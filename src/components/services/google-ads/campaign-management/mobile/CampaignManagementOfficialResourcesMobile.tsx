@@ -6,32 +6,32 @@ import Image from 'next/image';
 import { CAMPAIGN_MANAGEMENT_CONFIG } from '@/config/services/campaignManagement';
 
 export const CampaignManagementOfficialResourcesMobile: React.FC = () => {
-  const { officialResources } = CAMPAIGN_MANAGEMENT_CONFIG;
+  const { ecosystem } = CAMPAIGN_MANAGEMENT_CONFIG;
 
   return (
-    <section className="lg:hidden w-full py-12 px-4 bg-white/40 border-y border-[#BACFE6]">
-      <div className="text-center mb-10">
+    <section className="w-full py-10 px-4 bg-white/40 border-y border-[#BACFE6]">
+      <div className="text-center mb-8">
         <span className="text-[10px] font-mono font-semibold tracking-widest uppercase text-[#0A5FD7]">
-          {officialResources.tag}
+          {ecosystem.tag}
         </span>
         <h2 className="text-2xl font-bold text-[#07366D] mt-1 mb-2">
-          {officialResources.heading}
+          {ecosystem.heading}
         </h2>
         <p className="text-xs text-[#475569]">
-          {officialResources.subheading}
+          {ecosystem.subheading}
         </p>
       </div>
 
       <div className="space-y-8 pt-4">
-        {officialResources.items.map((item) => (
+        {ecosystem.items.map((item) => (
           <div
             key={item.title}
-            className="relative rounded-2xl border border-[#BACFE6] bg-white/90 p-5 shadow-xs"
+            className="relative rounded-2xl border border-[#BACFE6] bg-white/90 p-5 shadow-xs overflow-visible"
           >
-            {/* Mobile Floating Badge */}
+            {/* Pure Floating Badge overlapping border (NO white box wrapper) */}
             <div
               className={`absolute right-4 pointer-events-none z-10 ${
-                item.badgePosition === 'down' ? '-bottom-5' : '-top-5'
+                item.badgePosition === 'down' ? '-bottom-6' : '-top-6'
               }`}
             >
               <Image
@@ -39,7 +39,7 @@ export const CampaignManagementOfficialResourcesMobile: React.FC = () => {
                 alt={item.badgeAlt}
                 width={68}
                 height={68}
-                className="w-16 h-16 object-contain drop-shadow-[0_12px_20px_rgba(7,54,109,0.22)]"
+                className="w-16 h-16 object-contain select-none drop-shadow-[0_16px_28px_rgba(7,54,109,0.25)]"
               />
             </div>
 
