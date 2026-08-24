@@ -2,17 +2,33 @@
 
 export const MOTION_TOKENS = {
   ease: {
-    power3Out: 'power3.out',
-    power2Out: 'power2.out',
-    expoOut: 'expo.out',
+    executiveDecel: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    standardPower: 'power3.out',
+    subtlePower: 'power2.out',
   },
   duration: {
-    fast: 0.45,
-    medium: 0.75,
-    slow: 0.85,
+    heroTravel: 1.25,
+    cardEntry: 0.85,
+    standard: 0.75,
   },
-  scrollTriggerDefaults: {
-    start: 'top 85%',
-    toggleActions: 'play none none reverse' as const,
+  travel: {
+    heroX: -150,
+    companionX: 120,
+    cardY: 32,
+    itemY: 24,
+  },
+  scrollTrigger: {
+    default: {
+      start: 'top 85%',
+      toggleActions: 'play none none reverse' as const,
+    },
+    console: {
+      start: 'top 96%',
+      toggleActions: 'play none none reverse' as const,
+    },
+    grid: {
+      start: 'top 82%',
+      toggleActions: 'play none none reverse' as const,
+    },
   },
 } as const;
