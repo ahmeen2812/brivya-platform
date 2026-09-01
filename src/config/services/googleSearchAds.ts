@@ -20,7 +20,6 @@ export interface OfficialGoogleResource {
   readonly title: string;
   readonly description: string;
   readonly url: string;
-  readonly iconType: "keyword-planner" | "responsive-ads" | "search-terms" | "conversion-measurement";
   readonly badgePosition: "bottom" | "top";
   readonly badgeImagePath: string;
   readonly badgeImageAlt: string;
@@ -35,21 +34,18 @@ export interface GoogleSearchAdsConfig {
     readonly serviceTitle: string;
     readonly heading: string;
     readonly description: string;
-    readonly primaryButtonText: string;
-    readonly secondaryButtonText: string;
     readonly imagePath: string;
     readonly imageAlt: string;
   };
   readonly mainFeaturedCard: {
-    readonly tag: string;
     readonly heading: string;
     readonly paragraphs: readonly string[];
   };
   readonly supportingCards: {
-    readonly heading: string;
-    readonly subtitle: string;
-    readonly illustrationPath: string;
-    readonly illustrationAlt: string;
+    readonly card2IllustrationPath: string;
+    readonly card2IllustrationAlt: string;
+    readonly card3IllustrationPath: string;
+    readonly card3IllustrationAlt: string;
     readonly items: readonly SupportingServiceCard[];
   };
   readonly officialResources: {
@@ -81,13 +77,10 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
     heading: "Reach Customers When They're Searching for You",
     description:
       "Connect with potential customers actively searching for the products and services you offer. We create and manage Google Search campaigns that bring together relevant keywords, compelling ad messaging, and considered bidding strategies to turn search interest into meaningful business opportunities.",
-    primaryButtonText: "Start a Project",
-    secondaryButtonText: "Book a Consultation",
     imagePath: "/images/services/google-ads/search-hero-illustration.png",
     imageAlt: "Google Search Ads desktop search results and performance interface illustration",
   },
   mainFeaturedCard: {
-    tag: "Core Search Strategy",
     heading: "Search Advertising Built Around Business Goals",
     paragraphs: [
       "Successful Search campaigns start with understanding what your customers need and how they look for it. We develop campaigns around relevant search intent, carefully structured keywords, effective ad messaging, and landing pages that reflect what visitors expect to find.",
@@ -95,10 +88,10 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
     ],
   },
   supportingCards: {
-    heading: "Structured for Intent and Commercial Return",
-    subtitle: "Four focused pillars designed to eliminate budget waste and capture qualified buyers.",
-    illustrationPath: "/images/services/google-ads/search-supporting-illustration.png",
-    illustrationAlt: "Google Search Ad Relevance and Performance Optimization Illustration",
+    card2IllustrationPath: "/images/services/google-ads/search-supporting-illustration.png",
+    card2IllustrationAlt: "Responsive Search Ad Development Architecture Illustration",
+    card3IllustrationPath: "/images/services/google-ads/landing-page-relevance-illustration.png",
+    card3IllustrationAlt: "Landing Page Relevance & Conversion Architecture Illustration",
     items: [
       {
         index: "01",
@@ -138,7 +131,6 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
         description:
           "Research relevant search terms, explore estimated search volumes, and review keyword cost forecasts when planning Search campaigns.",
         url: "https://support.google.com/google-ads/answer/7337243",
-        iconType: "keyword-planner",
         badgePosition: "bottom",
         badgeImagePath: "/images/services/google-ads/search-resource-badge-01.png",
         badgeImageAlt: "Google Ads Keyword Planner Feature Badge",
@@ -149,7 +141,6 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
         description:
           "Understand how Google combines available headlines and descriptions to create advertisements suited to relevant search queries.",
         url: "https://support.google.com/google-ads/answer/7684791",
-        iconType: "responsive-ads",
         badgePosition: "top",
         badgeImagePath: "/images/services/google-ads/search-resource-badge-02.png",
         badgeImageAlt: "Responsive Search Ads Asset Badge",
@@ -160,7 +151,6 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
         description:
           "Explore how advertisers review the searches that trigger their ads and use performance information to refine keyword strategies.",
         url: "https://support.google.com/google-ads/answer/2472708",
-        iconType: "search-terms",
         badgePosition: "bottom",
         badgeImagePath: "/images/services/google-ads/search-resource-badge-03.png",
         badgeImageAlt: "Search Terms Query Mining Badge",
@@ -171,7 +161,6 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
         description:
           "Learn how Google Ads measures valuable customer actions, including purchases, enquiries, and other conversion events.",
         url: "https://support.google.com/google-ads/answer/1722022",
-        iconType: "conversion-measurement",
         badgePosition: "top",
         badgeImagePath: "/images/services/google-ads/search-resource-badge-04.png",
         badgeImageAlt: "Google Ads Conversion Measurement Tagging Badge",
