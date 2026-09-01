@@ -8,13 +8,15 @@ import { useIsomorphicLayoutEffect } from "@/components/shared/useIsomorphicLayo
 
 export const SearchSupportingCardsMobile: React.FC = () => {
   const { supportingCards } = GOOGLE_SEARCH_ADS_CONTENT;
-  const [supportingImageError, setSupportingImageError] = useState(false);
+  const [card2ImageError, setCard2ImageError] = useState(false);
+  const [card3ImageError, setCard3ImageError] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const card1Ref = useRef<HTMLDivElement | null>(null);
   const card2Ref = useRef<HTMLDivElement | null>(null);
-  const supportingIllustrationRef = useRef<HTMLDivElement | null>(null);
+  const card2IllustrationRef = useRef<HTMLDivElement | null>(null);
   const card3Ref = useRef<HTMLDivElement | null>(null);
+  const card3IllustrationRef = useRef<HTMLDivElement | null>(null);
   const card4Ref = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -25,8 +27,10 @@ export const SearchSupportingCardsMobile: React.FC = () => {
         card1: card1Ref.current,
         card2: card2Ref.current,
         card2Container: null,
-        supportingIllustration: supportingIllustrationRef.current,
+        card2Illustration: card2IllustrationRef.current,
+        card3Container: null,
         card3: card3Ref.current,
+        card3Illustration: card3IllustrationRef.current,
         card4: card4Ref.current,
       },
       containerRef.current
@@ -40,15 +44,6 @@ export const SearchSupportingCardsMobile: React.FC = () => {
       ref={containerRef}
       className="relative w-full flex flex-col space-y-6 mb-12 select-none overflow-x-clip"
     >
-      <div>
-        <span className="font-mono text-[10px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
-          Section 03 // Supporting Capabilities
-        </span>
-        <h2 className="font-sans text-[22px] font-extrabold text-[#06162C] leading-[1.2] tracking-tight">
-          {supportingCards.heading}
-        </h2>
-      </div>
-
       {/* Card 01 */}
       <div
         ref={card1Ref}
@@ -75,19 +70,19 @@ export const SearchSupportingCardsMobile: React.FC = () => {
         </p>
       </div>
 
-      {/* External Supporting Illustration for Mobile */}
+      {/* Image 02 for Mobile */}
       <div
-        ref={supportingIllustrationRef}
-        className="w-full max-w-[240px] aspect-[4/3] mx-auto relative flex items-center justify-center my-2 will-change-transform"
+        ref={card2IllustrationRef}
+        className="w-full max-w-[240px] aspect-[4/3] mx-auto relative flex items-center justify-center my-1 will-change-transform"
       >
-        {!supportingImageError ? (
+        {!card2ImageError ? (
           <Image
-            src={supportingCards.illustrationPath}
-            alt={supportingCards.illustrationAlt}
+            src={supportingCards.card2IllustrationPath}
+            alt={supportingCards.card2IllustrationAlt}
             fill
             sizes="240px"
             className="object-contain"
-            onError={() => setSupportingImageError(true)}
+            onError={() => setCard2ImageError(true)}
           />
         ) : (
           <div className="flex flex-col items-center justify-center text-center p-3 border border-dashed border-[#BACFE6] rounded-xl w-full h-full bg-white/40">
@@ -107,6 +102,27 @@ export const SearchSupportingCardsMobile: React.FC = () => {
         <p className="font-sans text-[13.5px] leading-[1.65] text-[#475569]">
           {supportingCards.items[2].description}
         </p>
+      </div>
+
+      {/* Image 03 for Mobile */}
+      <div
+        ref={card3IllustrationRef}
+        className="w-full max-w-[240px] aspect-[4/3] mx-auto relative flex items-center justify-center my-1 will-change-transform"
+      >
+        {!card3ImageError ? (
+          <Image
+            src={supportingCards.card3IllustrationPath}
+            alt={supportingCards.card3IllustrationAlt}
+            fill
+            sizes="240px"
+            className="object-contain"
+            onError={() => setCard3ImageError(true)}
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center p-3 border border-dashed border-[#BACFE6] rounded-xl w-full h-full bg-white/40">
+            <span className="font-mono text-[10px] text-[#64748B]">Image 03 slot</span>
+          </div>
+        )}
       </div>
 
       {/* Card 04 */}
