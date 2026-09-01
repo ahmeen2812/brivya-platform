@@ -2,26 +2,20 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { GOOGLE_SEARCH_ADS_CONTENT } from "@/config/services/googleSearchAds";
-import { SITE_CONTACT } from "@/config/siteContact";
-import { CalendlyModal } from "@/components/sections/inquiry/CalendlyModal";
 import { initHeroAnimation } from "./animations";
 import { SearchHeroMobile } from "./mobile/SearchHeroMobile";
 import { useIsomorphicLayoutEffect } from "@/components/shared/useIsomorphicLayoutEffect";
 
 export const SearchHero: React.FC = () => {
   const { hero } = GOOGLE_SEARCH_ADS_CONTENT;
-  const { meeting } = SITE_CONTACT;
   const [imageError, setImageError] = useState(false);
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const serviceTitleRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const accentLineRef = useRef<HTMLDivElement | null>(null);
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
-  const buttonsRef = useRef<HTMLDivElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -33,7 +27,6 @@ export const SearchHero: React.FC = () => {
         heading: headingRef.current,
         accentLine: accentLineRef.current,
         descriptionText: descriptionTextRef.current,
-        buttons: buttonsRef.current,
         illustration: illustrationRef.current,
       },
       containerRef.current
@@ -44,13 +37,13 @@ export const SearchHero: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Photo on LEFT, Text on RIGHT */}
+      {/* DESKTOP VIEWPORT: Photo on LEFT, Text on RIGHT (No Hero Buttons, Increased Bottom Space) */}
       <section
         ref={containerRef}
-        className="hidden lg:block relative w-full pt-6 pb-16 lg:pb-20 select-none overflow-x-clip"
+        className="hidden lg:block relative w-full pt-6 pb-20 lg:pb-24 select-none overflow-x-clip"
       >
         <div className="grid grid-cols-12 gap-10 items-center">
-          {/* Left Column: Hero Illustration (Glides in from Left with 160px Travel) */}
+          {/* Left Column: Hero Illustration (160px Glide from Left) */}
           <div className="col-span-5 flex items-center justify-center">
             <div
               ref={illustrationRef}
@@ -114,46 +107,14 @@ export const SearchHero: React.FC = () => {
                 </p>
               </div>
             </div>
-
-            {/* Action Buttons (Animated and tagged with will-change-transform to eliminate reload glitch) */}
-            <div
-              ref={buttonsRef}
-              className="mt-8 flex items-center gap-4 will-change-transform"
-            >
-              <Link
-                href="/start-project"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-8 py-3.5 font-sans text-sm font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] transition-all"
-              >
-                <span>{hero.primaryButtonText}</span>
-                <span aria-hidden="true">→</span>
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => setIsCalendlyOpen(true)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300/90 px-7 py-3.5 font-sans text-sm font-semibold text-[#06162C] shadow-2xs hover:bg-slate-50 hover:border-[#0A5FD7]/50 hover:text-[#0A5FD7] active:scale-[0.98] transition-all cursor-pointer"
-              >
-                <span>{hero.secondaryButtonText}</span>
-                <span aria-hidden="true">↗</span>
-              </button>
-            </div>
           </div>
         </div>
       </section>
 
       {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
-        <SearchHeroMobile onOpenCalendly={() => setIsCalendlyOpen(true)} />
+        <SearchHeroMobile />
       </div>
-
-      <CalendlyModal
-        isOpen={isCalendlyOpen}
-        onClose={() => setIsCalendlyOpen(false)}
-        calendlyUrl={meeting.calendlyUrl}
-        primaryColor={meeting.theme.primaryColor}
-        textColor={meeting.theme.textColor}
-        backgroundColor={meeting.theme.backgroundColor}
-      />
     </>
   );
 };
