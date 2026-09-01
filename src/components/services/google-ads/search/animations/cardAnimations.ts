@@ -25,7 +25,7 @@ export function initFeaturedCardAnimation(
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: cardElement,
-        start: isMobile ? "top 92%" : "top 95%",
+        start: isMobile ? "top 92%" : "top 96%",
         toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions,
       },
       onComplete: () => {
@@ -53,8 +53,10 @@ export interface SupportingCardsAnimationTargets {
   readonly card1: HTMLElement | null;
   readonly card2: HTMLElement | null;
   readonly card2Container: HTMLElement | null;
-  readonly supportingIllustration: HTMLElement | null;
+  readonly card2Illustration: HTMLElement | null;
+  readonly card3Container: HTMLElement | null;
   readonly card3: HTMLElement | null;
+  readonly card3Illustration: HTMLElement | null;
   readonly card4: HTMLElement | null;
 }
 
@@ -62,10 +64,10 @@ export function initSupportingCardsAnimation(
   targets: SupportingCardsAnimationTargets,
   container: HTMLElement | null
 ): gsap.Context | null {
-  const { card1, card2, card2Container, supportingIllustration, card3, card4 } = targets;
+  const { card1, card2, card2Container, card2Illustration, card3Container, card3, card3Illustration, card4 } = targets;
   if (!container) return null;
 
-  const elements = [card1, card2, supportingIllustration, card3, card4].filter(Boolean) as HTMLElement[];
+  const elements = [card1, card2, card2Illustration, card3, card3Illustration, card4].filter(Boolean) as HTMLElement[];
 
   if (checkPrefersReducedMotion()) {
     gsap.set(elements, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
@@ -95,7 +97,7 @@ export function initSupportingCardsAnimation(
       );
     }
 
-    // Card 02: Enters LEFT -> RIGHT + Supporting Image 02
+    // Card 02: Enters LEFT -> RIGHT + Supporting Image 02 on Right
     if (card2) {
       const trigger = card2Container || card2;
       gsap.fromTo(
@@ -112,9 +114,9 @@ export function initSupportingCardsAnimation(
         }
       );
 
-      if (supportingIllustration) {
+      if (card2Illustration) {
         gsap.fromTo(
-          supportingIllustration,
+          card2Illustration,
           { autoAlpha: 0, y: isMobile ? GOOGLE_SEARCH_MOTION.travel.mobileSupportingY : GOOGLE_SEARCH_MOTION.travel.desktopSupportingY, scale: GOOGLE_SEARCH_MOTION.scale.supportingImageInitial },
           {
             autoAlpha: 1,
@@ -123,14 +125,15 @@ export function initSupportingCardsAnimation(
             duration: GOOGLE_SEARCH_MOTION.durations.supportingImage,
             ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
             scrollTrigger: { trigger, start: isMobile ? "top 92%" : "top 86%", toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
-            onComplete: () => gsap.set(supportingIllustration, { clearProps: "transform,opacity" }),
+            onComplete: () => gsap.set(card2Illustration, { clearProps: "transform,opacity" }),
           }
         );
       }
     }
 
-    // Card 03: Enters RIGHT -> LEFT
+    // Card 03: Enters RIGHT -> LEFT + Image 03 on Left
     if (card3) {
+      const trigger = card3Container || card3;
       gsap.fromTo(
         card3,
         { autoAlpha: 0, x: lateralDistance, y: verticalDistance },
@@ -140,13 +143,29 @@ export function initSupportingCardsAnimation(
           y: 0,
           duration: GOOGLE_SEARCH_MOTION.durations.supportingCard,
           ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
-          scrollTrigger: { trigger: card3, start: startThreshold, toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
+          scrollTrigger: { trigger, start: startThreshold, toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
           onComplete: () => gsap.set(card3, { clearProps: "transform,opacity" }),
         }
       );
+
+      if (card3Illustration) {
+        gsap.fromTo(
+          card3Illustration,
+          { autoAlpha: 0, y: isMobile ? GOOGLE_SEARCH_MOTION.travel.mobileSupportingY : GOOGLE_SEARCH_MOTION.travel.desktopSupportingY, scale: GOOGLE_SEARCH_MOTION.scale.supportingImageInitial },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1.0,
+            duration: GOOGLE_SEARCH_MOTION.durations.supportingImage,
+            ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
+            scrollTrigger: { trigger, start: isMobile ? "top 92%" : "top 86%", toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
+            onComplete: () => gsap.set(card3Illustration, { clearProps: "transform,opacity" }),
+          }
+        );
+      }
     }
 
-    // Card 04: Alternating fix: Enters LEFT -> RIGHT (Left Aligned on Desktop)
+    // Card 04: Alternating Left-Alignment: Enters LEFT -> RIGHT
     if (card4) {
       gsap.fromTo(
         card4,
