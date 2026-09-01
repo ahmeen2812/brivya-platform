@@ -17,12 +17,7 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
   useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
 
-    const ctx = initResourcesAnimation(
-      containerRef.current,
-      null,
-      cardRefs.current,
-      badgeRefs.current
-    );
+    const ctx = initResourcesAnimation(containerRef.current, null, cardRefs.current, badgeRefs.current);
     return () => ctx?.revert();
   }, []);
 
@@ -50,14 +45,14 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
           ref={(el) => {
             cardRefs.current[idx] = el;
           }}
-          className="relative rounded-2xl border border-[#BACFE6] bg-white/85 p-5 shadow-xs flex flex-col justify-between will-change-transform"
+          className="relative rounded-2xl border border-[#BACFE6] bg-white/85 p-6 shadow-xs flex flex-col justify-between will-change-transform"
         >
-          {/* Mobile Badge Container */}
+          {/* Transparent Floating Badge on Mobile */}
           <div
             ref={(el) => {
               badgeRefs.current[idx] = el;
             }}
-            className="absolute -top-4 right-4 z-20 w-12 h-12 rounded-xl bg-white border border-[#CBDDF6] p-1.5 shadow-md flex items-center justify-center will-change-transform"
+            className="absolute -top-5 right-4 z-20 w-14 h-14 flex items-center justify-center will-change-transform drop-shadow-[0_10px_20px_rgba(7,54,109,0.2)]"
           >
             {!badgeErrors[item.id] ? (
               <div className="relative w-full h-full">
@@ -65,21 +60,21 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
                   src={item.badgeImagePath}
                   alt={item.badgeImageAlt}
                   fill
-                  sizes="48px"
+                  sizes="56px"
                   className="object-contain"
                   onError={() => handleBadgeError(item.id)}
                 />
               </div>
             ) : (
-              <span className="font-mono text-[8px] font-bold text-[#0A5FD7]">{idx + 1}</span>
+              <span className="font-mono text-[9px] font-bold text-[#0A5FD7]">{idx + 1}</span>
             )}
           </div>
 
           <div>
-            <h3 className="font-sans text-[16px] font-bold text-[#06162C] tracking-tight mb-1.5 pr-14">
+            <h3 className="font-sans text-[17px] font-bold text-[#06162C] tracking-tight mb-2 pr-14">
               {item.title}
             </h3>
-            <p className="font-sans text-[13px] leading-[1.65] text-[#475569]">
+            <p className="font-sans text-[13.5px] leading-[1.65] text-[#475569]">
               {item.description}
             </p>
           </div>
@@ -88,7 +83,7 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-sans text-[11.5px] font-semibold text-[#0A5FD7] mt-3.5 pt-2.5 border-t border-[#BACFE6]/60"
+            className="inline-flex items-center gap-1.5 font-sans text-[12px] font-semibold text-[#0A5FD7] mt-4 pt-3 border-t border-[#BACFE6]/60"
           >
             <span>Explore Documentation</span>
             <span aria-hidden="true">→</span>
