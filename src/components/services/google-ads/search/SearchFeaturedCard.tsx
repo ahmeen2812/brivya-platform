@@ -27,16 +27,13 @@ export const SearchFeaturedCard: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Master Blue-Gray Substrate Card */}
-      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
+      {/* DESKTOP VIEWPORT: Tag removed, positioned lower with increased margin */}
+      <section className="hidden lg:block relative w-full mb-20 select-none overflow-x-clip">
         <div
           ref={cardRef}
-          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-11 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
+          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-12 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
         >
           <div className="max-w-[940px] mx-auto flex flex-col">
-            <span className="font-mono text-[10.5px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-              {mainFeaturedCard.tag}
-            </span>
             <h2
               ref={headerRef}
               className="font-sans text-[30px] font-extrabold text-[#06162C] leading-[1.18] tracking-[-0.03em] mb-4 will-change-transform"
