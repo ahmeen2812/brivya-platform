@@ -17,14 +17,11 @@ export const SearchFeaturedCardMobile: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative w-full mb-8 select-none overflow-x-clip">
+    <section className="relative w-full mb-10 select-none overflow-x-clip">
       <div
         ref={cardRef}
         className="w-full rounded-2xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-6 shadow-sm will-change-transform"
       >
-        <span className="font-mono text-[10px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
-          {mainFeaturedCard.tag}
-        </span>
         <h2 className="font-sans text-[22px] font-extrabold text-[#06162C] leading-[1.2] tracking-tight mb-3">
           {mainFeaturedCard.heading}
         </h2>
