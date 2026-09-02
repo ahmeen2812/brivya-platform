@@ -146,11 +146,11 @@ export function initSupportingCardsAnimation(
       );
     }
 
-    // Card 04: Enters RIGHT -> LEFT
+    // Card 04: Alternating fix: Enters LEFT -> RIGHT (Left Aligned on Desktop)
     if (card4) {
       gsap.fromTo(
         card4,
-        { autoAlpha: 0, x: lateralDistance, y: verticalDistance },
+        { autoAlpha: 0, x: -lateralDistance, y: verticalDistance },
         {
           autoAlpha: 1,
           x: 0,
