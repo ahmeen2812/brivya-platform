@@ -4,7 +4,9 @@ import { GOOGLE_SEARCH_MOTION, checkIsMobile, checkPrefersReducedMotion } from "
 export interface HeroAnimationTargets {
   readonly serviceTitle: HTMLElement | null;
   readonly heading: HTMLElement | null;
+  readonly accentLine: HTMLElement | null;
   readonly descriptionText: HTMLElement | null;
+  readonly buttons: HTMLElement | null;
   readonly illustration: HTMLElement | null;
 }
 
@@ -12,10 +14,10 @@ export function initHeroAnimation(
   targets: HeroAnimationTargets,
   container: HTMLElement | null
 ): gsap.Context | null {
-  const { serviceTitle, heading, descriptionText, illustration } = targets;
+  const { serviceTitle, heading, accentLine, descriptionText, buttons, illustration } = targets;
   if (!container) return null;
 
-  const elements = [serviceTitle, heading, descriptionText, illustration].filter(Boolean) as HTMLElement[];
+  const elements = [serviceTitle, heading, accentLine, descriptionText, buttons, illustration].filter(Boolean) as HTMLElement[];
 
   if (checkPrefersReducedMotion()) {
     gsap.set(elements, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
@@ -38,6 +40,7 @@ export function initHeroAnimation(
       onComplete: () => gsap.set(elements, { clearProps: "transform,opacity" }),
     });
 
+    // 1. Long, authoritative illustration entrance from the Left
     if (illustration) {
       tl.fromTo(
         illustration,
@@ -47,16 +50,39 @@ export function initHeroAnimation(
       );
     }
 
+    // 2. Service Eyebrow Badge
     if (serviceTitle) {
       tl.fromTo(serviceTitle, { autoAlpha: 0, x: titleX, y: titleY }, { autoAlpha: 1, x: 0, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroServiceTitle }, 0.1);
     }
 
+    // 3. Main Heading
     if (heading) {
-      tl.fromTo(heading, { autoAlpha: 0, x: headingX, y: headingY }, { autoAlpha: 1, x: 0, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroHeading }, 0.18);
+      tl.fromTo(heading, { autoAlpha: 0, x: headingX, y: headingY }, { autoAlpha: 1, x: 0, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroHeading }, 0.16);
     }
 
+    // 4. Vertical Blue Accent Line (Scales smoothly from 0 height)
+    if (accentLine) {
+      tl.fromTo(
+        accentLine,
+        { autoAlpha: 0, scaleY: 0, transformOrigin: "top center" },
+        { autoAlpha: 1, scaleY: 1, duration: 0.6 },
+        0.24
+      );
+    }
+
+    // 5. Description emerges from behind vertical accent line
     if (descriptionText) {
       tl.fromTo(descriptionText, { autoAlpha: 0, x: descX, y: descY }, { autoAlpha: 1, x: 0, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroDescription }, 0.28);
+    }
+
+    // 6. Action Buttons reveal smoothly (Prevents them from appearing prematurely)
+    if (buttons) {
+      tl.fromTo(
+        buttons,
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroButtons, ease: GOOGLE_SEARCH_MOTION.easings.powerOut },
+        0.36
+      );
     }
   }, container);
 }
