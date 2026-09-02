@@ -75,7 +75,7 @@ export const SearchSupportingCardsMobile: React.FC = () => {
         </p>
       </div>
 
-      {/* External Supporting Illustration for Mobile (Image 02) */}
+      {/* External Supporting Illustration for Mobile */}
       <div
         ref={supportingIllustrationRef}
         className="w-full max-w-[240px] aspect-[4/3] mx-auto relative flex items-center justify-center my-2 will-change-transform"
