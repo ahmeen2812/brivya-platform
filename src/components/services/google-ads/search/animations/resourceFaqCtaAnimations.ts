@@ -9,15 +9,17 @@ if (typeof window !== "undefined") {
 export function initResourcesAnimation(
   container: HTMLElement | null,
   header: HTMLElement | null,
-  cards: readonly (HTMLElement | null)[]
+  cards: readonly (HTMLElement | null)[],
+  badges: readonly (HTMLElement | null)[]
 ): gsap.Context | null {
   if (!container) return null;
 
   const validCards = cards.filter(Boolean) as HTMLElement[];
-  const elements = [header, ...validCards].filter(Boolean) as HTMLElement[];
+  const validBadges = badges.filter(Boolean) as HTMLElement[];
+  const elements = [header, ...validCards, ...validBadges].filter(Boolean) as HTMLElement[];
 
   if (checkPrefersReducedMotion()) {
-    gsap.set(elements, { autoAlpha: 1, y: 0 });
+    gsap.set(elements, { autoAlpha: 1, y: 0, scale: 1 });
     return null;
   }
 
@@ -52,6 +54,23 @@ export function initResourcesAnimation(
         0.12
       );
     }
+
+    // Coordinated scale and reveal for the 4 floating feature badges
+    if (validBadges.length > 0) {
+      tl.fromTo(
+        validBadges,
+        { autoAlpha: 0, scale: GOOGLE_SEARCH_MOTION.scale.resourceBadgeInitial, y: 15 },
+        {
+          autoAlpha: 1,
+          scale: 1.0,
+          y: 0,
+          duration: GOOGLE_SEARCH_MOTION.durations.resourceBadge,
+          stagger: GOOGLE_SEARCH_MOTION.stagger.badges,
+          ease: GOOGLE_SEARCH_MOTION.easings.powerOut,
+        },
+        0.25
+      );
+    }
   }, container);
 }
 
@@ -84,7 +103,9 @@ export function initFaqAnimation(
         start: isMobile ? "top 88%" : "top 82%",
         toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions,
       },
-      onComplete: () => gsap.set([heading, ...validItems].filter(Boolean), { clearProps: "transform,opacity" }),
+      onComplete: () => {
+        gsap.set([heading, ...validItems].filter(Boolean), { clearProps: "transform,opacity" });
+      },
     });
 
     if (heading) {
