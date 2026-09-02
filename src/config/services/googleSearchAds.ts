@@ -21,6 +21,9 @@ export interface OfficialGoogleResource {
   readonly description: string;
   readonly url: string;
   readonly iconType: "keyword-planner" | "responsive-ads" | "search-terms" | "conversion-measurement";
+  readonly badgePosition: "bottom" | "top";
+  readonly badgeImagePath: string;
+  readonly badgeImageAlt: string;
 }
 
 export interface GoogleSearchAdsConfig {
@@ -136,6 +139,9 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
           "Research relevant search terms, explore estimated search volumes, and review keyword cost forecasts when planning Search campaigns.",
         url: "https://support.google.com/google-ads/answer/7337243",
         iconType: "keyword-planner",
+        badgePosition: "bottom",
+        badgeImagePath: "/images/services/google-ads/search-resource-badge-01.png",
+        badgeImageAlt: "Google Ads Keyword Planner Feature Badge",
       },
       {
         id: "res-responsive-ads",
@@ -144,6 +150,9 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
           "Understand how Google combines available headlines and descriptions to create advertisements suited to relevant search queries.",
         url: "https://support.google.com/google-ads/answer/7684791",
         iconType: "responsive-ads",
+        badgePosition: "top",
+        badgeImagePath: "/images/services/google-ads/search-resource-badge-02.png",
+        badgeImageAlt: "Responsive Search Ads Asset Badge",
       },
       {
         id: "res-search-terms",
@@ -152,6 +161,9 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
           "Explore how advertisers review the searches that trigger their ads and use performance information to refine keyword strategies.",
         url: "https://support.google.com/google-ads/answer/2472708",
         iconType: "search-terms",
+        badgePosition: "bottom",
+        badgeImagePath: "/images/services/google-ads/search-resource-badge-03.png",
+        badgeImageAlt: "Search Terms Query Mining Badge",
       },
       {
         id: "res-conversion-measurement",
@@ -160,6 +172,9 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
           "Learn how Google Ads measures valuable customer actions, including purchases, enquiries, and other conversion events.",
         url: "https://support.google.com/google-ads/answer/1722022",
         iconType: "conversion-measurement",
+        badgePosition: "top",
+        badgeImagePath: "/images/services/google-ads/search-resource-badge-04.png",
+        badgeImageAlt: "Google Ads Conversion Measurement Tagging Badge",
       },
     ],
   },
