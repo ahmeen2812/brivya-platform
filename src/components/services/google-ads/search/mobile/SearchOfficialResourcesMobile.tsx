@@ -1,27 +1,39 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
+import Image from "next/image";
 import { GOOGLE_SEARCH_ADS_CONTENT } from "@/config/services/googleSearchAds";
 import { initResourcesAnimation } from "../animations";
 import { useIsomorphicLayoutEffect } from "@/components/shared/useIsomorphicLayoutEffect";
 
 export const SearchOfficialResourcesMobile: React.FC = () => {
   const { officialResources } = GOOGLE_SEARCH_ADS_CONTENT;
+  const [badgeErrors, setBadgeErrors] = useState<{ [key: string]: boolean }>({});
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const badgeRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
 
-    const ctx = initResourcesAnimation(containerRef.current, null, cardRefs.current);
+    const ctx = initResourcesAnimation(
+      containerRef.current,
+      null,
+      cardRefs.current,
+      badgeRefs.current
+    );
     return () => ctx?.revert();
   }, []);
+
+  const handleBadgeError = (id: string) => {
+    setBadgeErrors((prev) => ({ ...prev, [id]: true }));
+  };
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full flex flex-col space-y-4 mb-10 select-none overflow-x-clip"
+      className="relative w-full flex flex-col space-y-6 mb-12 select-none overflow-visible"
     >
       <div>
         <span className="font-mono text-[10px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
@@ -38,10 +50,33 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
           ref={(el) => {
             cardRefs.current[idx] = el;
           }}
-          className="rounded-2xl border border-[#BACFE6] bg-white/85 p-5 shadow-xs flex flex-col justify-between will-change-transform"
+          className="relative rounded-2xl border border-[#BACFE6] bg-white/85 p-5 shadow-xs flex flex-col justify-between will-change-transform"
         >
+          {/* Mobile Badge Container */}
+          <div
+            ref={(el) => {
+              badgeRefs.current[idx] = el;
+            }}
+            className="absolute -top-4 right-4 z-20 w-12 h-12 rounded-xl bg-white border border-[#CBDDF6] p-1.5 shadow-md flex items-center justify-center will-change-transform"
+          >
+            {!badgeErrors[item.id] ? (
+              <div className="relative w-full h-full">
+                <Image
+                  src={item.badgeImagePath}
+                  alt={item.badgeImageAlt}
+                  fill
+                  sizes="48px"
+                  className="object-contain"
+                  onError={() => handleBadgeError(item.id)}
+                />
+              </div>
+            ) : (
+              <span className="font-mono text-[8px] font-bold text-[#0A5FD7]">{idx + 1}</span>
+            )}
+          </div>
+
           <div>
-            <h3 className="font-sans text-[16px] font-bold text-[#06162C] tracking-tight mb-1.5">
+            <h3 className="font-sans text-[16px] font-bold text-[#06162C] tracking-tight mb-1.5 pr-14">
               {item.title}
             </h3>
             <p className="font-sans text-[13px] leading-[1.65] text-[#475569]">
