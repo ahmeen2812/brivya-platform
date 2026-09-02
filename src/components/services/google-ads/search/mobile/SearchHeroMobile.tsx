@@ -18,7 +18,9 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
   const containerRef = useRef<HTMLDivElement | null>(null);
   const serviceTitleRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const accentLineRef = useRef<HTMLDivElement | null>(null);
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
+  const buttonsRef = useRef<HTMLDivElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -28,7 +30,9 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
       {
         serviceTitle: serviceTitleRef.current,
         heading: headingRef.current,
+        accentLine: accentLineRef.current,
         descriptionText: descriptionTextRef.current,
+        buttons: buttonsRef.current,
         illustration: illustrationRef.current,
       },
       containerRef.current
@@ -59,7 +63,11 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
         </div>
 
         <div className="mt-4 flex items-stretch">
-          <div aria-hidden="true" className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full" />
+          <div
+            ref={accentLineRef}
+            aria-hidden="true"
+            className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full will-change-transform"
+          />
           <div className="overflow-hidden pl-3.5 py-0.5">
             <p
               ref={descriptionTextRef}
@@ -70,8 +78,11 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-6 flex flex-col gap-3 w-full">
+        {/* Action Buttons Animated to prevent reload leak */}
+        <div
+          ref={buttonsRef}
+          className="mt-6 flex flex-col gap-3 w-full will-change-transform"
+        >
           <Link
             href="/start-project"
             className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] py-3.5 font-sans text-sm font-semibold text-white shadow-md active:scale-[0.98]"
