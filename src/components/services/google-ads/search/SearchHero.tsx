@@ -19,7 +19,9 @@ export const SearchHero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const serviceTitleRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const accentLineRef = useRef<HTMLDivElement | null>(null);
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
+  const buttonsRef = useRef<HTMLDivElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -29,7 +31,9 @@ export const SearchHero: React.FC = () => {
       {
         serviceTitle: serviceTitleRef.current,
         heading: headingRef.current,
+        accentLine: accentLineRef.current,
         descriptionText: descriptionTextRef.current,
+        buttons: buttonsRef.current,
         illustration: illustrationRef.current,
       },
       containerRef.current
@@ -46,7 +50,7 @@ export const SearchHero: React.FC = () => {
         className="hidden lg:block relative w-full pt-6 pb-16 lg:pb-20 select-none overflow-x-clip"
       >
         <div className="grid grid-cols-12 gap-10 items-center">
-          {/* Left Column: Hero Illustration Container (Enters Left -> Right) */}
+          {/* Left Column: Hero Illustration (Glides in from Left with 160px Travel) */}
           <div className="col-span-5 flex items-center justify-center">
             <div
               ref={illustrationRef}
@@ -94,9 +98,13 @@ export const SearchHero: React.FC = () => {
               </h1>
             </div>
 
-            {/* Description (Emerges from behind vertical accent line) */}
+            {/* Description (Emerges from behind synchronized vertical accent line) */}
             <div className="mt-6 flex items-stretch">
-              <div aria-hidden="true" className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full" />
+              <div
+                ref={accentLineRef}
+                aria-hidden="true"
+                className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full will-change-transform"
+              />
               <div className="overflow-hidden pl-5 py-0.5">
                 <p
                   ref={descriptionTextRef}
@@ -107,8 +115,11 @@ export const SearchHero: React.FC = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="mt-8 flex items-center gap-4">
+            {/* Action Buttons (Animated and tagged with will-change-transform to eliminate reload glitch) */}
+            <div
+              ref={buttonsRef}
+              className="mt-8 flex items-center gap-4 will-change-transform"
+            >
               <Link
                 href="/start-project"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-8 py-3.5 font-sans text-sm font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] transition-all"
