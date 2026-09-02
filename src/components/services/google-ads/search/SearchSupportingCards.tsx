@@ -39,7 +39,7 @@ export const SearchSupportingCards: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Alternating 80% Right -> 70% Left (+ 30% Image 02) -> 80% Right -> 80% Right */}
+      {/* DESKTOP VIEWPORT: Alternating Right -> Left -> Right -> Left */}
       <section
         ref={containerRef}
         className="hidden lg:flex relative w-full flex-col space-y-10 mb-20 select-none overflow-x-clip"
@@ -56,7 +56,7 @@ export const SearchSupportingCards: React.FC = () => {
           </p>
         </div>
 
-        {/* Card 01: Keyword Research & Search Intent (80% Width, Right Aligned) */}
+        {/* Card 01: 80% Width, Right Aligned */}
         <div ref={card1Ref} className="w-[80%] ml-auto will-change-transform">
           <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
             <div
@@ -74,7 +74,7 @@ export const SearchSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 02: Responsive Search Ads (70% Left) + Supporting Image 02 (30% Right) */}
+        {/* Card 02: 70% Width, Left Aligned + Supporting Image (30% Width) */}
         <div ref={card2ContainerRef} className="w-full flex items-center justify-between gap-8">
           <div ref={card2Ref} className="w-[70%] will-change-transform">
             <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
@@ -93,7 +93,6 @@ export const SearchSupportingCards: React.FC = () => {
             </div>
           </div>
 
-          {/* Reserved External Supporting Illustration (Image 02) */}
           <div
             ref={supportingIllustrationRef}
             className="w-[30%] flex items-center justify-center will-change-transform"
@@ -120,7 +119,7 @@ export const SearchSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 03: Landing Page Relevance (80% Width, Right Aligned) */}
+        {/* Card 03: 80% Width, Right Aligned */}
         <div ref={card3Ref} className="w-[80%] ml-auto will-change-transform">
           <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
             <div
@@ -138,12 +137,12 @@ export const SearchSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 04: Bidding & Performance Optimization (80% Width, Right Aligned) */}
-        <div ref={card4Ref} className="w-[80%] ml-auto will-change-transform">
-          <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
+        {/* Card 04: Alternating Fix — 80% Width, LEFT ALIGNED */}
+        <div ref={card4Ref} className="w-[80%] mr-auto will-change-transform">
+          <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10"
+              className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10"
             />
             <div className="relative z-0">
               <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
