@@ -27,7 +27,7 @@ export const SearchFeaturedCard: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT */}
+      {/* DESKTOP VIEWPORT: Master Blue-Gray Substrate Card */}
       <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
         <div
           ref={cardRef}
