@@ -38,7 +38,6 @@ export function initHeroAnimation(
       onComplete: () => gsap.set(elements, { clearProps: "transform,opacity" }),
     });
 
-    // 1. Left Illustration glides in from Left
     if (illustration) {
       tl.fromTo(
         illustration,
@@ -48,17 +47,14 @@ export function initHeroAnimation(
       );
     }
 
-    // 2. Service Title Badge
     if (serviceTitle) {
       tl.fromTo(serviceTitle, { autoAlpha: 0, x: titleX, y: titleY }, { autoAlpha: 1, x: 0, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroServiceTitle }, 0.1);
     }
 
-    // 3. Main Heading
     if (heading) {
       tl.fromTo(heading, { autoAlpha: 0, x: headingX, y: headingY }, { autoAlpha: 1, x: 0, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroHeading }, 0.18);
     }
 
-    // 4. Description emerges from behind vertical accent line
     if (descriptionText) {
       tl.fromTo(descriptionText, { autoAlpha: 0, x: descX, y: descY }, { autoAlpha: 1, x: 0, y: 0, duration: GOOGLE_SEARCH_MOTION.durations.heroDescription }, 0.28);
     }
