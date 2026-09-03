@@ -45,6 +45,8 @@ export interface GoogleSearchAdsConfig {
   readonly supportingCards: {
     readonly heading: string;
     readonly subtitle: string;
+    readonly illustrationPath: string;
+    readonly illustrationAlt: string;
     readonly items: readonly SupportingServiceCard[];
   };
   readonly officialResources: {
@@ -79,7 +81,7 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
     primaryButtonText: "Start a Project",
     secondaryButtonText: "Book a Consultation",
     imagePath: "/images/services/google-ads/search-hero-illustration.png",
-    imageAlt: "Google Search Ads sponsored results and performance interface illustration",
+    imageAlt: "Google Search Ads desktop search results and performance interface illustration",
   },
   mainFeaturedCard: {
     tag: "Core Search Strategy",
@@ -92,6 +94,8 @@ export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
   supportingCards: {
     heading: "Structured for Intent and Commercial Return",
     subtitle: "Four focused pillars designed to eliminate budget waste and capture qualified buyers.",
+    illustrationPath: "/images/services/google-ads/search-supporting-illustration.png",
+    illustrationAlt: "Google Search Ad Relevance and Performance Optimization Illustration",
     items: [
       {
         index: "01",
