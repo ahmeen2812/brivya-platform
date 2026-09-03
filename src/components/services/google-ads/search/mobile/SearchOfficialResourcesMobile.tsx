@@ -55,7 +55,7 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 font-sans text-[11.5px] font-semibold text-[#0A5FD7] mt-3.5 pt-2.5 border-t border-[#BACFE6]/60"
           >
-            <span>Official Documentation</span>
+            <span>Explore Documentation</span>
             <span aria-hidden="true">→</span>
           </a>
         </div>
