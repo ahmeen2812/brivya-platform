@@ -49,39 +49,118 @@ export function initFeaturedCardAnimation(
   }, cardElement);
 }
 
+export interface SupportingCardsAnimationTargets {
+  readonly card1: HTMLElement | null;
+  readonly card2: HTMLElement | null;
+  readonly card2Container: HTMLElement | null;
+  readonly supportingIllustration: HTMLElement | null;
+  readonly card3: HTMLElement | null;
+  readonly card4: HTMLElement | null;
+}
+
 export function initSupportingCardsAnimation(
-  container: HTMLElement | null,
-  cards: readonly (HTMLElement | null)[]
+  targets: SupportingCardsAnimationTargets,
+  container: HTMLElement | null
 ): gsap.Context | null {
+  const { card1, card2, card2Container, supportingIllustration, card3, card4 } = targets;
   if (!container) return null;
 
-  const validCards = cards.filter(Boolean) as HTMLElement[];
+  const elements = [card1, card2, supportingIllustration, card3, card4].filter(Boolean) as HTMLElement[];
 
   if (checkPrefersReducedMotion()) {
-    gsap.set(validCards, { autoAlpha: 1, y: 0 });
+    gsap.set(elements, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
     return null;
   }
 
   return gsap.context(() => {
     const isMobile = checkIsMobile();
-    const yTravel = isMobile ? GOOGLE_SEARCH_MOTION.travel.mobileCardsY : GOOGLE_SEARCH_MOTION.travel.desktopCardsY;
+    const lateralDistance = isMobile ? 0 : GOOGLE_SEARCH_MOTION.travel.desktopCardLateralX;
+    const verticalDistance = isMobile ? GOOGLE_SEARCH_MOTION.travel.mobileCardY : 0;
+    const startThreshold = isMobile ? "top 90%" : "top 85%";
 
-    gsap.fromTo(
-      validCards,
-      { autoAlpha: 0, y: yTravel },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: GOOGLE_SEARCH_MOTION.durations.supportingCard,
-        stagger: GOOGLE_SEARCH_MOTION.stagger.supportingCards,
-        ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
-        scrollTrigger: {
-          trigger: container,
-          start: isMobile ? "top 90%" : "top 85%",
-          toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions,
-        },
-        onComplete: () => gsap.set(validCards, { clearProps: "transform,opacity" }),
+    // Card 01: Enters RIGHT -> LEFT
+    if (card1) {
+      gsap.fromTo(
+        card1,
+        { autoAlpha: 0, x: lateralDistance, y: verticalDistance },
+        {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          duration: GOOGLE_SEARCH_MOTION.durations.supportingCard,
+          ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
+          scrollTrigger: { trigger: card1, start: startThreshold, toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(card1, { clearProps: "transform,opacity" }),
+        }
+      );
+    }
+
+    // Card 02: Enters LEFT -> RIGHT + Supporting Image 02
+    if (card2) {
+      const trigger = card2Container || card2;
+      gsap.fromTo(
+        card2,
+        { autoAlpha: 0, x: -lateralDistance, y: verticalDistance },
+        {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          duration: GOOGLE_SEARCH_MOTION.durations.supportingCard,
+          ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
+          scrollTrigger: { trigger, start: startThreshold, toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(card2, { clearProps: "transform,opacity" }),
+        }
+      );
+
+      if (supportingIllustration) {
+        gsap.fromTo(
+          supportingIllustration,
+          { autoAlpha: 0, y: isMobile ? GOOGLE_SEARCH_MOTION.travel.mobileSupportingY : GOOGLE_SEARCH_MOTION.travel.desktopSupportingY, scale: GOOGLE_SEARCH_MOTION.scale.supportingImageInitial },
+          {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1.0,
+            duration: GOOGLE_SEARCH_MOTION.durations.supportingImage,
+            ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
+            scrollTrigger: { trigger, start: isMobile ? "top 92%" : "top 86%", toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
+            onComplete: () => gsap.set(supportingIllustration, { clearProps: "transform,opacity" }),
+          }
+        );
       }
-    );
+    }
+
+    // Card 03: Enters RIGHT -> LEFT
+    if (card3) {
+      gsap.fromTo(
+        card3,
+        { autoAlpha: 0, x: lateralDistance, y: verticalDistance },
+        {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          duration: GOOGLE_SEARCH_MOTION.durations.supportingCard,
+          ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
+          scrollTrigger: { trigger: card3, start: startThreshold, toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(card3, { clearProps: "transform,opacity" }),
+        }
+      );
+    }
+
+    // Card 04: Enters RIGHT -> LEFT
+    if (card4) {
+      gsap.fromTo(
+        card4,
+        { autoAlpha: 0, x: lateralDistance, y: verticalDistance },
+        {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          duration: GOOGLE_SEARCH_MOTION.durations.supportingCard,
+          ease: GOOGLE_SEARCH_MOTION.easings.executiveDecel,
+          scrollTrigger: { trigger: card4, start: startThreshold, toggleActions: GOOGLE_SEARCH_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(card4, { clearProps: "transform,opacity" }),
+        }
+      );
+    }
   }, container);
 }
