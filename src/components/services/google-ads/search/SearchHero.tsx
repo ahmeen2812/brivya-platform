@@ -46,7 +46,7 @@ export const SearchHero: React.FC = () => {
         className="hidden lg:block relative w-full pt-6 pb-16 lg:pb-20 select-none overflow-x-clip"
       >
         <div className="grid grid-cols-12 gap-10 items-center">
-          {/* Left Column: Hero Illustration (Glides in from Left) */}
+          {/* Left Column: Hero Illustration Container (Enters Left -> Right) */}
           <div className="col-span-5 flex items-center justify-center">
             <div
               ref={illustrationRef}
