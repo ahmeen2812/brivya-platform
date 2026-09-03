@@ -27,7 +27,7 @@ export const SearchOfficialResources: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: 4 Boxes in a Single Row */}
+      {/* DESKTOP VIEWPORT: 4 Light-Theme Bordered Boxes */}
       <section
         ref={containerRef}
         className="hidden lg:block relative w-full mb-20 select-none overflow-x-clip"
@@ -44,7 +44,7 @@ export const SearchOfficialResources: React.FC = () => {
           </p>
         </div>
 
-        {/* 4 Boxes Row */}
+        {/* 4 Light-Theme Boxes in a Single Row */}
         <div className="grid grid-cols-4 gap-6">
           {officialResources.items.map((item, idx) => (
             <div
@@ -55,7 +55,7 @@ export const SearchOfficialResources: React.FC = () => {
               className="rounded-2xl border border-[#BACFE6] bg-white/85 p-6 flex flex-col justify-between hover:border-[#0A5FD7] hover:-translate-y-1 hover:shadow-[0_12px_30px_-6px_rgba(10,95,215,0.12)] transition-all duration-300 will-change-transform"
             >
               <div>
-                {/* Authentic Vector Icon Matching User Specification */}
+                {/* Custom SVG Icon Matching Feature Description */}
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 border border-[#CBDDF6] text-[#0A5FD7] mb-4 shadow-2xs">
                   {item.iconType === "keyword-planner" && (
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -94,7 +94,7 @@ export const SearchOfficialResources: React.FC = () => {
                 rel="noopener noreferrer"
                 className="group/link inline-flex items-center gap-1.5 font-sans text-xs font-semibold text-[#0A5FD7] hover:text-[#07366D] transition-colors mt-4 pt-3 border-t border-[#BACFE6]/60"
               >
-                <span>Official Documentation</span>
+                <span>Explore Documentation</span>
                 <span aria-hidden="true" className="transition-transform group-hover/link:translate-x-1">→</span>
               </a>
             </div>
