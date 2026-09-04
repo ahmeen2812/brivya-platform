@@ -16,8 +16,8 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
   const [imageError, setImageError] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const serviceTitleRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
-  const taglineRef = useRef<HTMLParagraphElement | null>(null);
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
@@ -26,8 +26,8 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
 
     const ctx = initHeroAnimation(
       {
+        serviceTitle: serviceTitleRef.current,
         heading: headingRef.current,
-        tagline: taglineRef.current,
         descriptionText: descriptionTextRef.current,
         illustration: illustrationRef.current,
       },
@@ -43,6 +43,12 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
       className="relative w-full pt-2 pb-10 select-none overflow-x-clip"
     >
       <div className="flex flex-col items-start text-left">
+        <div ref={serviceTitleRef} className="mb-2 will-change-transform">
+          <span className="font-mono text-[10.5px] font-bold text-[#0A5FD7] uppercase tracking-wider">
+            {hero.serviceTitle}
+          </span>
+        </div>
+
         <div className="overflow-hidden pb-1">
           <h1
             ref={headingRef}
@@ -50,15 +56,6 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
           >
             {hero.heading}
           </h1>
-        </div>
-
-        <div className="overflow-hidden pb-1">
-          <p
-            ref={taglineRef}
-            className="mt-3 font-sans text-[17px] sm:text-[19px] font-semibold text-[#0A5FD7] leading-[1.3] tracking-[-0.02em] will-change-transform"
-          >
-            {hero.tagline}
-          </p>
         </div>
 
         <div className="mt-4 flex items-stretch">
@@ -73,20 +70,7 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
           </div>
         </div>
 
-        {/* Minimal Badges on Mobile */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {hero.badges.map((badge, idx) => (
-            <span
-              key={idx}
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/90 border border-[#BACFE6] font-mono text-[9.5px] font-semibold text-[#06162C] uppercase"
-            >
-              <span className="h-1 w-1 rounded-full bg-[#0A5FD7]" />
-              {badge}
-            </span>
-          ))}
-        </div>
-
-        {/* Mobile Action Buttons */}
+        {/* Action Buttons */}
         <div className="mt-6 flex flex-col gap-3 w-full">
           <Link
             href="/start-project"
@@ -123,7 +107,7 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
           ) : (
             <div className="flex flex-col items-center justify-center text-center p-4 border border-dashed border-[#BACFE6] rounded-2xl w-full h-full bg-white/50">
               <span className="font-mono text-[10px] font-bold text-[#06162C]">
-                Image 01: {hero.imagePath}
+                Image: {hero.imagePath}
               </span>
             </div>
           )}
