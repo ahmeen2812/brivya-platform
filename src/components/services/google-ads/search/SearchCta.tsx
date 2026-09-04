@@ -34,7 +34,7 @@ export const SearchCta: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT */}
+      {/* DESKTOP VIEWPORT: Unfilled Bordered Layout */}
       <section className="hidden lg:block relative w-full mb-20 select-none overflow-x-clip">
         <div
           ref={containerRef}
