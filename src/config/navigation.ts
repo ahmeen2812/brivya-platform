@@ -62,13 +62,6 @@ export const NAV_ITEMS: readonly NavItemConfig[] = [
     index: "06",
     label: "Contact",
     href: "/contact",
-    hasDividerAfter: true, // Divider between Contact and Call Us
-  },
-  {
-    id: "call-us",
-    index: "07",
-    label: "Call Us",
-    href: "/call-us",
     hasDividerAfter: false,
   },
 ] as const;
