@@ -13,7 +13,6 @@ export function FooterTexture() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* 32px Engineering Grid */}
           <pattern id="footer-cad-grid" width="32" height="32" patternUnits="userSpaceOnUse">
             <path
               d="M 32 0 L 0 0 0 32"
@@ -24,20 +23,15 @@ export function FooterTexture() {
             <circle cx="16" cy="16" r="0.75" fill="#FFFFFF" />
           </pattern>
 
-          {/* Micro-Coordinate Dot Lattice */}
           <pattern id="footer-dot-lattice" width="16" height="16" patternUnits="userSpaceOnUse">
             <circle cx="8" cy="8" r="0.6" fill="#38BDF8" />
           </pattern>
         </defs>
 
-        {/* Global Technical Grid */}
         <rect width="100%" height="100%" fill="url(#footer-cad-grid)" />
-
-        {/* Corner Matrix Clusters */}
         <rect x="4%" y="25%" width="120" height="60" fill="url(#footer-dot-lattice)" />
         <rect x="88%" y="35%" width="100" height="70" fill="url(#footer-dot-lattice)" />
 
-        {/* Architectural Datum Axis */}
         <line
           x1="0"
           y1="38%"
