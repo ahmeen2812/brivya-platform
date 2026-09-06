@@ -3,6 +3,7 @@ export * from "./content";
 export * from "./UnifiedInquiryCard";
 export * from "./AsymmetricalContactPanels";
 export * from "./InquiryTexture";
+export * from "./CalendlyModal";
 export * from "./animations/animationConfig";
 export * from "./animations/InquiryHeroAnimation";
 export * from "./animations/InquiryImageReveal";
