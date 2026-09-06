@@ -16,7 +16,7 @@ export function FooterLinks({ category }: FooterLinksProps) {
         {category.heading}
       </h3>
 
-      {/* Compact Links Stack */}
+      {/* Links Stack */}
       <ul className="mt-3.5 flex flex-col space-y-2">
         {category.links.map((link) => (
           <li key={link.label}>
