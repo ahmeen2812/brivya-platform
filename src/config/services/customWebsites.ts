@@ -1,20 +1,12 @@
 /**
  * BRIVYA SOLUTIONS — CUSTOM WEBSITE DEVELOPMENT CONTENT MANIFEST
- * Single source of truth for editorial copy, structured FAQs, and metadata.
+ * Authoritative content manifest for both Desktop and Mobile layouts.
  */
 
 export interface FaqItem {
   readonly id: string;
   readonly question: string;
   readonly answer: string;
-}
-
-export interface ServiceCardData {
-  readonly index: string;
-  readonly title: string;
-  readonly subtitle: string;
-  readonly paragraphs: readonly string[];
-  readonly alignment: "right" | "left";
 }
 
 export interface CustomWebsitesContentConfig {
@@ -31,16 +23,34 @@ export interface CustomWebsitesContentConfig {
   };
   readonly introduction: {
     readonly heading: string;
-    readonly paragraphs: readonly string[];
+    readonly paragraph: string;
   };
-  readonly serviceCards: readonly ServiceCardData[];
+  readonly cards: {
+    readonly card1: {
+      readonly heading: string;
+      readonly description: string;
+      readonly highlight: string;
+    };
+    readonly card2: {
+      readonly heading: string;
+      readonly description: string;
+      readonly highlight: string;
+      readonly illustrationPath: string;
+      readonly illustrationAlt: string;
+    };
+    readonly card3: {
+      readonly heading: string;
+      readonly description: string;
+      readonly highlight: string;
+    };
+  };
   readonly faq: {
     readonly heading: string;
     readonly items: readonly FaqItem[];
   };
   readonly cta: {
     readonly heading: string;
-    readonly paragraphs: readonly string[];
+    readonly description: string;
     readonly primaryButtonText: string;
     readonly secondaryButtonText: string;
   };
@@ -62,49 +72,31 @@ export const CUSTOM_WEBSITES_CONTENT: CustomWebsitesContentConfig = {
   },
   introduction: {
     heading: "What Is Custom Website Development?",
-    paragraphs: [
-      "Not every business needs the same kind of website. A consulting company may need detailed service pages and an easy way for clients to arrange meetings. A growing business may need a website that connects with its existing systems, while an established company may need something more flexible than its current platform.",
-      "Custom website development starts by understanding those differences.",
-      "Rather than forcing your content and requirements into a predetermined layout, we plan the website around what you actually need. That includes its structure, appearance, functionality, and the way people interact with it.",
-      "It doesn't mean making everything complicated or building features you won't use. It means making thoughtful choices about what belongs on your website and how it should work.",
-      "The result should feel natural to your visitors and practical for the people managing it.",
-    ],
+    paragraph:
+      "Custom website development starts by understanding your operational requirements rather than forcing your business into a ready-made layout. Whether you need bespoke service funnels, automated client booking workflows, or direct integration with internal databases, we build your site around what you actually need. Every feature has a clear reason to exist—resulting in a seamless journey for your clients and a practical, maintainable system for your team.",
   },
-  serviceCards: [
-    {
-      index: "01",
-      title: "Custom Design & Development",
-      subtitle: "Made to look and work like your business.",
-      alignment: "right",
-      paragraphs: [
-        "Your website should reflect the identity of your company, not the limitations of a ready-made layout.",
-        "We bring together thoughtful design, clear page structures, and the functionality your business requires. Whether that's a professional company website, detailed service pages, booking features, or connections to other tools, the approach begins with what makes sense for your project.",
-        "Every feature should have a reason to be there.",
-      ],
+  cards: {
+    card1: {
+      heading: "Made to look and work like your business.",
+      description:
+        "Your website should reflect the unique identity and operational standards of your company, not the limitations of a pre-built theme. We combine deliberate layout hierarchies with the exact functional integrations your business requires.",
+      highlight: "Every feature has a reason to be there.",
     },
-    {
-      index: "02",
-      title: "Search Engine Optimization (SEO)",
-      subtitle: "Help the right people find your website.",
-      alignment: "left",
-      paragraphs: [
-        "A well-designed website also needs to be understandable to search engines.",
-        "We consider SEO from the planning stage, including how pages are organized, how headings describe their content, and how visitors move between related information. Clear URLs, relevant page titles, readable content, and properly prepared images all contribute to a stronger foundation for search visibility.",
-        "Good SEO starts with making your website useful and easy to understand. It isn't about filling pages with keywords or promising overnight rankings.",
-      ],
+    card2: {
+      heading: "Help the right people find your website.",
+      description:
+        "A high-performing website is built for search visibility from day one. Through clean semantic markup, optimized heading structures, descriptive URL hierarchies, and sub-80ms asset loading, we establish an organic foundation search engines understand.",
+      highlight: "Useful architecture over empty keyword stuffing.",
+      illustrationPath: "/images/services/web-development/seo-card-illustration.png",
+      illustrationAlt: "Technical Search Engine Optimization Architecture Illustration",
     },
-    {
-      index: "03",
-      title: "Responsive Design & Website Performance",
-      subtitle: "A better experience on every screen.",
-      alignment: "right",
-      paragraphs: [
-        "People may discover your business on their phone and return later from a laptop. Your website should feel comfortable to use in both situations.",
-        "We focus on adaptable layouts, readable text, straightforward navigation, and pages that load without unnecessary delays. Buttons should be easy to use, forms should be simple to complete, and visitors should be able to reach important information without frustration.",
-        "These details might not attract attention individually, but together they make a noticeable difference to the experience.",
-      ],
+    card3: {
+      heading: "A better experience on every screen.",
+      description:
+        "Whether visitors arrive from a mobile device or a desktop monitor, your website adapts with fluid precision. We prioritize rapid page load times, intuitive touch targets, and friction-free navigation so clients reach important information immediately.",
+      highlight: "Responsive performance that eliminates client friction.",
     },
-  ],
+  },
   faq: {
     heading: "Questions Clients Often Ask",
     items: [
@@ -148,10 +140,8 @@ export const CUSTOM_WEBSITES_CONTENT: CustomWebsitesContentConfig = {
   },
   cta: {
     heading: "Let's Build Something That Fits",
-    paragraphs: [
-      "Whether you're starting a new business, replacing an outdated website, or planning something with more specific requirements, we'd like to understand what you have in mind.",
-      "Tell us what you need your website to do. We'll help you work out a practical direction for the project.",
-    ],
+    description:
+      "Whether you're starting a new venture, upgrading an outdated website, or planning a platform with custom integrations, we're ready to help you plan a clear and practical direction.",
     primaryButtonText: "Contact Us",
     secondaryButtonText: "Book a Consultation",
   },
