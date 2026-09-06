@@ -31,11 +31,6 @@ export interface MeetingBookingConfig {
   readonly meetingTitle: string;
   readonly durationMinutes: number;
   readonly durationLabel: string;
-  readonly heading: string;
-  readonly description: string;
-  readonly secondaryDescription: string;
-  readonly illustrationPath: string;
-  readonly illustrationAlt: string;
   readonly theme: {
     readonly primaryColor: string;
     readonly textColor: string;
@@ -78,13 +73,6 @@ export const SITE_CONTACT: SiteContactConfig = {
     meetingTitle: "30 Minute Meeting | Brivya Solutions",
     durationMinutes: 30,
     durationLabel: "30 Min",
-    heading: "Book a Meeting",
-    description:
-      "Schedule a 30-minute introductory strategy session with our technical and digital growth leads. Pick a time on our calendar that fits your availability, and we will prepare a dedicated technical roadmap for our discussion.",
-    secondaryDescription:
-      "All sessions are held directly with senior architects. No sales pressure—just direct engineering and growth analysis.",
-    illustrationPath: "/call-us/assets/call-us-illustration.png",
-    illustrationAlt: "Brivya Solutions scheduled consultation technical illustration",
     theme: {
       primaryColor: "0a5fd7", // Brivya Cobalt
       textColor: "06162c",    // Brivya Ink
