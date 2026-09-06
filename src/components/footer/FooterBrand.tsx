@@ -9,7 +9,7 @@ import { FooterSocial } from "./FooterSocial";
 export function FooterBrand() {
   return (
     <div className="flex flex-col items-start pr-0 md:pr-4">
-      {/* Official Brivya Logo from navbar root (/images/logo.png) */}
+      {/* Official Brivya Logo matching Navbar root (/images/logo.png) */}
       <Link
         href="/"
         aria-label="Brivya Solutions - Back to top"
