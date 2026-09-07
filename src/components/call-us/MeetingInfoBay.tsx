@@ -40,9 +40,11 @@ export const MeetingInfoBay: React.FC<MeetingInfoBayProps> = ({
         </div>
 
         {/* Primary Section Heading */}
-        <h1 className="font-sans text-[28px] sm:text-[34px] md:text-[38px] lg:text-[40px] font-extrabold text-[#06162C] leading-[1.12] tracking-[-0.035em]">
-          {heading}
-        </h1>
+        <div className="overflow-hidden pb-1">
+          <h1 className="font-sans text-[28px] sm:text-[34px] md:text-[38px] lg:text-[40px] font-extrabold text-[#06162C] leading-[1.12] tracking-[-0.035em]">
+            {heading}
+          </h1>
+        </div>
 
         {/* Editorial Description */}
         <p className="mt-4 font-sans text-[14px] sm:text-[15px] leading-[1.68] text-[#475569] font-normal tracking-[-0.01em]">
@@ -66,7 +68,7 @@ export const MeetingInfoBay: React.FC<MeetingInfoBayProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             <span className="font-sans text-[12.5px] font-medium text-[#06162C]">
-              No software installation required
+              Direct Senior Architect session
             </span>
           </div>
 
@@ -116,7 +118,7 @@ export const MeetingInfoBay: React.FC<MeetingInfoBayProps> = ({
               Asset: {illustrationPath}
             </span>
             <span className="mt-1 text-[11px] text-[#64748B] leading-relaxed">
-              Place call-us-illustration.png in public/call-us/assets/ to display automatically
+              Place call-us-illustration.png in public/call-us/assets/ to render automatically
             </span>
           </div>
         )}
