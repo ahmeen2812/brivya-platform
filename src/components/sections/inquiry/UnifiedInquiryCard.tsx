@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { INQUIRY_CONTENT } from "./content";
@@ -335,9 +336,9 @@ export const UnifiedInquiryCard: React.FC = () => {
             </div>
 
             {/* 
-              Dual Action Controls with Continuous Kinetic Arrow Loops:
+              Dual Action Controls:
               1. Primary: Send Project Inquiry → (Horizontal Loop matching NavCtaButton)
-              2. Secondary: Book a Call ↗ (45° Diagonal Loop)
+              2. Secondary: Book a Call ↗ (Connected to /call-us with 45° Diagonal Loop)
             */}
             <div
               ref={actionButtonsRef}
@@ -366,13 +367,10 @@ export const UnifiedInquiryCard: React.FC = () => {
                 </span>
               </button>
 
-              {/* Secondary Button */}
-              <button
-                type="button"
+              {/* Secondary Button: Navigates to dedicated /call-us Calendly booking page */}
+              <Link
+                href="/call-us"
                 onMouseEnter={() => animateKineticArrowDiagonal(secondaryArrowRef.current)}
-                onClick={() => {
-                  // Direct calendar/meeting-booking integration placeholder
-                }}
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300/90 px-6 py-3.5 font-sans text-sm font-semibold text-[#06162C] shadow-2xs transition-all duration-300 hover:bg-slate-50 hover:border-[#0A5FD7]/50 hover:text-[#0A5FD7] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5FD7]"
               >
                 <span>{form.bookCallButtonText}</span>
@@ -390,7 +388,7 @@ export const UnifiedInquiryCard: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                   </svg>
                 </span>
-              </button>
+              </Link>
             </div>
           </form>
         </div>
