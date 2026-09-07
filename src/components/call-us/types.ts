@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — CALL US MEETING BOOKING TYPE DEFINITIONS
- * Authoritative type contracts for meeting scheduling bays and embeds.
+ * Authoritative contracts for Call Us meeting scheduling components.
  */
 
 export interface MeetingInfoBayProps {
@@ -19,16 +19,4 @@ export interface CalendlyEmbedProps {
   readonly textColor?: string;
   readonly backgroundColor?: string;
   readonly className?: string;
-}
-
-export interface CalendlyEventPayload {
-  readonly event: string;
-  readonly payload?: {
-    readonly event?: {
-      readonly uri?: string;
-    };
-    readonly invitee?: {
-      readonly uri?: string;
-    };
-  };
 }
