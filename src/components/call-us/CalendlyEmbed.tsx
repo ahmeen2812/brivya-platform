@@ -1,8 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Script from "next/script";
+import React, { useEffect, useRef, useState } from "react";
 import { CalendlyEmbedProps } from "./types";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initInlineWidget: (options: {
+        url: string;
+        parentElement: HTMLElement;
+      }) => void;
+    };
+  }
+}
 
 export const CalendlyEmbed: React.FC<CalendlyEmbedProps> = ({
   url,
@@ -11,10 +21,10 @@ export const CalendlyEmbed: React.FC<CalendlyEmbedProps> = ({
   backgroundColor = "ffffff",
   className = "",
 }) => {
-  const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [hasIframeLoaded, setHasIframeLoaded] = useState<boolean>(false);
 
-  // Build the parameterized URL matching the reference screenshots
+  // Construct parameterized Calendly URL matching design tokens
   const constructCalendlyUrl = (): string => {
     try {
       const cleanUrl = new URL(url);
@@ -33,24 +43,48 @@ export const CalendlyEmbed: React.FC<CalendlyEmbedProps> = ({
 
   const formattedUrl = constructCalendlyUrl();
 
-  // Detect iframe mount to remove loading pulse
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setHasIframeLoaded(true);
-    }, 1200);
+    let isSubscribed = true;
 
-    return () => clearTimeout(timer);
-  }, [isScriptLoaded]);
+    const mountCalendly = () => {
+      if (!isSubscribed || !containerRef.current) return;
+
+      if (window.Calendly) {
+        containerRef.current.innerHTML = "";
+        window.Calendly.initInlineWidget({
+          url: formattedUrl,
+          parentElement: containerRef.current,
+        });
+
+        setTimeout(() => {
+          if (isSubscribed) setHasIframeLoaded(true);
+        }, 1000);
+      }
+    };
+
+    // If script is already cached in DOM
+    if (window.Calendly) {
+      mountCalendly();
+    } else {
+      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
+      if (existingScript) {
+        existingScript.addEventListener("load", mountCalendly);
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://assets.calendly.com/assets/external/widget.js";
+        script.async = true;
+        script.onload = mountCalendly;
+        document.body.appendChild(script);
+      }
+    }
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [formattedUrl]);
 
   return (
     <div className={`relative w-full h-full min-h-[680px] sm:min-h-[720px] lg:min-h-[740px] flex flex-col justify-start rounded-2xl sm:rounded-3xl bg-white border border-[#CBDDF6] shadow-[0_4px_24px_-4px_rgba(7,54,109,0.06)] overflow-hidden ${className}`}>
-      {/* Script tag loading Calendly's official widget script */}
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
-        onLoad={() => setIsScriptLoaded(true)}
-      />
-
       {/* Loading Pulse State */}
       {!hasIframeLoaded && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/95 backdrop-blur-xs transition-opacity duration-300">
@@ -62,15 +96,15 @@ export const CalendlyEmbed: React.FC<CalendlyEmbedProps> = ({
             Connecting to Secure Calendly Schedule...
           </span>
           <span className="mt-1 font-mono text-[11px] text-[#64748B]">
-            Verifying live availability
+            Verifying live calendar availability
           </span>
         </div>
       )}
 
-      {/* Official Calendly Inline Container */}
+      {/* Target Mount Element for Calendly Widget */}
       <div
-        className="calendly-inline-widget w-full h-full min-h-[680px] sm:min-h-[720px] lg:min-h-[740px]"
-        data-url={formattedUrl}
+        ref={containerRef}
+        className="w-full h-full min-h-[680px] sm:min-h-[720px] lg:min-h-[740px]"
         style={{ minWidth: "320px", height: "100%", width: "100%" }}
       />
     </div>
