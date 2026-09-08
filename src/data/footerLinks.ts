@@ -1,7 +1,9 @@
 /**
  * BRIVYA SOLUTIONS — FOOTER DATA MANIFEST
- * Authoritative content store for brand metadata, 3-column links, and social platforms.
+ * Reads centralized contact and social URLs from siteContact.ts.
  */
+
+import { SITE_CONTACT } from "@/config/siteContact";
 
 export interface FooterLinkItem {
   readonly label: string;
@@ -23,7 +25,7 @@ export interface SocialLinkItem {
 }
 
 export const FOOTER_BRAND_DATA = {
-  name: "Brivya Solutions",
+  name: SITE_CONTACT.companyName,
   logoSrc: "/images/logo.png",
   tagline:
     "Brivya combines thoughtful design, powerful technology, and performance-driven solutions to help businesses build, grow, and operate better.",
@@ -34,25 +36,25 @@ export const FOOTER_SOCIAL_LINKS: readonly SocialLinkItem[] = [
   {
     id: "social-linkedin",
     name: "LinkedIn",
-    href: "https://linkedin.com/company/brivya",
+    href: SITE_CONTACT.socials.linkedin,
     iconKey: "linkedin",
   },
   {
     id: "social-github",
     name: "GitHub",
-    href: "https://github.com/brivya",
+    href: SITE_CONTACT.socials.github,
     iconKey: "github",
   },
   {
     id: "social-x",
     name: "X (Twitter)",
-    href: "https://x.com/brivya",
+    href: SITE_CONTACT.socials.twitter,
     iconKey: "twitter",
   },
   {
     id: "social-instagram",
     name: "Instagram",
-    href: "https://instagram.com/brivya",
+    href: SITE_CONTACT.socials.instagram,
     iconKey: "instagram",
   },
 ] as const;
