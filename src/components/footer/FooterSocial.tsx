@@ -65,20 +65,22 @@ export const FooterSocial = forwardRef<HTMLDivElement, FooterSocialProps>(
             rel="noopener noreferrer"
             aria-label={`Visit Brivya on ${social.name}`}
             /* 
-              36px Circular Boundary with Matched 380ms Velocity:
-              - Light icon slides out RIGHT (+36px)
-              - Dark icon enters from LEFT (-36px to 0)
-              - Transition speeds and easing are strictly matched
+              36px Circular Social Control:
+              - Default state: Light-colored icon on translucent circular background
+              - Hover state: Circle changes to pale ice-blue surface (#EBF3FF)
+              - Light icon exits RIGHT (+36px)
+              - Incoming dark icon enters from LEFT in deep navy (#102D50)
+              - Synchronized 380ms duration
             */
-            className="group/social relative flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.12] border border-white/20 overflow-hidden transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] hover:scale-[1.08] hover:bg-white hover:border-white focus-visible:bg-white focus-visible:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8]"
+            className="group/social relative flex h-9 w-9 items-center justify-center rounded-full bg-[#102D50]/15 border border-[#102D50]/20 overflow-hidden transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] hover:scale-[1.08] hover:bg-[#EBF3FF] hover:border-white focus-visible:bg-[#EBF3FF] focus-visible:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5FD7]"
           >
-            {/* 1. Light-colored icon (Exits to the RIGHT on hover) */}
+            {/* 1. Default Light Icon (Exits smoothly to the RIGHT on hover) */}
             <span className="absolute inset-0 flex items-center justify-center text-white transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-9 group-hover/social:opacity-0 group-focus-visible/social:translate-x-9 group-focus-visible/social:opacity-0">
               <SocialIconGlyph iconKey={social.iconKey} />
             </span>
 
-            {/* 2. Dark navy icon (Enters from the LEFT into Center on hover) */}
-            <span className="absolute inset-0 flex items-center justify-center text-[#16355F] -translate-x-9 opacity-0 transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-0 group-hover/social:opacity-100 group-focus-visible/social:translate-x-0 group-focus-visible/social:opacity-100">
+            {/* 2. Dark Navy Icon (#102D50) (Enters smoothly from the LEFT into Center on hover) */}
+            <span className="absolute inset-0 flex items-center justify-center text-[#102D50] -translate-x-9 opacity-0 transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-0 group-hover/social:opacity-100 group-focus-visible/social:translate-x-0 group-focus-visible/social:opacity-100">
               <SocialIconGlyph iconKey={social.iconKey} />
             </span>
           </a>
