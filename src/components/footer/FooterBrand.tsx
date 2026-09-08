@@ -16,7 +16,7 @@ export const FooterBrand = forwardRef<HTMLDivElement, FooterBrandProps>(
   ({ logoRef, descRef, registerSocialRef }, ref) => {
     return (
       <div ref={ref} className="flex flex-col items-start pr-0 md:pr-4">
-        {/* Real Brivya Logo with explicit styles (Next.js warning eliminated) */}
+        {/* Real Brivya Logo with explicit styles to maintain aspect ratio and silence warning */}
         <Link
           href="/"
           aria-label="Brivya Solutions - Back to top"
@@ -35,15 +35,15 @@ export const FooterBrand = forwardRef<HTMLDivElement, FooterBrandProps>(
           </div>
         </Link>
 
-        {/* Human Manifesto Description */}
+        {/* Human Manifesto Description: High-Contrast Deep Slate-Navy */}
         <p
           ref={descRef}
-          className="mt-3.5 max-w-[310px] font-sans text-[13px] sm:text-[13.5px] leading-[1.65] text-[#D9E8FA]"
+          className="mt-3.5 max-w-[310px] font-sans text-[13px] sm:text-[13.5px] leading-[1.65] text-[#0E2B4E]"
         >
           {FOOTER_BRAND_DATA.tagline}
         </p>
 
-        {/* 36px Social Badges */}
+        {/* 36px Synchronized Social Badges */}
         <div className="mt-5">
           <FooterSocial registerSocialRef={registerSocialRef} />
         </div>
