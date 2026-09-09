@@ -1,3 +1,99 @@
+/* @import "tailwindcss";
+
+:root {
+  --color-brivya-ink: #06162c;
+  --color-brivya-navy: #07366d;
+  --color-brivya-cobalt: #0a5fd7;
+  --color-signal-blue: #1675f8;
+  --color-brivya-ice: #f4f7fc;
+  --color-brivya-steel: #8998ad;
+  --color-champagne: #c7a76b;
+  --color-surface-base: #06162c;
+  --color-surface-layer1: #0a1d36;
+  --color-surface-layer2: #0d2544;
+  --color-border-hairline: rgba(137, 152, 173, 0.15);
+  --color-border-subtle: rgba(137, 152, 173, 0.25);
+  --color-border-structural: rgba(7, 54, 109, 0.8);
+  --color-border-accent: rgba(199, 167, 107, 0.6);
+
+  --radius-micro: 2px;
+  --radius-subtle: 4px;
+  --ease-brivya: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-brivya-ink);
+  color: var(--color-brivya-ice);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-blue);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: rgba(22, 117, 248, 0.3);
+  color: var(--color-brivya-ice);
+}
+
+.chamfer-sm {
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+}
+
+.chamfer-md {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+
+.chamfer-symmetric {
+  clip-path: polygon(
+    8px 0%,
+    calc(100% - 8px) 0%,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0% calc(100% - 8px),
+    0% 8px
+  );
+}
+
+.border-hairline {
+  border-color: var(--color-border-hairline);
+}
+
+.border-subtle {
+  border-color: var(--color-border-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+} */
+
+
+
 @import "tailwindcss";
 
 :root {
@@ -86,6 +182,12 @@ body {
 
 .border-subtle {
   border-color: var(--color-border-subtle);
+}
+
+/* Footer Mobile Accordion CSS Grid Transition */
+.footer-accordion-content {
+  display: grid;
+  transition: grid-template-rows 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Universal Accessibility: Reduced Motion Override */
