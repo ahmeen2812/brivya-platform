@@ -6,10 +6,10 @@ import Link from "next/link";
 import { FOOTER_BRAND_DATA } from "@/data/footerLinks";
 import { FooterSocial } from "./FooterSocial";
 
-export const FooterBrand: React.FC = () => {
+export function FooterBrand() {
   return (
     <div className="flex flex-col items-start pr-0 md:pr-4">
-      {/* Official Brivya Logo (132px Desktop Width, Matching Navbar Root) */}
+      {/* Official Brivya Logo from navbar root (/images/logo.png) */}
       <Link
         href="/"
         aria-label="Brivya Solutions - Back to top"
@@ -19,9 +19,9 @@ export const FooterBrand: React.FC = () => {
           <Image
             src={FOOTER_BRAND_DATA.logoSrc}
             alt={FOOTER_BRAND_DATA.name}
-            fill
-            sizes="138px"
-            className="object-contain object-left"
+            width={138}
+            height={36}
+            className="h-full w-auto object-contain object-left"
             priority
           />
         </div>
@@ -38,4 +38,6 @@ export const FooterBrand: React.FC = () => {
       </div>
     </div>
   );
-};
+}
+
+export default FooterBrand;
