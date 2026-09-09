@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export const FooterTexture: React.FC = () => {
+export function FooterTexture() {
   return (
     <div
       aria-hidden="true"
@@ -50,4 +50,6 @@ export const FooterTexture: React.FC = () => {
       </svg>
     </div>
   );
-};
+}
+
+export default FooterTexture;
