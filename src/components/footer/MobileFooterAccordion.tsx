@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FOOTER_CATEGORIES } from "@/data/footerLinks";
 
-export const MobileFooterAccordion: React.FC = () => {
+export function MobileFooterAccordion() {
   const [openCategoryId, setOpenCategoryId] = useState<string | null>(null);
 
   const toggleCategory = (id: string) => {
@@ -57,4 +57,6 @@ export const MobileFooterAccordion: React.FC = () => {
       })}
     </div>
   );
-};
+}
+
+export default MobileFooterAccordion;
