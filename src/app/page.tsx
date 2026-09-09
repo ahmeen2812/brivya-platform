@@ -19,7 +19,7 @@ export default function HomePage() {
       {/* 4. Google + Trustpilot Trust Header & 3D Testimonial Carousel */}
       <TestimonialsSection />
 
-      {/* 5. New Premium Footer */}
+      {/* 5. Refined Brivya Footer */}
       <Footer />
     </div>
   );
