@@ -41,7 +41,7 @@ const SocialIconSvg: React.FC<{ iconKey: SocialLinkItem["iconKey"] }> = ({ iconK
   }
 };
 
-export const FooterSocial: React.FC = () => {
+export function FooterSocial() {
   return (
     <div className="flex items-center gap-3">
       {FOOTER_SOCIAL_LINKS.map((social) => (
@@ -51,12 +51,6 @@ export const FooterSocial: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Visit Brivya on ${social.name}`}
-          /* 
-            Isolated 36px Hover:
-            - Scale: 1.08
-            - Background softens slightly
-            - Hovering one icon leaves all other icons static
-          */
           className="group flex h-[36px] w-[36px] items-center justify-center rounded-full bg-white/[0.08] border border-white/15 text-[#E2EEFC] transition-all duration-200 ease-out hover:scale-[1.08] hover:bg-white/20 hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#38BDF8]"
         >
           <SocialIconSvg iconKey={social.iconKey} />
@@ -64,4 +58,6 @@ export const FooterSocial: React.FC = () => {
       ))}
     </div>
   );
-};
+}
+
+export default FooterSocial;
