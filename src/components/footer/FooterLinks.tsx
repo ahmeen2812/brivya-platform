@@ -8,7 +8,7 @@ export interface FooterLinksProps {
   readonly category: FooterCategory;
 }
 
-export const FooterLinks: React.FC<FooterLinksProps> = ({ category }) => {
+export function FooterLinks({ category }: FooterLinksProps) {
   return (
     <div className="flex flex-col">
       {/* 11.5px Monospace Category Heading */}
@@ -16,7 +16,7 @@ export const FooterLinks: React.FC<FooterLinksProps> = ({ category }) => {
         {category.heading}
       </h3>
 
-      {/* Links Stack */}
+      {/* Compact Links Stack */}
       <ul className="mt-3.5 flex flex-col space-y-2">
         {category.links.map((link) => (
           <li key={link.label}>
@@ -42,4 +42,6 @@ export const FooterLinks: React.FC<FooterLinksProps> = ({ category }) => {
       </ul>
     </div>
   );
-};
+}
+
+export default FooterLinks;
