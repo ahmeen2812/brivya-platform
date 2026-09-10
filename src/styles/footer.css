@@ -1,14 +1,16 @@
 /**
- * BRIVYA SOLUTIONS — FOOTER SURFACE STYLING
- * Soft dark blue-gray to lighter Brivya blue gradient (#162A45 -> #245CA8).
+ * BRIVYA SOLUTIONS — FOOTER SURFACE & ACCORDION STYLES
+ * 180deg liquid transition from website ice canvas to Brivya medium blue-navy.
  */
 
-.brivya-footer-surface {
-  background: linear-gradient(135deg, #162a45 0%, #1b3f6f 50%, #245ca8 100%);
-}
-
-.brivya-footer-hairline {
-  border-color: rgba(244, 247, 252, 0.08);
+.brivya-footer-transition-surface {
+  background: linear-gradient(
+    180deg,
+    #f4f7fc 0%,
+    #dcebfa 18%,
+    #2a5692 60%,
+    #16355f 100%
+  );
 }
 
 .footer-accordion-content {
