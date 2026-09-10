@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — FOOTER DATA MANIFEST
- * Canonical content store for the 4-column layout, social links, and legal paths.
+ * Authoritative content store for brand metadata, 3-column links, and social platforms.
  */
 
 export interface FooterLinkItem {
@@ -24,14 +24,10 @@ export interface SocialLinkItem {
 
 export const FOOTER_BRAND_DATA = {
   name: "Brivya Solutions",
-  tagline: "Digital products, automation, and growth solutions for modern businesses.",
+  logoSrc: "/images/logo.png",
+  tagline:
+    "Brivya combines thoughtful design, powerful technology, and performance-driven solutions to help businesses build, grow, and operate better.",
   establishedYear: 2026,
-  cta: {
-    headline: "Have a project in mind?",
-    subheadline: "Let's build something scalable together.",
-    buttonText: "Start a Project",
-    buttonHref: "/start-project",
-  },
 } as const;
 
 export const FOOTER_SOCIAL_LINKS: readonly SocialLinkItem[] = [
