@@ -9,41 +9,41 @@ export const FooterTexture: React.FC = () => {
       className="pointer-events-none absolute inset-0 h-full w-full select-none overflow-hidden"
     >
       <svg
-        className="absolute inset-0 h-full w-full opacity-[0.05]"
+        className="absolute inset-0 h-full w-full opacity-[0.06]"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* 36px Engineering Grid */}
-          <pattern id="footer-cad-grid" width="36" height="36" patternUnits="userSpaceOnUse">
+          {/* 32px Engineering Grid */}
+          <pattern id="footer-cad-grid" width="32" height="32" patternUnits="userSpaceOnUse">
             <path
-              d="M 36 0 L 0 0 0 36"
+              d="M 32 0 L 0 0 0 32"
               fill="none"
-              stroke="#F4F7FC"
+              stroke="#FFFFFF"
               strokeWidth="0.5"
             />
-            <circle cx="18" cy="18" r="0.75" fill="#F4F7FC" />
+            <circle cx="16" cy="16" r="0.75" fill="#FFFFFF" />
           </pattern>
 
           {/* Micro-Coordinate Dot Lattice */}
-          <pattern id="footer-dot-lattice" width="18" height="18" patternUnits="userSpaceOnUse">
-            <circle cx="9" cy="9" r="0.6" fill="#60A5FA" />
+          <pattern id="footer-dot-lattice" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="8" cy="8" r="0.6" fill="#38BDF8" />
           </pattern>
         </defs>
 
-        {/* Global Grid Surface */}
+        {/* Global Technical Grid */}
         <rect width="100%" height="100%" fill="url(#footer-cad-grid)" />
 
-        {/* Subtle Corner Matrix Clusters */}
-        <rect x="3%" y="40px" width="140" height="70" fill="url(#footer-dot-lattice)" />
-        <rect x="88%" y="30%" width="100" height="80" fill="url(#footer-dot-lattice)" />
+        {/* Corner Matrix Clusters */}
+        <rect x="4%" y="25%" width="120" height="60" fill="url(#footer-dot-lattice)" />
+        <rect x="88%" y="35%" width="100" height="70" fill="url(#footer-dot-lattice)" />
 
-        {/* Horizontal Datum Guide */}
+        {/* Architectural Datum Axis */}
         <line
           x1="0"
-          y1="80"
+          y1="38%"
           x2="100%"
-          y2="80"
-          stroke="#F4F7FC"
+          y2="38%"
+          stroke="#FFFFFF"
           strokeWidth="0.5"
           strokeDasharray="4 6"
         />
