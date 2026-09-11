@@ -2,21 +2,25 @@ import { HeroSection } from "@/components/hero/HeroSection";
 import { WhyChooseUsSection } from "@/components/sections/why-choose-us/index";
 import { ProjectResultsSection } from "@/components/sections/results";
 import { TestimonialsSection } from "@/components/sections/testimonials";
+import { Footer } from "@/components/footer";
 
 export default function HomePage() {
   return (
     <div className="relative w-full overflow-hidden bg-[#FFFFFF]">
-      {/* 1. Existing Hero Section (Approved & Protected) */}
+      {/* 1. Existing Hero Section */}
       <HeroSection />
 
-      {/* 2. Why Work With Brivya — Three Cards (Approved & Protected) */}
+      {/* 2. Why Work With Brivya (Three Cards) */}
       <WhyChooseUsSection />
 
-      {/* 3. NEW PROJECT RESULTS SECTION (Delivery Record) */}
+      {/* 3. Delivery Record & Performance Metrics */}
       <ProjectResultsSection />
 
-      {/* 4. Google + Trustpilot & 5. Existing Testimonials Carousel */}
+      {/* 4. Google + Trustpilot Trust Header & 3D Testimonial Carousel */}
       <TestimonialsSection />
+
+      {/* 5. New Premium Footer */}
+      <Footer />
     </div>
   );
 }
