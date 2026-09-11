@@ -1,0 +1,26 @@
+/**
+ * BRIVYA SOLUTIONS — FOOTER DESIGN SYSTEM STYLES
+ * Surface gradients, subtle texture blurs, and hairline layout rules.
+ */
+
+.brivya-footer-surface {
+  background: linear-gradient(135deg, #08182e 0%, #0a2244 50%, #0f376e 100%);
+}
+
+.brivya-footer-hairline {
+  border-color: rgba(244, 247, 252, 0.08);
+}
+
+.brivya-footer-subtle-glow {
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(10, 95, 215, 0.12) 0%,
+    rgba(8, 24, 46, 0) 70%
+  );
+}
+
+/* Custom Accordion smooth content transition */
+.footer-accordion-content {
+  display: grid;
+  transition: grid-template-rows 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
