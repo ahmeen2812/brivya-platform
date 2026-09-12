@@ -5,8 +5,8 @@ import React from "react";
 /**
  * Architectural Vector Texture for Middle-Tone Results Panel
  * Uses the same visual language as the Why Work With Brivya cards:
- * - 8–12% default opacity (delicate, architectural)
- * - 16–20% on hover
+ * - 8–12% default opacity (clean, subtle)
+ * - 15–18% on hover
  * - Zero glowing neon effects
  */
 export const ResultsTexture: React.FC = () => {
@@ -36,12 +36,12 @@ export const ResultsTexture: React.FC = () => {
           {/* 3. Soft Ambient Specular Wash */}
           <radialGradient id="archSurfaceWash" cx="15%" cy="10%" r="75%">
             <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.85" />
-            <stop offset="50%" stopColor="#E6F0FA" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#CFE0F2" stopOpacity="0" />
+            <stop offset="50%" stopColor="#E6F0FA" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#C7DCF5" stopOpacity="0" />
           </radialGradient>
         </defs>
 
-        {/* Ambient Surface Wash */}
+        {/* Ambient Specular Wash */}
         <rect width="100%" height="100%" fill="url(#archSurfaceWash)" />
 
         {/* CAD Grid System */}
