@@ -8,7 +8,7 @@ export interface ReviewCardTextureProps {
 
 /**
  * Architectural Technical Vector Pattern for Testimonial Cards
- * Fine millimeter grid, CAD crosshairs, corner alignment brackets, and specular wash.
+ * Fine millimeter grid, CAD crosshairs, corner alignment brackets, and translucent ambient wash.
  */
 export const ReviewCardTexture: React.FC<ReviewCardTextureProps> = ({ isActive = false }) => {
   return (
@@ -34,29 +34,29 @@ export const ReviewCardTexture: React.FC<ReviewCardTextureProps> = ({ isActive =
           />
         </pattern>
 
-        {/* 2. Top-Center Ambient Light Wash */}
+        {/* 2. Top-Center Translucent Specular Highlight */}
         <radialGradient id="cardSpecularCore" cx="50%" cy="8%" r="65%">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.98" />
-          <stop offset="50%" stopColor="#F8FAFC" stopOpacity="0.88" />
-          <stop offset="100%" stopColor="#EEF4FC" stopOpacity="0.5" />
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.45" />
+          <stop offset="50%" stopColor="#F8FAFC" stopOpacity="0.20" />
+          <stop offset="100%" stopColor="#C2DBF7" stopOpacity="0" />
         </radialGradient>
 
         {/* 3. Subtle Technical Conduit Gradient */}
         <linearGradient id="cardConduitSweep" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#0A5FD7" stopOpacity="0.18" />
-          <stop offset="60%" stopColor="#1675F8" stopOpacity="0.08" />
+          <stop offset="0%" stopColor="#0A5FD7" stopOpacity="0.16" />
+          <stop offset="60%" stopColor="#1675F8" stopOpacity="0.06" />
           <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
         </linearGradient>
       </defs>
 
-      {/* Surface Base Wash */}
+      {/* Surface Base Wash (Translucent to reveal card gradient) */}
       <rect width="100%" height="100%" fill="url(#cardSpecularCore)" />
 
       {/* Coordinate Lattice */}
       <rect width="100%" height="100%" fill="url(#card-cad-lattice)" />
 
       {/* Architectural Corner Alignment Brackets */}
-      <g stroke="#0A5FD7" strokeWidth="0.9" strokeOpacity="0.28" fill="none">
+      <g stroke="#0A5FD7" strokeWidth="0.9" strokeOpacity="0.26" fill="none">
         {/* Top-Left Bracket */}
         <path d="M 24 34 L 24 24 L 34 24" />
         {/* Top-Right Bracket */}
@@ -68,7 +68,7 @@ export const ReviewCardTexture: React.FC<ReviewCardTextureProps> = ({ isActive =
       </g>
 
       {/* Precision CAD Crosshairs (+) */}
-      <g stroke="#0A5FD7" strokeWidth="0.8" strokeOpacity="0.22">
+      <g stroke="#0A5FD7" strokeWidth="0.8" strokeOpacity="0.20">
         <path d="M 48 44 L 48 52 M 44 48 L 52 48" />
         <path d="M 392 44 L 392 52 M 388 48 L 396 48" />
         <path d="M 48 288 L 48 296 M 44 292 L 52 292" />
@@ -84,7 +84,7 @@ export const ReviewCardTexture: React.FC<ReviewCardTextureProps> = ({ isActive =
         stroke="#0A5FD7"
         strokeWidth="0.6"
         strokeDasharray="2 3"
-        strokeOpacity="0.16"
+        strokeOpacity="0.15"
       />
       <circle
         cx="220"
@@ -94,7 +94,7 @@ export const ReviewCardTexture: React.FC<ReviewCardTextureProps> = ({ isActive =
         stroke="#1675F8"
         strokeWidth="0.5"
         strokeDasharray="4 4"
-        strokeOpacity="0.10"
+        strokeOpacity="0.08"
       />
 
       {/* Fine Diagonal Data Paths */}

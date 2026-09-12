@@ -27,13 +27,14 @@ export const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(
         onMouseEnter={onCardMouseEnter}
         onMouseLeave={onCardMouseLeave}
         /* 
-          - Removed transition-all: GSAP directly commands transforms and opacity.
-          - Sizing & Padding: min-h-[350px] ensures stable card heights across all reviews.
+          Background & Border matched to upper delivery card section:
+          - Soft silver-gray to light Brivya blue: from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7]
+          - Border: #BACFE6 with inset specular highlight
         */
-        className={`group relative w-full max-w-[440px] sm:max-w-[480px] md:max-w-[500px] min-h-[350px] sm:min-h-[365px] md:min-h-[375px] rounded-2xl sm:rounded-3xl bg-white border flex flex-col items-center text-center justify-between p-6 sm:p-7 md:p-8 select-none overflow-hidden ${
+        className={`group relative w-full max-w-[440px] sm:max-w-[480px] md:max-w-[500px] min-h-[350px] sm:min-h-[365px] md:min-h-[375px] rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] border [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] flex flex-col items-center text-center justify-between p-6 sm:p-7 md:p-8 select-none transition-all duration-300 overflow-hidden ${
           isCenter
-            ? "border-slate-200/90 shadow-[0_16px_45px_-8px_rgba(6,22,44,0.09)]"
-            : "border-slate-200/60 shadow-sm"
+            ? "border-[#BACFE6] shadow-[0_16px_45px_-8px_rgba(6,22,44,0.09)] pointer-events-auto"
+            : "border-[#BACFE6]/70 shadow-sm pointer-events-none opacity-45 sm:opacity-55"
         }`}
       >
         {/* Subtle Architectural Texture Background */}
@@ -56,14 +57,14 @@ export const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(
           </div>
         </div>
 
-        {/* 2. MIDDLE CENTER: Stable Quotation Text */}
+        {/* 2. MIDDLE CENTER: Review Text in Quotation Marks */}
         <div className="relative z-10 my-auto py-3 sm:py-4 flex items-center justify-center w-full">
           <p className="font-sans text-[14.5px] sm:text-[15.5px] md:text-[16px] leading-[1.7] text-[#334155] font-normal tracking-[-0.01em] text-center max-w-[92%]">
             &ldquo;{review.quote}&rdquo;
           </p>
         </div>
 
-        {/* 3. BOTTOM CENTER: Reviewer Name & 88% Wide Progress Bar */}
+        {/* 3. BOTTOM CENTER: Customer Name & 88% Wide Progress Bar */}
         <div className="relative z-10 w-full flex flex-col items-center justify-center shrink-0 pb-1">
           <h4 className="font-sans text-[15.5px] sm:text-[16.5px] font-bold text-[#06162C] tracking-tight">
             {review.name}
@@ -72,7 +73,7 @@ export const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(
           {/* Wide Progress Bar Track */}
           <div
             aria-hidden="true"
-            className="w-[88%] mx-auto h-[3px] rounded-full bg-slate-200/70 overflow-hidden mt-5"
+            className="w-[88%] mx-auto h-[3px] rounded-full bg-slate-300/60 overflow-hidden mt-5"
           >
             <div
               ref={isCenter ? progressRef : undefined}
