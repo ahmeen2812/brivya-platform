@@ -1,6 +1,6 @@
 /**
- * BRIVYA SOLUTIONS — FOOTER NAVIGATION & METADATA MANIFEST
- * Structured content categories, external social links, and legal paths.
+ * BRIVYA SOLUTIONS — FOOTER DATA MANIFEST
+ * Canonical content store for the 4-column layout, social links, and legal paths.
  */
 
 export interface FooterLinkItem {
@@ -10,7 +10,7 @@ export interface FooterLinkItem {
 }
 
 export interface FooterCategory {
-  readonly id: string;
+  readonly id: "services" | "company" | "resources";
   readonly heading: string;
   readonly links: readonly FooterLinkItem[];
 }
@@ -27,7 +27,6 @@ export const FOOTER_BRAND_DATA = {
   tagline: "Digital products, automation, and growth solutions for modern businesses.",
   establishedYear: 2026,
   cta: {
-    eyebrow: "GET IN TOUCH",
     headline: "Have a project in mind?",
     subheadline: "Let's build something scalable together.",
     buttonText: "Start a Project",
@@ -74,18 +73,6 @@ export const FOOTER_CATEGORIES: readonly FooterCategory[] = [
       { label: "Cloud & Technology Solutions", href: "/services/cloud-technology" },
       { label: "Office Add-in Development", href: "/services/office-addins" },
       { label: "Google Add-ons Development", href: "/services/google-addons" },
-    ],
-  },
-  {
-    id: "solutions",
-    heading: "Solutions",
-    links: [
-      { label: "Custom Software Development", href: "/solutions/custom-software" },
-      { label: "AI Automation", href: "/solutions/ai-automation" },
-      { label: "Business Systems", href: "/solutions/business-systems" },
-      { label: "Cloud Infrastructure", href: "/solutions/cloud-infrastructure" },
-      { label: "Marketing Systems", href: "/solutions/marketing-systems" },
-      { label: "Enterprise Solutions", href: "/solutions/enterprise" },
     ],
   },
   {
