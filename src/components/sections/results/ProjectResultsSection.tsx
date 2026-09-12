@@ -96,21 +96,21 @@ export const ProjectResultsSection: React.FC = () => {
       id="results"
       ref={sectionRef}
       aria-label="Delivery Record & Performance Metrics"
-      /* Seamless Light Canvas: Flows smoothly on #F4F7FC */
+      /* Seamless Light Canvas */
       className="relative w-full bg-gradient-to-b from-[#FFFFFF] via-[#F4F7FC] to-[#F4F7FC] py-12 sm:py-14 md:py-16 lg:py-20 overflow-hidden select-none"
     >
       <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8">
         {/* 
           Middle-Tone Architectural Results Panel:
-          50% Light + 50% Dark balance using a soft blue-gray / muted navy-tinted surface:
-          bg-gradient-to-br from-[#E6F0FA] via-[#DAE8F6] to-[#CFE0F2]
-          Border: #BACFE5 with specular inset rim
+          Left side: soft neutral gray / cool silver (#E1E7EF -> #D8E2F0)
+          Right side: light Brivya blue (#C2DBF7 -> #B8D5F6)
+          Framed by hairline border #BACFE6 with 0.95 inset specular highlight
         */}
         <div
           ref={panelRef}
-          className="group relative w-full rounded-2xl sm:rounded-3xl border border-[#BACFE5] bg-gradient-to-br from-[#E6F0FA] via-[#DAE8F6] to-[#CFE0F2] p-6 sm:p-8 lg:p-10 shadow-[0_16px_45px_-12px_rgba(7,54,109,0.08)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.85)] overflow-hidden"
+          className="group relative w-full rounded-2xl sm:rounded-3xl border border-[#BACFE6] bg-gradient-to-r from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-6 sm:p-8 lg:p-10 shadow-[0_16px_45px_-12px_rgba(7,54,109,0.08)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] overflow-hidden"
         >
-          {/* Subtle 8–12% Architectural Vector Texture */}
+          {/* 8–12% Subtle Architectural Texture */}
           <ResultsTexture />
 
           {/* Main Layout: Left Editorial (~38%) | Right 3 Cards (~62%) */}
