@@ -63,36 +63,36 @@ export function initResultsScrollSequence(
   }
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const xOffset = isMobile ? 0 : 50;
-  const yOffset = isMobile ? 30 : 50;
+  const xOffset = isMobile ? 0 : 45;
+  const yOffset = isMobile ? 25 : 45;
 
   // Master Bidirectional Scrubbing Timeline
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: "top 85%", // Smoothly engages as section enters viewport
-      end: "top 40%",   // Settles into position
+      start: "top 82%", // Engages smoothly as section enters viewport
+      end: "top 38%",   // Settles into position
       scrub: 1.2,       // 1.2s smooth physical inertia tied to scroll progress
     },
   });
 
-  // Stage 1: Panel Subtle Elevation
+  // Stage 1: Panel Elevation
   tl.fromTo(
     panel,
-    { autoAlpha: 0, y: 24, scale: 0.98 },
+    { autoAlpha: 0, y: 22, scale: 0.985 },
     { autoAlpha: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out" },
     0
   );
 
-  // Stage 2: Left Editorial Intro Reveal
+  // Stage 2: Left Editorial Intro
   if (eyebrow) {
-    tl.fromTo(eyebrow, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.1);
+    tl.fromTo(eyebrow, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.1);
   }
   if (heading) {
-    tl.fromTo(heading, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.18);
+    tl.fromTo(heading, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.16);
   }
   if (description) {
-    tl.fromTo(description, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.26);
+    tl.fromTo(description, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.22);
   }
 
   // Stage 3: Coordinated Directional Metric Entrances
@@ -101,8 +101,8 @@ export function initResultsScrollSequence(
     tl.fromTo(
       metric01,
       { autoAlpha: 0, x: -xOffset, y: isMobile ? yOffset : 0 },
-      { autoAlpha: 1, x: 0, y: 0, duration: 0.85, ease: "power2.out" },
-      0.3
+      { autoAlpha: 1, x: 0, y: 0, duration: 0.8, ease: "power2.out" },
+      0.28
     );
   }
 
@@ -111,8 +111,8 @@ export function initResultsScrollSequence(
     tl.fromTo(
       metric02,
       { autoAlpha: 0, y: yOffset },
-      { autoAlpha: 1, y: 0, duration: 0.85, ease: "power2.out" },
-      0.38
+      { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" },
+      0.35
     );
   }
 
@@ -121,15 +121,15 @@ export function initResultsScrollSequence(
     tl.fromTo(
       metric03,
       { autoAlpha: 0, x: xOffset, y: isMobile ? yOffset : 0 },
-      { autoAlpha: 1, x: 0, y: 0, duration: 0.85, ease: "power2.out" },
-      0.46
+      { autoAlpha: 1, x: 0, y: 0, duration: 0.8, ease: "power2.out" },
+      0.42
     );
   }
 
   // Stage 4: Coordinated Numeric Count-Up
-  if (num01) createMetricCounterTween({ element: num01, targetNumber: numValues[0] }, tl, 0.4);
-  if (num02) createMetricCounterTween({ element: num02, targetNumber: numValues[1] }, tl, 0.46);
-  if (num03) createMetricCounterTween({ element: num03, targetNumber: numValues[2] }, tl, 0.52);
+  if (num01) createMetricCounterTween({ element: num01, targetNumber: numValues[0] }, tl, 0.35);
+  if (num02) createMetricCounterTween({ element: num02, targetNumber: numValues[1] }, tl, 0.42);
+  if (num03) createMetricCounterTween({ element: num03, targetNumber: numValues[2] }, tl, 0.48);
 
   return tl;
 }
