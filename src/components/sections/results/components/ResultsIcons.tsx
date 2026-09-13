@@ -14,7 +14,6 @@ export const ResultsIcon: React.FC<ResultsIconProps> = ({
 }) => {
   switch (iconKey) {
     case "completed":
-      // Layered Delivery Stack
       return (
         <svg
           className={className}
@@ -33,7 +32,6 @@ export const ResultsIcon: React.FC<ResultsIconProps> = ({
       );
 
     case "ongoing":
-      // Precision Clock / Active Cycle
       return (
         <svg
           className={className}
@@ -51,7 +49,6 @@ export const ResultsIcon: React.FC<ResultsIconProps> = ({
       );
 
     case "clients":
-      // Client Partnership Network
       return (
         <svg
           className={className}
