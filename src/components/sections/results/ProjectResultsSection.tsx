@@ -58,22 +58,27 @@ export const ProjectResultsSection: React.FC = () => {
       id="results"
       ref={sectionRef}
       aria-label="Delivery Record & Performance Metrics"
-      /* Light substrate seamlessly continuing on #F4F7FC */
-      className="relative w-full bg-[#F4F7FC] py-10 sm:py-12 md:py-14 lg:py-16 overflow-hidden select-none"
+      /* 
+        Seamless Background Continuity:
+        - Starts at #FFFFFF (matching base of Why Work With Brivya)
+        - Transitions through #EEF4FC (deeper ice-blue tone around the panel)
+        - Concludes at #F4F7FC (matching top of Trust & Reviews section)
+      */
+      className="relative w-full bg-gradient-to-b from-[#FFFFFF] via-[#EEF4FC] to-[#F4F7FC] py-12 sm:py-14 md:py-16 lg:py-20 overflow-hidden select-none"
     >
       <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8">
         {/* 
           Elevated Architectural Results Panel:
-          Light theme, hairline border, subtle specular shadow, and corner technical details
+          Rich, slightly blue-tinted substrate, refined hairline border, and specular highlight
         */}
         <div
           ref={panelRef}
-          className="relative w-full rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white/95 p-6 sm:p-8 lg:p-10 shadow-[0_12px_40px_-8px_rgba(6,22,44,0.06)] overflow-hidden"
+          className="relative w-full rounded-2xl sm:rounded-3xl border border-[#CBDDF6]/80 bg-gradient-to-b from-white via-[#F8FAFD] to-[#F1F6FD] p-6 sm:p-8 lg:p-10 shadow-[0_16px_48px_-12px_rgba(6,22,44,0.08),0_2px_6px_rgba(6,22,44,0.02)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,1)] overflow-hidden"
         >
           {/* Subtle Technical Blueprint Texture */}
           <ResultsTexture />
 
-          {/* Main Content Layout: Left Editorial (~38%) | Right 3 Metrics (~62%) */}
+          {/* Main Layout: Left Editorial (~38%) | Right 3 Metrics (~62%) */}
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-stretch">
             {/* LEFT — Editorial Introduction */}
             <div className="lg:col-span-5 flex items-center">
@@ -86,7 +91,7 @@ export const ProjectResultsSection: React.FC = () => {
 
             {/* RIGHT — Three Performance Metrics */}
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-0 sm:divide-x sm:divide-slate-200/80 items-stretch">
-              {/* Metric 01 — Completed Projects (Enters from Left) */}
+              {/* Metric 01 — Projects Delivered 800+ (Enters from Left) */}
               <div className="flex items-stretch">
                 <MetricColumn
                   ref={metric01Ref}
@@ -95,7 +100,7 @@ export const ProjectResultsSection: React.FC = () => {
                 />
               </div>
 
-              {/* Metric 02 — Ongoing Projects (Enters from Below) */}
+              {/* Metric 02 — Ongoing Projects 08 (Enters from Below) */}
               <div className="flex items-stretch">
                 <MetricColumn
                   ref={metric02Ref}
