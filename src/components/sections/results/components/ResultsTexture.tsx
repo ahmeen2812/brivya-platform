@@ -3,9 +3,9 @@
 import React from "react";
 
 /**
- * Architectural Vector Texture for Light Results Panel
- * Matches the visual language of the 3 Why Work With Brivya cards:
- * - 8–12% default opacity (clean, subtle)
+ * Architectural Vector Texture for Middle-Tone Results Panel
+ * Uses the same visual language as the Why Work With Brivya cards:
+ * - 8–12% default opacity (delicate, architectural)
  * - 16–20% on hover
  * - Zero glowing neon effects
  */
@@ -19,12 +19,12 @@ export const ResultsTexture: React.FC = () => {
       >
         <defs>
           {/* 1. Fine Coordinate Dot Lattice */}
-          <pattern id="light-results-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+          <pattern id="arch-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
             <circle cx="12" cy="12" r="0.8" fill="#0A5FD7" />
           </pattern>
 
-          {/* 2. Thin Architectural Guide Grid */}
-          <pattern id="light-results-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+          {/* 2. Delicate Architectural Blueprint Grid */}
+          <pattern id="arch-cad-grid" width="48" height="48" patternUnits="userSpaceOnUse">
             <path
               d="M 48 0 L 0 0 0 48"
               fill="none"
@@ -33,23 +33,23 @@ export const ResultsTexture: React.FC = () => {
             />
           </pattern>
 
-          {/* 3. Soft Specular Wash */}
-          <radialGradient id="lightPanelSpecular" cx="15%" cy="10%" r="75%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.8" />
-            <stop offset="60%" stopColor="#F8FAFD" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#EDF4FC" stopOpacity="0" />
+          {/* 3. Soft Ambient Specular Wash */}
+          <radialGradient id="archSurfaceWash" cx="15%" cy="10%" r="75%">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.85" />
+            <stop offset="50%" stopColor="#E6F0FA" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#CFE0F2" stopOpacity="0" />
           </radialGradient>
         </defs>
 
-        {/* Ambient Specular Surface Wash */}
-        <rect width="100%" height="100%" fill="url(#lightPanelSpecular)" />
+        {/* Ambient Surface Wash */}
+        <rect width="100%" height="100%" fill="url(#archSurfaceWash)" />
 
         {/* CAD Grid System */}
-        <rect width="100%" height="100%" fill="url(#light-results-grid)" />
+        <rect width="100%" height="100%" fill="url(#arch-cad-grid)" />
 
-        {/* Coordinate Dot Matrices (Bottom-Left and Top-Right) */}
-        <rect x="24" y="65%" width="120" height="72" fill="url(#light-results-dots)" />
-        <rect x="80%" y="16" width="100" height="60" fill="url(#light-results-dots)" />
+        {/* Coordinate Dot Matrices */}
+        <rect x="24" y="65%" width="120" height="72" fill="url(#arch-dot-grid)" />
+        <rect x="80%" y="16" width="100" height="60" fill="url(#arch-dot-grid)" />
 
         {/* Minimal Engineering Corner Brackets */}
         <g stroke="#0A5FD7" strokeWidth="0.75" fill="none">
