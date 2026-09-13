@@ -1,11 +1,19 @@
 /**
  * BRIVYA SOLUTIONS — RESULTS SECTION SCROLL KINEMATICS
- * Staggered entrance with directional offsets (Left, Below, Right).
- * Reversible on scroll back with decoupled one-way number count-up.
+ * Staggered entrance with directional card offsets (Left, Below, Right)
+ * and internal element reveals (Icon -> Number -> Label -> Description).
  */
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+export interface CardInternalTargets {
+  readonly card: HTMLElement | null;
+  readonly icon: HTMLElement | null;
+  readonly numberWrapper: HTMLElement | null;
+  readonly label: HTMLElement | null;
+  readonly desc: HTMLElement | null;
+}
 
 export interface ResultsAnimationTargets {
   readonly section: HTMLElement | null;
@@ -13,9 +21,7 @@ export interface ResultsAnimationTargets {
   readonly eyebrow: HTMLElement | null;
   readonly heading: HTMLElement | null;
   readonly description: HTMLElement | null;
-  readonly metric01: HTMLElement | null;
-  readonly metric02: HTMLElement | null;
-  readonly metric03: HTMLElement | null;
+  readonly cardTargets: readonly CardInternalTargets[];
   readonly onFirstEntrance?: () => void;
 }
 
@@ -32,9 +38,7 @@ export function initResultsScrollSequence(
     eyebrow,
     heading,
     description,
-    metric01,
-    metric02,
-    metric03,
+    cardTargets,
     onFirstEntrance,
   } = targets;
 
@@ -44,9 +48,13 @@ export function initResultsScrollSequence(
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const allElements = [panel, eyebrow, heading, description, metric01, metric02, metric03].filter(
-    Boolean
-  ) as HTMLElement[];
+  const allElements = [
+    panel,
+    eyebrow,
+    heading,
+    description,
+    ...cardTargets.map((c) => c.card),
+  ].filter(Boolean) as HTMLElement[];
 
   if (prefersReduced) {
     gsap.set(allElements, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
@@ -55,8 +63,8 @@ export function initResultsScrollSequence(
   }
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const xOffset = isMobile ? 0 : 65;
-  const yOffset = isMobile ? 35 : 65;
+  const xOffset = isMobile ? 0 : 60;
+  const yOffset = isMobile ? 35 : 60;
 
   let hasTriggeredCount = false;
 
@@ -65,7 +73,7 @@ export function initResultsScrollSequence(
     scrollTrigger: {
       trigger: section,
       start: "top 84%",
-      end: "top 38%",
+      end: "top 36%",
       scrub: 1.2,
       onEnter: () => {
         if (!hasTriggeredCount && onFirstEntrance) {
@@ -76,55 +84,76 @@ export function initResultsScrollSequence(
     },
   });
 
-  // Stage 1: Main Panel Fades and Rises from Below
+  // Stage 1: Main Panel Fades and Rises Smoothly from Below
   tl.fromTo(
     panel,
-    { autoAlpha: 0, y: 60, scale: 0.97 },
+    { autoAlpha: 0, y: 50, scale: 0.98 },
     { autoAlpha: 1, y: 0, scale: 1, duration: 1.0, ease: "power3.out" },
     0
   );
 
-  // Stage 2: Left Content Stagger
+  // Stage 2: Left Content Staggered Reveal
   if (eyebrow) {
-    tl.fromTo(eyebrow, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.12);
+    tl.fromTo(eyebrow, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.1);
   }
   if (heading) {
-    tl.fromTo(heading, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.2);
+    tl.fromTo(heading, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.16);
   }
   if (description) {
-    tl.fromTo(description, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.28);
+    tl.fromTo(description, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.22);
   }
 
-  // Stage 3: Three Metric Cards Enter Separately
+  // Stage 3: Three Metric Cards Enter Separately with Directional Movement
+  const card1 = cardTargets[0];
+  const card2 = cardTargets[1];
+  const card3 = cardTargets[2];
+
   // Card 1: from LEFT
-  if (metric01) {
+  if (card1?.card) {
     tl.fromTo(
-      metric01,
+      card1.card,
       { autoAlpha: 0, x: -xOffset, y: isMobile ? yOffset : 0 },
-      { autoAlpha: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" },
-      0.32
+      { autoAlpha: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
+      0.28
     );
   }
 
   // Card 2: from BOTTOM
-  if (metric02) {
+  if (card2?.card) {
     tl.fromTo(
-      metric02,
+      card2.card,
       { autoAlpha: 0, y: yOffset },
-      { autoAlpha: 1, y: 0, duration: 0.9, ease: "power3.out" },
-      0.4
+      { autoAlpha: 1, y: 0, duration: 0.85, ease: "power3.out" },
+      0.36
     );
   }
 
   // Card 3: from RIGHT
-  if (metric03) {
+  if (card3?.card) {
     tl.fromTo(
-      metric03,
+      card3.card,
       { autoAlpha: 0, x: xOffset, y: isMobile ? yOffset : 0 },
-      { autoAlpha: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" },
-      0.48
+      { autoAlpha: 1, x: 0, y: 0, duration: 0.85, ease: "power3.out" },
+      0.44
     );
   }
+
+  // Stage 4: Staggered Internal Element Reveals inside Cards (Icon -> Number -> Label -> Desc)
+  cardTargets.forEach((c, idx) => {
+    const baseTime = 0.35 + idx * 0.08;
+    if (c.icon) {
+      tl.fromTo(c.icon, { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.4 }, baseTime);
+    }
+    if (c.numberWrapper) {
+      tl.fromTo(c.numberWrapper, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.4 }, baseTime + 0.05);
+    }
+    if (c.label) {
+      tl.fromTo(c.label, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.35 }, baseTime + 0.1);
+    }
+    if (c.desc) {
+      tl.fromTo(c.desc, { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.35 }, baseTime + 0.14);
+    }
+  });
 
   return tl;
 }
