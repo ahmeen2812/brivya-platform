@@ -41,3 +41,4 @@ export const RESULTS_CONTENT: ResultsSectionContent = {
     },
   ],
 } as const;
+
