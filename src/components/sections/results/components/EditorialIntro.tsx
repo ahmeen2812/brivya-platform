@@ -24,7 +24,7 @@ export const EditorialIntro = forwardRef<HTMLDivElement, EditorialIntroProps>(
         {/* 2-Line Editorial Heading */}
         <h2
           ref={headingRef}
-          className="font-sans text-[30px] sm:text-[36px] md:text-[42px] lg:text-[44px] font-extrabold text-[#06162C] leading-[1.08] tracking-[-0.035em]"
+          className="font-sans text-[28px] sm:text-[34px] md:text-[38px] lg:text-[40px] font-extrabold text-[#06162C] leading-[1.1] tracking-[-0.035em]"
         >
           <span className="block">{RESULTS_CONTENT.headingPrimary}</span>
           <span className="block text-[#0A5FD7]">{RESULTS_CONTENT.headingAccent}</span>
@@ -33,7 +33,7 @@ export const EditorialIntro = forwardRef<HTMLDivElement, EditorialIntroProps>(
         {/* Supporting Description */}
         <p
           ref={descRef}
-          className="mt-3.5 sm:mt-4.5 font-sans text-[13.5px] sm:text-[14.5px] lg:text-[15px] leading-relaxed text-[#475569] font-normal tracking-[-0.01em] max-w-md"
+          className="mt-3.5 sm:mt-4 font-sans text-[13.5px] sm:text-[14px] lg:text-[14.5px] leading-relaxed text-[#475569] font-normal tracking-[-0.01em] max-w-md"
         >
           {RESULTS_CONTENT.description}
         </p>
