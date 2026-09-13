@@ -15,16 +15,16 @@ export const RESULTS_CONTENT: ResultsSectionContent = {
     {
       id: "metric-completed",
       iconKey: "completed",
-      numericValue: 240, // Configurable target number (animates from 0 to 240)
+      numericValue: 800, // Reflects the 800–900 delivered range across repeat engagements
       suffix: "+",
-      label: "PROJECTS COMPLETED",
-      description: "Across web, advertising, and custom business solutions.",
+      label: "PROJECTS DELIVERED",
+      description: "Estimated 800–900 deliveries across repeat client engagements.",
       animationDirection: "left",
     },
     {
       id: "metric-ongoing",
       iconKey: "ongoing",
-      numericValue: 8, // Configurable active engagements count (animates from 0 to 8)
+      numericValue: 8, // Active engagements count (formats as 08)
       suffix: "",
       label: "ONGOING PROJECTS",
       description: "Active engagements currently in progress.",
@@ -33,7 +33,7 @@ export const RESULTS_CONTENT: ResultsSectionContent = {
     {
       id: "metric-clients",
       iconKey: "clients",
-      numericValue: 650, // Confirmed client count (animates from 0 to 650)
+      numericValue: 650, // Confirmed client count claim
       suffix: "+",
       label: "CLIENTS SERVED",
       description: "Long-term partnerships built on trust and dependable delivery.",
