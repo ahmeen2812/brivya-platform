@@ -26,16 +26,20 @@ export const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(
         aria-hidden={!isCenter}
         onMouseEnter={onCardMouseEnter}
         onMouseLeave={onCardMouseLeave}
-        className={`group relative w-full max-w-[440px] sm:max-w-[480px] md:max-w-[500px] min-h-[350px] sm:min-h-[365px] md:min-h-[375px] rounded-2xl sm:rounded-3xl bg-white border flex flex-col items-center text-center justify-between p-6 sm:p-7 md:p-8 select-none transition-all duration-300 overflow-hidden ${
+        /* 
+          - Removed transition-all: GSAP directly commands transforms and opacity.
+          - Sizing & Padding: min-h-[350px] ensures stable card heights across all reviews.
+        */
+        className={`group relative w-full max-w-[440px] sm:max-w-[480px] md:max-w-[500px] min-h-[350px] sm:min-h-[365px] md:min-h-[375px] rounded-2xl sm:rounded-3xl bg-white border flex flex-col items-center text-center justify-between p-6 sm:p-7 md:p-8 select-none overflow-hidden ${
           isCenter
-            ? "border-slate-200/90 shadow-[0_16px_45px_-8px_rgba(6,22,44,0.09)] pointer-events-auto"
-            : "border-slate-200/60 shadow-sm pointer-events-none opacity-45 sm:opacity-55"
+            ? "border-slate-200/90 shadow-[0_16px_45px_-8px_rgba(6,22,44,0.09)]"
+            : "border-slate-200/60 shadow-sm"
         }`}
       >
-        {/* 1. Subtle Architectural Vector Texture */}
+        {/* Subtle Architectural Texture Background */}
         <ReviewCardTexture isActive={isCenter} />
 
-        {/* 2. TOP CENTER: Enlarged Circular Avatar (68px mobile -> 76px desktop) */}
+        {/* 1. TOP CENTER: Circular Avatar Portrait (76px Desktop, 68px Mobile) */}
         <div className="relative z-10 flex flex-col items-center justify-center shrink-0 pt-1">
           <div className="relative flex h-[68px] w-[68px] sm:h-[76px] sm:w-[76px] items-center justify-center rounded-full bg-gradient-to-br from-[#EBF3FF] to-[#DFEDFF] border-2 border-white text-[#0A5FD7] font-sans font-bold text-lg shadow-[0_4px_14px_rgba(10,95,215,0.12)] overflow-hidden">
             {review.avatarUrl ? (
@@ -52,31 +56,27 @@ export const ReviewCard = forwardRef<HTMLDivElement, ReviewCardProps>(
           </div>
         </div>
 
-        {/* 3. MIDDLE CENTER: Review Text in Quotation Marks */}
-        <div className="relative z-10 my-auto py-3 sm:py-4 flex items-center justify-center">
+        {/* 2. MIDDLE CENTER: Stable Quotation Text */}
+        <div className="relative z-10 my-auto py-3 sm:py-4 flex items-center justify-center w-full">
           <p className="font-sans text-[14.5px] sm:text-[15.5px] md:text-[16px] leading-[1.7] text-[#334155] font-normal tracking-[-0.01em] text-center max-w-[92%]">
             &ldquo;{review.quote}&rdquo;
           </p>
         </div>
 
-        {/* 4. BOTTOM CENTER: Customer Name & 88% Wide Progress Bar */}
+        {/* 3. BOTTOM CENTER: Reviewer Name & 88% Wide Progress Bar */}
         <div className="relative z-10 w-full flex flex-col items-center justify-center shrink-0 pb-1">
           <h4 className="font-sans text-[15.5px] sm:text-[16.5px] font-bold text-[#06162C] tracking-tight">
             {review.name}
           </h4>
 
-          {/* 
-            Wide Horizontal Progress Bar Track (88% width):
-            Permanently in the DOM at scaleX(0) so it never flashes full.
-            Opacity transitions cleanly when the card becomes active.
-          */}
+          {/* Wide Progress Bar Track */}
           <div
             aria-hidden="true"
             className="w-[88%] mx-auto h-[3px] rounded-full bg-slate-200/70 overflow-hidden mt-5"
           >
             <div
               ref={isCenter ? progressRef : undefined}
-              className={`h-full bg-[#0A5FD7] rounded-full origin-left will-change-transform transition-opacity duration-300 ${
+              className={`h-full bg-[#0A5FD7] rounded-full origin-left will-change-transform ${
                 isCenter ? "opacity-100" : "opacity-0"
               }`}
               style={{ transform: "scaleX(0)" }}
