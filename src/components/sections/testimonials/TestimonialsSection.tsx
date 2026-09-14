@@ -43,6 +43,8 @@ export const TestimonialsSection: React.FC = () => {
     setIsAnimating,
     commitShift,
     progressBarRef,
+    startProgressTimer,
+    stopAndResetProgress,
     handleCardMouseEnter,
     handleCardMouseLeave,
   } = use3DCarousel({
@@ -92,13 +94,17 @@ export const TestimonialsSection: React.FC = () => {
     }
   }, [getSlotXOffset]);
 
-  // Set initial coordinates on mount
+  // Set initial coordinates on mount and start initial timer
   useEffect(() => {
     setBaseSlotTransforms();
+    startProgressTimer();
+
     const handleResize = () => setBaseSlotTransforms();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setBaseSlotTransforms]);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [setBaseSlotTransforms, startProgressTimer]);
 
   // ---------------------------------------------------------------------------
   // LEFT ARROW CLICK & AUTOPLAY (Cards physically move LEFT)
@@ -106,6 +112,8 @@ export const TestimonialsSection: React.FC = () => {
   const handleShiftLeft = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
+    // Reset progress bar instantly before movement begins
+    stopAndResetProgress();
 
     animate3DCardTransition(
       {
@@ -122,9 +130,21 @@ export const TestimonialsSection: React.FC = () => {
         commitShift((centerIndex + 1) % reviews.length);
         setBaseSlotTransforms();
         setIsAnimating(false);
+        // Start fresh timer only after card has settled
+        startProgressTimer();
       }
     );
-  }, [isAnimating, setIsAnimating, carouselConfig.transitionDurationSec, commitShift, centerIndex, reviews.length, setBaseSlotTransforms]);
+  }, [
+    isAnimating,
+    setIsAnimating,
+    stopAndResetProgress,
+    carouselConfig.transitionDurationSec,
+    commitShift,
+    centerIndex,
+    reviews.length,
+    setBaseSlotTransforms,
+    startProgressTimer,
+  ]);
 
   // Assign to ref for autoplay handler
   useEffect(() => {
@@ -137,6 +157,8 @@ export const TestimonialsSection: React.FC = () => {
   const handleShiftRight = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
+    // Reset progress bar instantly before movement begins
+    stopAndResetProgress();
 
     animate3DCardTransition(
       {
@@ -153,9 +175,21 @@ export const TestimonialsSection: React.FC = () => {
         commitShift((centerIndex - 1 + reviews.length) % reviews.length);
         setBaseSlotTransforms();
         setIsAnimating(false);
+        // Start fresh timer only after card has settled
+        startProgressTimer();
       }
     );
-  }, [isAnimating, setIsAnimating, carouselConfig.transitionDurationSec, commitShift, centerIndex, reviews.length, setBaseSlotTransforms]);
+  }, [
+    isAnimating,
+    setIsAnimating,
+    stopAndResetProgress,
+    carouselConfig.transitionDurationSec,
+    commitShift,
+    centerIndex,
+    reviews.length,
+    setBaseSlotTransforms,
+    startProgressTimer,
+  ]);
 
   // Mobile Touch Gestures
   const touchStartXRef = useRef<number | null>(null);
@@ -197,7 +231,6 @@ export const TestimonialsSection: React.FC = () => {
       /* 
         Unified Light Substrate:
         Flows on #F4F7FC with zero background break or seam.
-        Note: onMouseEnter/onMouseLeave have been completely removed from this section container!
       */
       className="relative w-full bg-[#F4F7FC] pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-24 overflow-hidden select-none"
     >
@@ -232,11 +265,11 @@ export const TestimonialsSection: React.FC = () => {
         {/* 
           3. REAL PHYSICAL 5-SLOT 3D STAGE:
           [Far-Left (Off)] - [Left Slot] - [Center Slot] - [Right Slot] - [Far-Right (Off)]
-          Cards translate continuously without unmounting or blinking.
+          Cards translate continuously without unmounting or text blinking.
         */}
         <div
           ref={stageRef}
-          className="relative w-full flex items-center justify-center min-h-[350px] sm:min-h-[365px] md:min-h-[375px] overflow-visible"
+          className="relative w-full flex items-center justify-center min-h-[360px] sm:min-h-[375px] md:min-h-[385px] overflow-visible"
         >
           {/* Slot 1: Far-Left Buffer (Off-screen) */}
           <div ref={farLeftSlotRef} className="absolute will-change-transform">
@@ -248,7 +281,7 @@ export const TestimonialsSection: React.FC = () => {
             <ReviewCard review={reviews[leftIndex]} slot="left" />
           </div>
 
-          {/* Slot 3: Center Active Slot (Prominent forward position with wide progress bar) */}
+          {/* Slot 3: Center Active Slot (Prominent forward position with stabilized progress bar) */}
           <div ref={centerSlotRef} className="relative will-change-transform">
             <ReviewCard
               review={reviews[centerIndex]}
