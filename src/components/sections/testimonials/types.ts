@@ -15,7 +15,7 @@ export type CarouselSlot = "center" | "left" | "right" | "far-left" | "far-right
 
 export type SlideDirection = "shift-left" | "shift-right";
 
-// Backward-compatible alias to cleanly resolve any legacy imports
+// Backward-compatible alias to resolve any legacy imports cleanly
 export type CarouselDirection = SlideDirection | "next" | "prev";
 
 export interface Carousel3DState {
