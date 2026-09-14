@@ -1,33 +1,34 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from "react";
-import gsap from "gsap";
 import { TESTIMONIALS_DATA } from "./content";
 import { TrustHeader } from "./components/TrustHeader";
 import { ReviewCard } from "./components/ReviewCard";
 import { CarouselNavButtons } from "./components/CarouselNavButtons";
 import { use3DCarousel } from "./hooks/use3DCarousel";
-import { animate3DCardTransition } from "./animations/carousel3DAnimations";
+import {
+  animateCardCarouselShift,
+  setCardSlotPosition,
+  getRelativeCardSlot,
+  getResponsiveCardOffsets,
+} from "./animations/carousel3DAnimations";
 import { initTestimonialsScrollReveal } from "./animations/scrollRevealAnimations";
 
 export const TestimonialsSection: React.FC = () => {
   const { header, carouselConfig, reviews } = TESTIMONIALS_DATA;
+  const totalReviews = reviews.length;
 
-  // DOM node references
+  // Structural References
   const sectionRef = useRef<HTMLElement | null>(null);
   const trustHeaderRef = useRef<HTMLDivElement | null>(null);
   const introHeaderRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const controlsRef = useRef<HTMLDivElement | null>(null);
 
-  // 5 Physical Slot Wrappers
-  const farLeftSlotRef = useRef<HTMLDivElement | null>(null);
-  const leftSlotRef = useRef<HTMLDivElement | null>(null);
-  const centerSlotRef = useRef<HTMLDivElement | null>(null);
-  const rightSlotRef = useRef<HTMLDivElement | null>(null);
-  const farRightSlotRef = useRef<HTMLDivElement | null>(null);
+  // References for all 12 persistent review card elements
+  const cardElementsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Forward declarations for shift handlers
+  // Shift handler ref for autoplay forward advancement
   const handleShiftLeftRef = useRef<() => void>(() => {});
   const onAdvanceLeft = useCallback(() => {
     handleShiftLeftRef.current();
@@ -35,10 +36,6 @@ export const TestimonialsSection: React.FC = () => {
 
   const {
     centerIndex,
-    leftIndex,
-    rightIndex,
-    farLeftIndex,
-    farRightIndex,
     isAnimating,
     setIsAnimating,
     commitShift,
@@ -48,89 +45,59 @@ export const TestimonialsSection: React.FC = () => {
     handleCardMouseEnter,
     handleCardMouseLeave,
   } = use3DCarousel({
-    totalItems: reviews.length,
+    totalItems: totalReviews,
     autoPlayDurationSec: carouselConfig.autoPlayDurationSec,
     onAdvanceLeft,
   });
 
-  // Calculate base offset distances responsively
-  const getSlotXOffset = useCallback(() => {
-    if (typeof window === "undefined") return 420;
-    if (window.innerWidth < 768) return window.innerWidth < 480 ? 320 : 350;
-    if (window.innerWidth < 1024) return 370;
-    return 420;
-  }, []);
-
-  // Initialize and reset base slot coordinates
-  const setBaseSlotTransforms = useCallback(() => {
-    const xOffset = getSlotXOffset();
-    const xExit = xOffset * 1.6;
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
-    if (centerSlotRef.current) {
-      gsap.set(centerSlotRef.current, { x: 0, scale: 1.0, autoAlpha: 1.0, zIndex: 30 });
-    }
-    if (leftSlotRef.current) {
-      gsap.set(leftSlotRef.current, {
-        x: -xOffset,
-        scale: 0.86,
-        autoAlpha: isMobile ? 0 : 0.45,
-        zIndex: 10,
+  // Position all 12 cards cleanly according to the active center index
+  const updateAllCardPositions = useCallback(
+    (activeCenter: number) => {
+      const config = getResponsiveCardOffsets();
+      cardElementsRef.current.forEach((el, index) => {
+        if (!el) return;
+        const diff = getRelativeCardSlot(index, activeCenter, totalReviews);
+        setCardSlotPosition(el, diff, config);
       });
-    }
-    if (rightSlotRef.current) {
-      gsap.set(rightSlotRef.current, {
-        x: xOffset,
-        scale: 0.86,
-        autoAlpha: isMobile ? 0 : 0.45,
-        zIndex: 10,
-      });
-    }
-    if (farLeftSlotRef.current) {
-      gsap.set(farLeftSlotRef.current, { x: -xExit, scale: 0.72, autoAlpha: 0, zIndex: 0 });
-    }
-    if (farRightSlotRef.current) {
-      gsap.set(farRightSlotRef.current, { x: xExit, scale: 0.72, autoAlpha: 0, zIndex: 0 });
-    }
-  }, [getSlotXOffset]);
+    },
+    [totalReviews]
+  );
 
-  // Set initial coordinates on mount and start initial timer
+  // Initialize card positions and start timer on mount
   useEffect(() => {
-    setBaseSlotTransforms();
+    updateAllCardPositions(centerIndex);
     startProgressTimer();
 
-    const handleResize = () => setBaseSlotTransforms();
+    const handleResize = () => {
+      updateAllCardPositions(centerIndex);
+    };
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [setBaseSlotTransforms, startProgressTimer]);
+  }, [centerIndex, updateAllCardPositions, startProgressTimer]);
 
   // ---------------------------------------------------------------------------
-  // LEFT ARROW CLICK & AUTOPLAY (Cards physically move LEFT)
+  // LEFT ARROW (←) & AUTOPLAY: Cards physically move LEFT
   // ---------------------------------------------------------------------------
   const handleShiftLeft = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
-    // Reset progress bar instantly before movement begins
     stopAndResetProgress();
 
-    animate3DCardTransition(
-      {
-        farLeft: farLeftSlotRef.current,
-        left: leftSlotRef.current,
-        center: centerSlotRef.current,
-        right: rightSlotRef.current,
-        farRight: farRightSlotRef.current,
-      },
+    const targetCenter = (centerIndex + 1) % totalReviews;
+
+    animateCardCarouselShift(
+      cardElementsRef.current,
+      centerIndex,
+      targetCenter,
+      totalReviews,
       "shift-left",
       carouselConfig.transitionDurationSec,
       () => {
-        // Commit index advance and reset base transforms cleanly
-        commitShift((centerIndex + 1) % reviews.length);
-        setBaseSlotTransforms();
+        commitShift(targetCenter);
         setIsAnimating(false);
-        // Start fresh timer only after card has settled
         startProgressTimer();
       }
     );
@@ -138,44 +105,38 @@ export const TestimonialsSection: React.FC = () => {
     isAnimating,
     setIsAnimating,
     stopAndResetProgress,
+    centerIndex,
+    totalReviews,
     carouselConfig.transitionDurationSec,
     commitShift,
-    centerIndex,
-    reviews.length,
-    setBaseSlotTransforms,
     startProgressTimer,
   ]);
 
-  // Assign to ref for autoplay handler
+  // Connect autoplay to shift left
   useEffect(() => {
     handleShiftLeftRef.current = handleShiftLeft;
   }, [handleShiftLeft]);
 
   // ---------------------------------------------------------------------------
-  // RIGHT ARROW CLICK (Cards physically move RIGHT)
+  // RIGHT ARROW (→): Cards physically move RIGHT
   // ---------------------------------------------------------------------------
   const handleShiftRight = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
-    // Reset progress bar instantly before movement begins
     stopAndResetProgress();
 
-    animate3DCardTransition(
-      {
-        farLeft: farLeftSlotRef.current,
-        left: leftSlotRef.current,
-        center: centerSlotRef.current,
-        right: rightSlotRef.current,
-        farRight: farRightSlotRef.current,
-      },
+    const targetCenter = (centerIndex - 1 + totalReviews) % totalReviews;
+
+    animateCardCarouselShift(
+      cardElementsRef.current,
+      centerIndex,
+      targetCenter,
+      totalReviews,
       "shift-right",
       carouselConfig.transitionDurationSec,
       () => {
-        // Commit index decrement and reset base transforms cleanly
-        commitShift((centerIndex - 1 + reviews.length) % reviews.length);
-        setBaseSlotTransforms();
+        commitShift(targetCenter);
         setIsAnimating(false);
-        // Start fresh timer only after card has settled
         startProgressTimer();
       }
     );
@@ -183,15 +144,14 @@ export const TestimonialsSection: React.FC = () => {
     isAnimating,
     setIsAnimating,
     stopAndResetProgress,
+    centerIndex,
+    totalReviews,
     carouselConfig.transitionDurationSec,
     commitShift,
-    centerIndex,
-    reviews.length,
-    setBaseSlotTransforms,
     startProgressTimer,
   ]);
 
-  // Mobile Touch Gestures
+  // Touch Swipe Gesture Handlers
   const touchStartXRef = useRef<number | null>(null);
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
@@ -228,10 +188,6 @@ export const TestimonialsSection: React.FC = () => {
       aria-label="Client Reviews and Testimonials"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      /* 
-        Unified Light Substrate:
-        Flows on #F4F7FC with zero background break or seam.
-      */
       className="relative w-full bg-[#F4F7FC] pt-8 sm:pt-10 md:pt-12 pb-16 sm:pb-20 md:pb-24 overflow-hidden select-none"
     >
       <div className="relative mx-auto w-full max-w-[1340px] px-4 sm:px-6 md:px-8 flex flex-col items-center justify-start">
@@ -263,50 +219,41 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* 
-          3. REAL PHYSICAL 5-SLOT 3D STAGE:
-          [Far-Left (Off)] - [Left Slot] - [Center Slot] - [Right Slot] - [Far-Right (Off)]
-          Cards translate continuously without unmounting or text blinking.
+          3. 3D CAROUSEL STAGE:
+          All 12 cards retain their own permanent DOM nodes.
+          No content is ever swapped between slots, guaranteeing zero text blink.
         */}
         <div
           ref={stageRef}
           className="relative w-full flex items-center justify-center min-h-[360px] sm:min-h-[375px] md:min-h-[385px] overflow-visible"
         >
-          {/* Slot 1: Far-Left Buffer (Off-screen) */}
-          <div ref={farLeftSlotRef} className="absolute will-change-transform">
-            <ReviewCard review={reviews[farLeftIndex]} slot="far-left" />
-          </div>
+          {reviews.map((review, index) => {
+            const isCenter = index === centerIndex;
+            const diff = getRelativeCardSlot(index, centerIndex, totalReviews);
+            const slotName =
+              diff === 0 ? "center" : diff === -1 ? "left" : diff === 1 ? "right" : "far-left";
 
-          {/* Slot 2: Left Visible Slot */}
-          <div ref={leftSlotRef} className="absolute will-change-transform">
-            <ReviewCard review={reviews[leftIndex]} slot="left" />
-          </div>
-
-          {/* Slot 3: Center Active Slot (Prominent forward position with stabilized progress bar) */}
-          <div ref={centerSlotRef} className="relative will-change-transform">
-            <ReviewCard
-              review={reviews[centerIndex]}
-              slot="center"
-              progressRef={progressBarRef}
-              onCardMouseEnter={handleCardMouseEnter}
-              onCardMouseLeave={handleCardMouseLeave}
-            />
-          </div>
-
-          {/* Slot 4: Right Visible Slot */}
-          <div ref={rightSlotRef} className="absolute will-change-transform">
-            <ReviewCard review={reviews[rightIndex]} slot="right" />
-          </div>
-
-          {/* Slot 5: Far-Right Buffer (Off-screen) */}
-          <div ref={farRightSlotRef} className="absolute will-change-transform">
-            <ReviewCard review={reviews[farRightIndex]} slot="far-right" />
-          </div>
+            return (
+              <div
+                key={review.id}
+                ref={(el) => {
+                  cardElementsRef.current[index] = el;
+                }}
+                className="absolute will-change-transform"
+              >
+                <ReviewCard
+                  review={review}
+                  slot={slotName}
+                  progressRef={isCenter ? progressBarRef : undefined}
+                  onCardMouseEnter={isCenter ? handleCardMouseEnter : undefined}
+                  onCardMouseLeave={isCenter ? handleCardMouseLeave : undefined}
+                />
+              </div>
+            );
+          })}
         </div>
 
-        {/* 
-          4. DUAL GRADIENT NAVIGATION CONTROLS:
-          Only two circular buttons centered together underneath.
-        */}
+        {/* 4. DUAL GRADIENT NAVIGATION CONTROLS */}
         <div ref={controlsRef} className="w-full">
           <CarouselNavButtons
             onMoveLeft={handleShiftLeft}
