@@ -1,9 +1,9 @@
 /**
  * BRIVYA SOLUTIONS — 3D CAROUSEL STATE & TIMER SYNCHRONIZER
- * Single-source GSAP progress bar animation, card-only hover pause, and loop handling.
+ * Single-source GSAP progress bar animation, card-only hover pause, and flicker-free reset.
  */
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import gsap from "gsap";
 
 export interface Use3DCarouselOptions {
@@ -32,10 +32,12 @@ export function use3DCarousel({
   const startProgressTimer = useCallback(() => {
     if (progressTimelineRef.current) {
       progressTimelineRef.current.kill();
+      progressTimelineRef.current = null;
     }
 
     if (!progressBarRef.current) return;
 
+    // Guaranteed reset to zero before the tween begins
     gsap.set(progressBarRef.current, { scaleX: 0 });
 
     const tl = gsap.timeline({
@@ -53,28 +55,31 @@ export function use3DCarousel({
     progressTimelineRef.current = tl;
   }, [autoPlayDurationSec, onAdvanceLeft]);
 
-  // Restart timer whenever the active center card changes
-  useEffect(() => {
-    startProgressTimer();
-    return () => {
-      if (progressTimelineRef.current) progressTimelineRef.current.kill();
-    };
-  }, [centerIndex, startProgressTimer]);
-
-  // Card-Only Hover Listeners
-  const handleCardMouseEnter = useCallback(() => {
+  // Kill progress bar and reset to 0 immediately when a card starts moving
+  const stopAndResetProgress = useCallback(() => {
     if (progressTimelineRef.current) {
+      progressTimelineRef.current.kill();
+      progressTimelineRef.current = null;
+    }
+    if (progressBarRef.current) {
+      gsap.set(progressBarRef.current, { scaleX: 0 });
+    }
+  }, []);
+
+  // Card-Only Hover Listeners (Pauses the active GSAP progress tween)
+  const handleCardMouseEnter = useCallback(() => {
+    if (progressTimelineRef.current && progressTimelineRef.current.isActive()) {
       progressTimelineRef.current.pause();
     }
   }, []);
 
   const handleCardMouseLeave = useCallback(() => {
-    if (progressTimelineRef.current) {
-      progressTimelineRef.current.play();
+    if (progressTimelineRef.current && progressTimelineRef.current.paused()) {
+      progressTimelineRef.current.resume();
     }
   }, []);
 
-  // Update center index and reset animation lock
+  // Update center index cleanly
   const commitShift = useCallback((newCenter: number) => {
     setCenterIndex(newCenter);
   }, []);
@@ -89,6 +94,8 @@ export function use3DCarousel({
     setIsAnimating,
     commitShift,
     progressBarRef,
+    startProgressTimer,
+    stopAndResetProgress,
     handleCardMouseEnter,
     handleCardMouseLeave,
   };
