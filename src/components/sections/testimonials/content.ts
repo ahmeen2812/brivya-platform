@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — REVIEWS DATA MANIFEST
- * Authoritative data store containing 12 reviews and trust header configuration.
+ * Authoritative data store containing 12 reviews, carousel timing, and trust header copy.
  */
 
 import { ReviewItem } from "./types";
@@ -17,8 +17,8 @@ export const TESTIMONIALS_DATA = {
       "Direct feedback from founders and engineering leaders on digital products built, customer acquisition scaled, and systems automated.",
   },
   carouselConfig: {
-    autoPlayDurationMs: 6500, // 6.5s reading duration
-    transitionDurationSec: 0.65, // 650ms smooth 3D physical shift
+    autoPlayDurationSec: 6.5, // 6.5s reading duration
+    transitionDurationSec: 0.65, // 650ms physical 3D transition
   },
   reviews: [
     {
@@ -53,7 +53,7 @@ export const TESTIMONIALS_DATA = {
       id: "rev-05",
       name: "Sophia Martinez",
       quote:
-        "From our initial wireframes to production deployment on Next.js, Brivya delivered with precision. The site feels like a custom digital operating system rather than an agency template.",
+        "From our initial wireframes to production deployment on Next.js, Brivya delivered with precision. The platform feels like a custom digital operating system rather than an agency template.",
       initials: "SM",
     },
     {
@@ -107,5 +107,3 @@ export const TESTIMONIALS_DATA = {
     },
   ] as readonly ReviewItem[],
 } as const;
-
-
