@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — TESTIMONIALS & 3D CAROUSEL TYPE SYSTEM
- * Type definitions for review items, 3D slot placements, and kinematic state.
+ * Type definitions for review items, 3D physical slots, and animation controls.
  */
 
 export interface ReviewItem {
@@ -11,18 +11,15 @@ export interface ReviewItem {
   readonly initials: string;
 }
 
-export type CarouselSlot = "center" | "left" | "right" | "hidden-left" | "hidden-right";
+export type CarouselSlot = "center" | "left" | "right" | "far-left" | "far-right";
 
 export type SlideDirection = "shift-left" | "shift-right";
 
-// Backward-compatible alias to resolve any legacy imports cleanly
+// Backward-compatible alias to cleanly resolve any legacy imports
 export type CarouselDirection = SlideDirection | "next" | "prev";
 
 export interface Carousel3DState {
   readonly centerIndex: number;
-  readonly leftIndex: number;
-  readonly rightIndex: number;
   readonly isAnimating: boolean;
-  readonly isPlaying: boolean;
-  readonly progress: number; // 0 to 100
+  readonly isHovered: boolean;
 }
