@@ -1,133 +1,95 @@
 /**
- * BRIVYA SOLUTIONS — 3D CAROUSEL STATE HOOK
- * Manages 3D slot indices, continuous autoplay, synchronized progress, and card-only hover pause.
+ * BRIVYA SOLUTIONS — 3D CAROUSEL STATE & TIMER SYNCHRONIZER
+ * Single-source GSAP progress bar animation, card-only hover pause, and loop handling.
  */
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import gsap from "gsap";
 
 export interface Use3DCarouselOptions {
   readonly totalItems: number;
-  readonly autoPlayDurationMs: number;
+  readonly autoPlayDurationSec: number;
+  readonly onAdvanceLeft: () => void;
 }
 
-export function use3DCarousel({ totalItems, autoPlayDurationMs = 6500 }: Use3DCarouselOptions) {
+export function use3DCarousel({
+  totalItems,
+  autoPlayDurationSec = 6.5,
+  onAdvanceLeft,
+}: Use3DCarouselOptions) {
   const [centerIndex, setCenterIndex] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [progress, setProgress] = useState<number>(0);
+  const progressBarRef = useRef<HTMLDivElement | null>(null);
+  const progressTimelineRef = useRef<gsap.core.Timeline | null>(null);
 
-  const elapsedMsRef = useRef<number>(0);
-  const lastTimeRef = useRef<number | null>(null);
-  const frameIdRef = useRef<number | null>(null);
-
-  // Derive neighbor slot indices
+  // Derive the 5 slot review indices for continuous looping
+  const farLeftIndex = (centerIndex - 2 + totalItems) % totalItems;
   const leftIndex = (centerIndex - 1 + totalItems) % totalItems;
   const rightIndex = (centerIndex + 1) % totalItems;
+  const farRightIndex = (centerIndex + 2) % totalItems;
 
-  // Advance left (Left Button Click or Autoplay)
-  const shiftLeft = useCallback(() => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setProgress(0);
-    elapsedMsRef.current = 0;
-    lastTimeRef.current = null;
-
-    setCenterIndex((prev) => (prev + 1) % totalItems);
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 660);
-  }, [isAnimating, totalItems]);
-
-  // Advance right (Right Button Click)
-  const shiftRight = useCallback(() => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setProgress(0);
-    elapsedMsRef.current = 0;
-    lastTimeRef.current = null;
-
-    setCenterIndex((prev) => (prev - 1 + totalItems) % totalItems);
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 660);
-  }, [isAnimating, totalItems]);
-
-  // Unified Single-Source Timer & Progress Loop
-  useEffect(() => {
-    if (isHovered || isAnimating) {
-      if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
-      lastTimeRef.current = null;
-      return;
+  // Single-source GSAP Progress & Autoplay Timer
+  const startProgressTimer = useCallback(() => {
+    if (progressTimelineRef.current) {
+      progressTimelineRef.current.kill();
     }
 
-    const tick = (now: number) => {
-      if (lastTimeRef.current === null) {
-        lastTimeRef.current = now;
-      }
+    if (!progressBarRef.current) return;
 
-      const delta = now - lastTimeRef.current;
-      lastTimeRef.current = now;
-      elapsedMsRef.current += delta;
+    gsap.set(progressBarRef.current, { scaleX: 0 });
 
-      const currentProgress = Math.min(100, (elapsedMsRef.current / autoPlayDurationMs) * 100);
-      setProgress(currentProgress);
+    const tl = gsap.timeline({
+      onComplete: () => {
+        onAdvanceLeft();
+      },
+    });
 
-      if (elapsedMsRef.current >= autoPlayDurationMs) {
-        shiftLeft();
-      } else {
-        frameIdRef.current = requestAnimationFrame(tick);
-      }
-    };
+    tl.to(progressBarRef.current, {
+      scaleX: 1,
+      duration: autoPlayDurationSec,
+      ease: "none",
+    });
 
-    frameIdRef.current = requestAnimationFrame(tick);
+    progressTimelineRef.current = tl;
+  }, [autoPlayDurationSec, onAdvanceLeft]);
 
+  // Restart timer whenever the active center card changes
+  useEffect(() => {
+    startProgressTimer();
     return () => {
-      if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
+      if (progressTimelineRef.current) progressTimelineRef.current.kill();
     };
-  }, [isHovered, isAnimating, autoPlayDurationMs, shiftLeft]);
+  }, [centerIndex, startProgressTimer]);
 
-  // Card-Only Hover Handlers (Never attached to section or window)
+  // Card-Only Hover Listeners
   const handleCardMouseEnter = useCallback(() => {
-    setIsHovered(true);
+    if (progressTimelineRef.current) {
+      progressTimelineRef.current.pause();
+    }
   }, []);
 
   const handleCardMouseLeave = useCallback(() => {
-    lastTimeRef.current = null;
-    setIsHovered(false);
+    if (progressTimelineRef.current) {
+      progressTimelineRef.current.play();
+    }
   }, []);
 
-  // Mobile Swipe Gestures
-  const touchStartXRef = useRef<number | null>(null);
-
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartXRef.current = e.touches[0].clientX;
+  // Update center index and reset animation lock
+  const commitShift = useCallback((newCenter: number) => {
+    setCenterIndex(newCenter);
   }, []);
-
-  const handleTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      if (touchStartXRef.current === null) return;
-      const diff = touchStartXRef.current - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) {
-        if (diff > 0) shiftLeft();
-        else shiftRight();
-      }
-      touchStartXRef.current = null;
-    },
-    [shiftLeft, shiftRight]
-  );
 
   return {
     centerIndex,
     leftIndex,
     rightIndex,
+    farLeftIndex,
+    farRightIndex,
     isAnimating,
-    isHovered,
-    progress,
-    shiftLeft,
-    shiftRight,
+    setIsAnimating,
+    commitShift,
+    progressBarRef,
     handleCardMouseEnter,
     handleCardMouseLeave,
-    handleTouchStart,
-    handleTouchEnd,
   };
 }
