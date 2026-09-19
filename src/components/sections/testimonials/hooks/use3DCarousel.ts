@@ -1,10 +1,9 @@
 /**
  * BRIVYA SOLUTIONS — 3D CAROUSEL STATE HOOK
- * Manages 3D slot indices, continuous autoplay, synchronized progress, and gestures.
+ * Manages 3D slot indices, continuous autoplay, synchronized progress, and card-only hover pause.
  */
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { SlideDirection } from "../types";
 
 export interface Use3DCarouselOptions {
   readonly totalItems: number;
@@ -14,26 +13,24 @@ export interface Use3DCarouselOptions {
 export function use3DCarousel({ totalItems, autoPlayDurationMs = 6500 }: Use3DCarouselOptions) {
   const [centerIndex, setCenterIndex] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
 
-  const startTimeRef = useRef<number | null>(null);
-  const elapsedBeforePauseRef = useRef<number>(0);
+  const elapsedMsRef = useRef<number>(0);
+  const lastTimeRef = useRef<number | null>(null);
   const frameIdRef = useRef<number | null>(null);
 
   // Derive neighbor slot indices
   const leftIndex = (centerIndex - 1 + totalItems) % totalItems;
   const rightIndex = (centerIndex + 1) % totalItems;
 
-  // ---------------------------------------------------------------------------
-  // LEFT Button Click -> Cards move LEFT, Right card becomes Center
-  // ---------------------------------------------------------------------------
+  // Advance left (Left Button Click or Autoplay)
   const shiftLeft = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setProgress(0);
-    startTimeRef.current = null;
-    elapsedBeforePauseRef.current = 0;
+    elapsedMsRef.current = 0;
+    lastTimeRef.current = null;
 
     setCenterIndex((prev) => (prev + 1) % totalItems);
     setTimeout(() => {
@@ -41,15 +38,13 @@ export function use3DCarousel({ totalItems, autoPlayDurationMs = 6500 }: Use3DCa
     }, 660);
   }, [isAnimating, totalItems]);
 
-  // ---------------------------------------------------------------------------
-  // RIGHT Button Click -> Cards move RIGHT, Left card becomes Center
-  // ---------------------------------------------------------------------------
+  // Advance right (Right Button Click)
   const shiftRight = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setProgress(0);
-    startTimeRef.current = null;
-    elapsedBeforePauseRef.current = 0;
+    elapsedMsRef.current = 0;
+    lastTimeRef.current = null;
 
     setCenterIndex((prev) => (prev - 1 + totalItems) % totalItems);
     setTimeout(() => {
@@ -57,24 +52,27 @@ export function use3DCarousel({ totalItems, autoPlayDurationMs = 6500 }: Use3DCa
     }, 660);
   }, [isAnimating, totalItems]);
 
-  // Autoplay & Progress Timer Synchronization (Autoplay uses Left-moving shift)
+  // Unified Single-Source Timer & Progress Loop
   useEffect(() => {
-    if (isPaused || isAnimating) {
+    if (isHovered || isAnimating) {
       if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
+      lastTimeRef.current = null;
       return;
     }
 
     const tick = (now: number) => {
-      if (startTimeRef.current === null) {
-        startTimeRef.current = now - elapsedBeforePauseRef.current;
+      if (lastTimeRef.current === null) {
+        lastTimeRef.current = now;
       }
 
-      const elapsed = now - startTimeRef.current;
-      elapsedBeforePauseRef.current = elapsed;
-      const pct = Math.min(100, (elapsed / autoPlayDurationMs) * 100);
-      setProgress(pct);
+      const delta = now - lastTimeRef.current;
+      lastTimeRef.current = now;
+      elapsedMsRef.current += delta;
 
-      if (elapsed >= autoPlayDurationMs) {
+      const currentProgress = Math.min(100, (elapsedMsRef.current / autoPlayDurationMs) * 100);
+      setProgress(currentProgress);
+
+      if (elapsedMsRef.current >= autoPlayDurationMs) {
         shiftLeft();
       } else {
         frameIdRef.current = requestAnimationFrame(tick);
@@ -86,16 +84,19 @@ export function use3DCarousel({ totalItems, autoPlayDurationMs = 6500 }: Use3DCa
     return () => {
       if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
     };
-  }, [isPaused, isAnimating, autoPlayDurationMs, shiftLeft]);
+  }, [isHovered, isAnimating, autoPlayDurationMs, shiftLeft]);
 
-  // Hover & interaction pauses
-  const handleMouseEnter = useCallback(() => setIsPaused(true), []);
-  const handleMouseLeave = useCallback(() => {
-    startTimeRef.current = null;
-    setIsPaused(false);
+  // Card-Only Hover Handlers (Never attached to section or window)
+  const handleCardMouseEnter = useCallback(() => {
+    setIsHovered(true);
   }, []);
 
-  // Mobile swipe gestures
+  const handleCardMouseLeave = useCallback(() => {
+    lastTimeRef.current = null;
+    setIsHovered(false);
+  }, []);
+
+  // Mobile Swipe Gestures
   const touchStartXRef = useRef<number | null>(null);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -107,8 +108,8 @@ export function use3DCarousel({ totalItems, autoPlayDurationMs = 6500 }: Use3DCa
       if (touchStartXRef.current === null) return;
       const diff = touchStartXRef.current - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 40) {
-        if (diff > 0) shiftLeft();  // Swipe left -> cards move left
-        else shiftRight();          // Swipe right -> cards move right
+        if (diff > 0) shiftLeft();
+        else shiftRight();
       }
       touchStartXRef.current = null;
     },
@@ -120,11 +121,12 @@ export function use3DCarousel({ totalItems, autoPlayDurationMs = 6500 }: Use3DCa
     leftIndex,
     rightIndex,
     isAnimating,
+    isHovered,
     progress,
     shiftLeft,
     shiftRight,
-    handleMouseEnter,
-    handleMouseLeave,
+    handleCardMouseEnter,
+    handleCardMouseLeave,
     handleTouchStart,
     handleTouchEnd,
   };
