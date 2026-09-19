@@ -11,21 +11,19 @@ import { use3DCarousel } from "./hooks/use3DCarousel";
 export const TestimonialsSection: React.FC = () => {
   const { header, carouselConfig, reviews } = TESTIMONIALS_DATA;
   const sectionRef = useRef<HTMLElement | null>(null);
-
   const centerCardRef = useRef<HTMLDivElement | null>(null);
-  const leftCardRef = useRef<HTMLDivElement | null>(null);
-  const rightCardRef = useRef<HTMLDivElement | null>(null);
 
   const {
     centerIndex,
     leftIndex,
     rightIndex,
     isAnimating,
+    isHovered,
     progress,
     shiftLeft,
     shiftRight,
-    handleMouseEnter,
-    handleMouseLeave,
+    handleCardMouseEnter,
+    handleCardMouseLeave,
     handleTouchStart,
     handleTouchEnd,
   } = use3DCarousel({
@@ -33,17 +31,13 @@ export const TestimonialsSection: React.FC = () => {
     autoPlayDurationMs: carouselConfig.autoPlayDurationMs,
   });
 
-  // Calculate incoming cards for continuous looping transitions
-  const incomingRightIndex = (rightIndex + 1) % reviews.length;
-  const incomingLeftIndex = (leftIndex - 1 + reviews.length) % reviews.length;
-
-  // Center card settle reveal
+  // Center card reveal effect
   useEffect(() => {
     if (centerCardRef.current) {
       gsap.fromTo(
         centerCardRef.current,
-        { scale: 0.96 },
-        { scale: 1.0, duration: 0.45, ease: "power2.out" }
+        { scale: 0.97 },
+        { scale: 1.0, duration: 0.4, ease: "power2.out" }
       );
     }
   }, [centerIndex]);
@@ -54,13 +48,12 @@ export const TestimonialsSection: React.FC = () => {
       ref={sectionRef}
       aria-roledescription="carousel"
       aria-label="Client Reviews and Testimonials"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       /* 
-        Seamless Light Substrate:
-        Flows continuously on #F4F7FC matching the upper section with zero color breaks.
+        Hover Bug Fixed: 
+        onMouseEnter and onMouseLeave have been completely removed from this section container.
+        Autoplay continues uninterrupted when moving the mouse over empty space or headings.
       */
       className="relative w-full bg-[#F4F7FC] pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20 overflow-hidden select-none"
     >
@@ -88,22 +81,16 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* 
-          3. REAL 3D-STYLE CAROUSEL STAGE:
-          Left Card (Behind/Smaller) — Center Card (Forward/Larger) — Right Card (Behind/Smaller)
+          3. CAROUSEL STAGE:
+          Left Card (Behind) — Center Card (Forward with Texture & Progress Bar) — Right Card (Behind)
         */}
         <div className="relative w-full flex items-center justify-center min-h-[360px] sm:min-h-[380px] overflow-visible">
-          {/* LEFT CARD (Visual depth behind center) */}
-          <div
-            ref={leftCardRef}
-            className="hidden sm:block absolute transition-transform duration-500 ease-out z-10 -translate-x-[260px] md:-translate-x-[360px] lg:-translate-x-[420px] scale-[0.86] opacity-45 pointer-events-none"
-          >
-            <ReviewCard
-              review={reviews[leftIndex]}
-              slot="left"
-            />
+          {/* LEFT CARD (Subdued) */}
+          <div className="hidden sm:block absolute transition-transform duration-500 ease-out z-10 -translate-x-[260px] md:-translate-x-[360px] lg:-translate-x-[420px] scale-[0.86] opacity-45 pointer-events-none">
+            <ReviewCard review={reviews[leftIndex]} slot="left" />
           </div>
 
-          {/* CENTER CARD (Prominent in front with active progress underline) */}
+          {/* CENTER CARD (Active with Card-Only Hover Listeners) */}
           <div
             ref={centerCardRef}
             className="relative z-30 scale-100 opacity-100 transition-transform duration-500 ease-out"
@@ -112,24 +99,21 @@ export const TestimonialsSection: React.FC = () => {
               review={reviews[centerIndex]}
               slot="center"
               progress={progress}
+              isPaused={isHovered}
+              onCardMouseEnter={handleCardMouseEnter}
+              onCardMouseLeave={handleCardMouseLeave}
             />
           </div>
 
-          {/* RIGHT CARD (Visual depth behind center) */}
-          <div
-            ref={rightCardRef}
-            className="hidden sm:block absolute transition-transform duration-500 ease-out z-10 translate-x-[260px] md:-translate-x-[-360px] lg:translate-x-[420px] scale-[0.86] opacity-45 pointer-events-none"
-          >
-            <ReviewCard
-              review={reviews[rightIndex]}
-              slot="right"
-            />
+          {/* RIGHT CARD (Subdued) */}
+          <div className="hidden sm:block absolute transition-transform duration-500 ease-out z-10 translate-x-[260px] md:translate-x-[360px] lg:translate-x-[420px] scale-[0.86] opacity-45 pointer-events-none">
+            <ReviewCard review={reviews[rightIndex]} slot="right" />
           </div>
         </div>
 
         {/* 
           4. NAVIGATION BUTTONS:
-          ONLY TWO circular arrow buttons (← and →) centered together underneath.
+          Only two circular gradient arrow buttons centered below
         */}
         <CarouselNavButtons
           onMoveLeft={shiftLeft}
