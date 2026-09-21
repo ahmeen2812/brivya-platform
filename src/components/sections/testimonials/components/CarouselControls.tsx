@@ -24,16 +24,16 @@ export const CarouselControls: React.FC<CarouselControlsProps> = ({
 }) => {
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full max-w-[540px] sm:max-w-[580px] md:max-w-[620px] mx-auto mt-7 sm:mt-8 select-none">
-      {/* Left: Progress Track and Telemetry Counter */}
-      <div className="flex items-center gap-3">
+      {/* Left Pod: Progress Track and Telemetry Counter */}
+      <div className="flex items-center gap-3.5 w-full sm:w-auto justify-center sm:justify-start">
         <ProgressBar progress={progress} isPlaying={isPlaying} />
-        <span className="font-mono text-[11px] font-bold tracking-wider text-[#64748B]">
+        <span className="font-mono text-[11px] font-bold tracking-wider text-[#64748B] whitespace-nowrap shrink-0">
           0{currentIndex + 1} <span className="text-slate-300">/</span> 0{totalCount}
         </span>
       </div>
 
-      {/* Right: Circular Navigation Controls & Play/Pause */}
-      <div className="flex items-center gap-2.5">
+      {/* Right Pod: Circular Navigation Controls & Play/Pause */}
+      <div className="flex items-center gap-2.5 shrink-0">
         {/* Play / Pause Toggle Button */}
         <button
           type="button"
