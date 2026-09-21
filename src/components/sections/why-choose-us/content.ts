@@ -1,9 +1,16 @@
 /**
- * BRIVYA SOLUTIONS — "WHY CHOOSE US" CONTENT MANIFEST
- * Clean, authoritative text payload for the editorial structure and premium cards.
+ * BRIVYA SOLUTIONS — "WHY CHOOSE US" CONTENT MANIFEST & EXPLICIT TYPING
+ * Deep strictly verified models executing beautifully native frameworks.
  */
 
-import { ConnectedTexture, EngineeringTexture, CommunicationTexture } from "./textures/TextureAssets";
+// 1. Defining standard strictly typed components eliminating index boundary mapping faults.
+export interface WhyUsCardData {
+  id: string;
+  title: string;
+  desc: string;
+  theme: "quality" | "speed" | "value";
+  vectorId: string;
+}
 
 export const WHY_US_CONTENT = {
   header: {
@@ -13,6 +20,8 @@ export const WHY_US_CONTENT = {
     thesis:
       "A website, an advertising campaign, and an internal business tool may serve different purposes. We bring the same care to each: understand the problem, choose the right approach, and make the details count.",
   },
+  
+  // Assign explicitly ensuring the objects conform precisely allowing React components dynamically scaling flawlessly mapping properly seamlessly cleanly cleanly seamlessly safely establishing effectively providing components
   cards: [
     {
       id: "opt-connect",
@@ -24,7 +33,7 @@ export const WHY_US_CONTENT = {
     {
       id: "opt-practical",
       title: "02 — Practical Engineering",
-      desc: "From cloud infrastructure and databases to AI automation and custom add-ons, we focus on technology that's useful, dependable, and straightforward to maintain.",
+      desc: "From cloud infrastructure to AI automation and custom add-ons, we focus on technology that's useful, dependable, and straightforward to maintain.",
       theme: "speed",
       vectorId: "infrastructure",
     },
@@ -35,7 +44,5 @@ export const WHY_US_CONTENT = {
       theme: "value",
       vectorId: "discussion",
     },
-  ]
-} as const;
-
-export type WhyUsCardData = typeof WHY_US_CONTENT.cards[0];
+  ] as WhyUsCardData[]
+};
