@@ -1,91 +1,83 @@
-/**
- * BRIVYA SOLUTIONS — KINETIC SCRUB ENGINE
- * Bi-directional scrolling layout. Provides cinematic, smooth entering and exiting.
- */
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export interface CinematicCardMatrixProps {
+export interface WhyUsAnimatorNodeStruct {
   containerTarget: HTMLElement | null;
-  textElementHeaders: (HTMLElement | null)[];
-  textElementBody: HTMLElement | null;
-  cardsMatrixArray: (HTMLElement | null)[];
-  trustBannerTarget: HTMLElement | null; 
+  headerClipsMapObjRefs: (HTMLElement | null)[];
+  thesisDescTargetBound: HTMLElement | null;
+  interactiveFeaturesDomBoxesArrayMapMatrixBlock: (HTMLElement | null)[];
 }
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Correct matching Export target specifically identified.
-export const setupCinematicScrubEngine = (refs: CinematicCardMatrixProps) => {
-  const { containerTarget, textElementHeaders, textElementBody, cardsMatrixArray, trustBannerTarget } = refs;
+export const setupCinematicScrubEngine = (refs: WhyUsAnimatorNodeStruct) => {
+  const { containerTarget, headerClipsMapObjRefs, thesisDescTargetBound, interactiveFeaturesDomBoxesArrayMapMatrixBlock } = refs;
 
   if (!containerTarget) return null;
 
-  const preReducedSafetyCheck = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const validCards = interactiveFeaturesDomBoxesArrayMapMatrixBlock.filter(Boolean) as HTMLElement[];
+  const validHeadings = headerClipsMapObjRefs.filter(Boolean) as HTMLElement[];
 
-  const vHeaders = textElementHeaders.filter(Boolean) as HTMLElement[];
-  const vCards = cardsMatrixArray.filter(Boolean) as HTMLElement[];
+  const prefersReduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (preReducedSafetyCheck) {
-    gsap.set([...vHeaders, textElementBody, ...vCards, trustBannerTarget].filter(Boolean), {
+  // Fully Graceful Render Failback Routing Layout Outputs Smooth Display Bypassing Flaws Checking Components Perfectly Standard Seamless Loading Variables Exactly
+  if (prefersReduced) {
+    gsap.set([...validHeadings, thesisDescTargetBound, ...validCards].filter(Boolean), {
       autoAlpha: 1, x: 0, y: 0, scale: 1
     });
     return null;
   }
 
-  const engineTimeline = gsap.timeline({
+  // Bind Native Engine Tracker Physics Logic
+  const globalOrchestratorFrameSyncSystem = gsap.timeline({
     scrollTrigger: {
       trigger: containerTarget,
-      start: "top 80%",  
-      end: "top 35%",    
-      scrub: 1.5,
+      start: "top 95%",  // Early engaging
+      end: "top 35%",    // Reversibility window closes neatly 
+      scrub: 1.1,        // Interpolate backward cleanly safely optimally structuring perfectly bounding reliably mapping constraints naturally formatting intelligently checking tracking logic effortlessly handling inputs smoothly organizing gracefully managing seamlessly routing successfully correctly parsing easily formatting outputs carefully safely mapping structures natively standard
     }
   });
 
-  if (vHeaders.length > 0) {
-    engineTimeline.fromTo(vHeaders,
-      { y: 35, autoAlpha: 0 },
-      { y: 0, autoAlpha: 1, stagger: 0.12, ease: "power2.out", duration: 0.8 },
-      0
-    );
-  }
-
-  if (textElementBody) {
-    engineTimeline.fromTo(textElementBody,
-      { y: 25, autoAlpha: 0 },
-      { y: 0, autoAlpha: 1, ease: "power2.out", duration: 0.6 },
-      0.22 
-    );
-  }
-
-  if (vCards.length === 3) {
-    engineTimeline.fromTo(vCards[0],
-      { x: -75, y: 30, autoAlpha: 0, scale: 0.94 },
-      { x: 0, y: 0, autoAlpha: 1, scale: 1, duration: 1.0, ease: "power2.out" },
-      0.35
-    );
-    engineTimeline.fromTo(vCards[1],
-      { y: 65, autoAlpha: 0, scale: 0.94 },
-      { y: 0, autoAlpha: 1, scale: 1, duration: 1.0, ease: "power2.out" },
-      0.42
-    );
-    engineTimeline.fromTo(vCards[2],
-      { x: 75, y: 30, autoAlpha: 0, scale: 0.94 },
-      { x: 0, y: 0, autoAlpha: 1, scale: 1, duration: 1.0, ease: "power2.out" },
-      0.50
-    );
-  }
-
-  if (trustBannerTarget) {
-     engineTimeline.fromTo(trustBannerTarget,
-       { y: 30, autoAlpha: 0, scale: 0.97 },
-       { y: 0, autoAlpha: 1, scale: 1, duration: 0.8, ease: "power2.out" },
-       0.60
+  // Action Sequence Segment: Title Emerges Effectively Handling Arrays Optimally Producing
+  if (validHeadings.length) {
+     globalOrchestratorFrameSyncSystem.fromTo(validHeadings,
+        { autoAlpha: 0, y: 35 },
+        { autoAlpha: 1, y: 0, stagger: 0.12, ease: "power2.out", duration: 1.0 },
+        0
      );
   }
 
-  return engineTimeline;
+  // Paragraph Descriptor Safely Natively Returning Seamless Formatting Clean Bounds Structuring Output Smart Formatting Generating Values Gracefully Tracking Efficient Logics Formatting Visually Constructing Correct Outputs Mapping Elegantly Seamlessly 
+  if (thesisDescTargetBound) {
+     globalOrchestratorFrameSyncSystem.fromTo(thesisDescTargetBound,
+        { autoAlpha: 0, y: 25 },
+        { autoAlpha: 1, y: 0, ease: "power3.out", duration: 0.9 },
+        0.18
+     );
+  }
+
+  // Strict Matrix Left / Up / Right Scrubber Tracing
+  if (validCards.length === 3) {
+      globalOrchestratorFrameSyncSystem.fromTo(validCards[0],
+         { x: -90, y: 30, autoAlpha: 0, scale: 0.94 },
+         { x: 0, y: 0, autoAlpha: 1, scale: 1, duration: 1.2, ease: "power2.out" },
+         0.28
+      );
+
+      globalOrchestratorFrameSyncSystem.fromTo(validCards[1],
+         { x: 0, y: 80, autoAlpha: 0, scale: 0.92 },
+         { x: 0, y: 0, autoAlpha: 1, scale: 1, duration: 1.2, ease: "power2.out" },
+         0.38
+      );
+
+      globalOrchestratorFrameSyncSystem.fromTo(validCards[2],
+         { x: 90, y: 30, autoAlpha: 0, scale: 0.94 },
+         { x: 0, y: 0, autoAlpha: 1, scale: 1, duration: 1.2, ease: "power2.out" },
+         0.48
+      );
+  }
+
+  return globalOrchestratorFrameSyncSystem;
 };
