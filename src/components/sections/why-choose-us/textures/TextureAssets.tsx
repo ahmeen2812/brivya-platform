@@ -2,73 +2,71 @@
 
 import React from "react";
 
-// Network Configuration: Connection Node Flow Systems Processing Visually Display Bounds Safely Natively Tracing Successfully
+// Technical Data / Server Relational Mesh Vectors Creating Complex Tonal Assets Routing Bounds Automatically Generating Constraints
 export function ConnectedTexture() {
   return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.4]" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.25]" viewBox="0 0 400 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <pattern id="connect-nodes" width="50" height="50" patternUnits="userSpaceOnUse">
-          <circle cx="25" cy="25" r="2.5" fill="#4B77BE" opacity="0.8" />
-          <path d="M 0,0 L 25,25 M 50,0 L 25,25 M 0,50 L 25,25 M 50,50 L 25,25" stroke="#6086B8" strokeWidth="0.8" opacity="0.4" />
-          <circle cx="0" cy="0" r="1.5" fill="#6086B8" opacity="0.5" />
-          <circle cx="50" cy="0" r="1.5" fill="#6086B8" opacity="0.5" />
-          <circle cx="0" cy="50" r="1.5" fill="#6086B8" opacity="0.5" />
-          <circle cx="50" cy="50" r="1.5" fill="#6086B8" opacity="0.5" />
+        <pattern id="data-nodes" width="60" height="60" patternUnits="userSpaceOnUse">
+          <circle cx="30" cy="30" r="2.5" fill="#4B77BE" opacity="0.6" />
+          <path d="M 0,15 L 30,30 M 60,15 L 30,30 M 0,45 L 30,30 M 60,45 L 30,30" stroke="#6086B8" strokeWidth="0.8" opacity="0.2" />
+          <circle cx="0" cy="15" r="1.5" fill="#6086B8" opacity="0.3" />
+          <circle cx="60" cy="15" r="1.5" fill="#6086B8" opacity="0.3" />
         </pattern>
         <linearGradient id="fadeConnect" x1="0%" y1="100%" x2="0%" y2="0%">
-          <stop offset="0%" stopColor="#EEF2F6" stopOpacity="1" />
-          <stop offset="100%" stopColor="#EEF2F6" stopOpacity="0.2" />
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="1" />
         </linearGradient>
       </defs>
-      <rect width="100%" height="100%" fill="url(#connect-nodes)" className="origin-center transition-transform duration-700 ease-out group-hover:scale-110 group-hover:rotate-1" />
+      <rect width="100%" height="100%" fill="url(#data-nodes)" className="origin-center transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:-translate-x-1" />
       <rect width="100%" height="100%" fill="url(#fadeConnect)" />
     </svg>
   );
 }
 
-// Engineering Blueprint Grid Overlay Mapping Formatting Neatly Visual Constraints Smoothly Setting Standard Successfully Tracing Flawlessly Scaling Output Correctly Optimizing Intelligently Handling Smooth Native Safely Accurately Parsing Correct Output 
+// Engineering Blueprint Metric Grid System Accurately Executing Spatial Limits Standard Seamless Structure Formatting Seamless Context Optimally Naturally Validating Smooth Mapping Format
 export function EngineeringTexture() {
   return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.4]" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.4]" viewBox="0 0 400 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <pattern id="engineer-grid" width="30" height="30" patternUnits="userSpaceOnUse">
-          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#65A69B" strokeWidth="0.6" strokeDasharray="3 3" opacity="0.7" />
-          <rect x="0" y="0" width="3" height="3" fill="#65A69B" opacity="0.5" />
+        <pattern id="engineer-metric" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#65A69B" strokeWidth="0.6" strokeDasharray="2 3" opacity="0.6" />
+          <path d="M 0 30 L 15 15 L 30 30" fill="none" stroke="#65A69B" strokeWidth="0.6" opacity="0.2" />
         </pattern>
-        <linearGradient id="fadeEng" x1="100%" y1="100%" x2="0%" y2="0%">
-          <stop offset="0%" stopColor="#D6F8E4" stopOpacity="1" />
-          <stop offset="100%" stopColor="#D6F8E4" stopOpacity="0.1" />
+        <linearGradient id="fadeBlueprint" x1="100%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="#D6F8E4" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="1" />
         </linearGradient>
       </defs>
-      <rect width="100%" height="100%" fill="url(#engineer-grid)" className="origin-center transition-transform duration-700 ease-out group-hover:-translate-x-3 group-hover:-translate-y-2 group-hover:scale-[1.02]" />
-      <rect width="100%" height="100%" fill="url(#fadeEng)" />
+      <rect width="100%" height="100%" fill="url(#engineer-metric)" className="origin-top-left transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 group-hover:translate-y-2 group-hover:scale-[1.05]" />
+      <rect width="100%" height="100%" fill="url(#fadeBlueprint)" />
     </svg>
   );
 }
 
-// Communication Soft Tone Soundwave Rendering Accurately Designing Patterns Visual Logic Clean Fluid Operations Securing Formatting Elegantly Safely Dynamically Rendering Generating Neatly Tracking Accurately Mapping Structuring Efficient Bounds 
+// Organic Speech Flow Modulation Path Rendering Native Volume Structures Creating Precise Elegant Sound Visualization Output Safely Scaling Parameters Safely Mapping Correct Settings Successfully Automatically Output Dynamically Managing
 export function CommunicationTexture() {
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.5]" viewBox="0 0 400 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="fadeCom" x1="0%" y1="0%" x2="0%" y2="100%">
-           <stop offset="20%" stopColor="#E6D4FC" stopOpacity="0" />
-           <stop offset="100%" stopColor="#F1E5F8" stopOpacity="1" />
+        <linearGradient id="glowPurp" x1="0%" y1="0%" x2="0%" y2="100%">
+           <stop offset="0%" stopColor="#CAAFE2" stopOpacity="0.8" />
+           <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.3" />
         </linearGradient>
-        <filter id="softGlow">
-           <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+        <filter id="softGlimmer">
+           <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
            <feMerge>
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
            </feMerge>
         </filter>
       </defs>
-      <g className="origin-left transition-transform duration-[800ms] ease-out group-hover:scale-x-[1.15] group-hover:-translate-y-4">
-        <path d="M-100,180 Q100,110 250,150 T500,80" fill="none" stroke="#CAAFE2" strokeWidth="2" filter="url(#softGlow)" opacity="0.5" />
-        <path d="M-50,220 Q150,280 300,180 T600,150" fill="none" stroke="#CAAFE2" strokeWidth="3" filter="url(#softGlow)" opacity="0.7" />
-        <path d="M0,260 Q100,230 200,270 T500,210" fill="none" stroke="#DBCDEC" strokeWidth="1.5" opacity="0.6" />
+      <g className="origin-center transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-[1.1] group-hover:translate-x-2">
+        <path d="M-100,120 Q100,190 250,140 T500,160" fill="none" stroke="url(#glowPurp)" strokeWidth="2.5" filter="url(#softGlimmer)" opacity="0.7" />
+        <path d="M-50,220 Q150,270 300,190 T600,240" fill="none" stroke="url(#glowPurp)" strokeWidth="4" filter="url(#softGlimmer)" opacity="0.4" />
+        <circle cx="280" cy="185" r="4" fill="#9333EA" filter="url(#softGlimmer)" opacity="0.3"/>
+        <circle cx="210" cy="135" r="2.5" fill="#9333EA" filter="url(#softGlimmer)" opacity="0.5"/>
       </g>
-      <rect width="100%" height="100%" fill="url(#fadeCom)" />
     </svg>
   );
 }
