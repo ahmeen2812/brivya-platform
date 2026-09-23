@@ -1,21 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { forwardRef } from "react";
 
-interface BannerParamsMapValueConfigLogicFlowLimitsDataRuleRenderingComponentLayoutArraySafelyPropertyContextAnchorStringPathBlockTargetTargetOutputFormattingAppropriatelyModelTrackerVariableDomainStructDOMSetupTargetSetupSecurelyCreatingExecutingNativeLimitPathSettingExactly {
-  wrapperNodeBinderTriggerTrackingPathLogicallyUpdatingSafelyStructRefPointerMappingFlawlessBoundsVariables: React.MutableRefObject<HTMLDivElement | null>;
-}
-
-export const TrustBanner: React.FC<BannerParamsMapValueConfigLogicFlowLimitsDataRuleRenderingComponentLayoutArraySafelyPropertyContextAnchorStringPathBlockTargetTargetOutputFormattingAppropriatelyModelTrackerVariableDomainStructDOMSetupTargetSetupSecurelyCreatingExecutingNativeLimitPathSettingExactly> = ({ wrapperNodeBinderTriggerTrackingPathLogicallyUpdatingSafelyStructRefPointerMappingFlawlessBoundsVariables }) => {
+export const TrustBanner = forwardRef<HTMLDivElement, {}>((_, ref) => {
   return (
     <div 
-      ref={wrapperNodeBinderTriggerTrackingPathLogicallyUpdatingSafelyStructRefPointerMappingFlawlessBoundsVariables}
-      className="w-full flex items-center justify-center pt-[50px] md:pt-[70px] lg:pt-[90px] border-t border-slate-100/60 mt-16 sm:mt-24 lg:mt-32 invisible opacity-0 relative z-30"
+      ref={ref}
+      className="w-full flex items-center justify-center pt-[50px] md:pt-[70px] lg:pt-[90px] border-t border-slate-100/60 mt-16 sm:mt-24 lg:mt-32 relative z-30"
     >
       <div className="flex flex-col lg:flex-row items-center justify-center bg-[#FAFCFF] border border-blue-50 px-6 sm:px-12 py-5 sm:py-6 rounded-2xl shadow-sm gap-4 sm:gap-6 lg:gap-10">
          
          <div className="flex items-center gap-5">
-           {/* Mock Verified Badges Connecting Natively Secure Components Expertly Returning Constraints Tracking Limits */}
            <div className="flex items-center gap-1.5 grayscale opacity-70 transition-all duration-300 hover:grayscale-0 hover:opacity-100 cursor-pointer">
               <span className="font-bold text-[#06162C] font-sans text-xl leading-none">Google</span>
               <span className="text-[#059669] text-base leading-none pl-1 pb-1 flex tracking-tighter">★★★★★</span>
@@ -38,4 +33,6 @@ export const TrustBanner: React.FC<BannerParamsMapValueConfigLogicFlowLimitsData
       </div>
     </div>
   );
-};
+});
+
+TrustBanner.displayName = "TrustBanner";
