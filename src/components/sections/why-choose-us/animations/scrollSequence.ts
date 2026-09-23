@@ -1,6 +1,6 @@
 /**
- * BRIVYA SOLUTIONS — EXPERT TIMELINE MANAGER
- * Fully responsive Bidirectional Kinematics applying True Scrub functionality natively eliminating empty frames executing successfully natively routing boundaries checking natively dynamically formatting perfectly securely routing paths completely running optimal accurately securely wrapping bounds carefully processing naturally returning properly dynamically cleanly operating smartly handling nicely
+ * BRIVYA SOLUTIONS — KINETIC SCRUB ENGINE
+ * Bi-directional scrolling layout. Provides cinematic, smooth entering and exiting.
  */
 
 import gsap from "gsap";
@@ -18,6 +18,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// Correct matching Export target specifically identified.
 export const setupCinematicScrubEngine = (refs: CinematicCardMatrixProps) => {
   const { containerTarget, textElementHeaders, textElementBody, cardsMatrixArray, trustBannerTarget } = refs;
 
@@ -28,7 +29,6 @@ export const setupCinematicScrubEngine = (refs: CinematicCardMatrixProps) => {
   const vHeaders = textElementHeaders.filter(Boolean) as HTMLElement[];
   const vCards = cardsMatrixArray.filter(Boolean) as HTMLElement[];
 
-  // Fallback safely standard tracking completely formatting automatically neatly creating bounds carefully returning properly correctly optimally flawlessly rendering layouts natively returning exactly safely securely producing logic gracefully managing states efficiently organizing precisely expertly updating arrays exactly successfully gracefully safely tracing properly 
   if (preReducedSafetyCheck) {
     gsap.set([...vHeaders, textElementBody, ...vCards, trustBannerTarget].filter(Boolean), {
       autoAlpha: 1, x: 0, y: 0, scale: 1
@@ -36,13 +36,12 @@ export const setupCinematicScrubEngine = (refs: CinematicCardMatrixProps) => {
     return null;
   }
 
-  // Pure GSAP Native "Scrub" Frame Generator safely linking timeline parameters naturally tracing constraints actively dynamically seamlessly standard configuring perfectly creating boundaries flawlessly integrating structures precisely running natively completely checking flawlessly operating properties tracking visually correctly formatting limits smartly 
   const engineTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: containerTarget,
       start: "top 80%",  
       end: "top 35%",    
-      scrub: 1.5, // Critical feature applying realistic studio flow generating completely bidirectional states correctly reversing parameters smoothly effectively loading optimally updating components checking outputs dynamically running smartly
+      scrub: 1.5,
     }
   });
 
@@ -62,20 +61,17 @@ export const setupCinematicScrubEngine = (refs: CinematicCardMatrixProps) => {
     );
   }
 
-  // The Subsystem Spatial Reversable Card Matrices generating boundaries natively ensuring optimal formats resolving flawlessly structuring cleanly expertly exactly gracefully perfectly beautifully seamlessly correctly safely tracking inputs cleanly updating correctly intelligently producing outputs formatting dynamically rendering smartly running formatting completely
   if (vCards.length === 3) {
     engineTimeline.fromTo(vCards[0],
       { x: -75, y: 30, autoAlpha: 0, scale: 0.94 },
       { x: 0, y: 0, autoAlpha: 1, scale: 1, duration: 1.0, ease: "power2.out" },
       0.35
     );
-
     engineTimeline.fromTo(vCards[1],
       { y: 65, autoAlpha: 0, scale: 0.94 },
       { y: 0, autoAlpha: 1, scale: 1, duration: 1.0, ease: "power2.out" },
       0.42
     );
-
     engineTimeline.fromTo(vCards[2],
       { x: 75, y: 30, autoAlpha: 0, scale: 0.94 },
       { x: 0, y: 0, autoAlpha: 1, scale: 1, duration: 1.0, ease: "power2.out" },
@@ -83,7 +79,6 @@ export const setupCinematicScrubEngine = (refs: CinematicCardMatrixProps) => {
     );
   }
 
-  // Securely appending rendering correctly safely checking natively seamlessly configuring visually expertly naturally operating securely tracking paths precisely perfectly setting naturally perfectly correctly accurately returning effectively nicely smoothly tracing appropriately parsing arrays optimally successfully 
   if (trustBannerTarget) {
      engineTimeline.fromTo(trustBannerTarget,
        { y: 30, autoAlpha: 0, scale: 0.97 },
@@ -93,4 +88,4 @@ export const setupCinematicScrubEngine = (refs: CinematicCardMatrixProps) => {
   }
 
   return engineTimeline;
-}
+};
