@@ -1,6 +1,10 @@
-import { ConnectedTexture, EngineeringTexture, CommunicationTexture } from "./textures/TextureAssets";
+import { 
+  ConnectedTexture, 
+  EngineeringTexture, 
+  CommunicationTexture 
+} from "./textures/TextureAssets";
 
-export const WORK_CONTENT_PAYLOAD = {
+export const WHY_US_CONTENT = {
   header: {
     kicker: "Why Work With Brivya",
     headingPrimary: "Different disciplines.",
@@ -8,7 +12,7 @@ export const WORK_CONTENT_PAYLOAD = {
     thesis:
       "A website, an advertising campaign, and an internal business tool may serve different purposes. We bring the same care to each: understand the problem, choose the right approach, and make the details count.",
   },
-  capabilities: [
+  cards: [
     {
       id: "opt-connect",
       title: "01 — Connected Thinking",
@@ -44,3 +48,5 @@ export const WORK_CONTENT_PAYLOAD = {
     }
   ]
 } as const;
+
+export type WhyUsCardData = typeof WHY_US_CONTENT.cards[0];
