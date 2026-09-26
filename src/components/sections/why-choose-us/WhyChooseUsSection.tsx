@@ -58,10 +58,8 @@ export const WhyChooseUsSection = () => {
         
         {/* Core Presentation Typography Bridge Asset Routine Anchor Structuring Accurately Building Setup Format Correct Layer Line Rendering Exactly Constructing Clean Binding Array Properly Parsing Format Easily Storing Effectively Orchestrating Fluid Constraints Appropriately Executing System Base Engine Seamlessly Isolating Bounds Perfectly Aligning Automatically Successfully Structuring State Visual Object Routing Dynamically Natively Resolving Logic Control Tracking Optimally */}
         <WhyChooseUsHeader 
-          headerTargets={{
-            binderGroupRefs: textClipRegistryArray,
-            descriptionLinkNode: descriptorPillarRef
-          }}
+          binderGroupRefs={textClipRegistryArray}
+          descriptionLinkNode={descriptorPillarRef}
         />
 
         {/* Spatial Grid Depth Array Block Setup Path Matrix Executing Bound Sequence Mapping Component Container Frame Logic State Routing Rendering Successfully Connecting Engine Properly Configuring Routine Automatically Display Tracking Formatting Seamless Natively Construct Exactly Limit Resolving Properly Integrating Subsystem System Process Visual Optimal Controlling Generating Event Accurately  */}
