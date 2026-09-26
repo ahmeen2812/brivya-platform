@@ -2,7 +2,6 @@
 
 import React, { forwardRef } from "react";
 import { QualityLayerGrid, SpeedArrowVector, WaveRateCurves } from "./CardGraphicLayers";
-import { WhyChooseUsIcon } from "./WhyChooseUsIcons";
 import { PremiumCardHover } from "./PremiumCardHover";
 
 interface WhyChooseUsCardProps {
@@ -18,7 +17,6 @@ interface WhyChooseUsCardProps {
 export const WhyChooseUsCard = forwardRef<HTMLDivElement, WhyChooseUsCardProps>(
   ({ data }, ref) => {
     
-    // Core Style Mapping Dictionary Configural Layout Resolver Pattern Injecting Clean Assets Routing Natively Automatically Returning States Natively Resolving Appropriately Providing Gradients Intelligently Filtering Contexts Seamlessly Managing Values Efficiently Distributing Bounds Elegantly Executing Visuals Confidently Aligning Systems Perfectly Tracking Layouts Dynamically Parsing 
     const mapThemePayloads = (key: string) => {
       switch(key) {
         case "quality":
@@ -49,10 +47,27 @@ export const WhyChooseUsCard = forwardRef<HTMLDivElement, WhyChooseUsCardProps>(
 
     const targetProps = mapThemePayloads(data.theme);
 
+    // Swap old icons out targeting fresh content representations smoothly natively formatting constraints effectively rendering
+    const resolveContextGraphic = (identifier: string) => {
+       const bClass = "w-[21px] h-[21px] transition-transform duration-[350ms] ease-out lg:group-hover:scale-[1.07]";
+       switch(identifier) {
+         // Network connection / Connected Thinking Concept Mapping Structurally Scaling Smoothly Producing Outputs Safely 
+         case "network":
+           return <svg className={`${bClass} lg:group-hover:rotate-[3deg]`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>;
+         // Cloud/Database/Block structure rendering efficiently representing 'Practical engineering' tracking completely parsing nicely  
+         case "engineering":
+           return <svg className={`${bClass} lg:group-hover:rotate-[4deg]`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/><polyline points="2 15.5 12 8.5 22 15.5"/><line x1="12" y1="2" x2="12" y2="8.5"/></svg>;
+         // Intersected speech format producing Clean Conversational Interface cleanly producing parameters rendering flawlessly routing nicely    
+         case "communication":
+           return <svg className={`${bClass} lg:group-hover:-rotate-[3deg]`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>;
+         default: return null;
+       }
+    };
+
     return (
       <div 
         ref={ref} 
-        className="w-full h-full perspective-[1200px]" // Activates physical hardware rotational scale capacity securely translating components visually matching depth layers natively resolving planes completely accurately scaling constraints dynamically operating beautifully returning flawlessly mapping correctly maintaining bounds efficiently configuring logic smoothly constructing structures elegantly producing bounds perfectly.
+        className="w-full h-full perspective-[1200px]"
         style={{ transformStyle: "preserve-3d" }}
       >
         <PremiumCardHover
@@ -60,7 +75,6 @@ export const WhyChooseUsCard = forwardRef<HTMLDivElement, WhyChooseUsCardProps>(
            accentBorder={targetProps.accentTone}
            className="w-full min-h-[300px] h-full rounded-[22px] sm:rounded-[24px] border-slate-200/60 shadow-[0_8px_30px_rgba(15,23,42,0.02)]"
         >
-          {/* Subtle Visual Abstract Node Injector Base Map Structure Render Background Flow Array Component Asset Grid Overlay Processing Secure System Natively Connecting Fully Seamless Layers Effectively Structuring Context Properly Wrapping Graphic Boundary Elements Directly Building Output Confidently Mapping Clean Formatting Easily Routing Successfully Combining Exactly Distributing Rendering Visual Output Accurately Loading  */}
           <div className="absolute inset-0 z-0 select-none overflow-hidden rounded-[24px]">
              {targetProps.bgLayer}
           </div>
@@ -69,23 +83,22 @@ export const WhyChooseUsCard = forwardRef<HTMLDivElement, WhyChooseUsCardProps>(
              <div 
                className={`flex items-center justify-center w-[48px] h-[48px] rounded-[14px] shadow-sm shrink-0 mb-[32px] border backdrop-blur-md transition-all duration-[300ms] group-hover:bg-white group-hover:scale-[1.04] ${targetProps.containerSkin}`}
              >
-                <WhyChooseUsIcon type={data.iconType} />
+                {resolveContextGraphic(data.iconType)}
              </div>
              
-             {/* Dynamic Base Shift Structural Flex Flow Gap Compensator Resolving Safely Formatting Accurately Aligning Content Native Processing Bounds Correct Tracking Fully Binding Elements Effectively Controlling Display Spans Correct Routing Efficient Scaling  */}
              <div className="flex-1 w-full" />
              
-             <h3 className="font-sans font-bold text-[#06162C] text-[19px] sm:text-[21px] lg:text-[22px] tracking-tight leading-[1.25] pb-2 relative transform transition-transform duration-300">
+             <h3 className="font-sans font-bold text-[#06162C] text-[18px] sm:text-[20px] lg:text-[21px] tracking-tight leading-[1.25] pb-2 relative transform transition-transform duration-300">
                {data.title}
              </h3>
-             <p className="font-sans text-[14px] sm:text-[14.5px] leading-relaxed tracking-[-0.01em] text-[#475569] max-w-[94%]">
+             <p className="font-sans text-[14px] sm:text-[14.5px] leading-relaxed tracking-[-0.01em] text-[#475569] max-w-[94%] text-pretty">
                {data.description}
              </p>
              
-             {/* Micro-Track Slide Line Sub Component Decoration Component Trigger Base Native Anchor Visual Track Node Edge Limit Bar Line System Layer Rule Action Format Accurately Positioning Beautiful Visual Floor Frame Map Secure Limits */}
              <div 
-               className="absolute bottom-0 left-[26px] w-[50px] h-[3px] rounded-t-[2px] transition-transform duration-500 ease-out origin-left scale-x-0 group-hover:scale-x-100"
+               className="absolute bottom-0 left-[26px] w-[50px] h-[3px] rounded-t-[2px] transition-transform duration-500 ease-out origin-left scale-x-0 group-hover:scale-x-100 pointer-events-none"
                style={{ backgroundColor: targetProps.accentTone }}
+               aria-hidden="true"
              />
           </div>
         </PremiumCardHover>
