@@ -1,39 +1,39 @@
 /**
  * BRIVYA SOLUTIONS — "WHY CHOOSE US" CONTENT MANIFEST
- * Authoritative editorial content based on competitive technical differentiators.
+ * Authoritative editorial content and contextual benefit configurations.
  */
 
 export const WHY_US_CONTENT = {
   header: {
-    eyebrow: "Why work with us",
-    title: "Why Choose Us",
+    eyebrow: "WHY WORK WITH BRIVYA",
+    title: "Different disciplines. One standard of work.",
     description:
-      "A successful project requires more than standard engineering. It demands careful decisions, strategic expertise, and meticulous attention to execution. That is the operational standard we bring to every engagement.",
+      "A website, an advertising campaign, and an internal business tool may serve different purposes. We bring the same care to each: understand the problem, choose the right approach, and make the details count.",
   },
   cards: [
     {
-      id: "benefit-quality",
+      id: "benefit-systems",
       theme: "quality",
-      iconType: "shield",
-      title: "Uncompromising Quality",
+      iconType: "network", 
+      title: "01 — Connected Thinking",
       description:
-        "Senior engineers on every project, with code reviews and rigorous technical audits before deployment. We build infrastructure that is highly reliable, easily maintainable, and engineered to peak global standards.",
+        "We consider how websites, digital advertising, and internal systems work together, rather than treating each as an isolated project.",
     },
     {
-      id: "benefit-speed",
+      id: "benefit-practical",
       theme: "speed",
-      iconType: "zap",
-      title: "Rapid Execution",
+      iconType: "engineering",
+      title: "02 — Practical Engineering",
       description:
-        "Our modular architecture systems and proprietary testing tooling transition your idea from scoping phase to production scale at remarkable speed. Experience operational velocity without technical debt.",
+        "From cloud infrastructure and databases to AI automation and custom add-ons, we focus on technology that's useful, dependable, and straightforward to maintain.",
     },
     {
-      id: "benefit-value",
+      id: "benefit-communication",
       theme: "value",
-      iconType: "wallet",
-      title: "Competitive Viability",
+      iconType: "communication",
+      title: "03 — Clear Communication",
       description:
-        "By structuring our agency entirely via focused technology specialists and direct-response operational pods, we drastically outpace traditional agency economics. Zero unpredictable invoices—transparent structural pricing.",
+        "We believe good partnerships depend on honest conversations, well-defined expectations, and decisions that make sense to the people paying for the work.",
     },
   ],
 } as const;
