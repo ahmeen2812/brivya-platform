@@ -13,7 +13,6 @@
 //   );
 // }
 import { HeroSection } from "@/components/hero/HeroSection";
-import { PrecisionInPracticeSection } from "@/components/sections/precision";
 import { WhyChooseUsSection } from "@/components/sections/why-choose-us";
 
 export default function HomePage() {
@@ -21,10 +20,17 @@ export default function HomePage() {
     <div className="relative w-full">
       <HeroSection />
       
-      <PrecisionInPracticeSection />
-      
+      {/* 
+        Temporarily suppressed per strict request 
+        <PrecisionInPracticeSection />
+      */}
+
+      {/* Verified Section Safely Running Successfully  */}
       <WhyChooseUsSection />
       
     </div>
   );
 }
+
+
+
