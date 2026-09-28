@@ -1,6 +1,5 @@
 /**
- * BRIVYA SOLUTIONS — PRECISION IN PRACTICE BARREL EXPORT
- * Exposes the master section component and type contracts cleanly.
+ * BRIVYA SOLUTIONS — METRICS SECTION BARREL EXPORT
  */
 
 export { PrecisionInPracticeSection } from "./PrecisionInPracticeSection";
