@@ -1,81 +1,30 @@
 /**
- * BRIVYA SOLUTIONS — PRECISION IN PRACTICE TYPE SYSTEM
- * Strict type contracts for the credibility & proof section:
- * - Telemetry metrics & verification standards
- * - Deployment ledger records
- * - Architectural visual plate schematic nodes
- * - 5-stage kinetic animation lifecycle targets
+ * BRIVYA SOLUTIONS — METRICS & CREDIBILITY SECTION TYPES
+ * Strict type contracts for the 3+2 expandable metrics layout.
  */
 
-export type VerificationStatus = "verified" | "active" | "compiled";
+export type MetricIconKey =
+  | "projects"
+  | "experience"
+  | "clients"
+  | "campaigns"
+  | "satisfaction";
 
-/**
- * Verifiable performance metric data model.
- * Strictly avoids vanity numbers; maps directly to technical and operational standards.
- */
-export interface TelemetryMetric {
+export interface MetricItemData {
   readonly id: string;
-  readonly index: string; // e.g. "01", "02"
-  readonly value: string; // e.g. "< 80ms", "99.8%"
-  readonly unit?: string;
-  readonly label: string; // e.g. "TTFB Edge Latency"
-  readonly benchmarkStandard: string; // e.g. "Global Cloudflare Benchmark"
-  readonly verificationBadge: string; // e.g. "Audited SLA"
+  readonly iconKey: MetricIconKey;
+  readonly value: string; // Verifiable numeric value (e.g. "45+", "6+", "98%")
+  readonly label: string; // e.g. "Completed Projects"
+  readonly sublabel?: string; // e.g. "Documented deliverables"
+  readonly isPrimary: boolean; // true = visible initially; false = visible when expanded
 }
 
-/**
- * Factual deployment ledger record representing an engineered client system.
- */
-export interface DeploymentRecord {
-  readonly id: string;
-  readonly code: string; // e.g. "SYS-094"
-  readonly clientSector: string; // e.g. "Enterprise Logistics"
-  readonly deliverable: string; // e.g. "Headless Commerce Architecture"
-  readonly technicalArchitecture: string; // e.g. "Next.js / Shopify / AWS"
-  readonly verifiedOutcome: string; // e.g. "+38% Conversion Throughput"
-  readonly timestamp: string; // e.g. "Q1 // 2026"
-  readonly href?: string;
-}
-
-/**
- * Inspection coordinate pin on the architectural schematic visual plate.
- */
-export interface VisualPlateNode {
-  readonly id: string;
-  readonly label: string;
-  readonly specification: string;
-  readonly coordinatePercent: {
-    readonly x: number;
-    readonly y: number;
-  };
-  readonly status: VerificationStatus;
-}
-
-/**
- * Complete editorial and telemetry data model for the section.
- */
-export interface PrecisionSectionContent {
+export interface MetricsSectionCopy {
   readonly eyebrow: string;
-  readonly indexCode: string;
-  readonly headline: {
-    readonly line1: string;
-    readonly line2Accent: string;
-    readonly line3: string;
-  };
-  readonly thesis: string;
-  readonly metrics: readonly TelemetryMetric[];
-  readonly ledgerEntries: readonly DeploymentRecord[];
-  readonly plateNodes: readonly VisualPlateNode[];
-}
-
-/**
- * DOM targets participating in the 5-stage GSAP kinetic reveal.
- */
-export interface PrecisionAnimationTargets {
-  readonly sectionContainer: HTMLElement | null;
-  readonly headerBlock: HTMLElement | null;
-  readonly visualPlate: HTMLElement | null;
-  readonly liveHtmlOverlay: HTMLElement | null;
-  readonly metricsGrid: HTMLElement | null;
-  readonly ledgerContainer: HTMLElement | null;
+  readonly headingLine1: string;
+  readonly headingLine2Accent: string;
+  readonly description: string;
+  readonly footerStatement: string;
+  readonly expandLabel: string;
+  readonly collapseLabel: string;
 }
