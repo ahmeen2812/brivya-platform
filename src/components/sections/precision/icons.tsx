@@ -1,79 +1,114 @@
 "use client";
 
 import * as React from "react";
+import { MetricIconKey } from "./types";
 
-interface PrecisionIconProps {
+interface IconProps {
   className?: string;
 }
 
 /**
- * Technical Crosshair Alignment Glyph
+ * Calendar / Years of Experience Icon
  */
-export const PrecisionCrosshairIcon: React.FC<PrecisionIconProps> = ({
+export const IconCalendar: React.FC<IconProps> = ({ className = "h-6 w-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+    <circle cx="8" cy="14" r="1" fill="currentColor" />
+    <circle cx="12" cy="14" r="1" fill="currentColor" />
+    <circle cx="16" cy="14" r="1" fill="currentColor" />
+    <circle cx="8" cy="18" r="1" fill="currentColor" />
+    <circle cx="12" cy="18" r="1" fill="currentColor" />
+    <circle cx="16" cy="18" r="1" fill="currentColor" />
+  </svg>
+);
+
+/**
+ * Stack / Completed Projects Icon
+ */
+export const IconProjectsStack: React.FC<IconProps> = ({ className = "h-6 w-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
+  </svg>
+);
+
+/**
+ * Users / Clients Served Icon
+ */
+export const IconClientsUsers: React.FC<IconProps> = ({ className = "h-6 w-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+/**
+ * Target / Campaigns Managed Icon
+ */
+export const IconCampaignsTarget: React.FC<IconProps> = ({ className = "h-6 w-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2" fill="currentColor" />
+  </svg>
+);
+
+/**
+ * Shield Check / Client Satisfaction Icon
+ */
+export const IconSatisfactionShield: React.FC<IconProps> = ({ className = "h-6 w-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    <polyline points="9 12 11 14 15 10" />
+  </svg>
+);
+
+/**
+ * Diagonal Expand/Collapse Arrow Icon (Matching Reference Screenshot)
+ */
+export const IconExpandDiagonal: React.FC<{ isExpanded: boolean; className?: string }> = ({
+  isExpanded,
   className = "h-4 w-4",
 }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="12" cy="12" r="8" strokeOpacity="0.4" />
-    <line x1="12" y1="2" x2="12" y2="6" strokeLinecap="round" />
-    <line x1="12" y1="18" x2="12" y2="22" strokeLinecap="round" />
-    <line x1="2" y1="12" x2="6" y2="12" strokeLinecap="round" />
-    <line x1="18" y1="12" x2="22" y2="12" strokeLinecap="round" />
-    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+  <svg
+    className={`${className} transition-transform duration-300 ${isExpanded ? "rotate-180" : "rotate-0"}`}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="7" y1="7" x2="17" y2="17" />
+    <polyline points="17 7 17 17 7 17" />
   </svg>
 );
 
 /**
- * Audited Verification Checkmark Badge
+ * Universal Icon Resolver
  */
-export const PrecisionCheckmarkIcon: React.FC<PrecisionIconProps> = ({
-  className = "h-3.5 w-3.5",
-}) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-  </svg>
-);
-
-/**
- * Terminal Deployment Chevron Link
- */
-export const PrecisionArrowIcon: React.FC<PrecisionIconProps> = ({
-  className = "h-3.5 w-3.5",
-}) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-  </svg>
-);
-
-/**
- * Live Operational Telemetry Diode
- */
-export const PrecisionPulseIcon: React.FC<PrecisionIconProps> = ({
-  className = "h-2 w-2",
-}) => (
-  <span className={`relative inline-flex ${className}`}>
-    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-    <span className="relative inline-flex h-full w-full rounded-full bg-emerald-500" />
-  </span>
-);
-
-/**
- * Structural Architecture Code Bracket
- */
-export const PrecisionCodeBracketIcon: React.FC<PrecisionIconProps> = ({
-  className = "h-4 w-4",
-}) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
-  </svg>
-);
-
-/**
- * Server Security Shield Badge
- */
-export const PrecisionShieldIcon: React.FC<PrecisionIconProps> = ({
-  className = "h-4 w-4",
-}) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
+export const MetricIconResolver: React.FC<{ iconKey: MetricIconKey; className?: string }> = ({
+  iconKey,
+  className = "h-6 w-6",
+}) => {
+  switch (iconKey) {
+    case "projects":
+      return <IconProjectsStack className={className} />;
+    case "experience":
+      return <IconCalendar className={className} />;
+    case "clients":
+      return <IconClientsUsers className={className} />;
+    case "campaigns":
+      return <IconCampaignsTarget className={className} />;
+    case "satisfaction":
+      return <IconSatisfactionShield className={className} />;
+    default:
+      return <IconProjectsStack className={className} />;
+  }
+};
