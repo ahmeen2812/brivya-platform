@@ -1,131 +1,68 @@
 /**
- * BRIVYA SOLUTIONS — PRECISION IN PRACTICE DATA MANIFEST
- * Authoritative editorial copy, verified technical telemetry standards,
- * and deployment ledger records. No fabricated vanity statistics.
+ * BRIVYA SOLUTIONS — METRICS & CREDIBILITY CONTENT MANIFEST
+ * Authoritative copy and configurable parameters for the 5 metrics.
  */
 
-import { PrecisionSectionContent } from "./types";
+import { MetricsSectionCopy, MetricItemData } from "./types";
 
-export const PRECISION_CONTENT: PrecisionSectionContent = {
-  eyebrow: "AUDITED ENGINEERING PRACTICE",
-  indexCode: "SPEC: BRV-VERIFIED-V3",
-  headline: {
-    line1: "Code that performs.",
-    line2Accent: "Data that accounts.",
-    line3: "Systems that scale.",
+export const METRICS_SECTION_COPY: MetricsSectionCopy = {
+  eyebrow: "THE WORK BEHIND THE THINKING",
+  headingLine1: "Good work is built",
+  headingLine2Accent: "on more than ideas.",
+  description:
+    "A successful project takes careful decisions, technical expertise, and attention to the details that matter. That's the standard we aim to bring to every engagement.",
+  footerStatement: "Thoughtful execution. Clear accountability.",
+  expandLabel: "Show all performance parameters",
+  collapseLabel: "Show core metrics only",
+};
+
+// 3 Primary metrics visible initially + 2 Secondary metrics revealed on expand
+export const METRICS_DATA: readonly MetricItemData[] = [
+  // ---------------------------------------------------------------------------
+  // INITIAL 3 METRICS (Always visible)
+  // ---------------------------------------------------------------------------
+  {
+    id: "metric-projects",
+    iconKey: "projects",
+    value: "50+",
+    label: "Completed Projects",
+    sublabel: "Documented digital deliverables",
+    isPrimary: true,
   },
-  thesis:
-    "We do not build speculative templates or deploy unmonitored advertising campaigns. Every digital product is engineered with strict type contracts, edge delivery standards, and first-party attribution pipelines.",
+  {
+    id: "metric-experience",
+    iconKey: "experience",
+    value: "6+",
+    label: "Years of Experience",
+    sublabel: "Combined engineering leadership",
+    isPrimary: true,
+  },
+  {
+    id: "metric-clients",
+    iconKey: "clients",
+    value: "30+",
+    label: "Clients Served",
+    sublabel: "Enterprise & growth partners",
+    isPrimary: true,
+  },
 
-  // Verifiable Technical & Operational Standards
-  metrics: [
-    {
-      id: "metric-latency",
-      index: "01",
-      value: "< 80ms",
-      unit: "TTFB",
-      label: "Edge Response Standard",
-      benchmarkStandard: "Global CDN delivery on Cloudflare & AWS edge networks",
-      verificationBadge: "Audited SLA",
-    },
-    {
-      id: "metric-types",
-      index: "02",
-      value: "100%",
-      unit: "STRICT",
-      label: "Type Contract Integrity",
-      benchmarkStandard: "Zero implicit-any TypeScript across production codebases",
-      verificationBadge: "Type-Safe Core",
-    },
-    {
-      id: "metric-attribution",
-      index: "03",
-      value: "First-Party",
-      unit: "CAPI",
-      label: "Conversion Attribution",
-      benchmarkStandard: "Server-side event matching bypassing browser tracking loss",
-      verificationBadge: "CAPI Protocol",
-    },
-    {
-      id: "metric-uptime",
-      index: "04",
-      value: "99.95%",
-      unit: "SLA",
-      label: "Platform Availability",
-      benchmarkStandard: "Multi-region failover with automated self-healing",
-      verificationBadge: "SLA Standard",
-    },
-  ],
-
-  // Recent Deliverables Ledger
-  ledgerEntries: [
-    {
-      id: "ledger-01",
-      code: "DEP-094",
-      clientSector: "Enterprise Commerce Ecosystem",
-      deliverable: "Headless Storefront & Checkout Architecture",
-      technicalArchitecture: "Next.js 15 · Shopify Plus · Edge Caching",
-      verifiedOutcome: "Sub-second product hydration & 99+ Core Vitals",
-      timestamp: "Q1 // 2026",
-    },
-    {
-      id: "ledger-02",
-      code: "DEP-093",
-      clientSector: "Performance Media Acquisition",
-      deliverable: "Algorithmic Search & Conversion Pipeline",
-      technicalArchitecture: "Google Ads Search/PMax · Meta Advantage+ · sGTM",
-      verifiedOutcome: "Deterministic first-party conversion feeds",
-      timestamp: "Q1 // 2026",
-    },
-    {
-      id: "ledger-03",
-      code: "DEP-092",
-      clientSector: "Operational Logistics & Automation",
-      deliverable: "Autonomous Inventory Reconciliation Mesh",
-      technicalArchitecture: "Python Engine · Vector Database · Webhook ETL",
-      verifiedOutcome: "Zero-error synchronization across ERP and CRM",
-      timestamp: "Q1 // 2026",
-    },
-    {
-      id: "ledger-04",
-      code: "DEP-091",
-      clientSector: "Enterprise Productivity Ecosystem",
-      deliverable: "Custom Microsoft 365 & Google Workspace Add-in",
-      technicalArchitecture: "Office.js · Google Apps Script · Azure AD SSO",
-      verifiedOutcome: "Cross-platform document and spreadsheet automation",
-      timestamp: "Q1 // 2026",
-    },
-  ],
-
-  // Architectural Schematic Inspection Pins
-  plateNodes: [
-    {
-      id: "pin-01",
-      label: "EDGE_RUNTIME",
-      specification: "Sub-80ms Global Handshake",
-      coordinatePercent: { x: 18, y: 26 },
-      status: "verified",
-    },
-    {
-      id: "pin-02",
-      label: "TYPE_SAFETY",
-      specification: "Strict Schema Contract",
-      coordinatePercent: { x: 76, y: 30 },
-      status: "compiled",
-    },
-    {
-      id: "pin-03",
-      label: "CAPI_PIPELINE",
-      specification: "Server-to-Server Event Match",
-      coordinatePercent: { x: 28, y: 74 },
-      status: "active",
-    },
-    {
-      id: "pin-04",
-      label: "AUTO_FAILOVER",
-      specification: "Multi-Region Cluster Sync",
-      coordinatePercent: { x: 82, y: 78 },
-      status: "verified",
-    },
-  ],
-} as const;
+  // ---------------------------------------------------------------------------
+  // EXPANDED 2 METRICS (Revealed upon clicking the expand control)
+  // ---------------------------------------------------------------------------
+  {
+    id: "metric-campaigns",
+    iconKey: "campaigns",
+    value: "120+",
+    label: "Campaigns Managed",
+    sublabel: "Multi-channel media pipelines",
+    isPrimary: false,
+  },
+  {
+    id: "metric-satisfaction",
+    iconKey: "satisfaction",
+    value: "98%",
+    label: "Client Satisfaction",
+    sublabel: "Audited delivery SLA rating",
+    isPrimary: false,
+  },
+] as const;
