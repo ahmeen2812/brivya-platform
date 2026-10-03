@@ -13,6 +13,8 @@ interface NavLinksProps {
   navLinksRef?: React.RefObject<HTMLUListElement | null>;
   registerDividerRef?: (index: number, el: HTMLDivElement | null) => void;
   onTriggerBorderPulse?: () => void;
+  isMegaMenuOpen?: boolean;
+  onToggleMegaMenu?: () => void;
 }
 
 export const NavLinks: React.FC<NavLinksProps> = ({
@@ -21,14 +23,18 @@ export const NavLinks: React.FC<NavLinksProps> = ({
   navLinksRef,
   registerDividerRef,
   onTriggerBorderPulse,
+  isMegaMenuOpen = false,
+  onToggleMegaMenu,
 }) => {
   const pathname = usePathname();
   const internalRef = React.useRef<HTMLUListElement | null>(null);
   const containerRef = navLinksRef || internalRef;
   const gliderRef = React.useRef<HTMLSpanElement | null>(null);
-  const itemElementsMap = React.useRef<Map<string, HTMLElement>>(new Map());
 
-  // Determine active item based on current route or user click latch
+  // Store references to the exact text elements to measure exact word length
+  const itemElementsMap = React.useRef<Map<string, HTMLElement>>(new Map());
+  const textElementsMap = React.useRef<Map<string, HTMLElement>>(new Map());
+
   const getInitialActiveId = () => {
     const matched = NAV_ITEMS.find((item: NavItemConfig) =>
       item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href),
@@ -38,35 +44,46 @@ export const NavLinks: React.FC<NavLinksProps> = ({
 
   const [activeId, setActiveId] = React.useState<string>(getInitialActiveId);
 
-  // Position magnetic glider on mount and route changes
+  // Reposition magnetic glider on mount, route change, and font load
   React.useEffect(() => {
     const matched = getInitialActiveId();
     setActiveId(matched);
 
     const activeEl = itemElementsMap.current.get(matched);
+    const textEl = textElementsMap.current.get(matched);
+
     if (activeEl && gliderRef.current && containerRef.current) {
-      animateMagneticGlider(gliderRef.current, activeEl, containerRef.current);
+      // Measure exact text width + 4px bleed to cover full word without cutoff
+      const exactLineWidth = textEl ? textEl.offsetWidth + 4 : 36;
+      animateMagneticGlider(gliderRef.current, activeEl, containerRef.current, exactLineWidth);
     }
   }, [pathname]);
 
-  const handleItemHover = (el: HTMLElement) => {
+  const handleItemHover = (el: HTMLElement, itemId: string) => {
     if (gliderRef.current && containerRef.current) {
-      animateMagneticGlider(gliderRef.current, el, containerRef.current);
+      const textEl = textElementsMap.current.get(itemId);
+      const exactLineWidth = textEl ? textEl.offsetWidth + 4 : 36;
+      animateMagneticGlider(gliderRef.current, el, containerRef.current, exactLineWidth);
     }
   };
 
   const handleNavMouseLeave = () => {
-    // Snap back magnetically to the active latched item
     const activeEl = itemElementsMap.current.get(activeId);
+    const textEl = textElementsMap.current.get(activeId);
+
     if (activeEl && gliderRef.current && containerRef.current) {
-      animateMagneticGlider(gliderRef.current, activeEl, containerRef.current);
+      const exactLineWidth = textEl ? textEl.offsetWidth + 4 : 36;
+      animateMagneticGlider(gliderRef.current, activeEl, containerRef.current, exactLineWidth);
     }
   };
 
   const handleItemSelect = (id: string, el: HTMLElement) => {
     setActiveId(id);
+    const textEl = textElementsMap.current.get(id);
+
     if (gliderRef.current && containerRef.current) {
-      animateMagneticGlider(gliderRef.current, el, containerRef.current);
+      const exactLineWidth = textEl ? textEl.offsetWidth + 4 : 36;
+      animateMagneticGlider(gliderRef.current, el, containerRef.current, exactLineWidth);
     }
     if (onItemClick) onItemClick();
   };
@@ -80,8 +97,8 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       className={`relative flex items-center m-0 p-0 ${className || ""}`}
     >
       {/* 
-        Single Shared Magnetic Glider Bar:
-        Glides across all items and snaps beneath active or hovered element
+        Single Dynamic Magnetic Glider Bar:
+        Dynamically resizes its width to match each hovered/active word length
       */}
       <span
         ref={gliderRef}
@@ -95,12 +112,17 @@ export const NavLinks: React.FC<NavLinksProps> = ({
           <NavItem
             item={item}
             isActive={activeId === item.id}
-            onItemHover={handleItemHover}
+            isMenuOpen={item.id === "services" ? isMegaMenuOpen : false}
+            onItemHover={(el) => handleItemHover(el, item.id)}
             onItemSelect={handleItemSelect}
             itemRef={(el) => {
               if (el) itemElementsMap.current.set(item.id, el);
             }}
+            textRef={(el) => {
+              if (el) textElementsMap.current.set(item.id, el);
+            }}
             onTriggerBorderPulse={onTriggerBorderPulse}
+            onToggleMegaMenu={item.id === "services" ? onToggleMegaMenu : undefined}
           />
           {item.hasDividerAfter && (
             <NavDivider

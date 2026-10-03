@@ -7,28 +7,42 @@ import { NavItemConfig } from "@/config/navigation";
 interface NavItemProps {
   item: NavItemConfig;
   isActive: boolean;
+  isMenuOpen?: boolean;
   onItemSelect: (id: string, el: HTMLElement) => void;
   onItemHover: (el: HTMLElement) => void;
   itemRef?: (el: HTMLLIElement | null) => void;
+  textRef?: (el: HTMLSpanElement | null) => void;
   onTriggerBorderPulse?: () => void;
+  onToggleMegaMenu?: () => void;
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
   item,
   isActive,
+  isMenuOpen = false,
   onItemSelect,
   onItemHover,
   itemRef,
+  textRef,
   onTriggerBorderPulse,
+  onToggleMegaMenu,
 }) => {
   const containerRef = React.useRef<HTMLLIElement | null>(null);
+  const isServices = item.id === "services";
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLLIElement>) => {
     onItemHover(e.currentTarget);
+    if (isServices && onToggleMegaMenu && !isMenuOpen) {
+      onToggleMegaMenu();
+    }
   };
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    onItemSelect(item.id, e.currentTarget);
+    if (isServices && onToggleMegaMenu) {
+      onToggleMegaMenu();
+    } else {
+      onItemSelect(item.id, e.currentTarget);
+    }
     if (onTriggerBorderPulse) onTriggerBorderPulse();
   };
 
@@ -44,31 +58,41 @@ export const NavItem: React.FC<NavItemProps> = ({
     >
       <Link
         href={item.href}
+        onClick={(e) => {
+          if (isServices) {
+            e.preventDefault(); // Prevent navigating directly so mega-menu can be inspected
+          }
+        }}
         aria-current={isActive ? "page" : undefined}
+        aria-expanded={isServices ? isMenuOpen : undefined}
         className={`group relative flex items-center justify-center px-3 sm:px-4 lg:px-5 py-2 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1675F8] rounded-full ${
           isActive ? "scale-[1.04]" : "scale-100 hover:scale-[1.02]"
         }`}
       >
-        {/* Active Signal Blue Beacon Diode (Fades & pulses exclusively on the active page) */}
-        {isActive && (
-          <span
-            aria-hidden="true"
-            className="mr-2 flex h-1.5 w-1.5 shrink-0 items-center justify-center transition-all duration-300"
-          >
-            <span className="absolute inline-flex h-2.5 w-2.5 animate-ping rounded-full bg-[#1675F8] opacity-60" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#1675F8]" />
-          </span>
-        )}
-
-        {/* Crisp Section Label (Guaranteed permanent opacity) */}
+        {/* Crisp Section Label (Zero Blinking Dot; Pure Confident Typography) */}
         <span
-          className={`font-sans tracking-[-0.01em] transition-colors duration-200 whitespace-nowrap ${
+          ref={textRef}
+          className={`font-sans tracking-[-0.01em] transition-colors duration-200 whitespace-nowrap inline-flex items-center gap-1.5 ${
             isActive
               ? "text-[14.5px] sm:text-[15px] font-bold text-[#06162C]"
               : "text-[13.5px] sm:text-[14px] font-semibold text-[#8998AD] group-hover:text-[#06162C]"
           }`}
         >
           {item.label}
+
+          {/* Micro Chevron Down Arrow for Services */}
+          {isServices && (
+            <svg
+              className={`h-3 w-3 text-[#8998AD] transition-transform duration-300 ${
+                isMenuOpen ? "rotate-180 text-[#1675F8]" : "group-hover:text-[#06162C]"
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          )}
         </span>
       </Link>
     </li>

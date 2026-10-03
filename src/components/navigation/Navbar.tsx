@@ -8,6 +8,7 @@ import { NavDivider } from "./NavDivider";
 import { NavCtaButton } from "./NavCtaButton";
 import { NavMobileToggle } from "./NavMobileToggle";
 import { NavMobileMenu } from "./NavMobileMenu";
+import { ServicesMegaMenu } from "./mega-menu/ServicesMegaMenu";
 import {
   initDesktopNavbarTimeline,
   triggerInteractiveBorderPulse,
@@ -16,6 +17,7 @@ import { usePathname } from "next/navigation";
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState<boolean>(false);
+  const [megaMenuOpen, setMegaMenuOpen] = React.useState<boolean>(false);
   const pathname = usePathname();
 
   // Animation Node References
@@ -28,7 +30,6 @@ export const Navbar: React.FC = () => {
   const ctaButtonRef = React.useRef<HTMLDivElement | null>(null);
   const navLinksRef = React.useRef<HTMLUListElement | null>(null);
 
-  // Array of divider refs
   const dividersRefList = React.useRef<(HTMLDivElement | null)[]>([]);
 
   const registerDividerRef = React.useCallback((index: number, el: HTMLDivElement | null) => {
@@ -63,12 +64,13 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
-  // Close mobile drawer on route navigation
+  // Close menus on route change
   React.useEffect(() => {
     setMobileMenuOpen(false);
+    setMegaMenuOpen(false);
   }, [pathname]);
 
-  // Prevent background scroll when mobile menu is open
+  // Lock body scroll on mobile drawer
   React.useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -79,6 +81,9 @@ export const Navbar: React.FC = () => {
 
   const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
   const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  const toggleMegaMenu = () => setMegaMenuOpen((prev) => !prev);
+  const closeMegaMenu = () => setMegaMenuOpen(false);
 
   const handlePulseBorder = () => {
     triggerInteractiveBorderPulse(borderRef.current);
@@ -111,6 +116,8 @@ export const Navbar: React.FC = () => {
             navLinksRef={navLinksRef}
             registerDividerRef={registerDividerRef}
             onTriggerBorderPulse={handlePulseBorder}
+            isMegaMenuOpen={megaMenuOpen}
+            onToggleMegaMenu={toggleMegaMenu}
           />
         </nav>
 
@@ -138,6 +145,9 @@ export const Navbar: React.FC = () => {
           <NavMobileToggle isOpen={mobileMenuOpen} onToggle={toggleMobileMenu} />
         </div>
       </NavContainer>
+
+      {/* Floating Desktop Services Mega-Menu Console */}
+      <ServicesMegaMenu isOpen={megaMenuOpen} onClose={closeMegaMenu} />
 
       {/* Dedicated Animated Mobile Drawer */}
       <NavMobileMenu isOpen={mobileMenuOpen} onClose={closeMobileMenu} />
