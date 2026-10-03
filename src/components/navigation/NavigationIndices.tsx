@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { PRIMARY_NAVIGATION_INDICES } from "@/config/navigation";
-import { NavigationPlaneId } from "@/types/navigation";
+import { NavigationPlaneId, PrimaryIndexItem } from "@/types/navigation";
 
 interface NavigationIndicesProps {
   onPlaneHover?: (planeId: NavigationPlaneId) => void;
@@ -20,6 +20,7 @@ export const NavigationIndices: React.FC<NavigationIndicesProps> = ({
       className="flex h-full w-full flex-col justify-between p-6 sm:p-8 lg:p-12"
     >
       <div className="flex flex-col">
+        {/* Header Telemetry */}
         <div className="flex items-center justify-between border-b border-[rgba(137,152,173,0.15)] pb-3">
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8998AD]">
             DIRECTORY // 07 SECTORS
@@ -29,8 +30,9 @@ export const NavigationIndices: React.FC<NavigationIndicesProps> = ({
           </span>
         </div>
 
+        {/* Numbered Sectors List */}
         <ul className="mt-4 flex flex-col divide-y divide-[rgba(137,152,173,0.1)]">
-          {PRIMARY_NAVIGATION_INDICES.map((item) => (
+          {PRIMARY_NAVIGATION_INDICES.map((item: PrimaryIndexItem) => (
             <li key={item.index} className="relative">
               <Link
                 href={item.href}
@@ -41,7 +43,9 @@ export const NavigationIndices: React.FC<NavigationIndicesProps> = ({
                   }
                 }}
                 className={`group flex items-center justify-between py-3.5 transition-colors duration-200 ${
-                  item.isAction ? "text-[#C7A76B]" : "text-[#F4F7FC] hover:text-[#1675F8]"
+                  item.isAction
+                    ? "text-[#C7A76B]"
+                    : "text-[#F4F7FC] hover:text-[#1675F8]"
                 }`}
               >
                 <div className="flex items-baseline gap-4 sm:gap-6">
