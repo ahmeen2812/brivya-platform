@@ -1,9 +1,20 @@
+/**
+ * BRIVYA SOLUTIONS — NAVIGATION MASTER MANIFEST
+ * Exports both configuration data and all navigation types.
+ */
+
+// 1. RE-EXPORT ALL NAVIGATION TYPE CONTRACTS
+export * from "@/types/navigation";
+
 import {
   ArchitecturalPlane,
   PrimaryIndexItem,
   NavItemConfig,
   NavBrandConfig,
 } from "@/types/navigation";
+
+// Explicit re-exports to guarantee zero TypeScript resolution failures
+export type { NavItemConfig, NavBrandConfig, PrimaryIndexItem, ArchitecturalPlane };
 
 /**
  * -----------------------------------------------------------------------------
@@ -65,8 +76,6 @@ export const NAV_BRAND_CONFIG: NavBrandConfig = {
 /**
  * -----------------------------------------------------------------------------
  * 2. PRIMARY NAVIGATION INDICES (01 Work ... 07 Start Project)
- * Bound strictly to PrimaryIndexItem[] to ensure planeTarget and isAction
- * are recognized on all members.
  * -----------------------------------------------------------------------------
  */
 export const PRIMARY_NAVIGATION_INDICES: readonly PrimaryIndexItem[] = [
