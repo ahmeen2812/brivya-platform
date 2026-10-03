@@ -12,42 +12,42 @@ export const NAV_ITEMS: readonly NavItemConfig[] = [
     index: "01",
     label: "Home",
     href: "/",
-    hasDividerAfter: true, // Exact match to reference divider between 01 and 02
+    hasDividerAfter: true, // Divider between 01 Home and 02 Services
   },
   {
     id: "services",
     index: "02",
     label: "Services",
     href: "/services",
-    hasDividerAfter: false,
+    hasDividerAfter: true, // Fixed: Added divider between 02 Services and 03 Work
   },
   {
     id: "work",
     index: "03",
     label: "Work",
     href: "/work",
-    hasDividerAfter: true, // Matches divider between 03 and 04
+    hasDividerAfter: true, // Divider between 03 Work and 04 Products
   },
   {
     id: "products",
     index: "04",
     label: "Products",
     href: "/products",
-    hasDividerAfter: true, // Matches divider between 04 and 05
+    hasDividerAfter: true, // Divider between 04 Products and 05 About
   },
   {
     id: "about",
     index: "05",
     label: "About",
     href: "/about",
-    hasDividerAfter: true, // Matches divider between 05 and 06
+    hasDividerAfter: true, // Divider between 05 About and 06 Contact
   },
   {
     id: "contact",
     index: "06",
     label: "Contact",
     href: "/contact",
-    hasDividerAfter: false,
+    hasDividerAfter: false, // The divider after 06 Contact sits structurally before the CTA button
   },
 ] as const;
 
