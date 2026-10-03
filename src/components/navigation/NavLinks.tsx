@@ -9,16 +9,20 @@ interface NavLinksProps {
   className?: string;
   onItemClick?: () => void;
   registerItemRef?: (index: number, el: HTMLLIElement | null) => void;
+  registerNumberRef?: (index: number, el: HTMLSpanElement | null) => void;
   registerDividerRef?: (index: number, el: HTMLDivElement | null) => void;
   activeLineRef?: React.RefObject<HTMLSpanElement | null>;
+  onTriggerBorderPulse?: () => void;
 }
 
 export const NavLinks: React.FC<NavLinksProps> = ({
   className,
   onItemClick,
   registerItemRef,
+  registerNumberRef,
   registerDividerRef,
   activeLineRef,
+  onTriggerBorderPulse,
 }) => {
   return (
     <ul
@@ -34,7 +38,11 @@ export const NavLinks: React.FC<NavLinksProps> = ({
             itemRef={(el) => {
               if (registerItemRef) registerItemRef(idx, el);
             }}
+            numberRef={(el) => {
+              if (registerNumberRef) registerNumberRef(idx, el);
+            }}
             activeLineRef={item.id === "home" ? activeLineRef : undefined}
+            onTriggerBorderPulse={onTriggerBorderPulse}
           />
           {item.hasDividerAfter && (
             <NavDivider

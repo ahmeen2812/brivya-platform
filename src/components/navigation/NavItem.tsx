@@ -9,17 +9,26 @@ interface NavItemProps {
   item: NavItemConfig;
   onClick?: () => void;
   itemRef?: (el: HTMLLIElement | null) => void;
+  numberRef?: (el: HTMLSpanElement | null) => void;
   activeLineRef?: React.RefObject<HTMLSpanElement | null>;
+  onTriggerBorderPulse?: () => void;
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
   item,
   onClick,
   itemRef,
+  numberRef,
   activeLineRef,
+  onTriggerBorderPulse,
 }) => {
   const pathname = usePathname();
   const isActive = item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
+
+  const handleClick = () => {
+    if (onTriggerBorderPulse) onTriggerBorderPulse();
+    if (onClick) onClick();
+  };
 
   return (
     <li
@@ -29,36 +38,30 @@ export const NavItem: React.FC<NavItemProps> = ({
     >
       <Link
         href={item.href}
-        onClick={onClick}
+        onClick={handleClick}
         aria-current={isActive ? "page" : undefined}
         className="group relative flex flex-col items-center justify-center px-2.5 sm:px-3.5 lg:px-5 py-1.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1675F8] rounded-sm"
       >
-        {/* Step Index Numeral (01, 02, etc.) */}
+        {/* Number Coordinate (Ticks from 00 up to target) */}
         <span
-          className={`font-sans text-[10px] sm:text-[11px] font-medium tracking-tight transition-colors duration-200 select-none ${
-            isActive
-              ? "text-[#8998AD]"
-              : "text-[#8998AD]/80 group-hover:text-[#06162C]"
+          ref={numberRef}
+          className={`font-mono text-[10px] sm:text-[11px] font-semibold tracking-tight transition-colors duration-200 select-none ${
+            isActive ? "text-[#8998AD]" : "text-[#8998AD]/85 group-hover:text-[#06162C]"
           }`}
         >
           {item.index}
         </span>
 
-        {/* Section Label (Home, Services, Work, etc.) */}
+        {/* Route Label */}
         <span
           className={`font-sans text-[12px] sm:text-[13.5px] lg:text-[14px] font-semibold tracking-[-0.01em] transition-colors duration-200 whitespace-nowrap ${
-            isActive
-              ? "text-[#06162C]"
-              : "text-[#06162C]/80 group-hover:text-[#06162C]"
+            isActive ? "text-[#06162C]" : "text-[#06162C]/80 group-hover:text-[#06162C]"
           }`}
         >
           {item.label}
         </span>
 
-        {/* 
-          Active State Blue Line:
-          Tied to activeLineRef for the laser-draw animation on load
-        */}
+        {/* Laser Active Underline on Home */}
         {isActive ? (
           <span
             ref={activeLineRef}
