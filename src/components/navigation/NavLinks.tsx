@@ -14,8 +14,10 @@ interface NavLinksProps {
   registerDividerRef?: (index: number, el: HTMLDivElement | null) => void;
   onTriggerBorderPulse?: () => void;
   isMegaMenuOpen?: boolean;
+  isMegaMenuPinned?: boolean;
   onOpenMegaMenu?: () => void;
   onCloseMegaMenu?: () => void;
+  onToggleMegaMenuPin?: () => void;
 }
 
 export const NavLinks: React.FC<NavLinksProps> = ({
@@ -25,8 +27,10 @@ export const NavLinks: React.FC<NavLinksProps> = ({
   registerDividerRef,
   onTriggerBorderPulse,
   isMegaMenuOpen = false,
+  isMegaMenuPinned = false,
   onOpenMegaMenu,
   onCloseMegaMenu,
+  onToggleMegaMenuPin,
 }) => {
   const pathname = usePathname();
   const internalRef = React.useRef<HTMLUListElement | null>(null);
@@ -66,8 +70,8 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       animateMagneticGlider(gliderRef.current, el, containerRef.current, exactLineWidth);
     }
 
-    // Immediately close mega-menu if hovering any other item (Home, Work, etc.)
-    if (itemId !== "services" && onCloseMegaMenu && isMegaMenuOpen) {
+    // If hovering away from services to another item, close if not pinned
+    if (itemId !== "services" && !isMegaMenuPinned && onCloseMegaMenu && isMegaMenuOpen) {
       onCloseMegaMenu();
     }
   };
@@ -106,10 +110,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       aria-label="Primary Navigation"
       className={`relative flex items-center m-0 p-0 ${className || ""}`}
     >
-      {/* 
-        Single Dynamic Magnetic Glider:
-        Dynamically resizes its width to match each hovered/active word length
-      */}
+      {/* Dynamic Magnetic Glider Bar */}
       <span
         ref={gliderRef}
         aria-hidden="true"
@@ -134,6 +135,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
             onTriggerBorderPulse={onTriggerBorderPulse}
             onOpenMegaMenu={item.id === "services" ? onOpenMegaMenu : undefined}
             onCloseMegaMenu={item.id === "services" ? onCloseMegaMenu : undefined}
+            onToggleMegaMenuPin={item.id === "services" ? onToggleMegaMenuPin : undefined}
           />
           {item.hasDividerAfter && (
             <NavDivider

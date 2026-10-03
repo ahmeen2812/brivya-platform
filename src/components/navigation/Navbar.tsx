@@ -18,9 +18,10 @@ import { usePathname } from "next/navigation";
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState<boolean>(false);
   const [megaMenuOpen, setMegaMenuOpen] = React.useState<boolean>(false);
+  const [megaMenuPinned, setMegaMenuPinned] = React.useState<boolean>(false);
   const pathname = usePathname();
 
-  // Debounce timer for smooth hover transitions without blinking
+  // Hover timeout debounce ref
   const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // Animation Node References
@@ -71,6 +72,7 @@ export const Navbar: React.FC = () => {
   React.useEffect(() => {
     setMobileMenuOpen(false);
     setMegaMenuOpen(false);
+    setMegaMenuPinned(false);
   }, [pathname]);
 
   // Lock body scroll on mobile drawer
@@ -82,13 +84,16 @@ export const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
-  // Zero-glitch hover bridge controllers
+  // Click vs Hover Handlers
   const handleOpenMegaMenu = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setMegaMenuOpen(true);
   };
 
   const handleCloseMegaMenuWithDelay = () => {
+    // If pinned by click, do NOT close on hover leave!
+    if (megaMenuPinned) return;
+
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     hoverTimeoutRef.current = setTimeout(() => {
       setMegaMenuOpen(false);
@@ -98,6 +103,17 @@ export const Navbar: React.FC = () => {
   const handleCloseMegaMenuImmediate = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setMegaMenuOpen(false);
+    setMegaMenuPinned(false);
+  };
+
+  const handleToggleMegaMenuPin = () => {
+    if (megaMenuPinned) {
+      setMegaMenuPinned(false);
+      setMegaMenuOpen(false);
+    } else {
+      setMegaMenuPinned(true);
+      setMegaMenuOpen(true);
+    }
   };
 
   const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
@@ -135,8 +151,10 @@ export const Navbar: React.FC = () => {
             registerDividerRef={registerDividerRef}
             onTriggerBorderPulse={handlePulseBorder}
             isMegaMenuOpen={megaMenuOpen}
+            isMegaMenuPinned={megaMenuPinned}
             onOpenMegaMenu={handleOpenMegaMenu}
             onCloseMegaMenu={handleCloseMegaMenuImmediate}
+            onToggleMegaMenuPin={handleToggleMegaMenuPin}
           />
         </nav>
 
@@ -163,9 +181,10 @@ export const Navbar: React.FC = () => {
         </div>
       </NavContainer>
 
-      {/* Floating Desktop Services Console with Hover Bridge */}
+      {/* Floating Desktop Services Console with 4px Air Gap and Pinning */}
       <ServicesMegaMenu
         isOpen={megaMenuOpen}
+        isPinned={megaMenuPinned}
         onClose={handleCloseMegaMenuImmediate}
         onMouseEnter={handleOpenMegaMenu}
         onMouseLeave={handleCloseMegaMenuWithDelay}

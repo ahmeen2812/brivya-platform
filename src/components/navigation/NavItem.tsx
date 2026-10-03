@@ -15,6 +15,7 @@ interface NavItemProps {
   onTriggerBorderPulse?: () => void;
   onOpenMegaMenu?: () => void;
   onCloseMegaMenu?: () => void;
+  onToggleMegaMenuPin?: () => void;
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
@@ -27,13 +28,14 @@ export const NavItem: React.FC<NavItemProps> = ({
   textRef,
   onTriggerBorderPulse,
   onOpenMegaMenu,
-  onCloseMegaMenu,
+  onToggleMegaMenuPin,
 }) => {
   const containerRef = React.useRef<HTMLLIElement | null>(null);
   const isServices = item.id === "services";
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLLIElement>) => {
     onItemHover(e.currentTarget);
+    // On hover: peek open the mega menu if not already open
     if (isServices && onOpenMegaMenu) {
       onOpenMegaMenu();
     }
@@ -41,10 +43,9 @@ export const NavItem: React.FC<NavItemProps> = ({
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
     if (isServices) {
-      if (isMenuOpen && onCloseMegaMenu) {
-        onCloseMegaMenu();
-      } else if (onOpenMegaMenu) {
-        onOpenMegaMenu();
+      // On click: pin or toggle open
+      if (onToggleMegaMenuPin) {
+        onToggleMegaMenuPin();
       }
     } else {
       onItemSelect(item.id, e.currentTarget);
@@ -66,7 +67,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         href={item.href}
         onClick={(e) => {
           if (isServices) {
-            e.preventDefault(); // Prevent page redirect so user can explore services dropdown
+            e.preventDefault(); // Prevent full page reload to allow smooth dropdown exploration
           }
         }}
         aria-current={isActive ? "page" : undefined}
@@ -75,7 +76,7 @@ export const NavItem: React.FC<NavItemProps> = ({
           isActive ? "scale-[1.04]" : "scale-100 hover:scale-[1.02]"
         }`}
       >
-        {/* Exact Section Label: Measured by parent for exact underline coverage */}
+        {/* Exact Section Label: Measured dynamically for perfect underline coverage */}
         <span
           ref={textRef}
           className={`font-sans tracking-[-0.01em] transition-colors duration-200 whitespace-nowrap inline-flex items-center gap-1.5 ${
@@ -86,7 +87,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         >
           {item.label}
 
-          {/* Micro Chevron for Services */}
+          {/* Micro Chevron for Services with smooth 180deg flip */}
           {isServices && (
             <svg
               className={`h-3 w-3 text-[#8998AD] transition-transform duration-300 ${
