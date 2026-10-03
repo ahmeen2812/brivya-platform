@@ -15,10 +15,20 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function HomePage() {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <div className="min-h-[80vh] w-full px-4 sm:px-8 max-w-[1360px] mx-auto flex flex-col items-center justify-center text-center">
-      {/* Ready for next step */}
-    </div>
+    <html lang="en" className={`${fontSans.variable} ${fontMono.variable} antialiased`}>
+      <body className="min-h-screen bg-[#F4F7FC] font-sans text-[#06162C]">
+        {/* Floating Navbar */}
+        <Navbar />
+
+        {/* Page Content Viewport */}
+        <main className="relative pt-28 sm:pt-32">{children}</main>
+      </body>
+    </html>
   );
 }
