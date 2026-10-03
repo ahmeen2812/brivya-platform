@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAV_ITEMS } from "@/config/navigation";
+import { NAV_ITEMS, type NavItemConfig } from "@/config/navigation";
 import { NavCtaButton } from "./NavCtaButton";
 import {
   animateMobileDrawerOpen,
@@ -69,7 +69,7 @@ export const NavMobileMenu: React.FC<NavMobileMenuProps> = ({
         </div>
 
         <ul className="flex flex-col divide-y divide-slate-100 m-0 p-0">
-          {NAV_ITEMS.map((item, idx) => {
+          {NAV_ITEMS.map((item: NavItemConfig, idx: number) => {
             const isActive =
               item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
 
@@ -87,7 +87,6 @@ export const NavMobileMenu: React.FC<NavMobileMenuProps> = ({
                   className="flex items-center justify-between py-3.5 group"
                 >
                   <div className="flex items-center gap-3.5">
-                    {/* Dynamic Rolling Number Index */}
                     <span
                       ref={(el) => {
                         numberRefList.current[idx] = el;
@@ -118,7 +117,6 @@ export const NavMobileMenu: React.FC<NavMobileMenuProps> = ({
           })}
         </ul>
 
-        {/* Mobile Full-Width CTA */}
         <div
           ref={ctaButtonRef}
           className="pt-3 border-t border-slate-100 sm:hidden"

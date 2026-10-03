@@ -26,9 +26,8 @@ export const Navbar: React.FC = () => {
   const logoDividerRef = React.useRef<HTMLDivElement | null>(null);
   const ctaDividerRef = React.useRef<HTMLDivElement | null>(null);
   const ctaButtonRef = React.useRef<HTMLDivElement | null>(null);
-  const activeLineRef = React.useRef<HTMLSpanElement | null>(null);
 
-  // Arrays of refs for items, numbers, and dividers
+  // Arrays of refs for elements
   const itemsRefList = React.useRef<(HTMLLIElement | null)[]>([]);
   const numberRefsList = React.useRef<(HTMLSpanElement | null)[]>([]);
   const dividersRefList = React.useRef<(HTMLDivElement | null)[]>([]);
@@ -64,7 +63,7 @@ export const Navbar: React.FC = () => {
       logoDivider: logoDividerRef.current,
       ctaDivider: ctaDividerRef.current,
       ctaButton: ctaButtonRef.current,
-      activeLine: activeLineRef.current,
+      activeLine: null,
       items: itemsRefList.current,
       dividers: dividersRefList.current,
       itemNumberRefs: numberRefsList.current,
@@ -103,7 +102,7 @@ export const Navbar: React.FC = () => {
         borderRef={borderRef}
         centerLineRef={centerLineRef}
       >
-        {/* Left Section: Logo */}
+        {/* Left: Logo with Prismatic Sheen */}
         <div className="flex items-center gap-3 sm:gap-5 lg:gap-6 shrink-0">
           <NavLogo wrapperRef={logoWrapperRef} onClick={closeMobileMenu} />
           <NavDivider
@@ -114,7 +113,7 @@ export const Navbar: React.FC = () => {
           />
         </div>
 
-        {/* Center Section: Desktop Navigation Items */}
+        {/* Center: Desktop Navigation with Magnetic Gliding Line */}
         <nav
           aria-label="Desktop Navigation"
           className="hidden md:flex items-center justify-center flex-1 px-1 sm:px-2"
@@ -123,12 +122,11 @@ export const Navbar: React.FC = () => {
             registerItemRef={registerItemRef}
             registerNumberRef={registerNumberRef}
             registerDividerRef={registerDividerRef}
-            activeLineRef={activeLineRef}
             onTriggerBorderPulse={handlePulseBorder}
           />
         </nav>
 
-        {/* Right Section: CTA Button & Animated Mobile Morph Toggle */}
+        {/* Right: CTA Button & Mobile Toggle */}
         <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
           <NavDivider
             customRef={(el) => {
@@ -137,7 +135,19 @@ export const Navbar: React.FC = () => {
             className="hidden md:block"
           />
 
-          <NavCtaButton buttonRef={ctaButtonRef} className="hidden sm:inline-flex" />
+          {/* 
+            Smoothly hides the top CTA when mobile drawer is open 
+            to eliminate duplicate button conflicts
+          */}
+          <div
+            className={`transition-all duration-300 ${
+              mobileMenuOpen
+                ? "opacity-0 scale-90 pointer-events-none"
+                : "opacity-100 scale-100"
+            }`}
+          >
+            <NavCtaButton buttonRef={ctaButtonRef} className="hidden sm:inline-flex" />
+          </div>
 
           {/* 3-Bar Kinetic Morph Toggle Button */}
           <NavMobileToggle isOpen={mobileMenuOpen} onToggle={toggleMobileMenu} />
