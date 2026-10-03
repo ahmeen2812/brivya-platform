@@ -14,7 +14,8 @@ interface NavLinksProps {
   registerDividerRef?: (index: number, el: HTMLDivElement | null) => void;
   onTriggerBorderPulse?: () => void;
   isMegaMenuOpen?: boolean;
-  onToggleMegaMenu?: () => void;
+  onOpenMegaMenu?: () => void;
+  onCloseMegaMenu?: () => void;
 }
 
 export const NavLinks: React.FC<NavLinksProps> = ({
@@ -24,14 +25,14 @@ export const NavLinks: React.FC<NavLinksProps> = ({
   registerDividerRef,
   onTriggerBorderPulse,
   isMegaMenuOpen = false,
-  onToggleMegaMenu,
+  onOpenMegaMenu,
+  onCloseMegaMenu,
 }) => {
   const pathname = usePathname();
   const internalRef = React.useRef<HTMLUListElement | null>(null);
   const containerRef = navLinksRef || internalRef;
   const gliderRef = React.useRef<HTMLSpanElement | null>(null);
 
-  // Store references to the exact text elements to measure exact word length
   const itemElementsMap = React.useRef<Map<string, HTMLElement>>(new Map());
   const textElementsMap = React.useRef<Map<string, HTMLElement>>(new Map());
 
@@ -44,7 +45,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
 
   const [activeId, setActiveId] = React.useState<string>(getInitialActiveId);
 
-  // Reposition magnetic glider on mount, route change, and font load
+  // Position magnetic glider dynamically to cover full word length
   React.useEffect(() => {
     const matched = getInitialActiveId();
     setActiveId(matched);
@@ -53,7 +54,6 @@ export const NavLinks: React.FC<NavLinksProps> = ({
     const textEl = textElementsMap.current.get(matched);
 
     if (activeEl && gliderRef.current && containerRef.current) {
-      // Measure exact text width + 4px bleed to cover full word without cutoff
       const exactLineWidth = textEl ? textEl.offsetWidth + 4 : 36;
       animateMagneticGlider(gliderRef.current, activeEl, containerRef.current, exactLineWidth);
     }
@@ -64,6 +64,11 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       const textEl = textElementsMap.current.get(itemId);
       const exactLineWidth = textEl ? textEl.offsetWidth + 4 : 36;
       animateMagneticGlider(gliderRef.current, el, containerRef.current, exactLineWidth);
+    }
+
+    // Immediately close mega-menu if hovering any other item (Home, Work, etc.)
+    if (itemId !== "services" && onCloseMegaMenu && isMegaMenuOpen) {
+      onCloseMegaMenu();
     }
   };
 
@@ -85,6 +90,11 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       const exactLineWidth = textEl ? textEl.offsetWidth + 4 : 36;
       animateMagneticGlider(gliderRef.current, el, containerRef.current, exactLineWidth);
     }
+
+    if (id !== "services" && onCloseMegaMenu) {
+      onCloseMegaMenu();
+    }
+
     if (onItemClick) onItemClick();
   };
 
@@ -97,7 +107,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       className={`relative flex items-center m-0 p-0 ${className || ""}`}
     >
       {/* 
-        Single Dynamic Magnetic Glider Bar:
+        Single Dynamic Magnetic Glider:
         Dynamically resizes its width to match each hovered/active word length
       */}
       <span
@@ -122,7 +132,8 @@ export const NavLinks: React.FC<NavLinksProps> = ({
               if (el) textElementsMap.current.set(item.id, el);
             }}
             onTriggerBorderPulse={onTriggerBorderPulse}
-            onToggleMegaMenu={item.id === "services" ? onToggleMegaMenu : undefined}
+            onOpenMegaMenu={item.id === "services" ? onOpenMegaMenu : undefined}
+            onCloseMegaMenu={item.id === "services" ? onCloseMegaMenu : undefined}
           />
           {item.hasDividerAfter && (
             <NavDivider

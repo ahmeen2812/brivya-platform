@@ -20,6 +20,9 @@ export const Navbar: React.FC = () => {
   const [megaMenuOpen, setMegaMenuOpen] = React.useState<boolean>(false);
   const pathname = usePathname();
 
+  // Debounce timer for smooth hover transitions without blinking
+  const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
   // Animation Node References
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const borderRef = React.useRef<HTMLDivElement | null>(null);
@@ -64,7 +67,7 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
-  // Close menus on route change
+  // Auto-close menus on route transition
   React.useEffect(() => {
     setMobileMenuOpen(false);
     setMegaMenuOpen(false);
@@ -79,11 +82,26 @@ export const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
+  // Zero-glitch hover bridge controllers
+  const handleOpenMegaMenu = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setMegaMenuOpen(true);
+  };
+
+  const handleCloseMegaMenuWithDelay = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setMegaMenuOpen(false);
+    }, 180);
+  };
+
+  const handleCloseMegaMenuImmediate = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setMegaMenuOpen(false);
+  };
+
   const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
   const closeMobileMenu = () => setMobileMenuOpen(false);
-
-  const toggleMegaMenu = () => setMegaMenuOpen((prev) => !prev);
-  const closeMegaMenu = () => setMegaMenuOpen(false);
 
   const handlePulseBorder = () => {
     triggerInteractiveBorderPulse(borderRef.current);
@@ -117,7 +135,8 @@ export const Navbar: React.FC = () => {
             registerDividerRef={registerDividerRef}
             onTriggerBorderPulse={handlePulseBorder}
             isMegaMenuOpen={megaMenuOpen}
-            onToggleMegaMenu={toggleMegaMenu}
+            onOpenMegaMenu={handleOpenMegaMenu}
+            onCloseMegaMenu={handleCloseMegaMenuImmediate}
           />
         </nav>
 
@@ -130,7 +149,6 @@ export const Navbar: React.FC = () => {
             className="hidden md:block"
           />
 
-          {/* Top CTA smoothly hides when mobile drawer opens */}
           <div
             className={`transition-all duration-300 ${
               mobileMenuOpen
@@ -141,13 +159,17 @@ export const Navbar: React.FC = () => {
             <NavCtaButton buttonRef={ctaButtonRef} className="hidden sm:inline-flex" />
           </div>
 
-          {/* 3-Bar Kinetic Morph Toggle Button */}
           <NavMobileToggle isOpen={mobileMenuOpen} onToggle={toggleMobileMenu} />
         </div>
       </NavContainer>
 
-      {/* Floating Desktop Services Mega-Menu Console */}
-      <ServicesMegaMenu isOpen={megaMenuOpen} onClose={closeMegaMenu} />
+      {/* Floating Desktop Services Console with Hover Bridge */}
+      <ServicesMegaMenu
+        isOpen={megaMenuOpen}
+        onClose={handleCloseMegaMenuImmediate}
+        onMouseEnter={handleOpenMegaMenu}
+        onMouseLeave={handleCloseMegaMenuWithDelay}
+      />
 
       {/* Dedicated Animated Mobile Drawer */}
       <NavMobileMenu isOpen={mobileMenuOpen} onClose={closeMobileMenu} />
