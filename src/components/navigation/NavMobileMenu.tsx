@@ -86,18 +86,19 @@ export const NavMobileMenu: React.FC<NavMobileMenuProps> = ({
                   onClick={onClose}
                   className="flex items-center justify-between py-3.5 group"
                 >
-                  <div className="flex items-center gap-3.5">
+                  <div className="flex items-center gap-2.5">
+                    {/* Active Diode */}
+                    {isActive ? (
+                      <span className="h-2 w-2 rounded-full bg-[#1675F8] shrink-0" />
+                    ) : (
+                      <span className="h-1.5 w-1.5 rounded-full bg-slate-300 shrink-0" />
+                    )}
+
                     <span
-                      ref={(el) => {
-                        numberRefList.current[idx] = el;
-                      }}
-                      className="font-mono text-xs font-semibold text-[#8998AD] group-hover:text-[#1675F8] transition-colors"
-                    >
-                      00
-                    </span>
-                    <span
-                      className={`font-sans text-base font-semibold tracking-tight transition-colors ${
-                        isActive ? "text-[#1675F8]" : "text-[#06162C] group-hover:text-[#0A5FD7]"
+                      className={`font-sans tracking-tight transition-colors ${
+                        isActive
+                          ? "text-[16px] font-bold text-[#06162C]"
+                          : "text-[15px] font-medium text-[#8998AD] group-hover:text-[#06162C]"
                       }`}
                     >
                       {item.label}
@@ -105,7 +106,9 @@ export const NavMobileMenu: React.FC<NavMobileMenuProps> = ({
                   </div>
 
                   {isActive ? (
-                    <span className="h-2 w-2 rounded-full bg-[#1675F8]" />
+                    <span className="font-mono text-[11px] font-bold text-[#1675F8]">
+                      ACTIVE
+                    </span>
                   ) : (
                     <span className="font-sans text-xs text-[#8998AD] opacity-0 group-hover:opacity-100 transition-opacity">
                       →
@@ -117,6 +120,7 @@ export const NavMobileMenu: React.FC<NavMobileMenuProps> = ({
           })}
         </ul>
 
+        {/* Mobile Full-Width CTA */}
         <div
           ref={ctaButtonRef}
           className="pt-3 border-t border-slate-100 sm:hidden"

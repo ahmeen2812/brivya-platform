@@ -1,5 +1,4 @@
 import gsap from "gsap";
-import { runCounterTicker } from "./navCounterTicker";
 
 export interface DesktopAnimationElements {
   container: HTMLDivElement | null;
@@ -9,14 +8,13 @@ export interface DesktopAnimationElements {
   logoDivider: HTMLDivElement | null;
   ctaDivider: HTMLDivElement | null;
   ctaButton: HTMLDivElement | null;
-  activeLine: HTMLSpanElement | null;
-  items: (HTMLLIElement | null)[];
+  navLinksWrapper: HTMLElement | null;
   dividers: (HTMLDivElement | null)[];
-  itemNumberRefs: (HTMLSpanElement | null)[];
 }
 
 /**
  * Orchestrates the Master Kinetic Caliper Reveal Sequence
+ * (Animates structural containers without destroying child text node opacities)
  */
 export function initDesktopNavbarTimeline(
   elements: DesktopAnimationElements,
@@ -29,15 +27,12 @@ export function initDesktopNavbarTimeline(
     logoDivider,
     ctaDivider,
     ctaButton,
-    activeLine,
-    items,
+    navLinksWrapper,
     dividers,
-    itemNumberRefs,
   } = elements;
 
   if (!container || !border || !centerLine) return null;
 
-  const validItems = items.filter(Boolean);
   const validDividers = dividers.filter(Boolean);
 
   // Set initial states
@@ -67,20 +62,19 @@ export function initDesktopNavbarTimeline(
   if (ctaDivider) gsap.set(ctaDivider, { opacity: 0, scaleY: 0 });
   if (ctaButton) gsap.set(ctaButton, { opacity: 0, scale: 0.88, x: 14 });
 
-  if (validItems.length > 0) gsap.set(validItems, { opacity: 0, y: -16 });
-  if (validDividers.length > 0) gsap.set(validDividers, { opacity: 0, scaleY: 0 });
-  if (activeLine) gsap.set(activeLine, { scaleX: 0, opacity: 0, transformOrigin: "center center" });
+  if (navLinksWrapper) {
+    gsap.set(navLinksWrapper, { opacity: 0, y: -12 });
+  }
 
-  // Initialize all number indicators to 00
-  itemNumberRefs.forEach((ref) => {
-    if (ref) ref.innerText = "00";
-  });
+  if (validDividers.length > 0) {
+    gsap.set(validDividers, { opacity: 0, scaleY: 0 });
+  }
 
   const tl = gsap.timeline({
     defaults: { ease: "power4.out" },
   });
 
-  // Stage 1: Plumb line drop
+  // Stage 1: Plumb line drop (0.0s - 0.35s)
   tl.to(centerLine, {
     opacity: 1,
     y: 0,
@@ -88,7 +82,7 @@ export function initDesktopNavbarTimeline(
     duration: 0.35,
     ease: "power2.out",
   })
-    // Stage 2: Dynamic Island pill expansion
+    // Stage 2: Dynamic Island pill expansion (0.35s - 1.05s)
     .to(
       container,
       {
@@ -144,20 +138,14 @@ export function initDesktopNavbarTimeline(
       },
       "-=0.35",
     )
-    // Stage 4: Cascading drop of nav items + number roll
+    // Stage 4: Smooth descent of the entire navigation links channel
     .to(
-      validItems,
+      navLinksWrapper,
       {
         opacity: 1,
         y: 0,
-        duration: 0.4,
-        stagger: 0.035,
+        duration: 0.45,
         ease: "power3.out",
-        onStart: () => {
-          itemNumberRefs.forEach((ref, index) => {
-            runCounterTicker(ref, index + 1, 0.45, index * 0.035);
-          });
-        },
       },
       "-=0.3",
     )
@@ -172,18 +160,7 @@ export function initDesktopNavbarTimeline(
       },
       "-=0.35",
     )
-    // Stage 5: Active laser line on Home
-    .to(
-      activeLine,
-      {
-        opacity: 1,
-        scaleX: 1,
-        duration: 0.3,
-        ease: "power2.out",
-      },
-      "-=0.15",
-    )
-    // Stage 6: The 2.0s Perimeter Border Hold & Smooth Dissolve
+    // Stage 5: The 2.0s Perimeter Border Hold & Smooth Dissolve
     .to(border, {
       opacity: 0,
       duration: 0.85,

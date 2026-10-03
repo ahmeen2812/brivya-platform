@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — NAVIGATION MASTER MANIFEST
- * Exports both configuration data and all navigation types.
+ * Fully typed configuration for the floating reference navbar and architectural indices.
  */
 
 // 1. RE-EXPORT ALL NAVIGATION TYPE CONTRACTS
@@ -18,7 +18,7 @@ export type { NavItemConfig, NavBrandConfig, PrimaryIndexItem, ArchitecturalPlan
 
 /**
  * -----------------------------------------------------------------------------
- * 1. FLOATING REFERENCE NAVBAR CONFIGURATION (01 Home ... 06 Contact)
+ * 1. FLOATING REFERENCE NAVBAR CONFIGURATION (Single-Line Typography)
  * -----------------------------------------------------------------------------
  */
 export const NAV_ITEMS: readonly NavItemConfig[] = [
@@ -27,35 +27,35 @@ export const NAV_ITEMS: readonly NavItemConfig[] = [
     index: "01",
     label: "Home",
     href: "/",
-    hasDividerAfter: true, // Divider between 01 Home and 02 Services
+    hasDividerAfter: true, // Divider between Home and Services
   },
   {
     id: "services",
     index: "02",
     label: "Services",
     href: "/services",
-    hasDividerAfter: true, // Divider between 02 Services and 03 Work
+    hasDividerAfter: true, // Divider between Services and Work
   },
   {
     id: "work",
     index: "03",
     label: "Work",
     href: "/work",
-    hasDividerAfter: true, // Divider between 03 Work and 04 Products
+    hasDividerAfter: true, // Divider between Work and Products
   },
   {
     id: "products",
     index: "04",
     label: "Products",
     href: "/products",
-    hasDividerAfter: true, // Divider between 04 Products and 05 About
+    hasDividerAfter: true, // Divider between Products and About
   },
   {
     id: "about",
     index: "05",
     label: "About",
     href: "/about",
-    hasDividerAfter: true, // Divider between 05 About and 06 Contact
+    hasDividerAfter: true, // Divider between About and Contact
   },
   {
     id: "contact",

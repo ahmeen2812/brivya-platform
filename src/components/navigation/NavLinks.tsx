@@ -10,8 +10,7 @@ import { animateMagneticGlider } from "@/animations/navHoverAnimations";
 interface NavLinksProps {
   className?: string;
   onItemClick?: () => void;
-  registerItemRef?: (index: number, el: HTMLLIElement | null) => void;
-  registerNumberRef?: (index: number, el: HTMLSpanElement | null) => void;
+  navLinksRef?: React.RefObject<HTMLUListElement | null>;
   registerDividerRef?: (index: number, el: HTMLDivElement | null) => void;
   onTriggerBorderPulse?: () => void;
 }
@@ -19,17 +18,17 @@ interface NavLinksProps {
 export const NavLinks: React.FC<NavLinksProps> = ({
   className,
   onItemClick,
-  registerItemRef,
-  registerNumberRef,
+  navLinksRef,
   registerDividerRef,
   onTriggerBorderPulse,
 }) => {
   const pathname = usePathname();
-  const navContainerRef = React.useRef<HTMLUListElement | null>(null);
+  const internalRef = React.useRef<HTMLUListElement | null>(null);
+  const containerRef = navLinksRef || internalRef;
   const gliderRef = React.useRef<HTMLSpanElement | null>(null);
   const itemElementsMap = React.useRef<Map<string, HTMLElement>>(new Map());
 
-  // Explicitly annotate `item: NavItemConfig` to prevent implicit any
+  // Determine active item based on current route or user click latch
   const getInitialActiveId = () => {
     const matched = NAV_ITEMS.find((item: NavItemConfig) =>
       item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href),
@@ -39,45 +38,51 @@ export const NavLinks: React.FC<NavLinksProps> = ({
 
   const [activeId, setActiveId] = React.useState<string>(getInitialActiveId);
 
+  // Position magnetic glider on mount and route changes
   React.useEffect(() => {
     const matched = getInitialActiveId();
     setActiveId(matched);
 
     const activeEl = itemElementsMap.current.get(matched);
-    if (activeEl && gliderRef.current && navContainerRef.current) {
-      animateMagneticGlider(gliderRef.current, activeEl, navContainerRef.current);
+    if (activeEl && gliderRef.current && containerRef.current) {
+      animateMagneticGlider(gliderRef.current, activeEl, containerRef.current);
     }
   }, [pathname]);
 
   const handleItemHover = (el: HTMLElement) => {
-    if (gliderRef.current && navContainerRef.current) {
-      animateMagneticGlider(gliderRef.current, el, navContainerRef.current);
+    if (gliderRef.current && containerRef.current) {
+      animateMagneticGlider(gliderRef.current, el, containerRef.current);
     }
   };
 
   const handleNavMouseLeave = () => {
+    // Snap back magnetically to the active latched item
     const activeEl = itemElementsMap.current.get(activeId);
-    if (activeEl && gliderRef.current && navContainerRef.current) {
-      animateMagneticGlider(gliderRef.current, activeEl, navContainerRef.current);
+    if (activeEl && gliderRef.current && containerRef.current) {
+      animateMagneticGlider(gliderRef.current, activeEl, containerRef.current);
     }
   };
 
   const handleItemSelect = (id: string, el: HTMLElement) => {
     setActiveId(id);
-    if (gliderRef.current && navContainerRef.current) {
-      animateMagneticGlider(gliderRef.current, el, navContainerRef.current);
+    if (gliderRef.current && containerRef.current) {
+      animateMagneticGlider(gliderRef.current, el, containerRef.current);
     }
     if (onItemClick) onItemClick();
   };
 
   return (
     <ul
-      ref={navContainerRef}
+      ref={containerRef}
       onMouseLeave={handleNavMouseLeave}
       role="menubar"
       aria-label="Primary Navigation"
       className={`relative flex items-center m-0 p-0 ${className || ""}`}
     >
+      {/* 
+        Single Shared Magnetic Glider Bar:
+        Glides across all items and snaps beneath active or hovered element
+      */}
       <span
         ref={gliderRef}
         aria-hidden="true"
@@ -94,10 +99,6 @@ export const NavLinks: React.FC<NavLinksProps> = ({
             onItemSelect={handleItemSelect}
             itemRef={(el) => {
               if (el) itemElementsMap.current.set(item.id, el);
-              if (registerItemRef) registerItemRef(idx, el);
-            }}
-            numberRef={(el) => {
-              if (registerNumberRef) registerNumberRef(idx, el);
             }}
             onTriggerBorderPulse={onTriggerBorderPulse}
           />
