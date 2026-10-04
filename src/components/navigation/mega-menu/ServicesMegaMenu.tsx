@@ -11,7 +11,7 @@ import {
   animateContainerWidthMorph,
 } from "@/animations/servicesMegaMenuAnimations";
 
-interface ServicesMegaMenuProps {
+export interface ServicesMegaMenuProps {
   isOpen: boolean;
   isPinned: boolean;
   onClose: () => void;
@@ -26,7 +26,7 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
   onMouseEnter,
   onMouseLeave,
 }) => {
-  // Progressive disclosure: activePillarId starts as null (showing ONLY 7 pillars)
+  // Progressive disclosure: activePillarId starts as null (showing ONLY 7 pillars initially)
   const [activePillarId, setActivePillarId] = React.useState<string | null>(null);
   const [shouldRender, setShouldRender] = React.useState<boolean>(isOpen);
 
@@ -35,16 +35,17 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
   const leftRailRef = React.useRef<HTMLDivElement | null>(null);
   const subPanelRef = React.useRef<HTMLDivElement | null>(null);
 
+  // Dimensional constraints: 370px compact -> 940px expanded
   const COLLAPSED_WIDTH = 370;
-  const EXPANDED_WIDTH = 920;
+  const EXPANDED_WIDTH = 940;
 
-  // Active pillar object resolution
+  // Active pillar resolution
   const activePillar: ServicePillar | null = React.useMemo(() => {
     if (!activePillarId) return null;
-    return SERVICE_PILLARS.find((p) => p.id === activePillarId) || null;
+    return SERVICE_PILLARS.find((pillar) => pillar.id === activePillarId) || null;
   }, [activePillarId]);
 
-  // Handle Opening / Closing Lifecycle with Exact Inverse Fold
+  // Synchronize Mounting and Inverse LIFO Disappearing Sequence
   React.useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
@@ -58,13 +59,13 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
         },
         () => {
           setShouldRender(false);
-          setActivePillarId(null); // Reset back to collapsed state on exit
+          setActivePillarId(null); // Reset back to collapsed 370px state on exit
         },
       );
     }
   }, [isOpen, shouldRender]);
 
-  // Trigger Symmetrical Reveal
+  // Trigger Symmetrical Reveal when mounted (Synchronized: NO empty box flash)
   React.useEffect(() => {
     if (shouldRender && isOpen) {
       animateMegaMenuReveal(
@@ -78,48 +79,48 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
     }
   }, [shouldRender, isOpen]);
 
-  // Trigger Progressive Width Morph (370px -> 920px)
+  // Trigger Progressive Width Morph (370px <-> 940px)
   React.useEffect(() => {
     if (!containerRef.current) return;
     const targetWidth = activePillarId ? EXPANDED_WIDTH : COLLAPSED_WIDTH;
     animateContainerWidthMorph(containerRef.current, targetWidth);
   }, [activePillarId]);
 
-  // Accessibility: Close on Escape key
+  // Accessibility: Handle Escape key to close/unpin
   React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
         onClose();
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
+
+  const handlePillarHover = (pillarId: string) => {
+    setActivePillarId(pillarId);
+  };
+
+  const handlePillarClick = (pillarId: string) => {
+    setActivePillarId(pillarId);
+  };
 
   if (!shouldRender) return null;
 
   return (
     <>
-      {/* 
-        Click-outside backdrop:
-        Clicking outside immediately folds and closes the menu
-      */}
+      {/* Click-Outside Backdrop */}
       <div
         aria-hidden="true"
         onClick={onClose}
         className="fixed inset-0 z-40 bg-[#06162C]/15 backdrop-blur-[1px] transition-opacity duration-200"
       />
 
-      {/* 
-        The Floating Hit-Bridge Wrapper:
-        Anchored at top-[5.25rem] (giving an exact 4px visible gap under the navbar).
-        The before: pseudo-element bridges the 4px gap so moving between the
-        navbar and the dropdown never triggers mouse leave or flickers.
-      */}
+      {/* Floating Hit-Bridge Wrapper */}
       <div
         onMouseEnter={onMouseEnter}
         onMouseLeave={() => {
-          // If the menu is pinned by click, do NOT close on hover leave!
           if (!isPinned && onMouseLeave) {
             onMouseLeave();
           }
@@ -147,15 +148,15 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
               <MegaMenuPillarList
                 pillars={SERVICE_PILLARS}
                 activePillarId={activePillarId}
-                onHoverPillar={(id) => setActivePillarId(id)}
-                onClickPillar={(id) => setActivePillarId(id)}
+                onHoverPillar={handlePillarHover}
+                onClickPillar={handlePillarClick}
                 railRef={leftRailRef}
               />
             </div>
 
             {/* Right Sub-Services Panel (Morphs into view when a pillar is selected) */}
             {activePillar && (
-              <div className="w-[550px] shrink-0 bg-white">
+              <div className="w-[570px] shrink-0 bg-white">
                 <MegaMenuSubPanel
                   pillar={activePillar}
                   onNavigate={onClose}

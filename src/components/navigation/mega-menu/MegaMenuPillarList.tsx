@@ -58,7 +58,7 @@ export const MegaMenuPillarList: React.FC<MegaMenuPillarListProps> = ({
               />
             )}
 
-            {/* Left Content: Official Logo + Title + Subtitle */}
+            {/* Left Content: Official Brand Logo + Title + Subtitle */}
             <div className="flex items-center gap-2.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center">
                 <MegaMenuBrandIcon type={pillar.iconType} className="h-5 w-5" />
@@ -83,13 +83,13 @@ export const MegaMenuPillarList: React.FC<MegaMenuPillarListProps> = ({
               </div>
             </div>
 
-            {/* Trailing High-Contrast Chevron Arrow */}
+            {/* High-Contrast Interactive Chevron Arrow */}
             <div className="ml-2 flex shrink-0 items-center">
               <svg
                 className={`h-3.5 w-3.5 transition-transform duration-200 ${
                   isSelected
                     ? "translate-x-0.5 text-[#1675F8] opacity-100"
-                    : "text-[#64748B] opacity-40 group-hover:translate-x-0.5 group-hover:opacity-100"
+                    : "text-[#475569] opacity-60 group-hover:translate-x-0.5 group-hover:opacity-100"
                 }`}
                 fill="none"
                 viewBox="0 0 24 24"

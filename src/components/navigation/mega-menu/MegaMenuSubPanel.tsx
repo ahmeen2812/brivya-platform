@@ -12,7 +12,7 @@ interface MegaMenuSubPanelProps {
   subPanelRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-// Child Sub-Service Item Component (With official colored product icons)
+// Sub-Service Row with Official Brand Icon
 const SubServiceItemRow: React.FC<{
   sub: SubServiceItem;
   onNavigate: () => void;
@@ -70,7 +70,7 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
       className="flex h-full w-full flex-col justify-between p-4 sm:p-5"
     >
       <div>
-        {/* Header with Title and Direct Link */}
+        {/* Header with Title and Overview Link */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-2">
           <div className="flex items-center gap-2">
             <span className="font-sans text-xs font-bold text-[#06162C]">
