@@ -1,10 +1,36 @@
 /**
  * BRIVYA SOLUTIONS — MEGA-MENU TYPE SYSTEM
- * Comprehensive type definitions for progressive disclosure,
- * pillar models, sub-services, and pinning states.
+ * Comprehensive type definitions for the 7 technological pillars,
+ * sub-services, icon models, and inverse kinetic animation targets.
  */
 
-export type ServiceIconType = "code" | "google" | "meta" | "ai" | "cloud";
+export type ServiceIconType =
+  | "code"
+  | "google"
+  | "meta"
+  | "ai"
+  | "cloud"
+  | "microsoft"
+  | "workspace";
+
+export type SubServiceIconType =
+  | "word"
+  | "excel"
+  | "powerpoint"
+  | "outlook"
+  | "teams"
+  | "sheets"
+  | "docs"
+  | "gmail"
+  | "forms"
+  | "slides"
+  | "drive"
+  | "code"
+  | "google-ads"
+  | "meta-ads"
+  | "ai-chip"
+  | "cloud-server"
+  | "default";
 
 export interface SubServiceItem {
   readonly id: string;
@@ -12,6 +38,7 @@ export interface SubServiceItem {
   readonly description: string;
   readonly href: string;
   readonly badge?: string;
+  readonly iconType?: SubServiceIconType;
 }
 
 export interface PillarCtaConfig {
@@ -23,6 +50,7 @@ export interface PillarCtaConfig {
 
 export interface ServicePillar {
   readonly id: string;
+  readonly index: string;
   readonly title: string;
   readonly subtitle: string;
   readonly summary: string;

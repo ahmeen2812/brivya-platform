@@ -1,6 +1,6 @@
 /**
- * BRIVYA SOLUTIONS — SERVICES MEGA-MENU MASTER MANIFEST
- * Authoritative data for all 5 core systems, 33 sub-services,
+ * BRIVYA SOLUTIONS — 7 CORE PILLARS & MEGA-MENU MASTER MANIFEST
+ * Authoritative data for all 7 systems, 47 sub-services, official brand icon keys,
  * and contextual per-pillar conversion actions.
  */
 
@@ -13,22 +13,15 @@ import {
   ServiceIconType,
 } from "@/types/megaMenu";
 
-export type ServiceCategory = ServicePillar;
-export type { SubServiceItem, ServicePillar, PillarCtaConfig, ServiceIconType };
-
-export interface MegaMenuFeaturedCardConfig {
-  readonly tag: string;
-  readonly title: string;
-  readonly description: string;
-  readonly buttonText: string;
-  readonly buttonHref: string;
-  readonly metricHighlight: string;
-  readonly metricLabel: string;
-}
+export type { ServicePillar, SubServiceItem, PillarCtaConfig, ServiceIconType };
 
 export const SERVICE_PILLARS: readonly ServicePillar[] = [
+  // ---------------------------------------------------------------------------
+  // PILLAR 01: WEB DEVELOPMENT & CUSTOM SOFTWARE
+  // ---------------------------------------------------------------------------
   {
     id: "web-development",
+    index: "01",
     title: "Web Development & Custom Software",
     subtitle: "Digital Platforms & Engineering",
     summary: "Engineered web applications, enterprise platforms, and scalable headless commerce.",
@@ -44,50 +37,62 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
       {
         id: "custom-websites",
         title: "Custom Website Development",
-        description: "Bespoke digital flagships with zero technical debt and ultra-fast paint times.",
+        description: "High-performance digital flagships with zero bloat and clean aesthetics.",
         href: "/services/web-development/custom-websites",
+        iconType: "code",
       },
       {
         id: "web-applications",
         title: "Full-Stack Web Applications",
-        description: "Enterprise software platforms built on Next.js, TypeScript, and modern backends.",
+        description: "Bespoke web applications built on Next.js, TypeScript, and modern backends.",
         href: "/services/web-development/web-applications",
+        iconType: "code",
       },
       {
         id: "saas-products",
         title: "SaaS Product Development",
-        description: "Multi-tenant software architectures engineered for scalability and data safety.",
+        description: "Multi-tenant software architectures engineered for enterprise scale.",
         href: "/services/web-development/saas-products",
+        iconType: "code",
       },
       {
         id: "ecommerce-platforms",
         title: "E-commerce Development",
-        description: "Custom checkout systems and headless Shopify Plus setups for high volume.",
+        description: "High-throughput Shopify Plus and headless commerce architectures.",
         href: "/services/web-development/ecommerce",
+        iconType: "code",
       },
       {
         id: "api-integrations",
         title: "API Development & Integration",
-        description: "Reliable REST and GraphQL middleware connecting internal databases.",
+        description: "Robust REST and GraphQL middleware connecting internal databases.",
         href: "/services/web-development/api-integration",
+        iconType: "code",
       },
       {
         id: "backend-databases",
         title: "Database & Backend Systems",
-        description: "PostgreSQL, Supabase, and distributed edge architectures with zero downtime.",
+        description: "PostgreSQL, Supabase, and distributed edge architectures.",
         href: "/services/web-development/database-systems",
+        iconType: "code",
       },
       {
         id: "performance-tuning",
         title: "Website Performance Optimization",
-        description: "Codebase refactoring to guarantee 99+ Core Web Vitals on mobile and desktop.",
+        description: "Codebase refactoring to guarantee 99+ Core Web Vitals.",
         href: "/services/web-development/performance-optimization",
         badge: "99+ Vitals",
+        iconType: "code",
       },
     ],
   },
+
+  // ---------------------------------------------------------------------------
+  // PILLAR 02: GOOGLE ADS & PERFORMANCE MARKETING
+  // ---------------------------------------------------------------------------
   {
     id: "google-ads",
+    index: "02",
     title: "Google Ads & Performance Marketing",
     subtitle: "Intent Capture & Bidding Systems",
     summary: "High-intent search, shopping feeds, and first-party conversion tracking infrastructure.",
@@ -105,18 +110,21 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
         title: "Google Search Ads",
         description: "Capturing active commercial intent with disciplined negative keyword matrices.",
         href: "/services/google-ads/search",
+        iconType: "google-ads",
       },
       {
         id: "display-campaigns",
         title: "Google Display Ads",
-        description: "Brand defense and targeted visual placement across premium partner inventories.",
+        description: "Contextual visual placement across premium global networks.",
         href: "/services/google-ads/display",
+        iconType: "google-ads",
       },
       {
         id: "youtube-campaigns",
         title: "YouTube Ads",
         description: "Direct-response video targeting high-value prospect segments.",
         href: "/services/google-ads/youtube",
+        iconType: "google-ads",
       },
       {
         id: "conversion-infrastructure",
@@ -124,29 +132,38 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
         description: "Server-side GTM, enhanced conversions, and offline attribution pipelines.",
         href: "/services/google-ads/conversion-tracking",
         badge: "First-Party",
+        iconType: "google-ads",
       },
       {
         id: "landing-page-testing",
         title: "Landing Page Optimization",
         description: "A/B split testing to increase visitor-to-lead conversion rates.",
         href: "/services/google-ads/landing-pages",
+        iconType: "google-ads",
       },
       {
         id: "budget-management",
         title: "Campaign Management",
-        description: "Algorithmic dayparting, bid adjustments, and transparent performance reports.",
+        description: "Algorithmic dayparting, bid adjustments, and transparent reports.",
         href: "/services/google-ads/management",
+        iconType: "google-ads",
       },
       {
         id: "roas-scaling",
         title: "ROI Optimization",
         description: "Focusing capital on profitable customer segments rather than vanity clicks.",
         href: "/services/google-ads/roi-optimization",
+        iconType: "google-ads",
       },
     ],
   },
+
+  // ---------------------------------------------------------------------------
+  // PILLAR 03: META ADS & SOCIAL GROWTH
+  // ---------------------------------------------------------------------------
   {
     id: "meta-ads",
+    index: "03",
     title: "Meta Ads & Social Growth",
     subtitle: "Customer Acquisition & Scale",
     summary: "High-volume direct response campaigns across Facebook and Instagram networks.",
@@ -162,49 +179,61 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
       {
         id: "facebook-growth",
         title: "Facebook Ads",
-        description: "Structured campaign architecture focused on consistent customer acquisition cost.",
+        description: "Structured campaign architecture focused on consistent customer acquisition.",
         href: "/services/meta-ads/facebook",
+        iconType: "meta-ads",
       },
       {
         id: "instagram-growth",
         title: "Instagram Ads",
         description: "High-impact visual narratives designed for conversion and brand stature.",
         href: "/services/meta-ads/instagram",
+        iconType: "meta-ads",
       },
       {
         id: "lead-funnels",
         title: "Lead Generation Campaigns",
         description: "Pre-qualified lead capture connected directly to your internal sales pipeline.",
         href: "/services/meta-ads/lead-generation",
+        iconType: "meta-ads",
       },
       {
         id: "ecommerce-funnels",
         title: "E-commerce Sales Campaigns",
         description: "Dynamic product catalogs and checkout funnels for recurring purchases.",
         href: "/services/meta-ads/ecommerce-sales",
+        iconType: "meta-ads",
       },
       {
         id: "retargeting-mesh",
         title: "Retargeting Strategies",
         description: "First-party behavioral retargeting using Meta Conversions API (CAPI).",
         href: "/services/meta-ads/retargeting",
+        iconType: "meta-ads",
       },
       {
         id: "creative-laboratory",
         title: "Creative Ad Strategy",
         description: "Systematic hook, body, and CTA split-testing matrices.",
         href: "/services/meta-ads/creative-strategy",
+        iconType: "meta-ads",
       },
       {
         id: "audience-modeling",
         title: "Audience Optimization",
         description: "Predictive lookalikes, exclusion lists, and custom purchase intent tiers.",
         href: "/services/meta-ads/audience-optimization",
+        iconType: "meta-ads",
       },
     ],
   },
+
+  // ---------------------------------------------------------------------------
+  // PILLAR 04: AI & BUSINESS AUTOMATION
+  // ---------------------------------------------------------------------------
   {
     id: "ai-automation",
+    index: "04",
     title: "AI & Business Automation",
     subtitle: "Intelligent Workflow Systems",
     summary: "Autonomous agents, custom business software, and zero-error API integrations.",
@@ -220,8 +249,9 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
       {
         id: "ai-assistants",
         title: "AI Chatbots & AI Assistants",
-        description: "Retrieval-augmented conversational bots connected directly to your internal data.",
+        description: "Retrieval-augmented conversational bots connected directly to your data.",
         href: "/services/ai-automation/chatbots",
+        iconType: "ai-chip",
       },
       {
         id: "autonomous-agents",
@@ -229,41 +259,52 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
         description: "Multi-step autonomous agents executing business tasks with human oversight.",
         href: "/services/ai-automation/agents",
         badge: "Autonomous",
+        iconType: "ai-chip",
       },
       {
         id: "process-workflows",
         title: "Business Process Automation",
         description: "Connecting disparate software tools to remove manual human data entry.",
         href: "/services/ai-automation/process-automation",
+        iconType: "ai-chip",
       },
       {
         id: "crm-pipelines",
         title: "CRM Automation",
         description: "Automated deal stages, follow-up notifications, and client data enrichment.",
         href: "/services/ai-automation/crm-automation",
+        iconType: "ai-chip",
       },
       {
         id: "messaging-automation",
         title: "WhatsApp & Email Automation",
         description: "High-delivery transactional messaging sequences and customer service triggers.",
         href: "/services/ai-automation/whatsapp-email",
+        iconType: "ai-chip",
       },
       {
         id: "integration-mesh",
         title: "Workflow Integration",
         description: "Enterprise webhooks and ETL pipelines synchronizing data across platforms.",
         href: "/services/ai-automation/workflow-integration",
+        iconType: "ai-chip",
       },
       {
         id: "bespoke-ai",
         title: "Custom AI Solutions",
         description: "Fine-tuned models and private business automation software.",
         href: "/services/ai-automation/custom-solutions",
+        iconType: "ai-chip",
       },
     ],
   },
+
+  // ---------------------------------------------------------------------------
+  // PILLAR 05: CLOUD & TECHNOLOGY SOLUTIONS
+  // ---------------------------------------------------------------------------
   {
     id: "cloud-technology",
+    index: "05",
     title: "Cloud & Technology Solutions",
     subtitle: "Enterprise Infrastructure",
     summary: "High-availability cloud deployments, managed security, and server configurations.",
@@ -281,18 +322,21 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
         title: "Cloud Deployment",
         description: "Distributed edge architectures, Cloudflare networks, and serverless compute.",
         href: "/services/cloud-technology/cloud-deployment",
+        iconType: "cloud-server",
       },
       {
         id: "server-operations",
         title: "Server Setup & Management",
         description: "Automated CI/CD pipelines, containerized environments, and monitoring.",
         href: "/services/cloud-technology/server-management",
+        iconType: "cloud-server",
       },
       {
         id: "database-clusters",
         title: "Database Solutions",
         description: "High-availability replication, automated backups, and encrypted storage.",
         href: "/services/cloud-technology/database-solutions",
+        iconType: "cloud-server",
       },
       {
         id: "security-hardening",
@@ -300,26 +344,161 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
         description: "WAF deployment, DDoS mitigation, and SSL/TLS configuration.",
         href: "/services/cloud-technology/security-optimization",
         badge: "Hardened",
+        iconType: "cloud-server",
       },
       {
         id: "container-apps",
         title: "Application Deployment",
         description: "Docker and Kubernetes setups ensuring smooth, scalable software rollouts.",
         href: "/services/cloud-technology/application-deployment",
+        iconType: "cloud-server",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  // PILLAR 06 (NEW): MICROSOFT OFFICE ADD-IN DEVELOPMENT
+  // ---------------------------------------------------------------------------
+  {
+    id: "office-addins",
+    index: "06",
+    title: "Office Add-in Development",
+    subtitle: "Microsoft 365 Enterprise Extensions",
+    summary: "Bespoke Office Web Add-ins for Word, Excel, PowerPoint, and Outlook.",
+    href: "/services/office-addins",
+    iconType: "microsoft",
+    contextualCta: {
+      headline: "Building or migrating a Microsoft Office Add-in?",
+      actionText: "Discuss Office Add-in Architecture",
+      href: "/start-project?service=office-addins",
+      turnaroundTag: "Microsoft AppSource Certified",
+    },
+    subServices: [
+      {
+        id: "word-addin",
+        title: "Word Add-in Development",
+        description: "Document automation, template generation, and legal contract drafting tools.",
+        href: "/services/office-addins/word",
+        iconType: "word",
+      },
+      {
+        id: "excel-addin",
+        title: "Excel Add-in Development",
+        description: "Custom financial calculation engines, data sync ribbons, and ERP bridge add-ins.",
+        href: "/services/office-addins/excel",
+        iconType: "excel",
+      },
+      {
+        id: "powerpoint-addin",
+        title: "PowerPoint Add-in Development",
+        description: "Automated slide deck builders, corporate asset libraries, and chart connectors.",
+        href: "/services/office-addins/powerpoint",
+        iconType: "powerpoint",
+      },
+      {
+        id: "outlook-addin",
+        title: "Outlook Add-in Development",
+        description: "Email tracking sidebar tools, CRM auto-filing, and secure scheduling add-ins.",
+        href: "/services/office-addins/outlook",
+        iconType: "outlook",
+      },
+      {
+        id: "teams-addin",
+        title: "Microsoft Teams App Development",
+        description: "Interactive messaging extensions, bots, and collaborative workspace tabs.",
+        href: "/services/office-addins/teams",
+        iconType: "teams",
+      },
+      {
+        id: "vsto-migration",
+        title: "VSTO to Web Add-in Migration",
+        description: "Modernizing legacy COM/VSTO plugins into modern cross-platform web add-ins.",
+        href: "/services/office-addins/vsto-migration",
+        badge: "Migration",
+        iconType: "microsoft",
+      },
+      {
+        id: "sso-azure-ad",
+        title: "Single Sign-On (SSO) & Azure AD",
+        description: "Enterprise identity provisioning and Microsoft Graph API integrations.",
+        href: "/services/office-addins/azure-sso",
+        badge: "Enterprise",
+        iconType: "microsoft",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  // PILLAR 07 (NEW): GOOGLE WORKSPACE ADD-ONS DEVELOPMENT
+  // ---------------------------------------------------------------------------
+  {
+    id: "google-addons",
+    index: "07",
+    title: "Google Add-ons Development",
+    subtitle: "Google Workspace & Productivity Tools",
+    summary: "Custom extensions for Google Sheets, Docs, Gmail, and Google Forms.",
+    href: "/services/google-addons",
+    iconType: "workspace",
+    contextualCta: {
+      headline: "Automating workflows across Google Workspace?",
+      actionText: "Consult on Workspace Engineering",
+      href: "/start-project?service=google-addons",
+      turnaroundTag: "Google Marketplace Ready",
+    },
+    subServices: [
+      {
+        id: "google-sheets-addon",
+        title: "Google Sheets Add-on Development",
+        description: "Custom formulas, external API data feeds, and financial modeling sidebars.",
+        href: "/services/google-addons/sheets",
+        iconType: "sheets",
+      },
+      {
+        id: "google-docs-addon",
+        title: "Google Docs Add-on Development",
+        description: "Automated document merge, AI content assistants, and publishing workflows.",
+        href: "/services/google-addons/docs",
+        iconType: "docs",
+      },
+      {
+        id: "gmail-addon",
+        title: "Gmail Add-on Development",
+        description: "Contextual email action cards, customer support sidebars, and CRM logging.",
+        href: "/services/google-addons/gmail",
+        iconType: "gmail",
+      },
+      {
+        id: "google-forms-addon",
+        title: "Google Forms Add-on Development",
+        description: "Automated response validation, notification triggers, and custom email routes.",
+        href: "/services/google-addons/forms",
+        iconType: "forms",
+      },
+      {
+        id: "google-slides-addon",
+        title: "Google Slides Add-on Development",
+        description: "Automated dynamic chart generation and brand design system synchronizers.",
+        href: "/services/google-addons/slides",
+        iconType: "slides",
+      },
+      {
+        id: "google-drive-addon",
+        title: "Google Drive Workflow Extensions",
+        description: "Cloud storage lifecycle automation, batch conversion, and access audits.",
+        href: "/services/google-addons/drive",
+        iconType: "drive",
+      },
+      {
+        id: "apps-script-mesh",
+        title: "Apps Script & Enterprise APIs",
+        description: "Custom Google Cloud project integration, OAuth2, and scalable backends.",
+        href: "/services/google-addons/apps-script",
+        badge: "Cloud API",
+        iconType: "workspace",
       },
     ],
   },
 ] as const;
 
+// Backward-compatible alias
 export const SERVICES_CATEGORIES = SERVICE_PILLARS;
-
-export const MEGA_MENU_FEATURED_CARD: MegaMenuFeaturedCardConfig = {
-  tag: "GROWTH ARCHITECTURE",
-  title: "Need a Custom Growth & Engineering Roadmap?",
-  description:
-    "We architect custom web systems, high-scale acquisition campaigns, and automated workflows tailored to your exact business metrics.",
-  buttonText: "Request Architecture Call",
-  buttonHref: "/start-project",
-  metricHighlight: "< 24h",
-  metricLabel: "Executive Response Time",
-} as const;
