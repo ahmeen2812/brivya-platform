@@ -1,8 +1,8 @@
 /**
  * BRIVYA SOLUTIONS — MEGA-MENU KINETIC ANIMATION ENGINE
  * Complete production-grade animation controllers:
- * - Synchronized Reveal: Container drops 6px while items emerge simultaneously (NO empty box flash).
- * - Exact Symmetrical Inverse Exit: Last item (07) disappears first down to 01 (LIFO order).
+ * - Synchronized Zero-Flash Reveal: Container and elements emerge simultaneously using autoAlpha.
+ * - Exact Symmetrical Inverse Exit: Last item (07) exits first down to 01 (LIFO order).
  * - Progressive Width Morphing: 370px <-> 940px without layout jitter.
  */
 
@@ -16,9 +16,9 @@ export interface MegaMenuAnimationTargets {
 }
 
 /**
- * 1. SYNCHRONIZED REVEAL SEQUENCE
- * Container drops 6px while the pillars cascade simultaneously at time 0.
- * Eliminates the empty white card flash completely.
+ * 1. SYNCHRONIZED REVEAL (Zero Empty-Box Flash)
+ * Container and first pillars emerge simultaneously at time 0.
+ * Eliminates unstyled white rectangle flash completely.
  */
 export function animateMegaMenuReveal(
   targets: MegaMenuAnimationTargets,
@@ -36,8 +36,8 @@ export function animateMegaMenuReveal(
   if (backdrop) {
     tl.fromTo(
       backdrop,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.22, ease: "power2.out" },
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 0.22, ease: "power2.out" },
       0,
     );
   }
@@ -47,40 +47,40 @@ export function animateMegaMenuReveal(
     tl.fromTo(
       container,
       {
-        opacity: 0,
+        autoAlpha: 0,
         y: -6,
         scale: 0.985,
         width: initialWidth,
         transformOrigin: "top center",
       },
       {
-        opacity: 1,
+        autoAlpha: 1,
         y: 0,
         scale: 1,
         width: initialWidth,
-        duration: 0.28,
+        duration: 0.26,
         ease: "power3.out",
       },
-      0, // Synchronized exactly at time 0
+      0, // Synchronized at time 0
     );
   }
 
-  // 7 Pillars cascade in starting at 0.02s (no delay/flash)
+  // 7 Pillars cascade in starting immediately at 0.01s (No delay/flash)
   if (leftRail && leftRail.children && leftRail.children.length > 0) {
     tl.fromTo(
       Array.from(leftRail.children),
       {
-        opacity: 0,
+        autoAlpha: 0,
         x: -8,
       },
       {
-        opacity: 1,
+        autoAlpha: 1,
         x: 0,
-        duration: 0.24,
-        stagger: 0.022,
+        duration: 0.22,
+        stagger: 0.02,
         ease: "power2.out",
       },
-      0.02, // Starts immediately as container drops
+      0.01, // Starts immediately with container
     );
   }
 
@@ -113,7 +113,7 @@ export function animateMegaMenuDisappear(
     tl.to(
       subPanel,
       {
-        opacity: 0,
+        autoAlpha: 0,
         x: 8,
         duration: 0.12,
         ease: "power2.in",
@@ -128,10 +128,10 @@ export function animateMegaMenuDisappear(
     tl.to(
       reversedChildren,
       {
-        opacity: 0,
+        autoAlpha: 0,
         x: -6,
         duration: 0.12,
-        stagger: 0.016, // Reverse stagger order: 7 -> 6 -> 5 -> 4 -> 3 -> 2 -> 1
+        stagger: 0.016, // Reverse stagger: 7 -> 6 -> 5 -> 4 -> 3 -> 2 -> 1
         ease: "power2.in",
       },
       0.02,
@@ -143,7 +143,7 @@ export function animateMegaMenuDisappear(
     tl.to(
       container,
       {
-        opacity: 0,
+        autoAlpha: 0,
         y: -6,
         scale: 0.985,
         duration: 0.16,
@@ -158,7 +158,7 @@ export function animateMegaMenuDisappear(
     tl.to(
       backdrop,
       {
-        opacity: 0,
+        autoAlpha: 0,
         duration: 0.16,
       },
       0.08,
@@ -203,8 +203,8 @@ export function animateSubPanelEntrance(panelElement: HTMLElement | null): void 
 
   tl.fromTo(
     panelElement,
-    { opacity: 0, x: 10 },
-    { opacity: 1, x: 0, duration: 0.24, ease: "power3.out" },
+    { autoAlpha: 0, x: 8 },
+    { autoAlpha: 1, x: 0, duration: 0.22, ease: "power3.out" },
     0,
   );
 
@@ -212,9 +212,9 @@ export function animateSubPanelEntrance(panelElement: HTMLElement | null): void 
   if (rows && rows.length > 0) {
     tl.fromTo(
       Array.from(rows),
-      { opacity: 0, y: 5 },
-      { opacity: 1, y: 0, duration: 0.18, stagger: 0.018, ease: "power2.out" },
-      0.04,
+      { autoAlpha: 0, y: 4 },
+      { autoAlpha: 1, y: 0, duration: 0.16, stagger: 0.016, ease: "power2.out" },
+      0.03,
     );
   }
 }

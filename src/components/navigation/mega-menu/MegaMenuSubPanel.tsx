@@ -12,21 +12,42 @@ interface MegaMenuSubPanelProps {
   subPanelRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-// Sub-Service Row with Official Brand Icon
+// Clean Sub-Service Item with Precision Bullet (or official badge for Office/Google)
 const SubServiceItemRow: React.FC<{
   sub: SubServiceItem;
   onNavigate: () => void;
 }> = ({ sub, onNavigate }) => {
+  // If the item has a specific product badge (like Word/Excel or Docs/Sheets), show its colored badge
+  const hasProductBadge =
+    sub.iconType &&
+    [
+      "word",
+      "excel",
+      "powerpoint",
+      "outlook",
+      "teams",
+      "sheets",
+      "docs",
+      "gmail",
+      "forms",
+    ].includes(sub.iconType);
+
   return (
     <Link
       href={sub.href}
       onClick={onNavigate}
-      className="group flex items-start gap-2.5 rounded-xl p-2 transition-colors duration-150 hover:bg-slate-50 border border-transparent hover:border-slate-100"
+      className="group flex items-start gap-2.5 rounded-xl p-2 transition-all duration-150 hover:bg-slate-50 border border-transparent hover:border-slate-100/90"
     >
-      {/* Official Full-Color Product Icon */}
-      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center">
-        <MegaMenuBrandIcon type={sub.iconType || "default"} className="h-5 w-5" />
-      </div>
+      {/* Precision Visual Indicator: Micro-badge for tools, or active bullet for services */}
+      {hasProductBadge ? (
+        <div className="mt-0.5 shrink-0">
+          <MegaMenuBrandIcon type={sub.iconType!} />
+        </div>
+      ) : (
+        <div className="mt-2 flex h-2 w-2 shrink-0 items-center justify-center">
+          <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition-all duration-200 group-hover:bg-[#1675F8] group-hover:scale-125" />
+        </div>
+      )}
 
       <div className="flex flex-col flex-1">
         <div className="flex items-center justify-between">
@@ -94,7 +115,7 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
           </Link>
         </div>
 
-        {/* 2-Column Subservices Grid with Official Product Logos */}
+        {/* 2-Column Clean Subservices Grid */}
         <div className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">
           {pillar.subServices.map((sub: SubServiceItem) => (
             <SubServiceItemRow key={sub.id} sub={sub} onNavigate={onNavigate} />
@@ -102,7 +123,7 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
         </div>
       </div>
 
-      {/* Contextual Per-Pillar Conversion CTA Panel */}
+      {/* Contextual Per-Pillar Conversion CTA Panel (Light-Theme Studio Standard) */}
       <div className="mt-3 flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5 sm:p-3 shadow-xs">
         <div className="flex flex-col">
           <span className="font-sans text-xs font-bold text-[#06162C]">
@@ -116,7 +137,7 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
         <Link
           href={pillar.contextualCta.href}
           onClick={onNavigate}
-          className="group inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#06162C] px-3.5 py-2 font-sans text-[11px] font-semibold text-white shadow-xs transition-all duration-200 hover:bg-[#07366D] active:scale-[0.98] shrink-0 ml-3"
+          className="group inline-flex items-center justify-center gap-1.5 rounded-lg bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-3.5 py-2 font-sans text-[11px] font-semibold text-white shadow-xs transition-all duration-200 hover:shadow-sm active:scale-[0.98] shrink-0 ml-3"
         >
           <span>{pillar.contextualCta.actionText}</span>
           <svg

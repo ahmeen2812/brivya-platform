@@ -65,7 +65,7 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
     }
   }, [isOpen, shouldRender]);
 
-  // Trigger Symmetrical Reveal when mounted (Synchronized: NO empty box flash)
+  // Trigger Synchronized Reveal when mounted (Starts immediately: zero empty-box flash)
   React.useEffect(() => {
     if (shouldRender && isOpen) {
       animateMegaMenuReveal(
@@ -127,12 +127,21 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
         }}
         className="fixed top-[5.25rem] sm:top-[5.5rem] left-0 right-0 z-50 mx-auto flex justify-center pointer-events-none before:absolute before:-top-3 before:left-0 before:right-0 before:h-4 before:content-['']"
       >
+        {/* 
+          Main Console Chassis:
+          Initial style specifies opacity: 0 and visibility: hidden so the GPU
+          NEVER paints an unstyled white box before GSAP begins animating!
+        */}
         <div
           ref={containerRef}
           role="region"
           aria-label="Services Exploration Console"
-          className="pointer-events-auto relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_16px_45px_-10px_rgba(6,22,44,0.14),0_2px_8px_-2px_rgba(6,22,44,0.04)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] transition-[box-shadow]"
-          style={{ width: COLLAPSED_WIDTH }}
+          style={{
+            width: COLLAPSED_WIDTH,
+            opacity: 0,
+            visibility: "hidden",
+          }}
+          className="pointer-events-auto relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_16px_45px_-10px_rgba(6,22,44,0.14),0_2px_8px_-2px_rgba(6,22,44,0.04)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)]"
         >
           {/* Pinned Telemetry Indicator */}
           {isPinned && (

@@ -58,11 +58,9 @@ export const MegaMenuPillarList: React.FC<MegaMenuPillarListProps> = ({
               />
             )}
 
-            {/* Left Content: Official Brand Logo + Title + Subtitle */}
+            {/* Left Content: Light-Theme Native Brand Icon + Title + Subtitle */}
             <div className="flex items-center gap-2.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center">
-                <MegaMenuBrandIcon type={pillar.iconType} className="h-5 w-5" />
-              </div>
+              <MegaMenuBrandIcon type={pillar.iconType} />
 
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
@@ -89,7 +87,7 @@ export const MegaMenuPillarList: React.FC<MegaMenuPillarListProps> = ({
                 className={`h-3.5 w-3.5 transition-transform duration-200 ${
                   isSelected
                     ? "translate-x-0.5 text-[#1675F8] opacity-100"
-                    : "text-[#475569] opacity-60 group-hover:translate-x-0.5 group-hover:opacity-100"
+                    : "text-[#64748B] opacity-50 group-hover:translate-x-0.5 group-hover:opacity-100"
                 }`}
                 fill="none"
                 viewBox="0 0 24 24"
