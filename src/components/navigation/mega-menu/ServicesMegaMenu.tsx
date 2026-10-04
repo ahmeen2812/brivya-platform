@@ -7,7 +7,7 @@ import { MegaMenuPillarList } from "./MegaMenuPillarList";
 import { MegaMenuSubPanel } from "./MegaMenuSubPanel";
 import {
   animateMegaMenuReveal,
-  animateMegaMenuFold,
+  animateMegaMenuDisappear,
   animateContainerWidthMorph,
 } from "@/animations/servicesMegaMenuAnimations";
 
@@ -26,60 +26,66 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
   onMouseEnter,
   onMouseLeave,
 }) => {
-  // Starts with null so only the 5 main pillars are shown on initial open
+  // Progressive disclosure: activePillarId starts as null (showing ONLY 7 pillars)
   const [activePillarId, setActivePillarId] = React.useState<string | null>(null);
   const [shouldRender, setShouldRender] = React.useState<boolean>(isOpen);
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const backdropRef = React.useRef<HTMLDivElement | null>(null);
+  const leftRailRef = React.useRef<HTMLDivElement | null>(null);
+  const subPanelRef = React.useRef<HTMLDivElement | null>(null);
 
-  const COLLAPSED_WIDTH = 360;
-  const EXPANDED_WIDTH = 880;
+  const COLLAPSED_WIDTH = 370;
+  const EXPANDED_WIDTH = 920;
 
+  // Active pillar object resolution
   const activePillar: ServicePillar | null = React.useMemo(() => {
     if (!activePillarId) return null;
     return SERVICE_PILLARS.find((p) => p.id === activePillarId) || null;
   }, [activePillarId]);
 
-  // Handle Lifecycle Transitions
+  // Handle Opening / Closing Lifecycle with Exact Inverse Fold
   React.useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
     } else if (shouldRender) {
-      animateMegaMenuFold(
+      animateMegaMenuDisappear(
         {
           container: containerRef.current,
           backdrop: backdropRef.current,
+          leftRail: leftRailRef.current,
+          subPanel: subPanelRef.current,
         },
         () => {
           setShouldRender(false);
-          setActivePillarId(null);
+          setActivePillarId(null); // Reset back to collapsed state on exit
         },
       );
     }
   }, [isOpen, shouldRender]);
 
-  // Trigger Open Animation
+  // Trigger Symmetrical Reveal
   React.useEffect(() => {
     if (shouldRender && isOpen) {
       animateMegaMenuReveal(
         {
           container: containerRef.current,
           backdrop: backdropRef.current,
+          leftRail: leftRailRef.current,
         },
         COLLAPSED_WIDTH,
       );
     }
   }, [shouldRender, isOpen]);
 
-  // Morph width between collapsed (360px) and expanded (880px)
+  // Trigger Progressive Width Morph (370px -> 920px)
   React.useEffect(() => {
     if (!containerRef.current) return;
     const targetWidth = activePillarId ? EXPANDED_WIDTH : COLLAPSED_WIDTH;
     animateContainerWidthMorph(containerRef.current, targetWidth);
   }, [activePillarId]);
 
-  // Close on Escape key
+  // Accessibility: Close on Escape key
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -94,7 +100,10 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
 
   return (
     <>
-      {/* Click-outside backdrop */}
+      {/* 
+        Click-outside backdrop:
+        Clicking outside immediately folds and closes the menu
+      */}
       <div
         aria-hidden="true"
         onClick={onClose}
@@ -102,14 +111,15 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
       />
 
       {/* 
-        Hit-Bridge Wrapper:
-        Anchors below the floating navbar with a clean 4px visible gap.
-        The before: pseudo-element acts as the mouse bridge so traversing
-        the gap does not trigger premature closing.
+        The Floating Hit-Bridge Wrapper:
+        Anchored at top-[5.25rem] (giving an exact 4px visible gap under the navbar).
+        The before: pseudo-element bridges the 4px gap so moving between the
+        navbar and the dropdown never triggers mouse leave or flickers.
       */}
       <div
         onMouseEnter={onMouseEnter}
         onMouseLeave={() => {
+          // If the menu is pinned by click, do NOT close on hover leave!
           if (!isPinned && onMouseLeave) {
             onMouseLeave();
           }
@@ -120,10 +130,10 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
           ref={containerRef}
           role="region"
           aria-label="Services Exploration Console"
-          className="pointer-events-auto relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_16px_45px_-10px_rgba(6,22,44,0.14),0_2px_8px_-2px_rgba(6,22,44,0.04)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)]"
+          className="pointer-events-auto relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_16px_45px_-10px_rgba(6,22,44,0.14),0_2px_8px_-2px_rgba(6,22,44,0.04)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] transition-[box-shadow]"
           style={{ width: COLLAPSED_WIDTH }}
         >
-          {/* Pinned Indicator when locked open via click */}
+          {/* Pinned Telemetry Indicator */}
           {isPinned && (
             <div className="absolute right-3 top-2.5 z-20 flex items-center gap-1.5 rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-mono font-semibold text-[#1675F8]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#1675F8]" />
@@ -132,20 +142,25 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
           )}
 
           <div className="flex h-full w-full">
-            {/* Left Rail: 5 Main Pillars */}
-            <div className="w-[360px] shrink-0 border-r border-slate-100 bg-slate-50/40">
+            {/* Left Rail: 7 Main Pillars (Always 370px wide) */}
+            <div className="w-[370px] shrink-0 border-r border-slate-100 bg-slate-50/40">
               <MegaMenuPillarList
                 pillars={SERVICE_PILLARS}
                 activePillarId={activePillarId}
                 onHoverPillar={(id) => setActivePillarId(id)}
                 onClickPillar={(id) => setActivePillarId(id)}
+                railRef={leftRailRef}
               />
             </div>
 
-            {/* Right Sub-Services Panel (Expands when pillar is hovered/clicked) */}
+            {/* Right Sub-Services Panel (Morphs into view when a pillar is selected) */}
             {activePillar && (
-              <div className="w-[520px] shrink-0 bg-white">
-                <MegaMenuSubPanel pillar={activePillar} onNavigate={onClose} />
+              <div className="w-[550px] shrink-0 bg-white">
+                <MegaMenuSubPanel
+                  pillar={activePillar}
+                  onNavigate={onClose}
+                  subPanelRef={subPanelRef}
+                />
               </div>
             )}
           </div>

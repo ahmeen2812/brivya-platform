@@ -13,7 +13,9 @@ export type ServiceIconType =
   | "microsoft"
   | "workspace";
 
+// Extended to inherit ServiceIconType so any pillar icon is valid on sub-services
 export type SubServiceIconType =
+  | ServiceIconType
   | "word"
   | "excel"
   | "powerpoint"
@@ -25,7 +27,6 @@ export type SubServiceIconType =
   | "forms"
   | "slides"
   | "drive"
-  | "code"
   | "google-ads"
   | "meta-ads"
   | "ai-chip"

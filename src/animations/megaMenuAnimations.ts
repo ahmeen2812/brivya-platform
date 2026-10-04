@@ -1,84 +1,82 @@
 /**
- * BRIVYA SOLUTIONS — SERVICES MEGA-MENU ANIMATION ENGINE
- * Handles GSAP transitions for opening/closing the floating console,
- * cross-fading the dynamic sub-services matrix, and kinetic arrow loops.
+ * BRIVYA SOLUTIONS — MEGA-MENU KINETIC ANIMATION ENGINE
+ * Powers the mechanical spring reveal, the exact inverse disappearing fold,
+ * progressive width morphing (360px -> 920px), and pillar cross-fades.
  */
 
 import gsap from "gsap";
 
-export interface MegaMenuAnimationElements {
-  container: HTMLDivElement | null;
-  backdrop: HTMLDivElement | null;
-  leftRail: HTMLDivElement | null;
-  subServicesBay: HTMLDivElement | null;
-  featuredCard: HTMLDivElement | null;
+export interface MegaMenuAnimationTargets {
+  container: HTMLElement | null;
+  backdrop: HTMLElement | null;
+  leftRail?: HTMLElement | null;
+  subPanel?: HTMLElement | null;
 }
 
 /**
- * Animates the Desktop Mega-Menu Opening
+ * 1. THE REVEAL SEQUENCE (Entrance)
+ * - Container drops with physical hydraulic deceleration
+ * - Left pillars cascade in with a rapid 25ms stagger
+ * - Sub-panel unmasks smoothly
  */
-export function animateMegaMenuOpen(elements: MegaMenuAnimationElements): gsap.core.Timeline {
-  const { container, backdrop, leftRail, subServicesBay, featuredCard } = elements;
+export function animateMegaMenuReveal(
+  targets: MegaMenuAnimationTargets,
+  initialWidth: number = 360,
+): gsap.core.Timeline {
+  const { container, backdrop, leftRail } = targets;
 
-  gsap.killTweensOf([container, backdrop, leftRail, subServicesBay, featuredCard]);
+  gsap.killTweensOf([container, backdrop, leftRail]);
 
   const tl = gsap.timeline({
-    defaults: { ease: "power3.out" },
+    defaults: { ease: "power4.out" },
   });
 
+  // Soft backdrop illumination
   if (backdrop) {
     tl.fromTo(
       backdrop,
       { opacity: 0 },
-      { opacity: 1, duration: 0.25, ease: "power2.out" },
+      { opacity: 1, duration: 0.24, ease: "power2.out" },
       0,
     );
   }
 
+  // Floating chassis drops 8px with mechanical settle
   if (container) {
     tl.fromTo(
       container,
       {
         opacity: 0,
-        y: -12,
+        y: -8,
         scale: 0.985,
+        width: initialWidth,
         transformOrigin: "top center",
       },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 0.35,
+        width: initialWidth,
+        duration: 0.32,
         ease: "power3.out",
       },
       0,
     );
   }
 
-  if (leftRail) {
+  // 7 Pillars cascade down from left
+  if (leftRail && leftRail.children) {
     tl.fromTo(
       leftRail.children,
       { opacity: 0, x: -8 },
-      { opacity: 1, x: 0, duration: 0.28, stagger: 0.03, ease: "power2.out" },
-      0.08,
-    );
-  }
-
-  if (subServicesBay) {
-    tl.fromTo(
-      subServicesBay,
-      { opacity: 0, y: 6 },
-      { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" },
-      0.12,
-    );
-  }
-
-  if (featuredCard) {
-    tl.fromTo(
-      featuredCard,
-      { opacity: 0, scale: 0.96 },
-      { opacity: 1, scale: 1, duration: 0.32, ease: "back.out(1.2)" },
-      0.14,
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.26,
+        stagger: 0.025,
+        ease: "power2.out",
+      },
+      0.06,
     );
   }
 
@@ -86,42 +84,77 @@ export function animateMegaMenuOpen(elements: MegaMenuAnimationElements): gsap.c
 }
 
 /**
- * Animates the Desktop Mega-Menu Closing
+ * 2. THE DISAPPEARING SEQUENCE (Exact Symmetrical Inverse Exit)
+ * - Sub-panel elements retract first
+ * - Left pillars cascade out in reverse
+ * - Container pulls up into the navbar and folds with high-velocity snap
  */
-export function animateMegaMenuClose(
-  elements: MegaMenuAnimationElements,
+export function animateMegaMenuDisappear(
+  targets: MegaMenuAnimationTargets,
   onComplete: () => void,
 ): gsap.core.Timeline {
-  const { container, backdrop } = elements;
+  const { container, backdrop, leftRail, subPanel } = targets;
 
-  gsap.killTweensOf([container, backdrop]);
+  gsap.killTweensOf([container, backdrop, leftRail, subPanel]);
 
   const tl = gsap.timeline({
-    defaults: { ease: "power2.inOut" },
+    defaults: { ease: "power3.in" },
     onComplete,
   });
 
+  // Sub-services bay retracts right-and-out
+  if (subPanel) {
+    tl.to(
+      subPanel,
+      {
+        opacity: 0,
+        x: 8,
+        duration: 0.14,
+        ease: "power2.in",
+      },
+      0,
+    );
+  }
+
+  // 7 Pillars retract to the left in reverse order
+  if (leftRail && leftRail.children) {
+    tl.to(
+      Array.from(leftRail.children).reverse(),
+      {
+        opacity: 0,
+        x: -6,
+        duration: 0.14,
+        stagger: 0.015,
+        ease: "power2.in",
+      },
+      0.02,
+    );
+  }
+
+  // Container pulls up 8px and folds away cleanly
   if (container) {
     tl.to(
       container,
       {
         opacity: 0,
         y: -8,
-        scale: 0.99,
-        duration: 0.2,
+        scale: 0.98,
+        duration: 0.18,
+        ease: "power3.in",
       },
-      0,
+      0.04,
     );
   }
 
+  // Backdrop dissolves simultaneously
   if (backdrop) {
     tl.to(
       backdrop,
       {
         opacity: 0,
-        duration: 0.2,
+        duration: 0.16,
       },
-      0,
+      0.06,
     );
   }
 
@@ -129,30 +162,32 @@ export function animateMegaMenuClose(
 }
 
 /**
- * Smoothly cross-fades the inspection bay when switching between categories
+ * 3. Progressive Width Morph: Dynamically transitions container width
+ * from compact (360px) to expanded (920px) with hydraulic easing
  */
-export function animateCategoryCrossFade(bayElement: HTMLElement | null): void {
-  if (!bayElement) return;
+export function animateContainerWidthMorph(
+  container: HTMLElement | null,
+  targetWidth: number,
+): void {
+  if (!container) return;
 
-  gsap.killTweensOf(bayElement);
-  gsap.fromTo(
-    bayElement,
-    { opacity: 0.3, y: 4 },
-    { opacity: 1, y: 0, duration: 0.22, ease: "power2.out" },
-  );
+  gsap.to(container, {
+    width: targetWidth,
+    duration: 0.34,
+    ease: "expo.out",
+  });
 }
 
 /**
- * Interactive hover micro-displacement for sub-service list arrows
+ * 4. Staggered Slide Reveal for Sub-Services Panel
  */
-export function animateSubServiceArrow(arrowElement: Element | null, isHovered: boolean): void {
-  if (!arrowElement) return;
+export function animateSubPanelEntrance(panelElement: HTMLElement | null): void {
+  if (!panelElement) return;
 
-  gsap.killTweensOf(arrowElement);
-  gsap.to(arrowElement, {
-    x: isHovered ? 3 : 0,
-    opacity: isHovered ? 1 : 0.6,
-    duration: 0.2,
-    ease: "power2.out",
-  });
+  gsap.killTweensOf(panelElement);
+  gsap.fromTo(
+    panelElement,
+    { opacity: 0, x: 10 },
+    { opacity: 1, x: 0, duration: 0.26, ease: "power3.out" },
+  );
 }
