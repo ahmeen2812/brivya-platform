@@ -12,42 +12,21 @@ interface MegaMenuSubPanelProps {
   subPanelRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-// Clean Sub-Service Item with Precision Bullet (or official badge for Office/Google)
+// Sub-Service Row with Official Brand Icon
 const SubServiceItemRow: React.FC<{
   sub: SubServiceItem;
   onNavigate: () => void;
 }> = ({ sub, onNavigate }) => {
-  // If the item has a specific product badge (like Word/Excel or Docs/Sheets), show its colored badge
-  const hasProductBadge =
-    sub.iconType &&
-    [
-      "word",
-      "excel",
-      "powerpoint",
-      "outlook",
-      "teams",
-      "sheets",
-      "docs",
-      "gmail",
-      "forms",
-    ].includes(sub.iconType);
-
   return (
     <Link
       href={sub.href}
       onClick={onNavigate}
       className="group flex items-start gap-2.5 rounded-xl p-2 transition-all duration-150 hover:bg-slate-50 border border-transparent hover:border-slate-100/90"
     >
-      {/* Precision Visual Indicator: Micro-badge for tools, or active bullet for services */}
-      {hasProductBadge ? (
-        <div className="mt-0.5 shrink-0">
-          <MegaMenuBrandIcon type={sub.iconType!} />
-        </div>
-      ) : (
-        <div className="mt-2 flex h-2 w-2 shrink-0 items-center justify-center">
-          <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition-all duration-200 group-hover:bg-[#1675F8] group-hover:scale-125" />
-        </div>
-      )}
+      {/* Official Light-Theme Brand Icon */}
+      <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center">
+        <MegaMenuBrandIcon type={sub.iconType || "default"} className="h-5 w-5" />
+      </div>
 
       <div className="flex flex-col flex-1">
         <div className="flex items-center justify-between">
@@ -91,7 +70,7 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
       className="flex h-full w-full flex-col justify-between p-4 sm:p-5"
     >
       <div>
-        {/* Header with Title and Overview Link */}
+        {/* Header with Title and Direct Link */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-2">
           <div className="flex items-center gap-2">
             <span className="font-sans text-xs font-bold text-[#06162C]">
@@ -115,7 +94,7 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
           </Link>
         </div>
 
-        {/* 2-Column Clean Subservices Grid */}
+        {/* 2-Column Subservices Grid with Official Product Logos */}
         <div className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">
           {pillar.subServices.map((sub: SubServiceItem) => (
             <SubServiceItemRow key={sub.id} sub={sub} onNavigate={onNavigate} />
