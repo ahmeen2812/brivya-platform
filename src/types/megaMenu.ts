@@ -7,9 +7,13 @@
 export type ServiceIconType =
   | "code"
   | "google"
+  | "google-ads"
   | "meta"
+  | "meta-ads"
   | "ai"
+  | "ai-chip"
   | "cloud"
+  | "cloud-server"
   | "microsoft"
   | "workspace";
 
@@ -69,7 +73,8 @@ export type SubServiceIconType =
   | "postgresql"
   | "security-waf"
   | "docker"
-  | "default";
+  | "default"
+  | (string & {});
 
 export interface SubServiceItem {
   readonly id: string;
