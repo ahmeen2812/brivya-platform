@@ -3,7 +3,7 @@
  * Complete production-grade animation controllers:
  * - Synchronized Zero-Flash Reveal: Container and elements emerge simultaneously.
  * - Exact Symmetrical Inverse Exit: Last item (07) exits first down to 01 (LIFO order).
- * - Instant Pre-Paint Sub-Panel Reveal: Eliminates double-appearance and 1-2s lag.
+ * - Smooth Sub-Services Cascade: Natural, staggered entrance for rows, header, and CTA.
  * - Progressive Width Morphing: 370px <-> 940px without layout jitter.
  */
 
@@ -61,7 +61,7 @@ export function animateMegaMenuReveal(
         duration: 0.26,
         ease: "power3.out",
       },
-      0, // Synchronized at time 0
+      0,
     );
   }
 
@@ -172,7 +172,7 @@ export function animateMegaMenuDisappear(
 export const animateMegaMenuFold = animateMegaMenuDisappear;
 
 /**
- * 3. Progressive Width Morph: Dynamically transitions container width
+ * 3. Progressive Width Morph: Transitions container width
  * from compact (370px) to expanded (940px) with hydraulic deceleration
  */
 export function animateContainerWidthMorph(
@@ -190,51 +190,75 @@ export function animateContainerWidthMorph(
 }
 
 /**
- * 4. SUB-SERVICES PANEL STAGGERED ENTRANCE (Zero Double-Appearance)
- * - If first mount: synchronizes cleanly with container expansion.
- * - If switching between pillars: executes an instant 160ms cross-fade with zero lag.
+ * 4. POLISHED SUB-SERVICES STAGGERED REVEAL
+ * Plays a natural, choreographed entrance sequence every time a pillar is selected:
+ * - Header glides down subtly
+ * - Sub-service cards cascade in with physical inertia
+ * - Contextual CTA card glides up into place
  */
-export function animateSubPanelEntrance(
-  panelElement: HTMLElement | null,
-  isPillarSwitch: boolean = false,
-): void {
+export function animateSubPanelEntrance(panelElement: HTMLElement | null): void {
   if (!panelElement) return;
 
+  // Kill existing tweens on panel and its children to prevent collision
   gsap.killTweensOf(panelElement);
+  const items = panelElement.querySelectorAll(".sub-service-item");
+  const header = panelElement.querySelector(".sub-panel-header");
+  const cta = panelElement.querySelector(".sub-panel-cta");
 
-  if (isPillarSwitch) {
-    // Snappy, seamless 160ms cross-fade when moving cursor between pillars
-    gsap.fromTo(
-      panelElement,
-      { autoAlpha: 0.4, y: 3 },
+  if (items.length > 0) {
+    gsap.killTweensOf(Array.from(items));
+  }
+  if (header) gsap.killTweensOf(header);
+  if (cta) gsap.killTweensOf(cta);
+
+  const tl = gsap.timeline({
+    defaults: { ease: "power2.out" },
+  });
+
+  // Base panel fade-in
+  tl.fromTo(
+    panelElement,
+    { autoAlpha: 0 },
+    { autoAlpha: 1, duration: 0.2, ease: "power1.out" },
+    0,
+  );
+
+  // 1. Header slides in gently from top
+  if (header) {
+    tl.fromTo(
+      header,
+      { autoAlpha: 0, y: -4 },
+      { autoAlpha: 1, y: 0, duration: 0.22, ease: "power2.out" },
+      0.02,
+    );
+  }
+
+  // 2. Sub-services cascade in with clear, natural stagger
+  if (items.length > 0) {
+    tl.fromTo(
+      Array.from(items),
+      {
+        autoAlpha: 0,
+        y: 8,
+      },
       {
         autoAlpha: 1,
         y: 0,
-        duration: 0.18,
+        duration: 0.26,
+        stagger: 0.024, // 24ms stagger provides clean, fluid readability
         ease: "power2.out",
       },
+      0.04,
     );
-  } else {
-    // Initial expansion reveal (only runs once upon first hover)
-    const tl = gsap.timeline({
-      defaults: { ease: "power3.out" },
-    });
+  }
 
+  // 3. Contextual CTA card slides in from bottom
+  if (cta) {
     tl.fromTo(
-      panelElement,
-      { autoAlpha: 0, x: 8 },
-      { autoAlpha: 1, x: 0, duration: 0.22, ease: "power3.out" },
-      0,
+      cta,
+      { autoAlpha: 0, y: 6 },
+      { autoAlpha: 1, y: 0, duration: 0.24, ease: "power2.out" },
+      0.12,
     );
-
-    const rows = panelElement.querySelectorAll("a");
-    if (rows && rows.length > 0) {
-      tl.fromTo(
-        Array.from(rows),
-        { autoAlpha: 0, y: 4 },
-        { autoAlpha: 1, y: 0, duration: 0.16, stagger: 0.016, ease: "power2.out" },
-        0.03,
-      );
-    }
   }
 }

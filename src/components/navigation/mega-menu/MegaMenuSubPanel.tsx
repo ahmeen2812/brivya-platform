@@ -6,7 +6,7 @@ import { ServicePillar, SubServiceItem } from "@/types/megaMenu";
 import { MegaMenuBrandIcon } from "./MegaMenuBrandIcons";
 import { animateSubPanelEntrance } from "@/animations/servicesMegaMenuAnimations";
 
-// SSR-safe layout effect to execute GSAP animations BEFORE browser paint
+// SSR-safe layout effect to execute GSAP animations before browser paint
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
@@ -16,7 +16,7 @@ interface MegaMenuSubPanelProps {
   subPanelRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-// Sub-Service Row with Official Brand Icon
+// Sub-Service Row with Official Brand Icon & Animation Class Anchor
 const SubServiceItemRow: React.FC<{
   sub: SubServiceItem;
   onNavigate: () => void;
@@ -25,7 +25,7 @@ const SubServiceItemRow: React.FC<{
     <Link
       href={sub.href}
       onClick={onNavigate}
-      className="group flex items-start gap-2.5 rounded-xl p-2 transition-all duration-150 hover:bg-slate-50 border border-transparent hover:border-slate-100/90"
+      className="sub-service-item group flex items-start gap-2.5 rounded-xl p-2 transition-all duration-150 hover:bg-slate-50 border border-transparent hover:border-slate-100/90"
     >
       {/* Official Light-Theme Brand Icon */}
       <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center">
@@ -61,18 +61,10 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
   const internalRef = React.useRef<HTMLDivElement | null>(null);
   const panelRef = subPanelRef || internalRef;
 
-  // Track the previous pillar ID to determine if this is a first mount or a cross-fade transition
-  const prevPillarIdRef = React.useRef<string | null>(null);
-
+  // Run the entrance animation synchronously on mount and whenever pillar.id changes
   useIsomorphicLayoutEffect(() => {
     if (!panelRef.current) return;
-
-    const isPillarSwitch =
-      prevPillarIdRef.current !== null && prevPillarIdRef.current !== pillar.id;
-    prevPillarIdRef.current = pillar.id;
-
-    // Trigger smooth entrance directly before the frame is presented to the user
-    animateSubPanelEntrance(panelRef.current, isPillarSwitch);
+    animateSubPanelEntrance(panelRef.current);
   }, [pillar.id, panelRef]);
 
   return (
@@ -82,13 +74,13 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
       role="tabpanel"
       aria-labelledby={`pillartab-${pillar.id}`}
       style={{
-        opacity: 0, // Initial state guaranteed invisible before layout effect triggers
+        opacity: 0, // Initial state guaranteed hidden until GSAP timeline takes control
       }}
       className="flex h-full w-full flex-col justify-between p-4 sm:p-5"
     >
       <div>
         {/* Header with Title and Direct Link */}
-        <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+        <div className="sub-panel-header flex items-center justify-between border-b border-slate-100 pb-2">
           <div className="flex items-center gap-2">
             <span className="font-sans text-xs font-bold text-[#06162C]">
               {pillar.title}
@@ -119,8 +111,8 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
         </div>
       </div>
 
-      {/* Contextual Per-Pillar Conversion CTA Panel (Light-Theme Studio Standard) */}
-      <div className="mt-3 flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5 sm:p-3 shadow-xs">
+      {/* Contextual Per-Pillar Conversion CTA Panel */}
+      <div className="sub-panel-cta mt-3 flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5 sm:p-3 shadow-xs">
         <div className="flex flex-col">
           <span className="font-sans text-xs font-bold text-[#06162C]">
             {pillar.contextualCta.headline}
