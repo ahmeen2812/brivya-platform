@@ -6,6 +6,10 @@ import { ServicePillar, SubServiceItem } from "@/types/megaMenu";
 import { MegaMenuBrandIcon } from "./MegaMenuBrandIcons";
 import { animateSubPanelEntrance } from "@/animations/servicesMegaMenuAnimations";
 
+// SSR-safe layout effect to execute GSAP animations BEFORE browser paint
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 interface MegaMenuSubPanelProps {
   pillar: ServicePillar;
   onNavigate: () => void;
@@ -57,8 +61,18 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
   const internalRef = React.useRef<HTMLDivElement | null>(null);
   const panelRef = subPanelRef || internalRef;
 
-  React.useEffect(() => {
-    animateSubPanelEntrance(panelRef.current);
+  // Track the previous pillar ID to determine if this is a first mount or a cross-fade transition
+  const prevPillarIdRef = React.useRef<string | null>(null);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!panelRef.current) return;
+
+    const isPillarSwitch =
+      prevPillarIdRef.current !== null && prevPillarIdRef.current !== pillar.id;
+    prevPillarIdRef.current = pillar.id;
+
+    // Trigger smooth entrance directly before the frame is presented to the user
+    animateSubPanelEntrance(panelRef.current, isPillarSwitch);
   }, [pillar.id, panelRef]);
 
   return (
@@ -67,6 +81,9 @@ export const MegaMenuSubPanel: React.FC<MegaMenuSubPanelProps> = ({
       id={`subpanel-${pillar.id}`}
       role="tabpanel"
       aria-labelledby={`pillartab-${pillar.id}`}
+      style={{
+        opacity: 0, // Initial state guaranteed invisible before layout effect triggers
+      }}
       className="flex h-full w-full flex-col justify-between p-4 sm:p-5"
     >
       <div>

@@ -1,8 +1,9 @@
 /**
  * BRIVYA SOLUTIONS — MEGA-MENU KINETIC ANIMATION ENGINE
  * Complete production-grade animation controllers:
- * - Synchronized Zero-Flash Reveal: Container and elements emerge simultaneously using autoAlpha.
+ * - Synchronized Zero-Flash Reveal: Container and elements emerge simultaneously.
  * - Exact Symmetrical Inverse Exit: Last item (07) exits first down to 01 (LIFO order).
+ * - Instant Pre-Paint Sub-Panel Reveal: Eliminates double-appearance and 1-2s lag.
  * - Progressive Width Morphing: 370px <-> 940px without layout jitter.
  */
 
@@ -18,7 +19,6 @@ export interface MegaMenuAnimationTargets {
 /**
  * 1. SYNCHRONIZED REVEAL (Zero Empty-Box Flash)
  * Container and first pillars emerge simultaneously at time 0.
- * Eliminates unstyled white rectangle flash completely.
  */
 export function animateMegaMenuReveal(
   targets: MegaMenuAnimationTargets,
@@ -80,7 +80,7 @@ export function animateMegaMenuReveal(
         stagger: 0.02,
         ease: "power2.out",
       },
-      0.01, // Starts immediately with container
+      0.01,
     );
   }
 
@@ -190,31 +190,51 @@ export function animateContainerWidthMorph(
 }
 
 /**
- * 4. Staggered Slide Reveal for Sub-Services Panel
+ * 4. SUB-SERVICES PANEL STAGGERED ENTRANCE (Zero Double-Appearance)
+ * - If first mount: synchronizes cleanly with container expansion.
+ * - If switching between pillars: executes an instant 160ms cross-fade with zero lag.
  */
-export function animateSubPanelEntrance(panelElement: HTMLElement | null): void {
+export function animateSubPanelEntrance(
+  panelElement: HTMLElement | null,
+  isPillarSwitch: boolean = false,
+): void {
   if (!panelElement) return;
 
   gsap.killTweensOf(panelElement);
 
-  const tl = gsap.timeline({
-    defaults: { ease: "power3.out" },
-  });
-
-  tl.fromTo(
-    panelElement,
-    { autoAlpha: 0, x: 8 },
-    { autoAlpha: 1, x: 0, duration: 0.22, ease: "power3.out" },
-    0,
-  );
-
-  const rows = panelElement.querySelectorAll("a");
-  if (rows && rows.length > 0) {
-    tl.fromTo(
-      Array.from(rows),
-      { autoAlpha: 0, y: 4 },
-      { autoAlpha: 1, y: 0, duration: 0.16, stagger: 0.016, ease: "power2.out" },
-      0.03,
+  if (isPillarSwitch) {
+    // Snappy, seamless 160ms cross-fade when moving cursor between pillars
+    gsap.fromTo(
+      panelElement,
+      { autoAlpha: 0.4, y: 3 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.18,
+        ease: "power2.out",
+      },
     );
+  } else {
+    // Initial expansion reveal (only runs once upon first hover)
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out" },
+    });
+
+    tl.fromTo(
+      panelElement,
+      { autoAlpha: 0, x: 8 },
+      { autoAlpha: 1, x: 0, duration: 0.22, ease: "power3.out" },
+      0,
+    );
+
+    const rows = panelElement.querySelectorAll("a");
+    if (rows && rows.length > 0) {
+      tl.fromTo(
+        Array.from(rows),
+        { autoAlpha: 0, y: 4 },
+        { autoAlpha: 1, y: 0, duration: 0.16, stagger: 0.016, ease: "power2.out" },
+        0.03,
+      );
+    }
   }
 }

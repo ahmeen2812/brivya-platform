@@ -30,14 +30,18 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
   const [activePillarId, setActivePillarId] = React.useState<string | null>(null);
   const [shouldRender, setShouldRender] = React.useState<boolean>(isOpen);
 
+  // DOM node references for GSAP animation targets
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const backdropRef = React.useRef<HTMLDivElement | null>(null);
   const leftRailRef = React.useRef<HTMLDivElement | null>(null);
   const subPanelRef = React.useRef<HTMLDivElement | null>(null);
 
-  // Dimensional constraints: 370px compact -> 940px expanded
+  // Dimensional constraints
   const COLLAPSED_WIDTH = 370;
   const EXPANDED_WIDTH = 940;
+
+  // Track whether container is currently in expanded state to prevent width re-collapse
+  const isExpandedRef = React.useRef<boolean>(false);
 
   // Active pillar resolution
   const activePillar: ServicePillar | null = React.useMemo(() => {
@@ -59,13 +63,14 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
         },
         () => {
           setShouldRender(false);
-          setActivePillarId(null); // Reset back to collapsed 370px state on exit
+          setActivePillarId(null);
+          isExpandedRef.current = false;
         },
       );
     }
   }, [isOpen, shouldRender]);
 
-  // Trigger Synchronized Reveal when mounted (Starts immediately: zero empty-box flash)
+  // Trigger Symmetrical Reveal when mounted (Synchronized: zero empty box flash)
   React.useEffect(() => {
     if (shouldRender && isOpen) {
       animateMegaMenuReveal(
@@ -79,14 +84,23 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
     }
   }, [shouldRender, isOpen]);
 
-  // Trigger Progressive Width Morph (370px <-> 940px)
+  // Progressive Width Morph (Only animates width when state transitions between collapsed and expanded)
   React.useEffect(() => {
     if (!containerRef.current) return;
-    const targetWidth = activePillarId ? EXPANDED_WIDTH : COLLAPSED_WIDTH;
-    animateContainerWidthMorph(containerRef.current, targetWidth);
+
+    if (activePillarId && !isExpandedRef.current) {
+      // First expansion from 370px -> 940px
+      isExpandedRef.current = true;
+      animateContainerWidthMorph(containerRef.current, EXPANDED_WIDTH);
+    } else if (!activePillarId && isExpandedRef.current) {
+      // Collapse from 940px -> 370px
+      isExpandedRef.current = false;
+      animateContainerWidthMorph(containerRef.current, COLLAPSED_WIDTH);
+    }
+    // When switching between pillars while already expanded, width STAYS at 940px (no jitter/lag)
   }, [activePillarId]);
 
-  // Accessibility: Handle Escape key to close/unpin
+  // Accessibility: Handle Escape key
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
@@ -98,11 +112,14 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
+  // Pillar selection handlers with identity guards to prevent redundant re-renders
   const handlePillarHover = (pillarId: string) => {
+    if (pillarId === activePillarId) return; // Prevent duplicate triggers on same pillar
     setActivePillarId(pillarId);
   };
 
   const handlePillarClick = (pillarId: string) => {
+    if (pillarId === activePillarId) return;
     setActivePillarId(pillarId);
   };
 
@@ -129,15 +146,14 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
       >
         {/* 
           Main Console Chassis:
-          Initial style specifies opacity: 0 and visibility: hidden so the GPU
-          NEVER paints an unstyled white box before GSAP begins animating!
+          Initial style specifies opacity: 0 and visibility: hidden.
+          Width is NOT hardcoded in JSX so React never resets GSAP's animated width on re-renders!
         */}
         <div
           ref={containerRef}
           role="region"
           aria-label="Services Exploration Console"
           style={{
-            width: COLLAPSED_WIDTH,
             opacity: 0,
             visibility: "hidden",
           }}
@@ -163,7 +179,7 @@ export const ServicesMegaMenu: React.FC<ServicesMegaMenuProps> = ({
               />
             </div>
 
-            {/* Right Sub-Services Panel (Morphs into view when a pillar is selected) */}
+            {/* Right Sub-Services Panel */}
             {activePillar && (
               <div className="w-[570px] shrink-0 bg-white">
                 <MegaMenuSubPanel
