@@ -49,6 +49,9 @@ export const Navbar: React.FC = () => {
     dividersRefList.current[index] = el;
   }, []);
 
+  // Utility to determine if current device is desktop/tablet (>= 768px)
+  const checkIsDesktop = () => typeof window !== "undefined" && window.innerWidth >= 768;
+
   // 1. Master Desktop Entrance Sequence (Runs reliably on mount)
   React.useEffect(() => {
     const prefersReducedMotion =
@@ -75,7 +78,6 @@ export const Navbar: React.FC = () => {
 
     if (tl) {
       tl.eventCallback("onComplete", () => {
-        // Unlock the idle detection system ONLY after the entrance animation has fully finished
         isEntranceCompleteRef.current = true;
       });
     } else {
@@ -87,15 +89,42 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
-  // 2. Idle State Transition Animation (Dynamic Island Morph)
+  // 2. Responsive Window Resize Synchronizer
   React.useEffect(() => {
-    // Strictly do nothing until the entrance animation is complete
+    const handleResize = () => {
+      if (typeof window === "undefined") return;
+
+      if (window.innerWidth < 768) {
+        // MOBILE (< 768px):
+        // 1. Remove any inline maxWidth so container fills mobile layout naturally
+        if (containerRef.current) {
+          containerRef.current.style.maxWidth = "";
+        }
+        // 2. Clear inline display on navElementRef so CSS .hidden applies strictly
+        if (navElementRef.current) {
+          navElementRef.current.style.display = "";
+        }
+      } else {
+        // DESKTOP (>= 768px):
+        if (containerRef.current && !isIdle) {
+          containerRef.current.style.maxWidth = "1360px";
+        }
+        if (navElementRef.current) {
+          navElementRef.current.style.display = "";
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isIdle]);
+
+  // 3. Idle State Transition Animation (Strictly Isolated to Desktop)
+  React.useEffect(() => {
     if (!isEntranceCompleteRef.current || !containerRef.current) return;
 
-    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
-
-    if (isDesktop) {
-      // DESKTOP / TABLET: Morph width between full (1360px) and compact Conversion Capsule (390px)
+    if (checkIsDesktop()) {
+      // DESKTOP (>= 768px): Morph between 1360px and 390px
       gsap.killTweensOf([
         containerRef.current,
         navElementRef.current,
@@ -106,8 +135,8 @@ export const Navbar: React.FC = () => {
       ]);
 
       if (isIdle) {
-        // Entering Idle:
-        // 1. Hide the outer bookend dividers (logoDivider & ctaDivider) so no lines linger
+        // Entering Idle on Desktop:
+        // Hide bookend dividers
         if (logoDividerRef.current && ctaDividerRef.current) {
           gsap.to([logoDividerRef.current, ctaDividerRef.current], {
             autoAlpha: 0,
@@ -116,7 +145,7 @@ export const Navbar: React.FC = () => {
           });
         }
 
-        // 2. Fade out the middle navigation container and collapse it from layout
+        // Fade out middle navigation and collapse
         if (navElementRef.current) {
           gsap.to(navElementRef.current, {
             autoAlpha: 0,
@@ -131,24 +160,23 @@ export const Navbar: React.FC = () => {
           });
         }
 
-        // 3. Smoothly contract the container to 390px (Fits logo + full button + arrow perfectly)
+        // Contract container to 390px capsule
         gsap.to(containerRef.current, {
           maxWidth: 390,
           duration: 0.38,
           ease: "power3.inOut",
         });
       } else {
-        // Waking Up:
-        // 1. Expand the container back to full 1360px width
+        // Waking Up on Desktop:
         gsap.to(containerRef.current, {
           maxWidth: 1360,
           duration: 0.34,
           ease: "expo.out",
         });
 
-        // 2. Restore the middle navigation element to layout
+        // Use style.display = "" so CSS .hidden vs .md:flex governs
         if (navElementRef.current) {
-          navElementRef.current.style.display = "flex";
+          navElementRef.current.style.display = "";
           gsap.fromTo(
             navElementRef.current,
             { autoAlpha: 0, scale: 0.95 },
@@ -162,7 +190,6 @@ export const Navbar: React.FC = () => {
           );
         }
 
-        // 3. Restore the bookend dividers
         if (logoDividerRef.current && ctaDividerRef.current) {
           gsap.to([logoDividerRef.current, ctaDividerRef.current], {
             autoAlpha: 1,
@@ -173,7 +200,8 @@ export const Navbar: React.FC = () => {
         }
       }
     } else {
-      // MOBILE (< 768px): Maintain full width, softly relax ambient opacity to 0.85
+      // MOBILE (< 768px):
+      // Desktop nav remains hidden. Softly relax ambient opacity without shifting width.
       gsap.to(containerRef.current, {
         opacity: isIdle ? 0.85 : 1,
         duration: 0.3,
@@ -182,9 +210,9 @@ export const Navbar: React.FC = () => {
     }
   }, [isIdle]);
 
-  // 3. User Inactivity & Wake-Up Event Engine (5.0s Threshold)
+  // 4. User Inactivity & Wake-Up Event Engine (5.0s Threshold)
   React.useEffect(() => {
-    const IDLE_DELAY_MS = 5000; // 5.0 seconds of inactivity
+    const IDLE_DELAY_MS = 5000;
 
     const resetIdleTimer = () => {
       setIsIdle(false);
@@ -193,7 +221,6 @@ export const Navbar: React.FC = () => {
         clearTimeout(idleTimerRef.current);
       }
 
-      // Do NOT start countdown if entrance is still playing, user is hovering, or menus are open/pinned
       if (
         !isEntranceCompleteRef.current ||
         isHoveringNavbarRef.current ||
@@ -217,7 +244,6 @@ export const Navbar: React.FC = () => {
       }, IDLE_DELAY_MS);
     };
 
-    // Filter mouse movement to avoid sensor micro-jitters (< 5px)
     const handleMouseMove = (e: MouseEvent) => {
       const dx = Math.abs(e.clientX - lastMousePosRef.current.x);
       const dy = Math.abs(e.clientY - lastMousePosRef.current.y);
@@ -239,7 +265,6 @@ export const Navbar: React.FC = () => {
     window.addEventListener("wheel", handleUserActivity, { passive: true });
     window.addEventListener("mousedown", handleUserActivity, { passive: true });
 
-    // Initialize timer
     resetIdleTimer();
 
     return () => {
@@ -253,7 +278,7 @@ export const Navbar: React.FC = () => {
     };
   }, [megaMenuOpen, megaMenuPinned, mobileMenuOpen]);
 
-  // 4. Auto-close menus on route transition
+  // 5. Auto-close menus on route transition
   React.useEffect(() => {
     setMobileMenuOpen(false);
     setMegaMenuOpen(false);
@@ -261,7 +286,7 @@ export const Navbar: React.FC = () => {
     setIsIdle(false);
   }, [pathname]);
 
-  // 5. Lock body scroll on mobile drawer
+  // 6. Lock body scroll on mobile drawer
   React.useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -308,10 +333,9 @@ export const Navbar: React.FC = () => {
     triggerInteractiveBorderPulse(borderRef.current);
   };
 
-  // Direct container hover handlers
   const handleNavbarMouseEnter = () => {
     isHoveringNavbarRef.current = true;
-    setIsIdle(false); // Immediately expand if user hovers the compact capsule
+    setIsIdle(false);
     if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
   };
 
@@ -328,8 +352,8 @@ export const Navbar: React.FC = () => {
         onMouseEnter={handleNavbarMouseEnter}
         onMouseLeave={handleNavbarMouseLeave}
       >
-        {/* Left Section: Logo with Prismatic Sheen */}
-        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+        {/* Left Section: Logo */}
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           <NavLogo wrapperRef={logoWrapperRef} onClick={closeMobileMenu} />
           <NavDivider
             customRef={(el) => {
@@ -339,7 +363,7 @@ export const Navbar: React.FC = () => {
           />
         </div>
 
-        {/* Center Section: Desktop Navigation Items */}
+        {/* Center Section: Desktop Navigation Items (STRICTLY HIDDEN ON MOBILE) */}
         <nav
           ref={navElementRef}
           aria-label="Desktop Navigation"
@@ -357,7 +381,7 @@ export const Navbar: React.FC = () => {
           />
         </nav>
 
-        {/* Right Section: CTA Button & Animated Mobile Morph Toggle */}
+        {/* Right Section: CTA Button & Mobile Toggle */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <NavDivider
             customRef={(el) => {
@@ -366,6 +390,7 @@ export const Navbar: React.FC = () => {
             className="hidden md:block transition-opacity"
           />
 
+          {/* CTA Button: Properly proportioned on both mobile and desktop */}
           <div
             className={`transition-all duration-300 ${
               mobileMenuOpen
@@ -373,9 +398,10 @@ export const Navbar: React.FC = () => {
                 : "opacity-100 scale-100"
             }`}
           >
-            <NavCtaButton buttonRef={ctaButtonRef} className="hidden sm:inline-flex" />
+            <NavCtaButton buttonRef={ctaButtonRef} />
           </div>
 
+          {/* 3-Bar Kinetic Morph Toggle Button */}
           <NavMobileToggle isOpen={mobileMenuOpen} onToggle={toggleMobileMenu} />
         </div>
       </NavContainer>
