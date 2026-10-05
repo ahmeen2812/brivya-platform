@@ -3,11 +3,13 @@
 import * as React from "react";
 import { triggerInteractiveBorderPulse } from "@/animations/navDesktopAnimations";
 
-interface NavContainerProps {
+export interface NavContainerProps {
   children: React.ReactNode;
   containerRef: React.RefObject<HTMLDivElement | null>;
   borderRef: React.RefObject<HTMLDivElement | null>;
   centerLineRef: React.RefObject<HTMLDivElement | null>;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 export const NavContainer: React.FC<NavContainerProps> = ({
@@ -15,14 +17,24 @@ export const NavContainer: React.FC<NavContainerProps> = ({
   containerRef,
   borderRef,
   centerLineRef,
+  onMouseEnter,
+  onMouseLeave,
 }) => {
-  const handleMouseEnter = () => {
+  const handleContainerMouseEnter = () => {
+    // Pulse the perimeter border
     triggerInteractiveBorderPulse(borderRef.current);
+    // Notify parent to cancel any idle timers
+    if (onMouseEnter) {
+      onMouseEnter();
+    }
   };
 
   return (
     <header className="fixed top-3 sm:top-5 md:top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none select-none">
-      {/* Central Drop Line */}
+      {/* 
+        Central Drop Line (Plumb line for initial reveal):
+        Drops from above at 0.0s before the pill expands
+      */}
       <div
         ref={centerLineRef}
         aria-hidden="true"
@@ -31,19 +43,21 @@ export const NavContainer: React.FC<NavContainerProps> = ({
       />
 
       {/* 
-        Engineered Floating Pill Chassis:
-        - Replaced diffuse AI shadow with 1px hairline border + subtle contact shadow + top specular highlight
+        The Main Floating Pill Chassis:
+        - Clean engineered 1px border + specular rim (no AI drop shadow)
+        - Supports dynamic width morphing for both initial entrance and idle capsule state
       */}
       <div
         ref={containerRef}
-        onMouseEnter={handleMouseEnter}
+        onMouseEnter={handleContainerMouseEnter}
+        onMouseLeave={onMouseLeave}
         className="pointer-events-auto relative flex w-full max-w-[1360px] items-center justify-between overflow-hidden rounded-full bg-white px-3.5 sm:px-6 lg:px-8 py-2.5 sm:py-3 border border-slate-200/80 shadow-[0_2px_12px_-3px_rgba(6,22,44,0.06),0_1px_3px_rgba(6,22,44,0.03)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)]"
         style={{
           transformOrigin: "center center",
-          willChange: "width, transform, opacity",
+          willChange: "width, transform, opacity, max-width",
         }}
       >
-        {/* Interactive Perimeter Border (Sheen on reveal, hover, or click) */}
+        {/* Subtle interactive perimeter border */}
         <div
           ref={borderRef}
           aria-hidden="true"

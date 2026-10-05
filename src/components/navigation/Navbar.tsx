@@ -23,6 +23,9 @@ export const Navbar: React.FC = () => {
   const [isIdle, setIsIdle] = React.useState<boolean>(false);
   const pathname = usePathname();
 
+  // Guard flag to guarantee idle transitions NEVER kill the entrance animation on mount
+  const isEntranceCompleteRef = React.useRef<boolean>(false);
+
   // Debounce and timer references
   const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const idleTimerRef = React.useRef<NodeJS.Timeout | null>(null);
@@ -45,7 +48,7 @@ export const Navbar: React.FC = () => {
     dividersRefList.current[index] = el;
   }, []);
 
-  // 1. Initial Master Desktop Entrance Sequence
+  // 1. Master Desktop Entrance Sequence (Runs reliably on mount)
   React.useEffect(() => {
     const prefersReducedMotion =
       typeof window !== "undefined" &&
@@ -53,6 +56,7 @@ export const Navbar: React.FC = () => {
 
     if (prefersReducedMotion) {
       if (borderRef.current) borderRef.current.style.opacity = "0";
+      isEntranceCompleteRef.current = true;
       return;
     }
 
@@ -68,6 +72,15 @@ export const Navbar: React.FC = () => {
       dividers: dividersRefList.current,
     });
 
+    if (tl) {
+      tl.eventCallback("onComplete", () => {
+        // Unlock the idle detection system ONLY after the entrance animation has fully finished
+        isEntranceCompleteRef.current = true;
+      });
+    } else {
+      isEntranceCompleteRef.current = true;
+    }
+
     return () => {
       if (tl) tl.kill();
     };
@@ -75,35 +88,31 @@ export const Navbar: React.FC = () => {
 
   // 2. Idle State Transition Animation (Dynamic Island Morph)
   React.useEffect(() => {
-    if (!containerRef.current) return;
+    // Strictly do nothing until the entrance animation is complete
+    if (!isEntranceCompleteRef.current || !containerRef.current) return;
 
     const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
 
     if (isDesktop) {
-      // DESKTOP & TABLET: Morph width between full (1360px) and compact Conversion Capsule (340px)
+      // Desktop / Tablet: Morph width between full (1360px) and compact Conversion Capsule (340px)
       gsap.killTweensOf([containerRef.current, navLinksRef.current, dividersRefList.current]);
 
       if (isIdle) {
-        // Entering Idle: Hide center links and shrink container
-        gsap.to(navLinksRef.current, {
-          autoAlpha: 0,
-          y: -5,
-          scale: 0.96,
-          duration: 0.22,
-          ease: "power2.in",
-          onComplete: () => {
-            if (navLinksRef.current) {
-              navLinksRef.current.style.display = "none";
-            }
-          },
-        });
+        // Entering Idle: Center links and dividers slide up 4px and fade out
+        if (navLinksRef.current) {
+          gsap.to(navLinksRef.current, {
+            autoAlpha: 0,
+            y: -4,
+            duration: 0.2,
+            ease: "power2.in",
+          });
+        }
 
-        // Hide inner dividers
         dividersRefList.current.forEach((divider) => {
-          if (divider) gsap.to(divider, { autoAlpha: 0, duration: 0.18 });
+          if (divider) gsap.to(divider, { autoAlpha: 0, duration: 0.16 });
         });
 
-        // Shrink outer container to compact capsule
+        // Shrink container to compact capsule
         gsap.to(containerRef.current, {
           maxWidth: 340,
           duration: 0.38,
@@ -111,29 +120,26 @@ export const Navbar: React.FC = () => {
         });
       } else {
         // Waking Up: Restore full width and reveal center links
-        if (navLinksRef.current) {
-          navLinksRef.current.style.display = "flex";
-        }
-
         gsap.to(containerRef.current, {
           maxWidth: 1360,
           duration: 0.32,
           ease: "expo.out",
         });
 
-        gsap.fromTo(
-          navLinksRef.current,
-          { autoAlpha: 0, y: -5, scale: 0.96 },
-          { autoAlpha: 1, y: 0, scale: 1, duration: 0.28, ease: "power2.out", delay: 0.08 },
-        );
+        if (navLinksRef.current) {
+          gsap.fromTo(
+            navLinksRef.current,
+            { autoAlpha: 0, y: -4 },
+            { autoAlpha: 1, y: 0, duration: 0.24, ease: "power2.out", delay: 0.08 },
+          );
+        }
 
-        // Restore inner dividers
         dividersRefList.current.forEach((divider) => {
-          if (divider) gsap.to(divider, { autoAlpha: 1, duration: 0.24, delay: 0.08 });
+          if (divider) gsap.to(divider, { autoAlpha: 1, duration: 0.22, delay: 0.08 });
         });
       }
     } else {
-      // MOBILE (< 768px): Maintain full width, softly relax ambient background opacity
+      // Mobile (< 768px): Maintain full width, softly relax ambient opacity to 0.85
       gsap.to(containerRef.current, {
         opacity: isIdle ? 0.85 : 1,
         duration: 0.3,
@@ -144,18 +150,18 @@ export const Navbar: React.FC = () => {
 
   // 3. User Inactivity & Wake-Up Event Engine (5.0s Threshold)
   React.useEffect(() => {
-    const IDLE_DELAY_MS = 5000; // 5.0 seconds of complete inactivity
+    const IDLE_DELAY_MS = 5000; // 5.0 seconds of inactivity
 
     const resetIdleTimer = () => {
-      // Instantly wake up the navbar on any user interaction
       setIsIdle(false);
 
       if (idleTimerRef.current) {
         clearTimeout(idleTimerRef.current);
       }
 
-      // Do NOT start idle countdown if user is hovering the navbar, or if menus are open/pinned
+      // Do NOT start countdown if entrance is still playing, user is hovering, or menus are open/pinned
       if (
+        !isEntranceCompleteRef.current ||
         isHoveringNavbarRef.current ||
         megaMenuOpen ||
         megaMenuPinned ||
@@ -165,8 +171,8 @@ export const Navbar: React.FC = () => {
       }
 
       idleTimerRef.current = setTimeout(() => {
-        // Confirm user is still not hovering and menus remain closed before shrinking
         if (
+          isEntranceCompleteRef.current &&
           !isHoveringNavbarRef.current &&
           !megaMenuOpen &&
           !megaMenuPinned &&
@@ -177,7 +183,7 @@ export const Navbar: React.FC = () => {
       }, IDLE_DELAY_MS);
     };
 
-    // Filter mouse movement to avoid sensor micro-jitters (< 5px delta)
+    // Filter mouse movement to avoid sensor micro-jitters (< 5px)
     const handleMouseMove = (e: MouseEvent) => {
       const dx = Math.abs(e.clientX - lastMousePosRef.current.x);
       const dy = Math.abs(e.clientY - lastMousePosRef.current.y);
@@ -192,7 +198,6 @@ export const Navbar: React.FC = () => {
       resetIdleTimer();
     };
 
-    // Attach passive activity listeners
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("scroll", handleUserActivity, { passive: true });
     window.addEventListener("keydown", handleUserActivity, { passive: true });
@@ -231,7 +236,7 @@ export const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
-  // Mega-Menu Hover Bridge & Interaction Controllers
+  // Mega-Menu Hover Bridge & Interaction Handlers
   const handleOpenMegaMenu = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setMegaMenuOpen(true);
@@ -269,7 +274,7 @@ export const Navbar: React.FC = () => {
     triggerInteractiveBorderPulse(borderRef.current);
   };
 
-  // Hover detection over the navbar envelope
+  // Direct container hover handlers
   const handleNavbarMouseEnter = () => {
     isHoveringNavbarRef.current = true;
     setIsIdle(false); // Immediately expand if user hovers the compact capsule
@@ -281,15 +286,13 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <div
-      onMouseEnter={handleNavbarMouseEnter}
-      onMouseLeave={handleNavbarMouseLeave}
-      className="contents"
-    >
+    <>
       <NavContainer
         containerRef={containerRef}
         borderRef={borderRef}
         centerLineRef={centerLineRef}
+        onMouseEnter={handleNavbarMouseEnter}
+        onMouseLeave={handleNavbarMouseLeave}
       >
         {/* Left Section: Logo with Prismatic Sheen */}
         <div className="flex items-center gap-3 sm:gap-5 lg:gap-6 shrink-0">
@@ -305,7 +308,7 @@ export const Navbar: React.FC = () => {
         {/* Center Section: Desktop Navigation Items */}
         <nav
           aria-label="Desktop Navigation"
-          className="hidden md:flex items-center justify-center flex-1 px-1 sm:px-2 transition-[width]"
+          className="hidden md:flex items-center justify-center flex-1 px-1 sm:px-2 overflow-hidden"
         >
           <NavLinks
             navLinksRef={navLinksRef}
@@ -353,6 +356,6 @@ export const Navbar: React.FC = () => {
 
       {/* Dedicated Animated Mobile Drawer */}
       <NavMobileMenu isOpen={mobileMenuOpen} onClose={closeMobileMenu} />
-    </div>
+    </>
   );
 };
