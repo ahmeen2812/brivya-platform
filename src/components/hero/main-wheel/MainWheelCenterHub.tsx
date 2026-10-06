@@ -21,7 +21,7 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
   const textContainerRef = React.useRef<HTMLDivElement | null>(null);
   const prevPhaseIdRef = React.useRef<string>(currentPhase.id);
 
-  // 650ms Synchronized Vector & Typographic Morph Timeline
+  // 650ms Continuous Kinetic Morph Timeline
   React.useEffect(() => {
     if (prevPhaseIdRef.current === currentPhase.id) return;
     prevPhaseIdRef.current = currentPhase.id;
@@ -35,7 +35,7 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
 
     const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
 
-    // 1. Vector Icon Morphs: scales down with subtle twist, then springs forward into the new shape
+    // 1. Vector Icon Morphs: scales down with a subtle twist, then springs forward into the new shape
     tl.to(iconEl, {
       scale: 0.55,
       rotate: -25,
@@ -52,7 +52,7 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
       ease: "back.out(1.6)",
     });
 
-    // 2. Text executes a synchronized split slide-roll
+    // 2. Text executes a synchronized split slide-roll (no blank gap)
     tl.fromTo(
       textEl,
       { y: 8, opacity: 0 },
@@ -67,8 +67,8 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
       case "code":
         return (
           // Web Dev: Code Brackets & Core Slash
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-[#0A5FD7] border border-sky-100 shadow-xs">
-            <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-[#0A5FD7] border border-sky-100 shadow-xs">
+            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3m-9 3l6-12" />
             </svg>
           </div>
@@ -77,8 +77,8 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
       case "cloud":
         return (
           // Cloud: Smooth Multi-Lobed Infrastructure Cloud
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-[#D97706] border border-amber-100 shadow-xs">
-            <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-[#D97706] border border-amber-100 shadow-xs">
+            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -91,8 +91,8 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
       case "ai":
         return (
           // AI: Radiant Hexagonal Neural Processor Core
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-[#7C3AED] border border-violet-100 shadow-xs">
-            <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-50 text-[#7C3AED] border border-violet-100 shadow-xs">
+            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
           </div>
@@ -119,28 +119,19 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
         {renderMorphingVectorGlyph(currentPhase.morphType)}
       </div>
 
-      {/* 2. Typographic Core (Title, Subtitle & Phase Index) */}
+      {/* 2. Typographic Core (Title & Clean One-Line Description) */}
       <div
         ref={textContainerRef}
-        className="flex flex-col items-center justify-center mt-2.5"
+        className="flex flex-col items-center justify-center mt-2"
         style={{ willChange: "transform, opacity" }}
       >
-        {/* Phase Telemetry Diode */}
-        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-100/80 text-[10px] font-mono font-bold text-[#64748B]">
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: currentPhase.accentColor }}
-          />
-          <span>{currentPhase.index} // SYSTEM</span>
-        </div>
-
-        {/* Heading Title */}
-        <span className="mt-1 font-sans text-[15px] sm:text-[16px] font-bold text-[#06162C] leading-snug">
+        {/* Main Category Title */}
+        <span className="font-sans text-[16px] sm:text-[17px] font-bold text-[#06162C] leading-snug">
           {currentPhase.title}
         </span>
 
-        {/* Subtitle */}
-        <span className="mt-0.5 text-[10.5px] leading-snug text-[#8998AD] max-w-[160px]">
+        {/* Short Professional Description */}
+        <span className="mt-1 text-[11px] leading-snug text-[#8998AD] max-w-[160px]">
           {currentPhase.subtitle}
         </span>
       </div>

@@ -6,7 +6,7 @@ import {
   MAIN_WHEEL_PHASES,
   CONTINUOUS_NODE_STREAM,
 } from "@/config/heroMainWheelData";
-import { MainWheelPhaseConfig } from "@/types/heroMainWheel";
+import { MainWheelPhaseConfig, MainWheelNode } from "@/types/heroMainWheel";
 import { MainWheelOrbitPath } from "./MainWheelOrbitPath";
 import { MainWheelCenterHub } from "./MainWheelCenterHub";
 import { MainWheelIcon } from "./MainWheelIcons";
@@ -20,7 +20,7 @@ export const MainWheelMaster: React.FC = () => {
   const currentPhase: MainWheelPhaseConfig = MAIN_WHEEL_PHASES[activePhaseIndex];
 
   // Tooltip Hover State
-  const [hoveredNodeName, setHoveredNodeName] = React.useState<string | null>(null);
+  const [hoveredNode, setHoveredNode] = React.useState<MainWheelNode | null>(null);
   const isHoveredRef = React.useRef<boolean>(false);
 
   // DIRECT DOM NODE REFS (Decoupled from React render cycle for zero-stutter 60fps motion)
@@ -42,8 +42,8 @@ export const MainWheelMaster: React.FC = () => {
         const currentSpeed = isHoveredRef.current ? speed * 0.12 : speed;
         globalAngleRef.current = (globalAngleRef.current + currentSpeed * delta) % 360;
 
-        const count = CONTINUOUS_NODE_STREAM.length;
-        const angleStep = 360 / count; // 30° spacing between icon centers
+        const count = CONTINUOUS_NODE_STREAM.length; // Exactly 15 nodes
+        const angleStep = 360 / count; // 24° spacing between icon centers
 
         for (let i = 0; i < count; i++) {
           const el = nodesGroupRef.current[i];
@@ -51,21 +51,19 @@ export const MainWheelMaster: React.FC = () => {
 
           // Compute angle around 360° circle
           let angle = (i * angleStep + globalAngleRef.current) % 360;
-          // Normalize angle into [-180°, +180°] range
           if (angle > 180) angle -= 360;
 
           // -------------------------------------------------------------------
           // Phase Change Trigger at -40° Threshold
           // -------------------------------------------------------------------
-          // Check lead node of each category:
-          // Node 0: Dev, Node 4: Cloud, Node 8: AI
+          // Node 0: Lead Dev, Node 5: Lead Cloud, Node 10: Lead AI
           if (i === 0 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "development") {
             lastTriggeredCategoryRef.current = "development";
             setActivePhaseIndex(0);
-          } else if (i === 4 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "cloud") {
+          } else if (i === 5 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "cloud") {
             lastTriggeredCategoryRef.current = "cloud";
             setActivePhaseIndex(1);
-          } else if (i === 8 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "ai") {
+          } else if (i === 10 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "ai") {
             lastTriggeredCategoryRef.current = "ai";
             setActivePhaseIndex(2);
           }
@@ -141,7 +139,7 @@ export const MainWheelMaster: React.FC = () => {
         {/* Exact 144° Arc Track with Faded Gradient Ends */}
         <MainWheelOrbitPath />
 
-        {/* 12-Node Continuous Conveyor Stream */}
+        {/* 15-Node Continuous Conveyor Stream */}
         {CONTINUOUS_NODE_STREAM.map((node, i) => (
           <g
             key={node.id}
@@ -151,31 +149,41 @@ export const MainWheelMaster: React.FC = () => {
             className="pointer-events-auto cursor-pointer"
             onMouseEnter={() => {
               isHoveredRef.current = true;
-              setHoveredNodeName(node.name);
+              setHoveredNode(node);
             }}
             onMouseLeave={() => {
               isHoveredRef.current = false;
-              setHoveredNodeName(null);
+              setHoveredNode(null);
             }}
             style={{ willChange: "transform, opacity" }}
           >
             {/* Center point sits exactly on the track line */}
             <foreignObject x="-26" y="-26" width="52" height="52" className="overflow-visible">
               <div className="flex h-13 w-13 items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-[0_4px_16px_rgba(6,22,44,0.08)] transition-transform duration-150 hover:scale-115">
-                <MainWheelIcon type={node.iconKey} className="h-6 w-6" />
+                <MainWheelIcon type={node.iconKey} className="h-7 w-7" />
               </div>
             </foreignObject>
           </g>
         ))}
       </svg>
 
-      {/* Interactive Tooltip Card */}
-      {hoveredNodeName && (
+      {/* Rich Interactive Tooltip Pod */}
+      {hoveredNode && (
         <div
           style={{ left: cx, top: cy - hubRadius - 16 }}
-          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-md bg-[#06162C] px-3 py-1.5 text-[11px] font-mono font-semibold text-white shadow-lg z-40 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150"
+          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-xl bg-[#06162C] p-3 shadow-xl z-50 max-w-[280px] text-left animate-in fade-in zoom-in-95 duration-150"
         >
-          {hoveredNodeName}
+          <div className="flex items-center justify-between pb-1 border-b border-white/10">
+            <span className="font-sans text-xs font-bold text-white">
+              {hoveredNode.name}
+            </span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-[#C7A76B]">
+              {hoveredNode.role}
+            </span>
+          </div>
+          <p className="mt-1 font-sans text-[11px] leading-snug text-slate-300">
+            {hoveredNode.description}
+          </p>
         </div>
       )}
     </div>

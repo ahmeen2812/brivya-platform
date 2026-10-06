@@ -1,39 +1,42 @@
 /**
  * BRIVYA SOLUTIONS — HERO MAIN WHEEL TYPE SYSTEM
- * Strict type contracts for the primary 3-phase engine:
- * Web Development -> Cloud Infrastructure -> AI & Automation
+ * Strict type contracts for the continuous 15-node stream,
+ * 144-degree mathematical arc, and phased vector morphing.
  */
 
 export type MainWheelPhaseId = "development" | "cloud" | "ai";
 
 export type MainWheelIconKey =
-  // Web Development Phase
+  // Web Development Phase (5 Nodes)
   | "nextjs"
   | "react"
   | "typescript"
   | "shopify"
-  // Cloud Infrastructure Phase
+  | "postgresql"
+  // Cloud Infrastructure Phase (5 Nodes)
   | "cloudflare"
+  | "aws"
   | "docker"
   | "kubernetes"
   | "supabase"
-  // AI & Automation Phase
+  // AI & Automation Phase (5 Nodes)
   | "openai"
   | "python"
   | "pytorch"
+  | "langchain"
   | "zapier";
 
 export interface MainWheelNode {
   readonly id: string;
   readonly name: string;
   readonly role: string;
+  readonly description: string; // One concise, professional sentence for rich tooltip
   readonly categoryId: MainWheelPhaseId;
   readonly iconKey: MainWheelIconKey;
 }
 
 export interface MainWheelPhaseConfig {
   readonly id: MainWheelPhaseId;
-  readonly index: string;
   readonly title: string;
   readonly subtitle: string;
   readonly morphType: "code" | "cloud" | "ai";

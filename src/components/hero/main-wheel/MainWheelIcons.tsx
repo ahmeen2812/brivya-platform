@@ -13,9 +13,9 @@ export const MainWheelIcon: React.FC<MainWheelIconProps> = ({
   className = "h-7 w-7",
 }) => {
   switch (type) {
-    // -------------------------------------------------------------------------
-    // WEB DEVELOPMENT ASSETS
-    // -------------------------------------------------------------------------
+    // =========================================================================
+    // 1. WEB DEVELOPMENT PHASE (Solid Brand Assets)
+    // =========================================================================
 
     case "nextjs":
       return (
@@ -58,15 +58,35 @@ export const MainWheelIcon: React.FC<MainWheelIconProps> = ({
         </div>
       );
 
-    // -------------------------------------------------------------------------
-    // CLOUD INFRASTRUCTURE ASSETS
-    // -------------------------------------------------------------------------
+    case "postgresql":
+      return (
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center text-[#336791]">
+          <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+          </svg>
+        </div>
+      );
+
+    // =========================================================================
+    // 2. CLOUD INFRASTRUCTURE PHASE (Solid Brand Assets)
+    // =========================================================================
 
     case "cloudflare":
       return (
         <div className="flex h-7 w-7 shrink-0 items-center justify-center text-[#F38020]">
           <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.2 12.8c-.2 0-.4.1-.6.1-.2-2.1-2-3.8-4.2-3.8-1.5 0-2.8.8-3.5 2-.4-.2-.8-.3-1.3-.3-1.6 0-3 1.3-3 2.9 0 .1 0 .2.1.3-1.6.3-2.7 1.6-2.7 3.2 0 1.9 1.5 3.3 3.4 3.3h11.9c1.9 0 3.5-1.5 3.5-3.4 0-1.8-1.4-3.3-3.2-3.4 0-.3-.4-.9-.4-.9z" />
+          </svg>
+        </div>
+      );
+
+    case "aws":
+      return (
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center text-[#FF9900]">
+          <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.8" fill="none" />
           </svg>
         </div>
       );
@@ -99,9 +119,9 @@ export const MainWheelIcon: React.FC<MainWheelIconProps> = ({
         </div>
       );
 
-    // -------------------------------------------------------------------------
-    // AI & AUTOMATION ASSETS
-    // -------------------------------------------------------------------------
+    // =========================================================================
+    // 3. AI & AUTOMATION PHASE (Solid Brand Assets)
+    // =========================================================================
 
     case "openai":
       return (
@@ -137,16 +157,23 @@ export const MainWheelIcon: React.FC<MainWheelIconProps> = ({
         </div>
       );
 
+    case "langchain":
+      return (
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-emerald-50 text-[#00A67E] border border-emerald-100/90 shadow-2xs font-mono font-bold text-[11px]">
+          LC
+        </div>
+      );
+
     case "zapier":
       return (
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-[#FF4A00] font-extrabold text-lg leading-none border border-orange-100/70">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-orange-50 text-[#FF4A00] font-extrabold text-xl leading-none border border-orange-100/70">
           *
         </div>
       );
 
     default:
       return (
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-[#0A5FD7] font-mono text-[10px] font-bold">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-[#0A5FD7] font-mono text-[11px] font-bold">
           API
         </div>
       );

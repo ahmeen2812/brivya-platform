@@ -114,8 +114,11 @@ export const HeroSection: React.FC = () => {
             />
           </div>
 
-          {/* Right Column: Dedicated Main Wheel Engine (5 Columns) */}
-          <div className="lg:col-span-5 xl:col-span-5 relative flex items-center justify-center lg:justify-end min-h-[480px] sm:min-h-[520px]">
+          {/* 
+            Right Column: Shifted slightly left (lg:-translate-x-10) 
+            Leaves comfortable clearance on the right for upcoming satellite wheels
+          */}
+          <div className="lg:col-span-5 xl:col-span-5 relative flex items-center justify-center lg:justify-start lg:-translate-x-8 xl:-translate-x-12 min-h-[480px] sm:min-h-[520px]">
             <div
               ref={wheelWrapperRef}
               style={{ opacity: 0 }}
