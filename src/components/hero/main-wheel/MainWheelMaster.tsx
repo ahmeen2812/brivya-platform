@@ -42,28 +42,28 @@ export const MainWheelMaster: React.FC = () => {
         const currentSpeed = isHoveredRef.current ? speed * 0.12 : speed;
         globalAngleRef.current = (globalAngleRef.current + currentSpeed * delta) % 360;
 
-        const count = CONTINUOUS_NODE_STREAM.length; // Exactly 15 nodes
-        const angleStep = 360 / count; // 24° spacing between icon centers
+        const count = CONTINUOUS_NODE_STREAM.length; // Exactly 9 nodes
+        const angleStep = 360 / count; // Exactly 40° spacing (within 38°-44° target)
 
         for (let i = 0; i < count; i++) {
           const el = nodesGroupRef.current[i];
           if (!el) continue;
 
-          // Compute angle around 360° circle
+          // Compute continuous angle around 360° circle
           let angle = (i * angleStep + globalAngleRef.current) % 360;
           if (angle > 180) angle -= 360;
 
           // -------------------------------------------------------------------
           // Phase Change Trigger at -40° Threshold
           // -------------------------------------------------------------------
-          // Node 0: Lead Dev, Node 5: Lead Cloud, Node 10: Lead AI
+          // Node 0: Dev Lead, Node 3: Cloud Lead, Node 6: AI Lead
           if (i === 0 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "development") {
             lastTriggeredCategoryRef.current = "development";
             setActivePhaseIndex(0);
-          } else if (i === 5 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "cloud") {
+          } else if (i === 3 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "cloud") {
             lastTriggeredCategoryRef.current = "cloud";
             setActivePhaseIndex(1);
-          } else if (i === 10 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "ai") {
+          } else if (i === 6 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "ai") {
             lastTriggeredCategoryRef.current = "ai";
             setActivePhaseIndex(2);
           }
@@ -139,7 +139,7 @@ export const MainWheelMaster: React.FC = () => {
         {/* Exact 144° Arc Track with Faded Gradient Ends */}
         <MainWheelOrbitPath />
 
-        {/* 15-Node Continuous Conveyor Stream */}
+        {/* 9-Node Continuous Conveyor Stream with 40° Angular Spacing */}
         {CONTINUOUS_NODE_STREAM.map((node, i) => (
           <g
             key={node.id}
@@ -158,9 +158,9 @@ export const MainWheelMaster: React.FC = () => {
             style={{ willChange: "transform, opacity" }}
           >
             {/* Center point sits exactly on the track line */}
-            <foreignObject x="-26" y="-26" width="52" height="52" className="overflow-visible">
-              <div className="flex h-13 w-13 items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-[0_4px_16px_rgba(6,22,44,0.08)] transition-transform duration-150 hover:scale-115">
-                <MainWheelIcon type={node.iconKey} className="h-7 w-7" />
+            <foreignObject x="-25" y="-25" width="50" height="50" className="overflow-visible">
+              <div className="flex h-12.5 w-12.5 items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-[0_4px_16px_rgba(6,22,44,0.08)] transition-transform duration-150 hover:scale-115">
+                <MainWheelIcon type={node.iconKey} className="h-6 w-6" />
               </div>
             </foreignObject>
           </g>
