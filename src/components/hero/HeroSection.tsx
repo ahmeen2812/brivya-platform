@@ -100,8 +100,8 @@ export const HeroSection: React.FC = () => {
         className="pointer-events-none absolute right-[-5%] top-[10%] h-[600px] w-[600px] rounded-full bg-blue-100/30 blur-[120px]"
       />
 
-      <div className="relative mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8 min-h-[580px]">
+      <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-8 min-h-[580px]">
           {/* Left Column: Editorial Headline & Actions (6 Columns) */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center z-10">
             <HeroContent
@@ -116,30 +116,31 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* 
-            Right Column: Constellation Stage (6 Columns)
-            Expanded to max-w-[720px] so the smaller wheel moves cleanly to the right
+            Right Column: 2-Wheel Constellation Stage (6 Columns)
+            - On Desktop (lg): Side-by-side with Ads Wheel aligned to navbar right edge
+            - On Mobile (< lg): Stacked vertically with clean spacing (no cramming/overlap)
           */}
           <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center lg:justify-end min-h-[520px] sm:min-h-[580px]">
             <div
               ref={constellationWrapperRef}
               style={{ opacity: 0 }}
-              className="relative w-full max-w-[660px] lg:max-w-[720px] xl:max-w-[760px] h-[540px] sm:h-[580px] flex items-center justify-center overflow-visible"
+              className="relative w-full max-w-[540px] lg:max-w-none h-auto lg:h-[580px] flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-0 overflow-visible"
             >
               {/* 
                 1. Main Wheel:
-                Shifted slightly left (left-[-20px] sm:left-0)
-                Preserves 100% of its working layout, 196px hub, and 145px orbit
+                Desktop: Anchored on the left of the right stage (left-[-20px] lg:left-[-15px] xl:left-0)
+                Mobile: Centered with full 100% visibility
               */}
-              <div className="absolute left-[-20px] sm:left-0 lg:left-[-15px] xl:left-0 top-[55px] sm:top-[40px] z-10 pointer-events-none">
+              <div className="relative lg:absolute lg:left-[-15px] xl:left-0 lg:top-[50px] z-10 pointer-events-none">
                 <MainWheelMaster />
               </div>
 
               {/* 
                 2. Top-Right Satellite Wheel: Google Ads <-> Meta Ads
-                Moved significantly further right (right-[-45px] lg:right-[-60px] xl:right-[-25px])
-                Guarantees zero overlap with the main wheel's upper arc icons
+                Desktop: Anchored at right-[-35px] lg:right-[-40px], aligning with the navbar's right edge
+                Mobile: Positioned cleanly below the main wheel with zero collision
               */}
-              <div className="absolute top-[-25px] sm:top-[-15px] right-[-45px] sm:right-[-35px] lg:right-[-60px] xl:right-[-25px] z-20 pointer-events-none">
+              <div className="relative lg:absolute lg:top-[-10px] lg:right-[-35px] xl:right-[-40px] z-20 pointer-events-none">
                 <AdsWheelMaster />
               </div>
             </div>

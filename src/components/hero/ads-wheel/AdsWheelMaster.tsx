@@ -100,8 +100,8 @@ export const AdsWheelMaster: React.FC = () => {
   }, [cx, cy, orbitRadius, arcStartDeg, arcSpanDeg]);
 
   return (
-    // Outer container is pointer-events-none so its transparent box never blocks Main Wheel icons
-    <div className="relative w-[340px] h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
+    // Explicit responsive dimensions maintain non-zero layout box on all devices
+    <div className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] lg:w-[340px] lg:h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
       {/* 
         1. Morphing Central Core Hub:
         126px diameter with physical elevation
@@ -143,9 +143,18 @@ export const AdsWheelMaster: React.FC = () => {
             }}
             style={{ willChange: "transform, opacity" }}
           >
-            {/* Center point sits exactly on the track line */}
-            <foreignObject x="-22" y="-22" width="44" height="44" className="overflow-visible">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-[0_3px_12px_rgba(6,22,44,0.08)] transition-transform duration-150 hover:scale-115">
+            {/* Explicit 44px x 44px ForeignObject with guaranteed dimensions */}
+            <foreignObject
+              x="-22"
+              y="-22"
+              width="44"
+              height="44"
+              className="overflow-visible"
+            >
+              <div
+                style={{ width: "44px", height: "44px" }}
+                className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-[0_3px_12px_rgba(6,22,44,0.08)] transition-transform duration-150 hover:scale-115"
+              >
                 <AdsWheelIcon type={node.iconKey} className="h-5 w-5" />
               </div>
             </foreignObject>
@@ -153,21 +162,24 @@ export const AdsWheelMaster: React.FC = () => {
         ))}
       </svg>
 
-      {/* Rich Interactive Tooltip Pod */}
+      {/* 
+        3. Professional Rich Hover Tooltip Pod:
+        Fixed rigid width (w-[260px] sm:w-[280px]) with clean line wrapping
+      */}
       {hoveredNode && (
         <div
           style={{ left: cx, top: cy - hubRadius - 14 }}
-          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-xl bg-[#06162C] p-2.5 shadow-xl z-50 max-w-[240px] text-left animate-in fade-in zoom-in-95 duration-150"
+          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-xl bg-[#06162C] p-3 shadow-2xl z-50 w-[260px] sm:w-[280px] text-left border border-white/10 animate-in fade-in zoom-in-95 duration-150"
         >
-          <div className="flex items-center justify-between pb-1 border-b border-white/10">
-            <span className="font-sans text-[11px] font-bold text-white">
+          <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
+            <span className="font-sans text-[12px] font-bold text-white tracking-tight">
               {hoveredNode.name}
             </span>
-            <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#C7A76B]">
+            <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#C7A76B] font-semibold">
               {hoveredNode.role}
             </span>
           </div>
-          <p className="mt-1 font-sans text-[10px] leading-snug text-slate-300">
+          <p className="mt-1.5 font-sans text-[10.5px] leading-relaxed text-slate-300 font-normal">
             {hoveredNode.description}
           </p>
         </div>
