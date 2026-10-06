@@ -620,3 +620,4 @@ export const MegaMenuBrandIcon: React.FC<BrandIconProps> = ({
       );
   }
 };
+

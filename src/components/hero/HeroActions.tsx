@@ -5,11 +5,15 @@ import Link from "next/link";
 import { HERO_EDITORIAL_COPY } from "@/config/hero";
 import { animateKineticArrowLoop } from "@/animations/navHoverAnimations";
 
-interface HeroActionsProps {
+export interface HeroActionsProps {
+  actionsRef: React.RefObject<HTMLDivElement | null>;
   onOpenShowreel: () => void;
 }
 
-export const HeroActions: React.FC<HeroActionsProps> = ({ onOpenShowreel }) => {
+export const HeroActions: React.FC<HeroActionsProps> = ({
+  actionsRef,
+  onOpenShowreel,
+}) => {
   const arrowRef = React.useRef<SVGSVGElement | null>(null);
 
   const handleMouseEnter = () => {
@@ -17,12 +21,16 @@ export const HeroActions: React.FC<HeroActionsProps> = ({ onOpenShowreel }) => {
   };
 
   return (
-    <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4 sm:gap-5">
-      {/* Primary Conversion CTA Button */}
+    <div
+      ref={actionsRef}
+      style={{ opacity: 0, visibility: "hidden" }}
+      className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4 sm:gap-5"
+    >
+      {/* Primary CTA: Website Theme Gradient Pill */}
       <Link
         href={HERO_EDITORIAL_COPY.primaryCtaHref}
         onMouseEnter={handleMouseEnter}
-        className="group relative inline-flex items-center justify-center gap-2.5 rounded-full bg-[#06162C] px-7 py-3.5 font-sans text-[14px] font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,22,44,0.35)] transition-all duration-300 hover:bg-[#07366D] hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] select-none"
+        className="group relative inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-7 py-3.5 font-sans text-[14px] font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] transition-all duration-300 hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] select-none"
       >
         <span className="tracking-[-0.01em]">{HERO_EDITORIAL_COPY.primaryCtaText}</span>
 
@@ -43,7 +51,7 @@ export const HeroActions: React.FC<HeroActionsProps> = ({ onOpenShowreel }) => {
         </span>
       </Link>
 
-      {/* View Showreel Interactive Play Button */}
+      {/* View Showreel Play Button (Light-Theme Floating Pod) */}
       <button
         type="button"
         onClick={onOpenShowreel}
