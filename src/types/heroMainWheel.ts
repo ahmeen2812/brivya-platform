@@ -1,30 +1,45 @@
 /**
  * BRIVYA SOLUTIONS — HERO MAIN WHEEL TYPE SYSTEM
- * Strict type contracts for the continuous 15-node stream,
- * 144-degree mathematical arc, and phased vector morphing.
+ * Strict type contracts for 30-node continuous conveyor stream,
+ * 144-degree mathematical arc, and deterministic phase transitions.
  */
 
 export type MainWheelPhaseId = "development" | "cloud" | "ai";
 
 export type MainWheelIconKey =
-  // Web Development Phase (5 Nodes)
+  // Web Development Phase (10 Nodes)
   | "nextjs"
   | "react"
   | "typescript"
   | "shopify"
+  | "nodejs"
+  | "graphql"
+  | "tailwind"
   | "postgresql"
-  // Cloud Infrastructure Phase (5 Nodes)
+  | "python"
+  | "lighthouse"
+  // Cloud Infrastructure Phase (10 Nodes)
   | "cloudflare"
   | "aws"
   | "docker"
   | "kubernetes"
+  | "terraform"
+  | "gcp"
+  | "azure"
   | "supabase"
-  // AI & Automation Phase (5 Nodes)
+  | "redis"
+  | "githubactions"
+  // AI & Automation Phase (10 Nodes)
   | "openai"
-  | "python"
+  | "python-ai"
   | "pytorch"
   | "langchain"
-  | "zapier";
+  | "anthropic"
+  | "huggingface"
+  | "pinecone"
+  | "tensorflow"
+  | "zapier"
+  | "hubspot";
 
 export interface MainWheelNode {
   readonly id: string;

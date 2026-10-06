@@ -67,8 +67,8 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
       case "code":
         return (
           // Web Dev: Code Brackets & Core Slash
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-[#0A5FD7] border border-sky-100 shadow-xs">
-            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-[#0A5FD7] border border-sky-100 shadow-xs">
+            <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3m-9 3l6-12" />
             </svg>
           </div>
@@ -77,8 +77,8 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
       case "cloud":
         return (
           // Cloud: Smooth Multi-Lobed Infrastructure Cloud
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-[#D97706] border border-amber-100 shadow-xs">
-            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-[#D97706] border border-amber-100 shadow-xs">
+            <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -91,8 +91,8 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
       case "ai":
         return (
           // AI: Radiant Hexagonal Neural Processor Core
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-50 text-[#7C3AED] border border-violet-100 shadow-xs">
-            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-[#7C3AED] border border-violet-100 shadow-xs">
+            <svg className="h-5.5 w-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
           </div>
@@ -119,19 +119,19 @@ export const MainWheelCenterHub: React.FC<MainWheelCenterHubProps> = ({
         {renderMorphingVectorGlyph(currentPhase.morphType)}
       </div>
 
-      {/* 2. Typographic Core (Title & Clean One-Line Description) */}
+      {/* 2. Typographic Core (Title & Clean One-Line Description — Zero Overflow) */}
       <div
         ref={textContainerRef}
-        className="flex flex-col items-center justify-center mt-2"
+        className="flex flex-col items-center justify-center mt-2 w-full max-w-[136px]"
         style={{ willChange: "transform, opacity" }}
       >
         {/* Main Category Title */}
-        <span className="font-sans text-[16px] sm:text-[17px] font-bold text-[#06162C] leading-snug">
+        <span className="font-sans text-[15px] sm:text-[16px] font-bold text-[#06162C] leading-snug">
           {currentPhase.title}
         </span>
 
-        {/* Short Professional Description */}
-        <span className="mt-1 text-[11px] leading-snug text-[#8998AD] max-w-[160px]">
+        {/* Short Professional Description (Guaranteed fits inside 196px circle) */}
+        <span className="mt-1 text-[10.5px] leading-snug text-[#8998AD]">
           {currentPhase.subtitle}
         </span>
       </div>

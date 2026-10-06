@@ -25,13 +25,10 @@ export const MainWheelMaster: React.FC = () => {
 
   // DIRECT DOM NODE REFS (Decoupled from React render cycle for zero-stutter 60fps motion)
   const nodesGroupRef = React.useRef<(SVGGElement | null)[]>([]);
-  const globalAngleRef = React.useRef<number>(0);
+  const streamPositionRef = React.useRef<number>(0);
   const lastTimeRef = React.useRef<number | null>(null);
 
-  // Track currently active category triggered at -40° threshold
-  const lastTriggeredCategoryRef = React.useRef<string>("development");
-
-  // Direct DOM 60fps Kinetic Engine
+  // Direct DOM 60fps Continuous Kinetic Engine
   React.useEffect(() => {
     let animId: number;
     const speed = 12; // Constant linear velocity: exactly 12 degrees per second
@@ -40,37 +37,39 @@ export const MainWheelMaster: React.FC = () => {
       if (lastTimeRef.current !== null) {
         const delta = (time - lastTimeRef.current) / 1000;
         const currentSpeed = isHoveredRef.current ? speed * 0.12 : speed;
-        globalAngleRef.current = (globalAngleRef.current + currentSpeed * delta) % 360;
 
-        const count = CONTINUOUS_NODE_STREAM.length; // Exactly 9 nodes
-        const angleStep = 360 / count; // Exactly 40° spacing (within 38°-44° target)
+        // Total 30-node conveyor loop = 30 * 40° = 1200°
+        streamPositionRef.current = (streamPositionRef.current + currentSpeed * delta) % 1200;
+
+        // ---------------------------------------------------------------------
+        // DETERMINISTIC CATEGORY SYNCHRONIZATION
+        // Category 0 (Web Dev): 0° - 399.9° (Icon 0 enters at -72°)
+        // Category 1 (Cloud):   400° - 799.9° (Icon 10 enters at -72°)
+        // Category 2 (AI):      800° - 1199.9° (Icon 20 enters at -72°)
+        // ---------------------------------------------------------------------
+        const targetPhase = Math.floor(streamPositionRef.current / 400) % 3;
+        setActivePhaseIndex((prev) => (prev !== targetPhase ? targetPhase : prev));
+
+        // ---------------------------------------------------------------------
+        // CONTINUOUS 144° VISIBLE ARC RENDERING (-72° to +72° with 12° fade zones)
+        // ---------------------------------------------------------------------
+        const count = CONTINUOUS_NODE_STREAM.length; // Exactly 30 nodes
+        const nodeSpacingDeg = 40; // Exactly 40° spacing between icon centers
 
         for (let i = 0; i < count; i++) {
           const el = nodesGroupRef.current[i];
           if (!el) continue;
 
-          // Compute continuous angle around 360° circle
-          let angle = (i * angleStep + globalAngleRef.current) % 360;
-          if (angle > 180) angle -= 360;
+          // Compute relative distance from stream head
+          let relDist = (streamPositionRef.current - i * nodeSpacingDeg) % 1200;
+          if (relDist < 0) relDist += 1200;
 
-          // -------------------------------------------------------------------
-          // Phase Change Trigger at -40° Threshold
-          // -------------------------------------------------------------------
-          // Node 0: Dev Lead, Node 3: Cloud Lead, Node 6: AI Lead
-          if (i === 0 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "development") {
-            lastTriggeredCategoryRef.current = "development";
-            setActivePhaseIndex(0);
-          } else if (i === 3 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "cloud") {
-            lastTriggeredCategoryRef.current = "cloud";
-            setActivePhaseIndex(1);
-          } else if (i === 6 && Math.abs(angle - -40) < 1.5 && lastTriggeredCategoryRef.current !== "ai") {
-            lastTriggeredCategoryRef.current = "ai";
-            setActivePhaseIndex(2);
-          }
+          // Normalize so negative angles represent oncoming icons before entrance
+          if (relDist > 600) relDist -= 1200;
 
-          // -------------------------------------------------------------------
-          // 144° Visible Arc Mapping (-72° to +72° with 12° fade zones)
-          // -------------------------------------------------------------------
+          // Map distance directly to orbit angle starting at -72°
+          const angle = arcStartDeg + relDist;
+
           const minVisible = arcStartDeg - 12; // -84°
           const maxVisible = arcStartDeg + arcSpanDeg + 12; // +84°
 
@@ -118,7 +117,7 @@ export const MainWheelMaster: React.FC = () => {
     <div className="relative w-full max-w-[520px] h-[480px] sm:h-[520px] flex items-center justify-center select-none overflow-visible">
       {/* 
         1. Morphing Central Core Hub:
-        190px diameter with physical elevation
+        196px diameter with physical elevation and zero text overflow
       */}
       <MainWheelCenterHub
         currentPhase={currentPhase}
@@ -129,7 +128,7 @@ export const MainWheelMaster: React.FC = () => {
 
       {/* 
         2. Master SVG Canvas:
-        Houses both the 144° track and the nodes in the SAME coordinate space
+        Maps all 30 nodes simultaneously so the track is NEVER empty!
       */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
@@ -139,7 +138,7 @@ export const MainWheelMaster: React.FC = () => {
         {/* Exact 144° Arc Track with Faded Gradient Ends */}
         <MainWheelOrbitPath />
 
-        {/* 9-Node Continuous Conveyor Stream with 40° Angular Spacing */}
+        {/* ALL 30 Nodes in DOM simultaneously (Seamless continuous conveyor) */}
         {CONTINUOUS_NODE_STREAM.map((node, i) => (
           <g
             key={node.id}
