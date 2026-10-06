@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { HeroContent } from "./HeroContent";
 import { HeroActions } from "./HeroActions";
 import { MainWheelMaster } from "./main-wheel/MainWheelMaster";
+import { AdsWheelMaster } from "./ads-wheel/AdsWheelMaster";
 
 export const HeroSection: React.FC = () => {
   const [isShowreelActive, setIsShowreelActive] = React.useState<boolean>(false);
@@ -14,7 +15,7 @@ export const HeroSection: React.FC = () => {
   const headlineRef = React.useRef<HTMLHeadingElement | null>(null);
   const descriptionRef = React.useRef<HTMLParagraphElement | null>(null);
   const actionsRef = React.useRef<HTMLDivElement | null>(null);
-  const wheelWrapperRef = React.useRef<HTMLDivElement | null>(null);
+  const constellationWrapperRef = React.useRef<HTMLDivElement | null>(null);
 
   // Synchronized Master Entrance Timeline
   React.useEffect(() => {
@@ -27,7 +28,7 @@ export const HeroSection: React.FC = () => {
       if (headlineRef.current) headlineRef.current.style.opacity = "1";
       if (descriptionRef.current) descriptionRef.current.style.opacity = "1";
       if (actionsRef.current) actionsRef.current.style.opacity = "1";
-      if (wheelWrapperRef.current) wheelWrapperRef.current.style.opacity = "1";
+      if (constellationWrapperRef.current) constellationWrapperRef.current.style.opacity = "1";
       return;
     }
 
@@ -76,10 +77,10 @@ export const HeroSection: React.FC = () => {
       );
     }
 
-    // 5. Main Wheel blooms smoothly into view
-    if (wheelWrapperRef.current) {
+    // 5. Constellation blooms smoothly into view
+    if (constellationWrapperRef.current) {
       tl.fromTo(
-        wheelWrapperRef.current,
+        constellationWrapperRef.current,
         { autoAlpha: 0, scale: 0.95 },
         { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" },
         0.18,
@@ -102,7 +103,7 @@ export const HeroSection: React.FC = () => {
       <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8 min-h-[580px]">
           {/* Left Column: Editorial Headline & Actions (7 Columns) */}
-          <div className="lg:col-span-7 xl:col-span-7 flex flex-col justify-center z-10">
+          <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center z-10">
             <HeroContent
               kickerRef={kickerRef}
               headlineRef={headlineRef}
@@ -115,16 +116,25 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* 
-            Right Column: Shifted slightly left (lg:-translate-x-10) 
-            Leaves comfortable clearance on the right for upcoming satellite wheels
+            Right Column: 2-Wheel Constellation Stage (6 Columns)
+            - Main Wheel on Center-Left
+            - Ads Satellite Wheel in Top-Right position
           */}
-          <div className="lg:col-span-5 xl:col-span-5 relative flex items-center justify-center lg:justify-start lg:-translate-x-8 xl:-translate-x-12 min-h-[480px] sm:min-h-[520px]">
+          <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center min-h-[520px] sm:min-h-[580px]">
             <div
-              ref={wheelWrapperRef}
+              ref={constellationWrapperRef}
               style={{ opacity: 0 }}
-              className="relative flex items-center justify-center w-full"
+              className="relative w-full max-w-[620px] h-[540px] sm:h-[580px] flex items-center justify-center overflow-visible"
             >
-              <MainWheelMaster />
+              {/* 1. Main Wheel: Shifted slightly left */}
+              <div className="absolute left-[-20px] sm:left-0 top-[60px] sm:top-[40px] z-10">
+                <MainWheelMaster />
+              </div>
+
+              {/* 2. Top-Right Satellite Wheel: Google Ads <-> Meta Ads */}
+              <div className="absolute top-[-10px] sm:top-[0px] right-[-15px] sm:right-[-5px] z-20">
+                <AdsWheelMaster />
+              </div>
             </div>
           </div>
         </div>
