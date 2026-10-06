@@ -41,18 +41,10 @@ export const AdsWheelMaster: React.FC = () => {
         // Total 10-node conveyor loop = 10 * 36° = 360°
         streamPositionRef.current = (streamPositionRef.current + currentSpeed * delta) % 360;
 
-        // ---------------------------------------------------------------------
-        // DETERMINISTIC PHASE SYNCHRONIZATION
-        // Category 0 (Google Ads): 0° - 179.9°
-        // Category 1 (Meta Ads):   180° - 359.9°
-        // When lead icon enters -80° threshold, category locks deterministically
-        // ---------------------------------------------------------------------
+        // Deterministic Phase Synchronization: 0° - 179.9° = Google Ads, 180° - 359.9° = Meta Ads
         const targetPhase = Math.floor(streamPositionRef.current / 180) % 2;
         setActivePhaseIndex((prev) => (prev !== targetPhase ? targetPhase : prev));
 
-        // ---------------------------------------------------------------------
-        // CONTINUOUS 144° VISIBLE ARC RENDERING (280° -> 64° / -80° to +64°)
-        // ---------------------------------------------------------------------
         const count = ADS_NODE_STREAM.length; // 10 nodes
         const nodeSpacingDeg = 36; // 36° spacing
 
@@ -108,7 +100,8 @@ export const AdsWheelMaster: React.FC = () => {
   }, [cx, cy, orbitRadius, arcStartDeg, arcSpanDeg]);
 
   return (
-    <div className="relative w-[340px] h-[340px] flex items-center justify-center select-none overflow-visible">
+    // Outer container is pointer-events-none so its transparent box never blocks Main Wheel icons
+    <div className="relative w-[340px] h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
       {/* 
         1. Morphing Central Core Hub:
         126px diameter with physical elevation
@@ -122,7 +115,7 @@ export const AdsWheelMaster: React.FC = () => {
 
       {/* 
         2. Master SVG Canvas:
-        Maps all 10 nodes simultaneously so the track is NEVER empty!
+        Maps all 10 nodes simultaneously in sub-pixel SVG coordinates
       */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
