@@ -38,15 +38,15 @@ export const AdsWheelMaster: React.FC = () => {
         const delta = (time - lastTimeRef.current) / 1000;
         const currentSpeed = isHoveredRef.current ? speed * 0.12 : speed;
 
-        // Total 10-node conveyor loop = 10 * 36° = 360°
+        // Total 8-node conveyor loop = 8 * 45° = 360°
         streamPositionRef.current = (streamPositionRef.current + currentSpeed * delta) % 360;
 
         // Deterministic Phase Synchronization: 0° - 179.9° = Google Ads, 180° - 359.9° = Meta Ads
         const targetPhase = Math.floor(streamPositionRef.current / 180) % 2;
         setActivePhaseIndex((prev) => (prev !== targetPhase ? targetPhase : prev));
 
-        const count = ADS_NODE_STREAM.length; // 10 nodes
-        const nodeSpacingDeg = 36; // 36° spacing
+        const count = ADS_NODE_STREAM.length; // 8 nodes
+        const nodeSpacingDeg = 45; // Exactly 45° spacing (strictly max 4 visible icons)
 
         for (let i = 0; i < count; i++) {
           const el = nodesGroupRef.current[i];
@@ -100,12 +100,8 @@ export const AdsWheelMaster: React.FC = () => {
   }, [cx, cy, orbitRadius, arcStartDeg, arcSpanDeg]);
 
   return (
-    // Explicit responsive dimensions maintain non-zero layout box on all devices
-    <div className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] lg:w-[340px] lg:h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
-      {/* 
-        1. Morphing Central Core Hub:
-        126px diameter with physical elevation
-      */}
+    <div className="relative w-[340px] h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
+      {/* 1. Morphing Central Core Hub */}
       <AdsWheelCenterHub
         currentPhase={currentPhase}
         cx={cx}
@@ -113,19 +109,15 @@ export const AdsWheelMaster: React.FC = () => {
         radius={hubRadius}
       />
 
-      {/* 
-        2. Master SVG Canvas:
-        Maps all 10 nodes simultaneously in sub-pixel SVG coordinates
-      */}
+      {/* 2. Master SVG Canvas */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
         viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
         fill="none"
       >
-        {/* Exact 144° Arc Track with Faded Gradient Ends */}
         <AdsWheelOrbitPath />
 
-        {/* ALL 10 Nodes in DOM simultaneously */}
+        {/* 8 Nodes in DOM with 45° Spacing */}
         {ADS_NODE_STREAM.map((node, i) => (
           <g
             key={node.id}
@@ -143,14 +135,7 @@ export const AdsWheelMaster: React.FC = () => {
             }}
             style={{ willChange: "transform, opacity" }}
           >
-            {/* Explicit 44px x 44px ForeignObject with guaranteed dimensions */}
-            <foreignObject
-              x="-22"
-              y="-22"
-              width="44"
-              height="44"
-              className="overflow-visible"
-            >
+            <foreignObject x="-22" y="-22" width="44" height="44" className="overflow-visible">
               <div
                 style={{ width: "44px", height: "44px" }}
                 className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-[0_3px_12px_rgba(6,22,44,0.08)] transition-transform duration-150 hover:scale-115"
@@ -162,10 +147,7 @@ export const AdsWheelMaster: React.FC = () => {
         ))}
       </svg>
 
-      {/* 
-        3. Professional Rich Hover Tooltip Pod:
-        Fixed rigid width (w-[260px] sm:w-[280px]) with clean line wrapping
-      */}
+      {/* 3. Hover Tooltip Pod */}
       {hoveredNode && (
         <div
           style={{ left: cx, top: cy - hubRadius - 14 }}

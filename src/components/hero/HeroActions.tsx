@@ -23,14 +23,14 @@ export const HeroActions: React.FC<HeroActionsProps> = ({
   return (
     <div
       ref={actionsRef}
-      style={{ opacity: 0, visibility: "hidden" }}
-      className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4 sm:gap-5"
+      style={{ opacity: 0 }}
+      className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap items-center gap-3 sm:gap-5"
     >
       {/* Primary CTA: Website Theme Gradient Pill */}
       <Link
         href={HERO_EDITORIAL_COPY.primaryCtaHref}
         onMouseEnter={handleMouseEnter}
-        className="group relative inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-7 py-3.5 font-sans text-[14px] font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] transition-all duration-300 hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] select-none"
+        className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-6 py-3 sm:px-7 sm:py-3.5 font-sans text-[13px] sm:text-[14px] font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] transition-all duration-300 hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] select-none shrink-0"
       >
         <span className="tracking-[-0.01em]">{HERO_EDITORIAL_COPY.primaryCtaText}</span>
 
@@ -51,15 +51,14 @@ export const HeroActions: React.FC<HeroActionsProps> = ({
         </span>
       </Link>
 
-      {/* View Showreel Play Button (Light-Theme Floating Pod) */}
+      {/* View Showreel Play Button */}
       <button
         type="button"
         onClick={onOpenShowreel}
         aria-label="Play Brivya Studio Showreel"
-        className="group inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 border border-slate-200/90 shadow-[0_2px_8px_-2px_rgba(6,22,44,0.04)] font-sans text-[14px] font-semibold text-[#06162C] transition-all duration-200 hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98]"
+        className="group inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2.5 sm:px-5 sm:py-3 border border-slate-200/90 shadow-[0_2px_8px_-2px_rgba(6,22,44,0.04)] font-sans text-[13px] sm:text-[14px] font-semibold text-[#06162C] transition-all duration-200 hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98] shrink-0"
       >
-        {/* Circular Play Icon Pod */}
-        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-[#06162C] transition-transform duration-200 group-hover:scale-110 group-hover:bg-[#0A5FD7] group-hover:text-white">
+        <div className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-slate-100 text-[#06162C] transition-transform duration-200 group-hover:scale-110 group-hover:bg-[#0A5FD7] group-hover:text-white">
           <svg className="h-3 w-3 translate-x-0.5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M8 5v14l11-7z" />
           </svg>

@@ -38,15 +38,15 @@ export const AddonsWheelMaster: React.FC = () => {
         const delta = (time - lastTimeRef.current) / 1000;
         const currentSpeed = isHoveredRef.current ? speed * 0.12 : speed;
 
-        // Total 10-node conveyor loop = 10 * 36° = 360°
+        // Total 8-node conveyor loop = 8 * 45° = 360°
         streamPositionRef.current = (streamPositionRef.current + currentSpeed * delta) % 360;
 
         // Deterministic Phase Synchronization: 0° - 179.9° = Google Add-ons, 180° - 359.9° = Office Add-ins
         const targetPhase = Math.floor(streamPositionRef.current / 180) % 2;
         setActivePhaseIndex((prev) => (prev !== targetPhase ? targetPhase : prev));
 
-        const count = ADDONS_NODE_STREAM.length; // 10 nodes
-        const nodeSpacingDeg = 36; // 36° spacing
+        const count = ADDONS_NODE_STREAM.length; // 8 nodes
+        const nodeSpacingDeg = 45; // Exactly 45° spacing (strictly max 4 visible icons)
 
         for (let i = 0; i < count; i++) {
           const el = nodesGroupRef.current[i];
@@ -100,12 +100,8 @@ export const AddonsWheelMaster: React.FC = () => {
   }, [cx, cy, orbitRadius, arcStartDeg, arcSpanDeg]);
 
   return (
-    // Outer container is pointer-events-none so transparent box never blocks Main Wheel
     <div className="relative w-[340px] h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
-      {/* 
-        1. Morphing Central Core Hub:
-        126px diameter with physical elevation
-      */}
+      {/* 1. Morphing Central Core Hub */}
       <AddonsWheelCenterHub
         currentPhase={currentPhase}
         cx={cx}
@@ -113,19 +109,15 @@ export const AddonsWheelMaster: React.FC = () => {
         radius={hubRadius}
       />
 
-      {/* 
-        2. Master SVG Canvas:
-        Maps all 10 nodes simultaneously in sub-pixel SVG coordinates
-      */}
+      {/* 2. Master SVG Canvas */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
         viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
         fill="none"
       >
-        {/* Exact 144° Arc Track with Faded Gradient Ends */}
         <AddonsWheelOrbitPath />
 
-        {/* ALL 10 Nodes in DOM simultaneously */}
+        {/* 8 Nodes in DOM with 45° Spacing */}
         {ADDONS_NODE_STREAM.map((node, i) => (
           <g
             key={node.id}
@@ -143,7 +135,6 @@ export const AddonsWheelMaster: React.FC = () => {
             }}
             style={{ willChange: "transform, opacity" }}
           >
-            {/* Explicit 44px x 44px ForeignObject with guaranteed dimensions */}
             <foreignObject x="-22" y="-22" width="44" height="44" className="overflow-visible">
               <div
                 style={{ width: "44px", height: "44px" }}
@@ -156,20 +147,17 @@ export const AddonsWheelMaster: React.FC = () => {
         ))}
       </svg>
 
-      {/* 
-        3. Professional Rich Hover Tooltip Pod:
-        Fixed rigid width (w-[260px] sm:w-[280px]) with clean line wrapping
-      */}
+      {/* 3. Hover Tooltip Pod */}
       {hoveredNode && (
         <div
           style={{ left: cx, top: cy - hubRadius - 14 }}
           className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-xl bg-[#06162C] p-3 shadow-2xl z-50 w-[260px] sm:w-[280px] text-left border border-white/10 animate-in fade-in zoom-in-95 duration-150"
         >
-          <div className="flex items-center justify-between pb-1 border-b border-white/10">
+          <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
             <span className="font-sans text-[12px] font-bold text-white tracking-tight">
               {hoveredNode.name}
             </span>
-            <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#C7A76B]">
+            <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#C7A76B] font-semibold">
               {hoveredNode.role}
             </span>
           </div>

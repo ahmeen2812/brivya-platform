@@ -1,7 +1,7 @@
 /**
  * BRIVYA SOLUTIONS — HERO ADDONS WHEEL CONFIGURATION MANIFEST
- * Authoritative data for the 10-node continuous conveyor stream
- * (5 Google Add-ons -> 5 Office Add-ins) with rich hover tooltips.
+ * 8-Node continuous conveyor stream (4 Google Add-ons -> 4 Office Add-ins)
+ * with 45° angular spacing, guaranteeing max 4 visible icons on the 144° arc.
  */
 
 import {
@@ -38,10 +38,11 @@ export const ADDONS_WHEEL_PHASES: readonly AddonsWheelPhaseConfig[] = [
   },
 ] as const;
 
-// 10-Node Continuous Conveyor Stream (5 Google Add-ons -> 5 Office Add-ins)
-// Spaced by exactly 36° around a seamless 360° circle (10 x 36° = 360°)
+// 8-Node Continuous Conveyor Stream (4 Google Add-ons -> 4 Office Add-ins)
+// Spaced by exactly 45° around a seamless 360° circle (8 x 45° = 360°)
+// Yields strictly 3-4 visible icons on the 144° arc with 41px clearance
 export const ADDONS_NODE_STREAM: readonly AddonsWheelNode[] = [
-  // 1. Google Workspace Add-ons Sequence (Nodes 0 - 4)
+  // 1. Google Workspace Add-ons Sequence (Nodes 0 - 3)
   {
     id: "node-sheets",
     name: "Google Sheets Add-on",
@@ -74,16 +75,8 @@ export const ADDONS_NODE_STREAM: readonly AddonsWheelNode[] = [
     categoryId: "google-addons",
     iconKey: "forms",
   },
-  {
-    id: "node-apps-script",
-    name: "Apps Script & APIs",
-    role: "Serverless GCP Engines",
-    description: "We integrate Google Cloud endpoints, OAuth2 permissions, and scheduled enterprise automation scripts.",
-    categoryId: "google-addons",
-    iconKey: "apps-script",
-  },
 
-  // 2. Microsoft Office 365 Add-ins Sequence (Nodes 5 - 9)
+  // 2. Microsoft Office 365 Add-ins Sequence (Nodes 4 - 7)
   {
     id: "node-excel",
     name: "Excel Web Add-in",
@@ -115,13 +108,5 @@ export const ADDONS_NODE_STREAM: readonly AddonsWheelNode[] = [
     description: "We build interactive bot extensions, project dashboard tabs, and adaptive card notification meshes.",
     categoryId: "office-addins",
     iconKey: "teams",
-  },
-  {
-    id: "node-vsto",
-    name: "VSTO to Web Migration",
-    role: "Modernization Protocol",
-    description: "We modernize legacy COM/VSTO desktop plugins into modern cross-platform web add-ins.",
-    categoryId: "office-addins",
-    iconKey: "vsto",
   },
 ] as const;

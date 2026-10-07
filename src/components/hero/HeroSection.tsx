@@ -7,6 +7,7 @@ import { HeroActions } from "./HeroActions";
 import { MainWheelMaster } from "./main-wheel/MainWheelMaster";
 import { AdsWheelMaster } from "./ads-wheel/AdsWheelMaster";
 import { AddonsWheelMaster } from "./addons-wheel/AddonsWheelMaster";
+import { HeroMobileConstellation } from "./constellation/HeroMobileConstellation";
 
 export const HeroSection: React.FC = () => {
   const [isShowreelActive, setIsShowreelActive] = React.useState<boolean>(false);
@@ -16,7 +17,8 @@ export const HeroSection: React.FC = () => {
   const headlineRef = React.useRef<HTMLHeadingElement | null>(null);
   const descriptionRef = React.useRef<HTMLParagraphElement | null>(null);
   const actionsRef = React.useRef<HTMLDivElement | null>(null);
-  const constellationWrapperRef = React.useRef<HTMLDivElement | null>(null);
+  const desktopConstellationRef = React.useRef<HTMLDivElement | null>(null);
+  const mobileConstellationRef = React.useRef<HTMLDivElement | null>(null);
 
   // Synchronized Master Entrance Timeline
   React.useEffect(() => {
@@ -29,13 +31,14 @@ export const HeroSection: React.FC = () => {
       if (headlineRef.current) headlineRef.current.style.opacity = "1";
       if (descriptionRef.current) descriptionRef.current.style.opacity = "1";
       if (actionsRef.current) actionsRef.current.style.opacity = "1";
-      if (constellationWrapperRef.current) constellationWrapperRef.current.style.opacity = "1";
+      if (desktopConstellationRef.current) desktopConstellationRef.current.style.opacity = "1";
+      if (mobileConstellationRef.current) mobileConstellationRef.current.style.opacity = "1";
       return;
     }
 
     const tl = gsap.timeline({
       defaults: { ease: "power3.out" },
-      delay: 0.38, // Synchronized with navbar drop-line
+      delay: 0.38, // Synchronized with navbar drop-line landing
     });
 
     // 1. Kicker tag slides in
@@ -78,13 +81,23 @@ export const HeroSection: React.FC = () => {
       );
     }
 
-    // 5. Constellation blooms smoothly into view
-    if (constellationWrapperRef.current) {
+    // 5. Constellation blooms smoothly into view on desktop
+    if (desktopConstellationRef.current) {
       tl.fromTo(
-        constellationWrapperRef.current,
+        desktopConstellationRef.current,
         { autoAlpha: 0, scale: 0.96 },
         { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" },
         0.18,
+      );
+    }
+
+    // 6. Mobile constellation reveals smoothly on small screens
+    if (mobileConstellationRef.current) {
+      tl.fromTo(
+        mobileConstellationRef.current,
+        { autoAlpha: 0, y: 20 },
+        { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" },
+        0.25,
       );
     }
 
@@ -102,8 +115,8 @@ export const HeroSection: React.FC = () => {
       />
 
       <div className="relative mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8 min-h-[580px]">
-          {/* Left Column: Editorial Headline & Actions (6 Columns) */}
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8 min-h-[580px]">
+          {/* Left Column: Editorial Headline & Actions (6 Columns on Desktop) */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center z-10">
             <HeroContent
               kickerRef={kickerRef}
@@ -116,43 +129,43 @@ export const HeroSection: React.FC = () => {
             />
           </div>
 
-          {/* 
-            Right Column: 3-Wheel Constellation Stage (6 Columns)
-            - Main Wheel on Center-Left
-            - Top-Right Satellite Wheel (Moved further right with lg:-right-12 xl:-right-16)
-            - Bottom-Right Satellite Wheel (Symmetrically aligned along the same right boundary)
-          */}
-          <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center lg:justify-end min-h-[540px] sm:min-h-[600px]">
+          {/* ================================================================= */}
+          {/* DESKTOP CONSTELLATION STAGE (>= 1024px — 100% UNTOUCHED & INTACT) */}
+          {/* ================================================================= */}
+          <div className="hidden lg:flex lg:col-span-6 xl:col-span-6 relative items-center justify-end min-h-[540px] sm:min-h-[600px]">
             <div
-              ref={constellationWrapperRef}
+              ref={desktopConstellationRef}
               style={{ opacity: 0 }}
-              className="relative w-full max-w-[540px] lg:max-w-none h-auto lg:h-[600px] flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-0 overflow-visible"
+              className="relative w-full max-w-none h-[600px] flex items-center justify-center overflow-visible"
             >
-              {/* 
-                1. Main Wheel:
-                Anchored on center-left (Dev -> Cloud -> AI)
-              */}
-              <div className="relative lg:absolute lg:left-[-15px] xl:left-0 lg:top-[50px] z-10 pointer-events-none">
+              {/* 1. Main Wheel on Center-Left */}
+              <div className="absolute left-[-15px] xl:left-0 top-[50px] z-10 pointer-events-none">
                 <MainWheelMaster />
               </div>
 
-              {/* 
-                2. Top-Right Satellite Wheel: Google Ads <-> Meta Ads
-                Moved further right (lg:-right-12 xl:-right-16) for clear separation from the main wheel
-              */}
-              <div className="relative lg:absolute lg:top-[-20px] lg:-right-12 xl:-right-16 z-20 pointer-events-none">
+              {/* 2. Top-Right Satellite Wheel (Google Ads <-> Meta Ads) */}
+              <div className="absolute top-[-20px] -right-12 xl:-right-16 z-20 pointer-events-none">
                 <AdsWheelMaster />
               </div>
 
-              {/* 
-                3. Bottom-Right Satellite Wheel: Google Add-ons <-> Office Add-ins
-                Aligned to the EXACT same right edge (lg:-right-12 xl:-right-16) at the bottom
-              */}
-              <div className="relative lg:absolute lg:bottom-[-20px] lg:-right-12 xl:-right-16 z-20 pointer-events-none">
+              {/* 3. Bottom-Right Satellite Wheel (Google Add-ons <-> Office Add-ins) */}
+              <div className="absolute bottom-[-20px] -right-12 xl:-right-16 z-20 pointer-events-none">
                 <AddonsWheelMaster />
               </div>
             </div>
           </div>
+        </div>
+
+        {/* ================================================================= */}
+        {/* DEDICATED MOBILE CONSTELLATION (< 1024px — ZERO OVERFLOW / ZERO CLIPPING) */}
+        {/* Structured flow: Top (Ads) -> Middle (Main Dev) -> Bottom (Add-ons)*/}
+        {/* ================================================================= */}
+        <div
+          ref={mobileConstellationRef}
+          style={{ opacity: 0 }}
+          className="w-full lg:hidden overflow-visible"
+        >
+          <HeroMobileConstellation />
         </div>
       </div>
     </section>
