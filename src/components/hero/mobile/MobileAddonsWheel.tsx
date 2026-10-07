@@ -10,7 +10,7 @@ export const MobileAddonsWheel: React.FC = () => {
   const CX = 85;
   const CY = 85;
   const HUB_R = 40; // 80px diameter hub
-  const ORBIT_R = 58; // Compact 18px gap from hub
+  const ORBIT_R = 58; // Compact 18px clearance from hub
   const START_DEG = -64; // 296°
   const SPAN_DEG = 144; // Ends at +80°
 
@@ -120,7 +120,7 @@ export const MobileAddonsWheel: React.FC = () => {
         className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-1.5 text-center"
       >
         <div ref={iconRef}>
-          <AddonsWheelIcon type={currentPhase.centerIcon} className="h-3.5 w-3.5" />
+          <AddonsWheelIcon type={currentPhase.centerIcon} className="h-4 w-4" />
         </div>
         <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[68px]">
           <span className="font-sans text-[10px] font-bold text-[#06162C] leading-tight">
@@ -147,12 +147,12 @@ export const MobileAddonsWheel: React.FC = () => {
 
         {ADDONS_NODE_STREAM.map((node, i) => (
           <g key={node.id} ref={(el) => { nodesRef.current[i] = el; }}>
-            <foreignObject x="-14" y="-14" width="28" height="28" className="overflow-visible">
+            <foreignObject x="-13" y="-13" width="26" height="26" className="overflow-visible">
               <div
-                style={{ width: "28px", height: "28px" }}
+                style={{ width: "26px", height: "26px" }}
                 className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
               >
-                <AddonsWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />
+                <AddonsWheelIcon type={node.iconKey} className="h-3 w-3" />
               </div>
             </foreignObject>
           </g>

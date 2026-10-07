@@ -7,11 +7,11 @@ import { MainWheelPhaseConfig } from "@/types/heroMainWheel";
 import { MainWheelIcon } from "../main-wheel/MainWheelIcons";
 
 export const MobileMainWheel: React.FC = () => {
-  // Mobile-calibrated mathematical dimensions (Compact & tight to hub)
-  const CX = 105;
-  const CY = 105;
-  const HUB_R = 52; // 104px diameter center circle
-  const ORBIT_R = 76; // Compact 24px gap from hub edge (tight & connected)
+  // Mobile-calibrated compact dimensions (Balanced with smaller wheels)
+  const CX = 100;
+  const CY = 100;
+  const HUB_R = 48; // 96px diameter center circle
+  const ORBIT_R = 70; // Compact 22px clearance from hub edge
   const START_DEG = -72; // 288°
   const SPAN_DEG = 144; // Ends at +72°
 
@@ -41,7 +41,7 @@ export const MobileMainWheel: React.FC = () => {
     tl.fromTo(textEl, { y: 6, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, 0.15);
   }, [currentPhase.id]);
 
-  // 60fps Direct-DOM Animation Loop (Zero React state re-render lag)
+  // 60fps Direct-DOM Animation Loop
   React.useEffect(() => {
     let animId: number;
     const speed = 12; // 12 deg/sec linear velocity
@@ -63,7 +63,7 @@ export const MobileMainWheel: React.FC = () => {
           setPhaseIdx(target);
         }
 
-        // Sub-pixel node coordinate mutator (Locked 100% to ORBIT_R)
+        // Sub-pixel node coordinate mutator (100% locked to ORBIT_R)
         for (let i = 0; i < CONTINUOUS_NODE_STREAM.length; i++) {
           const el = nodesRef.current[i];
           if (!el) continue;
@@ -85,7 +85,7 @@ export const MobileMainWheel: React.FC = () => {
               opacity = Math.max(0, (START_DEG + SPAN_DEG + 10 - angle) / 10);
             }
 
-            el.setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(0.95)`);
+            el.setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(0.92)`);
             el.style.opacity = String(opacity);
             el.style.visibility = "visible";
           } else {
@@ -104,7 +104,7 @@ export const MobileMainWheel: React.FC = () => {
     };
   }, []);
 
-  // SVG Arc Geometry (Derives from the exact same CX, CY, ORBIT_R)
+  // SVG Arc Geometry (100% matched to CX, CY, ORBIT_R)
   const sRad = (START_DEG * Math.PI) / 180;
   const eRad = ((START_DEG + SPAN_DEG) * Math.PI) / 180;
   const x1 = CX + ORBIT_R * Math.cos(sRad);
@@ -113,29 +113,29 @@ export const MobileMainWheel: React.FC = () => {
   const y2 = CY + ORBIT_R * Math.sin(eRad);
   const arcD = `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${ORBIT_R} ${ORBIT_R} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
 
-  // Vector Morphing Render Engine (Eliminates "API" Bug)
+  // Vector Morphing Render Engine (Real SVGs — eliminates "API" text)
   const renderGlyph = (morphType: "code" | "cloud" | "ai") => {
     switch (morphType) {
       case "code":
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-50 text-[#0A5FD7] border border-sky-100 shadow-2xs">
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-50 text-[#0A5FD7] border border-sky-100 shadow-2xs">
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-4 3 4 3m8-6l4 3-4 3m-9 3l6-12" />
             </svg>
           </div>
         );
       case "cloud":
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-[#D97706] border border-amber-100 shadow-2xs">
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-50 text-[#D97706] border border-amber-100 shadow-2xs">
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
             </svg>
           </div>
         );
       case "ai":
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-50 text-[#7C3AED] border border-violet-100 shadow-2xs">
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-50 text-[#7C3AED] border border-violet-100 shadow-2xs">
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
           </div>
@@ -144,8 +144,8 @@ export const MobileMainWheel: React.FC = () => {
   };
 
   return (
-    <div className="relative w-[210px] h-[210px] flex items-center justify-center select-none overflow-visible pointer-events-none">
-      {/* 1. Center Hub (104px diameter) */}
+    <div className="relative w-[200px] h-[200px] flex items-center justify-center select-none overflow-visible pointer-events-none">
+      {/* 1. Center Hub (96px diameter) */}
       <div
         style={{
           width: `${HUB_R * 2}px`,
@@ -153,21 +153,21 @@ export const MobileMainWheel: React.FC = () => {
           left: `${CX - HUB_R}px`,
           top: `${CY - HUB_R}px`,
         }}
-        className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-md p-2 text-center"
+        className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-md p-1.5 text-center"
       >
         <div ref={iconRef}>{renderGlyph(currentPhase.morphType)}</div>
-        <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[88px]">
-          <span className="font-sans text-[11.5px] font-bold text-[#06162C] leading-tight">
+        <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[82px]">
+          <span className="font-sans text-[11px] font-bold text-[#06162C] leading-tight">
             {currentPhase.title}
           </span>
-          <span className="mt-0.5 text-[7.5px] leading-tight text-[#8998AD] line-clamp-1">
+          <span className="mt-0.5 text-[7px] leading-tight text-[#8998AD] line-clamp-1">
             {currentPhase.subtitle}
           </span>
         </div>
       </div>
 
       {/* 2. SVG Track and Nodes */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 210 210" fill="none">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 200" fill="none">
         <defs>
           <linearGradient id="mobMainArcGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#94A3B8" stopOpacity="0" />
@@ -181,12 +181,12 @@ export const MobileMainWheel: React.FC = () => {
 
         {CONTINUOUS_NODE_STREAM.map((node, i) => (
           <g key={node.id} ref={(el) => { nodesRef.current[i] = el; }}>
-            <foreignObject x="-17" y="-17" width="34" height="34" className="overflow-visible">
+            <foreignObject x="-15" y="-15" width="30" height="30" className="overflow-visible">
               <div
-                style={{ width: "34px", height: "34px" }}
+                style={{ width: "30px", height: "30px" }}
                 className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
               >
-                <MainWheelIcon type={node.iconKey} className="h-4 w-4" />
+                <MainWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />
               </div>
             </foreignObject>
           </g>

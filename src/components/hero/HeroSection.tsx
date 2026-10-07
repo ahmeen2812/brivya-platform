@@ -135,7 +135,7 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* ================================================================= */}
-          {/* DESKTOP CONSTELLATION STAGE (>= 1024px — 100% UNTOUCHED)          */}
+          {/* DESKTOP CONSTELLATION STAGE (>= 1024px — 100% UNTOUCHED & SYMMETRICAL) */}
           {/* ================================================================= */}
           <div className="hidden lg:flex lg:col-span-6 xl:col-span-6 relative items-center justify-end min-h-[540px] sm:min-h-[600px]">
             <div
@@ -166,12 +166,12 @@ export const HeroSection: React.FC = () => {
 
         {/* ================================================================= */}
         {/* DEDICATED MOBILE CONSTELLATION (< 1024px)                        */}
-        {/* Compact 520px S-Curve stage starting closely after the buttons   */}
+        {/* Compact 410px S-Curve stage starting closely after the buttons   */}
         {/* ================================================================= */}
         <div
           ref={mobileConstellationRef}
           style={{ opacity: 0 }}
-          className="w-full lg:hidden mt-3 sm:mt-5 overflow-visible"
+          className="w-full lg:hidden mt-3 sm:mt-4 overflow-visible"
         >
           <HeroMobileConstellation />
         </div>

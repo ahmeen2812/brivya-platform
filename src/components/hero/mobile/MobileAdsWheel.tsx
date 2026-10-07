@@ -10,7 +10,7 @@ export const MobileAdsWheel: React.FC = () => {
   const CX = 85;
   const CY = 85;
   const HUB_R = 40; // 80px diameter hub
-  const ORBIT_R = 58; // Compact 18px gap from hub
+  const ORBIT_R = 58; // Compact 18px clearance from hub
   const START_DEG = -80; // 280°
   const SPAN_DEG = 144; // Ends at +64°
 
@@ -107,6 +107,27 @@ export const MobileAdsWheel: React.FC = () => {
   const y2 = CY + ORBIT_R * Math.sin(eRad);
   const arcD = `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${ORBIT_R} ${ORBIT_R} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
 
+  // Render official solid platform icons (Guarantees Meta is NEVER transparent)
+  const renderCenterIcon = (iconKey: "google-ads" | "meta") => {
+    if (iconKey === "meta") {
+      return (
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 7.2C10.6 5.2 8.7 4 6.5 4C2.9 4 0 7.3 0 11.8C0 16.4 3 20 6.6 20C8.9 20 10.7 18.7 12 16.6C13.3 18.7 15.1 20 17.4 20C21 20 24 16.4 24 11.8C24 7.3 21.1 4 17.5 4C15.3 4 13.4 5.2 12 7.2ZM6.6 17.4C4.4 17.4 2.6 15 2.6 11.8C2.6 8.7 4.3 6.6 6.5 6.6C8.3 6.6 9.8 8.1 10.8 10.6C9.9 13.6 8.5 17.4 6.6 17.4ZM17.4 17.4C15.5 17.4 14.1 13.6 13.2 10.6C14.2 8.1 15.7 6.6 17.5 6.6C19.7 6.6 21.4 8.7 21.4 11.8C21.4 15 19.6 17.4 17.4 17.4Z"
+            fill="#0064E0"
+          />
+        </svg>
+      );
+    }
+    return (
+      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+        <path d="M4.1 14.8l4.9-8.5c.7-1.2 2.2-1.7 3.5-1 1.3.7 1.7 2.2 1 3.5l-4.9 8.5c-.7 1.2-2.2 1.7-3.5 1-1.3-.7-1.7-2.3-1-3.5z" fill="#FBBC04" />
+        <path d="M12.9 8.8l4.9 8.5c.7 1.2 2.2 1.7 3.5 1 1.3-.7 1.7-2.2 1-3.5l-4.9-8.5c-.7-1.2-2.2-1.7-3.5-1-1.3.7-1.7 2.2-1 3.5z" fill="#4285F4" />
+        <circle cx="6.4" cy="17.2" r="2.8" fill="#34A853" />
+      </svg>
+    );
+  };
+
   return (
     <div className="relative w-[170px] h-[170px] flex items-center justify-center select-none overflow-visible pointer-events-none">
       {/* Center Hub */}
@@ -119,9 +140,7 @@ export const MobileAdsWheel: React.FC = () => {
         }}
         className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-1.5 text-center"
       >
-        <div ref={iconRef}>
-          <AdsWheelIcon type={currentPhase.centerIcon} className="h-3.5 w-3.5" />
-        </div>
+        <div ref={iconRef}>{renderCenterIcon(currentPhase.centerIcon)}</div>
         <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[68px]">
           <span className="font-sans text-[10px] font-bold text-[#06162C] leading-tight">
             {currentPhase.title}
@@ -147,12 +166,12 @@ export const MobileAdsWheel: React.FC = () => {
 
         {ADS_NODE_STREAM.map((node, i) => (
           <g key={node.id} ref={(el) => { nodesRef.current[i] = el; }}>
-            <foreignObject x="-14" y="-14" width="28" height="28" className="overflow-visible">
+            <foreignObject x="-13" y="-13" width="26" height="26" className="overflow-visible">
               <div
-                style={{ width: "28px", height: "28px" }}
+                style={{ width: "26px", height: "26px" }}
                 className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
               >
-                <AdsWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />
+                <AdsWheelIcon type={node.iconKey} className="h-3 w-3" />
               </div>
             </foreignObject>
           </g>

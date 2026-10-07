@@ -7,18 +7,19 @@ import { MobileAddonsWheel } from "../mobile/MobileAddonsWheel";
 
 export const HeroMobileConstellation: React.FC = () => {
   return (
-    <div className="relative w-full max-w-[360px] xs:max-w-[380px] h-[395px] xs:h-[405px] mx-auto select-none overflow-visible">
+    <div className="relative w-full max-w-[360px] xs:max-w-[380px] h-[410px] xs:h-[420px] mx-auto select-none overflow-visible">
       {/* 
         1. TOP SATELLITE: Google Ads <-> Meta Ads
-        Shifted RIGHT (top: 0px)
+        Positioned RIGHT (top: 0px, center Y: 85px)
       */}
-      <div className="absolute top-[0px] right-[4px] sm:right-[12px] z-20">
+      <div className="absolute top-0 right-[2px] sm:right-[10px] z-20">
         <MobileAdsWheel />
       </div>
 
       {/* 
         2. MAIN WHEEL: Web Dev -> Cloud -> AI
-        Shifted LEFT / LEFT-CENTER (top: 105px, exactly 105px vertical distance from top wheel)
+        Positioned LEFT (top: 105px, center Y: 210px)
+        Exact 125px vertical distance from top wheel (210 - 85 = 125px)
       */}
       <div className="absolute top-[105px] left-[-15px] sm:left-[-5px] z-10">
         <MobileMainWheel />
@@ -26,9 +27,10 @@ export const HeroMobileConstellation: React.FC = () => {
 
       {/* 
         3. BOTTOM SATELLITE: Google Add-ons <-> Office Add-ins
-        Shifted RIGHT (top: 210px, exactly 105px vertical distance from main wheel)
+        Positioned RIGHT (top: 230px, center Y: 335px)
+        Exact 125px vertical distance from main wheel (335 - 210 = 125px)
       */}
-      <div className="absolute top-[210px] right-[4px] sm:right-[12px] z-20">
+      <div className="absolute top-[230px] right-[2px] sm:right-[10px] z-20">
         <MobileAddonsWheel />
       </div>
     </div>
