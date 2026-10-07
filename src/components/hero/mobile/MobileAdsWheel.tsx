@@ -7,10 +7,10 @@ import { AdsWheelPhaseConfig } from "@/types/heroAdsWheel";
 import { AdsWheelIcon } from "../ads-wheel/AdsWheelIcons";
 
 export const MobileAdsWheel: React.FC = () => {
-  const CX = 100;
-  const CY = 100;
-  const HUB_R = 44; // 88px diameter hub
-  const ORBIT_R = 72; // 28px clearance
+  const CX = 85;
+  const CY = 85;
+  const HUB_R = 40; // 80px diameter hub
+  const ORBIT_R = 58; // Compact 18px gap from hub
   const START_DEG = -80; // 280°
   const SPAN_DEG = 144; // Ends at +64°
 
@@ -108,7 +108,7 @@ export const MobileAdsWheel: React.FC = () => {
   const arcD = `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${ORBIT_R} ${ORBIT_R} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
 
   return (
-    <div className="relative w-[200px] h-[200px] flex items-center justify-center select-none overflow-visible pointer-events-none">
+    <div className="relative w-[170px] h-[170px] flex items-center justify-center select-none overflow-visible pointer-events-none">
       {/* Center Hub */}
       <div
         style={{
@@ -117,23 +117,23 @@ export const MobileAdsWheel: React.FC = () => {
           left: `${CX - HUB_R}px`,
           top: `${CY - HUB_R}px`,
         }}
-        className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-2 text-center"
+        className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-1.5 text-center"
       >
         <div ref={iconRef}>
-          <AdsWheelIcon type={currentPhase.centerIcon} className="h-4 w-4" />
+          <AdsWheelIcon type={currentPhase.centerIcon} className="h-3.5 w-3.5" />
         </div>
-        <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[76px]">
-          <span className="font-sans text-[11px] font-bold text-[#06162C] leading-tight">
+        <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[68px]">
+          <span className="font-sans text-[10px] font-bold text-[#06162C] leading-tight">
             {currentPhase.title}
           </span>
-          <span className="text-[7.5px] leading-tight text-[#8998AD] line-clamp-1">
+          <span className="text-[7px] leading-tight text-[#8998AD] line-clamp-1">
             {currentPhase.subtitle}
           </span>
         </div>
       </div>
 
       {/* SVG Arc and Nodes */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 200" fill="none">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 170 170" fill="none">
         <defs>
           <linearGradient id="mobAdsArcGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#94A3B8" stopOpacity="0" />
@@ -147,9 +147,9 @@ export const MobileAdsWheel: React.FC = () => {
 
         {ADS_NODE_STREAM.map((node, i) => (
           <g key={node.id} ref={(el) => { nodesRef.current[i] = el; }}>
-            <foreignObject x="-15" y="-15" width="30" height="30" className="overflow-visible">
+            <foreignObject x="-14" y="-14" width="28" height="28" className="overflow-visible">
               <div
-                style={{ width: "30px", height: "30px" }}
+                style={{ width: "28px", height: "28px" }}
                 className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
               >
                 <AdsWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />

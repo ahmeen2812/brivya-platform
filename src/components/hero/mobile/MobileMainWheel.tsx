@@ -7,11 +7,11 @@ import { MainWheelPhaseConfig } from "@/types/heroMainWheel";
 import { MainWheelIcon } from "../main-wheel/MainWheelIcons";
 
 export const MobileMainWheel: React.FC = () => {
-  // Mobile-specific mathematical dimensions
-  const CX = 125;
-  const CY = 125;
-  const HUB_R = 56; // 112px diameter hub
-  const ORBIT_R = 92; // 36px clearance from hub
+  // Mobile-calibrated mathematical dimensions (Compact & tight to hub)
+  const CX = 105;
+  const CY = 105;
+  const HUB_R = 52; // 104px diameter center circle
+  const ORBIT_R = 76; // Compact 24px gap from hub edge (tight & connected)
   const START_DEG = -72; // 288°
   const SPAN_DEG = 144; // Ends at +72°
 
@@ -41,10 +41,10 @@ export const MobileMainWheel: React.FC = () => {
     tl.fromTo(textEl, { y: 6, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power3.out" }, 0.15);
   }, [currentPhase.id]);
 
-  // 60fps Direct DOM Animation Loop
+  // 60fps Direct-DOM Animation Loop (Zero React state re-render lag)
   React.useEffect(() => {
     let animId: number;
-    const speed = 12;
+    const speed = 12; // 12 deg/sec linear velocity
 
     const animate = (time: number) => {
       if (typeof window !== "undefined" && window.innerWidth >= 1024) {
@@ -63,7 +63,7 @@ export const MobileMainWheel: React.FC = () => {
           setPhaseIdx(target);
         }
 
-        // Sub-pixel node coordinate mutator
+        // Sub-pixel node coordinate mutator (Locked 100% to ORBIT_R)
         for (let i = 0; i < CONTINUOUS_NODE_STREAM.length; i++) {
           const el = nodesRef.current[i];
           if (!el) continue;
@@ -85,7 +85,7 @@ export const MobileMainWheel: React.FC = () => {
               opacity = Math.max(0, (START_DEG + SPAN_DEG + 10 - angle) / 10);
             }
 
-            el.setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(0.92)`);
+            el.setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(0.95)`);
             el.style.opacity = String(opacity);
             el.style.visibility = "visible";
           } else {
@@ -104,7 +104,7 @@ export const MobileMainWheel: React.FC = () => {
     };
   }, []);
 
-  // SVG Arc Geometry
+  // SVG Arc Geometry (Derives from the exact same CX, CY, ORBIT_R)
   const sRad = (START_DEG * Math.PI) / 180;
   const eRad = ((START_DEG + SPAN_DEG) * Math.PI) / 180;
   const x1 = CX + ORBIT_R * Math.cos(sRad);
@@ -144,8 +144,8 @@ export const MobileMainWheel: React.FC = () => {
   };
 
   return (
-    <div className="relative w-[250px] h-[250px] flex items-center justify-center select-none overflow-visible pointer-events-none">
-      {/* 1. Center Hub */}
+    <div className="relative w-[210px] h-[210px] flex items-center justify-center select-none overflow-visible pointer-events-none">
+      {/* 1. Center Hub (104px diameter) */}
       <div
         style={{
           width: `${HUB_R * 2}px`,
@@ -156,18 +156,18 @@ export const MobileMainWheel: React.FC = () => {
         className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-md p-2 text-center"
       >
         <div ref={iconRef}>{renderGlyph(currentPhase.morphType)}</div>
-        <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[96px]">
-          <span className="font-sans text-[12px] font-bold text-[#06162C] leading-tight">
+        <div ref={textRef} className="flex flex-col items-center justify-center mt-1 w-full max-w-[88px]">
+          <span className="font-sans text-[11.5px] font-bold text-[#06162C] leading-tight">
             {currentPhase.title}
           </span>
-          <span className="mt-0.5 text-[8px] leading-tight text-[#8998AD] line-clamp-1">
+          <span className="mt-0.5 text-[7.5px] leading-tight text-[#8998AD] line-clamp-1">
             {currentPhase.subtitle}
           </span>
         </div>
       </div>
 
       {/* 2. SVG Track and Nodes */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 250 250" fill="none">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 210 210" fill="none">
         <defs>
           <linearGradient id="mobMainArcGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#94A3B8" stopOpacity="0" />
