@@ -107,7 +107,7 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#F4F7FC] pt-6 sm:pt-10 md:pt-16 pb-12 sm:pb-20">
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#F4F7FC] pt-14 sm:pt-18 md:pt-20 lg:pt-8 pb-12 sm:pb-20">
       {/* Clean Luminous Light Pool */}
       <div
         aria-hidden="true"
@@ -120,7 +120,7 @@ export const HeroSection: React.FC = () => {
           min-h-0 on mobile eliminates the massive blank gap before the wheels!
           lg:min-h-[580px] maintains perfect desktop centering.
         */}
-        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-8 min-h-0 lg:min-h-[580px]">
+        <div className="grid grid-cols-1 items-center gap-4 sm:gap-6 lg:grid-cols-12 lg:gap-8 min-h-0 lg:min-h-[580px]">
           {/* Left Column: Editorial Headline & Actions */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center z-10">
             <HeroContent
@@ -149,15 +149,15 @@ export const HeroSection: React.FC = () => {
               </div>
 
               {/* 2. Top-Right Satellite Wheel: Google Ads <-> Meta Ads */}
-              <div className="absolute top-[-20px] -right-12 xl:-right-16 z-20 pointer-events-none">
+              <div className="absolute top-[-20px] -right-10 xl:-right-14 z-20 pointer-events-none">
                 <AdsWheelMaster />
               </div>
 
               {/* 
                 3. Bottom-Right Satellite Wheel: Google Add-ons <-> Office Add-ins
-                Moved DOWN to bottom-[-60px] to match the exact 170px distance of the top wheel!
+                Moved DOWN to top-[320px] creating the exact 170px symmetrical distance from main wheel!
               */}
-              <div className="absolute bottom-[-60px] -right-12 xl:-right-16 z-20 pointer-events-none">
+              <div className="absolute top-[320px] xl:top-[330px] -right-10 xl:-right-14 z-20 pointer-events-none">
                 <AddonsWheelMaster />
               </div>
             </div>
@@ -166,12 +166,12 @@ export const HeroSection: React.FC = () => {
 
         {/* ================================================================= */}
         {/* DEDICATED MOBILE CONSTELLATION (< 1024px)                        */}
-        {/* Begins shortly after the hero buttons with zero dead-space gaps   */}
+        {/* Compact 480px S-Curve stage starting closely after the buttons   */}
         {/* ================================================================= */}
         <div
           ref={mobileConstellationRef}
           style={{ opacity: 0 }}
-          className="w-full lg:hidden mt-4 sm:mt-6 overflow-visible"
+          className="w-full lg:hidden mt-3 sm:mt-5 overflow-visible"
         >
           <HeroMobileConstellation />
         </div>
