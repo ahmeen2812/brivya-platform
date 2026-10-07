@@ -155,7 +155,7 @@ export const HeroSection: React.FC = () => {
 
               {/* 
                 3. Bottom-Right Satellite Wheel: Google Add-ons <-> Office Add-ins
-                Moved DOWN to top-[320px] creating the exact 170px symmetrical distance from main wheel!
+                Symmetrically positioned at top-[320px] for identical 170px spacing
               */}
               <div className="absolute top-[320px] xl:top-[330px] -right-10 xl:-right-14 z-20 pointer-events-none">
                 <AddonsWheelMaster />
@@ -166,12 +166,12 @@ export const HeroSection: React.FC = () => {
 
         {/* ================================================================= */}
         {/* DEDICATED MOBILE CONSTELLATION (< 1024px)                        */}
-        {/* Compact 480px S-Curve stage starting closely after the buttons   */}
+        {/* Starts ~16px below the hero buttons with zero dead-space gaps     */}
         {/* ================================================================= */}
         <div
           ref={mobileConstellationRef}
           style={{ opacity: 0 }}
-          className="w-full lg:hidden mt-3 sm:mt-5 overflow-visible"
+          className="w-full lg:hidden mt-3 sm:mt-4 overflow-visible"
         >
           <HeroMobileConstellation />
         </div>

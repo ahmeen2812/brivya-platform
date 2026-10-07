@@ -9,7 +9,7 @@ import { AdsWheelIcon } from "../ads-wheel/AdsWheelIcons";
 import { AddonsWheelIcon } from "../addons-wheel/AddonsWheelIcons";
 
 export const HeroMobileConstellation: React.FC = () => {
-  // Phase States (Updated strictly on change, zero state lag in 60fps loop)
+  // Phase States (Updated strictly on change to prevent 60fps re-render lag)
   const [adsPhaseIdx, setAdsPhaseIdx] = React.useState<number>(0);
   const [mainPhaseIdx, setMainPhaseIdx] = React.useState<number>(0);
   const [addonsPhaseIdx, setAddonsPhaseIdx] = React.useState<number>(0);
@@ -31,7 +31,42 @@ export const HeroMobileConstellation: React.FC = () => {
 
   const lastTimeRef = React.useRef<number | null>(null);
 
-  // High-Performance Mobile Animation Engine
+  // ---------------------------------------------------------------------------
+  // MATHEMATICAL GEOMETRIC DEFINITIONS (Mobile Coordinates)
+  // ---------------------------------------------------------------------------
+  // 1. TOP WHEEL (Google Ads <-> Meta Ads): cx = 246, cy = 105, R = 80, Hub = 100px dia
+  const TOP_CX = 246;
+  const TOP_CY = 105;
+  const TOP_R = 80;
+  const TOP_START_DEG = -80; // 280°
+  const TOP_SPAN_DEG = 144;  // Ends at +64°
+
+  // 2. MAIN CENTER WHEEL (Dev -> Cloud -> AI): cx = 120, cy = 260, R = 106, Hub = 132px dia
+  const MAIN_CX = 120;
+  const MAIN_CY = 260; // Exact Center of the 520px stage
+  const MAIN_R = 106;
+  const MAIN_START_DEG = -72; // 288°
+  const MAIN_SPAN_DEG = 144;  // Ends at +72°
+
+  // 3. BOTTOM WHEEL (Office <-> Workspace): cx = 248, cy = 415, R = 80, Hub = 100px dia
+  const BTM_CX = 248;
+  const BTM_CY = 415; // Exact 155px distance from MAIN_CY (260 + 155 = 415)
+  const BTM_R = 80;
+  const BTM_START_DEG = -64; // 296°
+  const BTM_SPAN_DEG = 144;  // Ends at +80°
+
+  // Helper to generate SVG Arc Path matching the node coordinates
+  const createArcD = (cx: number, cy: number, r: number, startDeg: number, spanDeg: number) => {
+    const sRad = (startDeg * Math.PI) / 180;
+    const eRad = ((startDeg + spanDeg) * Math.PI) / 180;
+    const x1 = cx + r * Math.cos(sRad);
+    const y1 = cy + r * Math.sin(sRad);
+    const x2 = cx + r * Math.cos(eRad);
+    const y2 = cy + r * Math.sin(eRad);
+    return `M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  };
+
+  // High-Performance Mobile Animation Engine (Direct DOM updates with 0 lag)
   React.useEffect(() => {
     let animId: number;
     const speed = 12; // 12 deg/sec linear velocity
@@ -73,7 +108,7 @@ export const HeroMobileConstellation: React.FC = () => {
         }
 
         // ---------------------------------------------------------------------
-        // 1. Top Ads Wheel (cx: 100, cy: 95, R: 72, arc: -80° -> +64°)
+        // 1. Top Ads Wheel (Mathematically locked to TOP_CX, TOP_CY, TOP_R)
         // ---------------------------------------------------------------------
         for (let i = 0; i < ADS_NODE_STREAM.length; i++) {
           const el = adsNodesRef.current[i];
@@ -82,16 +117,19 @@ export const HeroMobileConstellation: React.FC = () => {
           let rel = (adsStreamRef.current - i * 45) % 360;
           if (rel < 0) rel += 360;
           if (rel > 180) rel -= 360;
-          const angle = -80 + rel;
+          const angle = TOP_START_DEG + rel;
 
-          if (angle >= -92 && angle <= 76) {
+          if (angle >= TOP_START_DEG - 10 && angle <= TOP_START_DEG + TOP_SPAN_DEG + 10) {
             const rad = (angle * Math.PI) / 180;
-            const x = 100 + 72 * Math.cos(rad);
-            const y = 95 + 72 * Math.sin(rad);
+            const x = TOP_CX + TOP_R * Math.cos(rad);
+            const y = TOP_CY + TOP_R * Math.sin(rad);
 
             let opacity = 1.0;
-            if (angle < -80) opacity = Math.max(0, (angle - -92) / 12);
-            else if (angle > 64) opacity = Math.max(0, (76 - angle) / 12);
+            if (angle < TOP_START_DEG) {
+              opacity = Math.max(0, (angle - (TOP_START_DEG - 10)) / 10);
+            } else if (angle > TOP_START_DEG + TOP_SPAN_DEG) {
+              opacity = Math.max(0, (TOP_START_DEG + TOP_SPAN_DEG + 10 - angle) / 10);
+            }
 
             el.setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(0.9)`);
             el.style.opacity = String(opacity);
@@ -102,7 +140,7 @@ export const HeroMobileConstellation: React.FC = () => {
         }
 
         // ---------------------------------------------------------------------
-        // 2. Middle Main Wheel (cx: 115, cy: 115, R: 90, arc: -72° -> +72°)
+        // 2. Middle Main Wheel (Mathematically locked to MAIN_CX, MAIN_CY, MAIN_R)
         // ---------------------------------------------------------------------
         for (let i = 0; i < CONTINUOUS_NODE_STREAM.length; i++) {
           const el = mainNodesRef.current[i];
@@ -111,16 +149,19 @@ export const HeroMobileConstellation: React.FC = () => {
           let rel = (mainStreamRef.current - i * 40) % 1200;
           if (rel < 0) rel += 1200;
           if (rel > 600) rel -= 1200;
-          const angle = -72 + rel;
+          const angle = MAIN_START_DEG + rel;
 
-          if (angle >= -84 && angle <= 84) {
+          if (angle >= MAIN_START_DEG - 10 && angle <= MAIN_START_DEG + MAIN_SPAN_DEG + 10) {
             const rad = (angle * Math.PI) / 180;
-            const x = 115 + 90 * Math.cos(rad);
-            const y = 115 + 90 * Math.sin(rad);
+            const x = MAIN_CX + MAIN_R * Math.cos(rad);
+            const y = MAIN_CY + MAIN_R * Math.sin(rad);
 
             let opacity = 1.0;
-            if (angle < -72) opacity = Math.max(0, (angle - -84) / 12);
-            else if (angle > 72) opacity = Math.max(0, (84 - angle) / 12);
+            if (angle < MAIN_START_DEG) {
+              opacity = Math.max(0, (angle - (MAIN_START_DEG - 10)) / 10);
+            } else if (angle > MAIN_START_DEG + MAIN_SPAN_DEG) {
+              opacity = Math.max(0, (MAIN_START_DEG + MAIN_SPAN_DEG + 10 - angle) / 10);
+            }
 
             el.setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(0.95)`);
             el.style.opacity = String(opacity);
@@ -131,7 +172,7 @@ export const HeroMobileConstellation: React.FC = () => {
         }
 
         // ---------------------------------------------------------------------
-        // 3. Bottom Add-ons Wheel (cx: 100, cy: 95, R: 72, arc: -64° -> +80°)
+        // 3. Bottom Add-ons Wheel (Mathematically locked to BTM_CX, BTM_CY, BTM_R)
         // ---------------------------------------------------------------------
         for (let i = 0; i < ADDONS_NODE_STREAM.length; i++) {
           const el = addonsNodesRef.current[i];
@@ -140,16 +181,19 @@ export const HeroMobileConstellation: React.FC = () => {
           let rel = (addonsStreamRef.current - i * 45) % 360;
           if (rel < 0) rel += 360;
           if (rel > 180) rel -= 360;
-          const angle = -64 + rel;
+          const angle = BTM_START_DEG + rel;
 
-          if (angle >= -76 && angle <= 92) {
+          if (angle >= BTM_START_DEG - 10 && angle <= BTM_START_DEG + BTM_SPAN_DEG + 10) {
             const rad = (angle * Math.PI) / 180;
-            const x = 100 + 72 * Math.cos(rad);
-            const y = 95 + 72 * Math.sin(rad);
+            const x = BTM_CX + BTM_R * Math.cos(rad);
+            const y = BTM_CY + BTM_R * Math.sin(rad);
 
             let opacity = 1.0;
-            if (angle < -64) opacity = Math.max(0, (angle - -76) / 12);
-            else if (angle > 80) opacity = Math.max(0, (92 - angle) / 12);
+            if (angle < BTM_START_DEG) {
+              opacity = Math.max(0, (angle - (BTM_START_DEG - 10)) / 10);
+            } else if (angle > BTM_START_DEG + BTM_SPAN_DEG) {
+              opacity = Math.max(0, (BTM_START_DEG + BTM_SPAN_DEG + 10 - angle) / 10);
+            }
 
             el.setAttribute("transform", `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(0.9)`);
             el.style.opacity = String(opacity);
@@ -175,146 +219,170 @@ export const HeroMobileConstellation: React.FC = () => {
   const curAddons = ADDONS_WHEEL_PHASES[addonsPhaseIdx] || ADDONS_WHEEL_PHASES[0];
 
   return (
-    <div className="relative w-full max-w-[360px] xs:max-w-[390px] h-[480px] xs:h-[500px] mx-auto select-none overflow-visible">
-      {/* =================================================================== */}
-      {/* 1. TOP WHEEL: GOOGLE ADS <-> META ADS (Shifted RIGHT)               */}
-      {/* =================================================================== */}
-      <div className="absolute top-0 right-0 w-[210px] h-[190px] overflow-visible">
-        {/* Center Hub */}
-        <div
-          style={{ width: "94px", height: "94px", left: "53px", top: "48px" }}
-          className="absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-2 text-center"
-        >
-          <AdsWheelIcon type={curAds.centerIcon} className="h-4 w-4" />
-          <span className="mt-1 font-sans text-[11px] font-bold text-[#06162C] leading-tight">
-            {curAds.title}
-          </span>
-          <span className="text-[8px] leading-tight text-[#8998AD] line-clamp-1 max-w-[72px]">
-            {curAds.subtitle}
-          </span>
-        </div>
+    <div className="relative w-full max-w-[360px] xs:max-w-[380px] h-[520px] mx-auto select-none overflow-visible">
+      {/* 
+        ========================================================================
+        CENTER HUBS LAYER (All dimensions mathematically positioned)
+        ========================================================================
+      */}
 
-        {/* SVG Orbit Track & Nodes */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 210 190" fill="none">
-          <path
-            d="M 112 24 A 72 72 0 0 1 131 160"
-            stroke="#CBD5E1"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-          {ADS_NODE_STREAM.map((node, i) => (
-            <g
-              key={node.id}
-              ref={(el) => {
-                adsNodesRef.current[i] = el;
-              }}
-            >
-              <foreignObject x="-16" y="-16" width="32" height="32" className="overflow-visible">
-                <div
-                  style={{ width: "32px", height: "32px" }}
-                  className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
-                >
-                  <AdsWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />
-                </div>
-              </foreignObject>
-            </g>
-          ))}
-        </svg>
+      {/* 1. TOP HUB: GOOGLE ADS <-> META ADS (Shifted RIGHT, cy: 105px) */}
+      <div
+        style={{
+          width: "98px",
+          height: "98px",
+          left: `${TOP_CX - 49}px`,
+          top: `${TOP_CY - 49}px`,
+        }}
+        className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-2 text-center"
+      >
+        <AdsWheelIcon type={curAds.centerIcon} className="h-4 w-4" />
+        <span className="mt-1 font-sans text-[11px] font-bold text-[#06162C] leading-tight">
+          {curAds.title}
+        </span>
+        <span className="text-[8px] leading-tight text-[#8998AD] line-clamp-1 max-w-[75px]">
+          {curAds.subtitle}
+        </span>
       </div>
 
-      {/* =================================================================== */}
-      {/* 2. MIDDLE MAIN WHEEL: DEV -> CLOUD -> AI (Shifted LEFT / CENTER)    */}
-      {/* Interlocking offset at top: 135px                                   */}
-      {/* =================================================================== */}
-      <div className="absolute top-[135px] xs:top-[140px] left-[-10px] xs:left-0 w-[240px] h-[230px] overflow-visible">
-        {/* Main Hub */}
-        <div
-          style={{ width: "118px", height: "118px", left: "56px", top: "56px" }}
-          className="absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-md p-2.5 text-center"
-        >
-          <MainWheelIcon type={curMain.morphType} className="h-5 w-5" />
-          <span className="mt-1 font-sans text-[12.5px] font-bold text-[#06162C] leading-tight">
-            {curMain.title}
-          </span>
-          <span className="mt-0.5 text-[8.5px] leading-tight text-[#8998AD] line-clamp-1 max-w-[95px]">
-            {curMain.subtitle}
-          </span>
-        </div>
-
-        {/* SVG Orbit Track & Nodes */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 240 230" fill="none">
-          <path
-            d="M 143 29 A 90 90 0 0 1 143 201"
-            stroke="#CBD5E1"
-            strokeWidth="1.3"
-            strokeLinecap="round"
-          />
-          {CONTINUOUS_NODE_STREAM.map((node, i) => (
-            <g
-              key={node.id}
-              ref={(el) => {
-                mainNodesRef.current[i] = el;
-              }}
-            >
-              <foreignObject x="-18" y="-18" width="36" height="36" className="overflow-visible">
-                <div
-                  style={{ width: "36px", height: "36px" }}
-                  className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
-                >
-                  <MainWheelIcon type={node.iconKey} className="h-4 w-4" />
-                </div>
-              </foreignObject>
-            </g>
-          ))}
-        </svg>
+      {/* 2. MAIN CENTER HUB: DEV -> CLOUD -> AI (Shifted LEFT, cy: 260px) */}
+      <div
+        style={{
+          width: "132px",
+          height: "132px",
+          left: `${MAIN_CX - 66}px`,
+          top: `${MAIN_CY - 66}px`,
+        }}
+        className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-md p-2.5 text-center"
+      >
+        <MainWheelIcon type={curMain.morphType} className="h-5 w-5" />
+        <span className="mt-1 font-sans text-[13px] font-bold text-[#06162C] leading-tight">
+          {curMain.title}
+        </span>
+        <span className="mt-0.5 text-[8.5px] leading-tight text-[#8998AD] line-clamp-1 max-w-[95px]">
+          {curMain.subtitle}
+        </span>
       </div>
 
-      {/* =================================================================== */}
-      {/* 3. BOTTOM WHEEL: GOOGLE ADD-ONS <-> OFFICE ADD-INS (Shifted RIGHT)  */}
-      {/* Interlocking offset at top: 290px                                   */}
-      {/* =================================================================== */}
-      <div className="absolute top-[290px] xs:top-[300px] right-0 w-[210px] h-[190px] overflow-visible">
-        {/* Center Hub */}
-        <div
-          style={{ width: "94px", height: "94px", left: "53px", top: "48px" }}
-          className="absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-2 text-center"
-        >
-          <AddonsWheelIcon type={curAddons.centerIcon} className="h-4 w-4" />
-          <span className="mt-1 font-sans text-[11px] font-bold text-[#06162C] leading-tight">
-            {curAddons.title}
-          </span>
-          <span className="text-[8px] leading-tight text-[#8998AD] line-clamp-1 max-w-[72px]">
-            {curAddons.subtitle}
-          </span>
-        </div>
-
-        {/* SVG Orbit Track & Nodes */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 210 190" fill="none">
-          <path
-            d="M 131 30 A 72 72 0 0 1 112 166"
-            stroke="#CBD5E1"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-          {ADDONS_NODE_STREAM.map((node, i) => (
-            <g
-              key={node.id}
-              ref={(el) => {
-                addonsNodesRef.current[i] = el;
-              }}
-            >
-              <foreignObject x="-16" y="-16" width="32" height="32" className="overflow-visible">
-                <div
-                  style={{ width: "32px", height: "32px" }}
-                  className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
-                >
-                  <AddonsWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />
-                </div>
-              </foreignObject>
-            </g>
-          ))}
-        </svg>
+      {/* 3. BOTTOM HUB: GOOGLE ADD-ONS <-> OFFICE ADD-INS (Shifted RIGHT, cy: 415px) */}
+      <div
+        style={{
+          width: "98px",
+          height: "98px",
+          left: `${BTM_CX - 49}px`,
+          top: `${BTM_CY - 49}px`,
+        }}
+        className="pointer-events-auto absolute z-10 flex flex-col items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-sm p-2 text-center"
+      >
+        <AddonsWheelIcon type={curAddons.centerIcon} className="h-4 w-4" />
+        <span className="mt-1 font-sans text-[11px] font-bold text-[#06162C] leading-tight">
+          {curAddons.title}
+        </span>
+        <span className="text-[8px] leading-tight text-[#8998AD] line-clamp-1 max-w-[75px]">
+          {curAddons.subtitle}
+        </span>
       </div>
+
+      {/* 
+        ========================================================================
+        SVG CANVAS LAYER: All 3 tracks & all nodes share exact (cx, cy, R)
+        ========================================================================
+      */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
+        viewBox="0 0 380 520"
+        fill="none"
+      >
+        <defs>
+          <linearGradient id="mobileOrbitFade" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#94A3B8" stopOpacity="0" />
+            <stop offset="14%" stopColor="#CBD5E1" stopOpacity="0.85" />
+            <stop offset="86%" stopColor="#CBD5E1" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#94A3B8" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* 1. TOP ARC TRACK */}
+        <path
+          d={createArcD(TOP_CX, TOP_CY, TOP_R, TOP_START_DEG, TOP_SPAN_DEG)}
+          stroke="url(#mobileOrbitFade)"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+        />
+
+        {/* 2. MAIN CENTER ARC TRACK */}
+        <path
+          d={createArcD(MAIN_CX, MAIN_CY, MAIN_R, MAIN_START_DEG, MAIN_SPAN_DEG)}
+          stroke="url(#mobileOrbitFade)"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
+
+        {/* 3. BOTTOM ARC TRACK */}
+        <path
+          d={createArcD(BTM_CX, BTM_CY, BTM_R, BTM_START_DEG, BTM_SPAN_DEG)}
+          stroke="url(#mobileOrbitFade)"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+        />
+
+        {/* 1. Top Ads Orbit Nodes */}
+        {ADS_NODE_STREAM.map((node, i) => (
+          <g
+            key={node.id}
+            ref={(el) => {
+              adsNodesRef.current[i] = el;
+            }}
+          >
+            <foreignObject x="-16" y="-16" width="32" height="32" className="overflow-visible">
+              <div
+                style={{ width: "32px", height: "32px" }}
+                className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
+              >
+                <AdsWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />
+              </div>
+            </foreignObject>
+          </g>
+        ))}
+
+        {/* 2. Middle Main Orbit Nodes */}
+        {CONTINUOUS_NODE_STREAM.map((node, i) => (
+          <g
+            key={node.id}
+            ref={(el) => {
+              mainNodesRef.current[i] = el;
+            }}
+          >
+            <foreignObject x="-18" y="-18" width="36" height="36" className="overflow-visible">
+              <div
+                style={{ width: "36px", height: "36px" }}
+                className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
+              >
+                <MainWheelIcon type={node.iconKey} className="h-4 w-4" />
+              </div>
+            </foreignObject>
+          </g>
+        ))}
+
+        {/* 3. Bottom Add-ons Orbit Nodes */}
+        {ADDONS_NODE_STREAM.map((node, i) => (
+          <g
+            key={node.id}
+            ref={(el) => {
+              addonsNodesRef.current[i] = el;
+            }}
+          >
+            <foreignObject x="-16" y="-16" width="32" height="32" className="overflow-visible">
+              <div
+                style={{ width: "32px", height: "32px" }}
+                className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-2xs"
+              >
+                <AddonsWheelIcon type={node.iconKey} className="h-3.5 w-3.5" />
+              </div>
+            </foreignObject>
+          </g>
+        ))}
+      </svg>
     </div>
   );
 };

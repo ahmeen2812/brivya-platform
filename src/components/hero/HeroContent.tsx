@@ -20,28 +20,24 @@ export const HeroContent: React.FC<HeroContentRefs> = ({
       <div
         ref={kickerRef}
         style={{ opacity: 0 }}
-        className="inline-flex items-center justify-center lg:justify-start gap-2 mb-2 sm:mb-1"
+        className="inline-flex items-center justify-center lg:justify-start gap-2 mb-2"
       >
-        <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#0A5FD7]">
+        <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em] text-[#0A5FD7]">
           {HERO_EDITORIAL_COPY.kicker}
         </span>
       </div>
 
-      {/* 2. Authority 3-Line Display Headline (Calibrated to never break awkwardly on mobile) */}
+      {/* 2. Authority 3-Line Display Headline (Balanced line wrap on mobile) */}
       <h1
         ref={headlineRef}
         style={{ opacity: 0 }}
-        className="mt-1 sm:mt-2 font-sans text-[clamp(28px,7.4vw,34px)] sm:text-[44px] md:text-[50px] lg:text-[56px] xl:text-[60px] font-extrabold tracking-[-0.035em] leading-[1.1] sm:leading-[1.08] text-[#06162C]"
+        className="mt-1 font-sans text-[clamp(28px,7.4vw,34px)] sm:text-[44px] md:text-[50px] lg:text-[56px] xl:text-[60px] font-extrabold tracking-[-0.035em] leading-[1.1] sm:leading-[1.08] text-[#06162C]"
       >
-        <span className="block whitespace-normal sm:whitespace-nowrap">
-          {HERO_EDITORIAL_COPY.headlineLine1}
-        </span>
-        <span className="block whitespace-normal sm:whitespace-nowrap text-[#0A5FD7]">
+        <span className="block">{HERO_EDITORIAL_COPY.headlineLine1}</span>
+        <span className="block text-[#0A5FD7]">
           {HERO_EDITORIAL_COPY.headlineLine2}
         </span>
-        <span className="block whitespace-normal sm:whitespace-nowrap">
-          {HERO_EDITORIAL_COPY.headlineLine3}
-        </span>
+        <span className="block">{HERO_EDITORIAL_COPY.headlineLine3}</span>
       </h1>
 
       {/* 3. Executive Supporting Thesis */}

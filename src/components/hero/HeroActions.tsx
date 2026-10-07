@@ -24,9 +24,9 @@ export const HeroActions: React.FC<HeroActionsProps> = ({
     <div
       ref={actionsRef}
       style={{ opacity: 0 }}
-      className="mt-5 sm:mt-7 lg:mt-10 flex flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 w-full px-2"
+      className="mt-6 sm:mt-7 lg:mt-10 flex flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 w-full px-2"
     >
-      {/* Primary CTA Button */}
+      {/* Primary CTA: Website Theme Gradient Pill */}
       <Link
         href={HERO_EDITORIAL_COPY.primaryCtaHref}
         onMouseEnter={handleMouseEnter}
@@ -36,7 +36,7 @@ export const HeroActions: React.FC<HeroActionsProps> = ({
           {HERO_EDITORIAL_COPY.primaryCtaText}
         </span>
 
-        {/* Kinetic Arrow */}
+        {/* Boundary Mask for Kinetic Arrow Loop */}
         <span className="relative flex h-3.5 w-3.5 sm:h-4 sm:w-4 items-center justify-center overflow-hidden">
           <svg
             ref={arrowRef}
