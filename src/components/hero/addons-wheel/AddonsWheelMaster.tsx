@@ -169,7 +169,7 @@ export const AddonsWheelMaster: React.FC = () => {
             <span className="font-sans text-[12px] font-bold text-white tracking-tight">
               {hoveredNode.name}
             </span>
-            <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#C7A76B] font-semibold">
+            <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#C7A76B]">
               {hoveredNode.role}
             </span>
           </div>

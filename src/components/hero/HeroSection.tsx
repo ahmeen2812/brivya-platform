@@ -1,183 +1,160 @@
 "use client";
 
 import * as React from "react";
-import {
-  ADDONS_WHEEL_DIMENSIONS,
-  ADDONS_WHEEL_PHASES,
-  ADDONS_NODE_STREAM,
-} from "@/config/heroAddonsWheelData";
-import { AddonsWheelPhaseConfig, AddonsWheelNode } from "@/types/heroAddonsWheel";
-import { AddonsWheelOrbitPath } from "./AddonsWheelOrbitPath";
-import { AddonsWheelCenterHub } from "./AddonsWheelCenterHub";
-import { AddonsWheelIcon } from "./AddonsWheelIcons";
+import gsap from "gsap";
+import { HeroContent } from "./HeroContent";
+import { HeroActions } from "./HeroActions";
+import { MainWheelMaster } from "./main-wheel/MainWheelMaster";
+import { AdsWheelMaster } from "./ads-wheel/AdsWheelMaster";
+import { AddonsWheelMaster } from "./addons-wheel/AddonsWheelMaster";
 
-export const AddonsWheelMaster: React.FC = () => {
-  const { viewBoxSize, cx, cy, hubRadius, orbitRadius, arcStartDeg, arcSpanDeg } =
-    ADDONS_WHEEL_DIMENSIONS;
+export const HeroSection: React.FC = () => {
+  const [isShowreelActive, setIsShowreelActive] = React.useState<boolean>(false);
 
-  // Active Phase State (0: Google Add-ons, 1: Office Add-ins)
-  const [activePhaseIndex, setActivePhaseIndex] = React.useState<number>(0);
-  const currentPhase: AddonsWheelPhaseConfig = ADDONS_WHEEL_PHASES[activePhaseIndex];
+  // Animation Target References
+  const kickerRef = React.useRef<HTMLDivElement | null>(null);
+  const headlineRef = React.useRef<HTMLHeadingElement | null>(null);
+  const descriptionRef = React.useRef<HTMLParagraphElement | null>(null);
+  const actionsRef = React.useRef<HTMLDivElement | null>(null);
+  const constellationWrapperRef = React.useRef<HTMLDivElement | null>(null);
 
-  // Tooltip Hover State
-  const [hoveredNode, setHoveredNode] = React.useState<AddonsWheelNode | null>(null);
-  const isHoveredRef = React.useRef<boolean>(false);
-
-  // DIRECT DOM NODE REFS (Zero React state in loop for 60fps motion)
-  const nodesGroupRef = React.useRef<(SVGGElement | null)[]>([]);
-  const streamPositionRef = React.useRef<number>(0);
-  const lastTimeRef = React.useRef<number | null>(null);
-
-  // Direct DOM 60fps Continuous Kinetic Engine
+  // Synchronized Master Entrance Timeline
   React.useEffect(() => {
-    let animId: number;
-    const speed = 12; // Constant linear velocity: 12 degrees per second
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const animate = (time: number) => {
-      if (lastTimeRef.current !== null) {
-        const delta = (time - lastTimeRef.current) / 1000;
-        const currentSpeed = isHoveredRef.current ? speed * 0.12 : speed;
+    if (prefersReducedMotion) {
+      if (kickerRef.current) kickerRef.current.style.opacity = "1";
+      if (headlineRef.current) headlineRef.current.style.opacity = "1";
+      if (descriptionRef.current) descriptionRef.current.style.opacity = "1";
+      if (actionsRef.current) actionsRef.current.style.opacity = "1";
+      if (constellationWrapperRef.current) constellationWrapperRef.current.style.opacity = "1";
+      return;
+    }
 
-        // Total 10-node conveyor loop = 10 * 36° = 360°
-        streamPositionRef.current = (streamPositionRef.current + currentSpeed * delta) % 360;
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out" },
+      delay: 0.38, // Synchronized with navbar drop-line
+    });
 
-        // Deterministic Phase Synchronization: 0° - 179.9° = Google Add-ons, 180° - 359.9° = Office Add-ins
-        const targetPhase = Math.floor(streamPositionRef.current / 180) % 2;
-        setActivePhaseIndex((prev) => (prev !== targetPhase ? targetPhase : prev));
+    // 1. Kicker tag slides in
+    if (kickerRef.current) {
+      tl.fromTo(
+        kickerRef.current,
+        { autoAlpha: 0, y: 12 },
+        { autoAlpha: 1, y: 0, duration: 0.32 },
+        0,
+      );
+    }
 
-        const count = ADDONS_NODE_STREAM.length; // 10 nodes
-        const nodeSpacingDeg = 36; // 36° spacing
+    // 2. Headline reveals directly with full visibility guaranteed
+    if (headlineRef.current) {
+      tl.fromTo(
+        headlineRef.current,
+        { autoAlpha: 0, y: 22 },
+        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
+        0.06,
+      );
+    }
 
-        for (let i = 0; i < count; i++) {
-          const el = nodesGroupRef.current[i];
-          if (!el) continue;
+    // 3. Thesis description glides up softly
+    if (descriptionRef.current) {
+      tl.fromTo(
+        descriptionRef.current,
+        { autoAlpha: 0, y: 16 },
+        { autoAlpha: 1, y: 0, duration: 0.38 },
+        0.24,
+      );
+    }
 
-          let relDist = (streamPositionRef.current - i * nodeSpacingDeg) % 360;
-          if (relDist < 0) relDist += 360;
-          if (relDist > 180) relDist -= 360;
+    // 4. Action buttons spring into place
+    if (actionsRef.current) {
+      tl.fromTo(
+        actionsRef.current,
+        { autoAlpha: 0, scale: 0.95, y: 10 },
+        { autoAlpha: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.2)" },
+        0.32,
+      );
+    }
 
-          // Map distance to orbit angle starting at -64° (296°)
-          const angle = arcStartDeg + relDist;
+    // 5. Constellation blooms smoothly into view
+    if (constellationWrapperRef.current) {
+      tl.fromTo(
+        constellationWrapperRef.current,
+        { autoAlpha: 0, scale: 0.96 },
+        { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" },
+        0.18,
+      );
+    }
 
-          const minVisible = arcStartDeg - 12; // -76°
-          const maxVisible = arcStartDeg + arcSpanDeg + 12; // +92°
-
-          if (angle >= minVisible && angle <= maxVisible) {
-            const rad = (angle * Math.PI) / 180;
-            const nodeX = cx + orbitRadius * Math.cos(rad);
-            const nodeY = cy + orbitRadius * Math.sin(rad);
-
-            let opacity = 1.0;
-            if (angle < arcStartDeg) {
-              // Pre-entry fade-in (-76° to -64°)
-              opacity = Math.max(0, (angle - minVisible) / 12);
-            } else if (angle > arcStartDeg + arcSpanDeg) {
-              // Post-exit fade-out (+80° to +92°)
-              opacity = Math.max(0, (maxVisible - angle) / 12);
-            }
-
-            // Depth scale along the path
-            const scale = 0.88 + 0.16 * Math.cos(rad);
-
-            el.setAttribute("transform", `translate(${nodeX}, ${nodeY}) scale(${scale})`);
-            el.style.opacity = String(opacity);
-            el.style.visibility = "visible";
-          } else {
-            el.style.visibility = "hidden";
-            el.style.opacity = "0";
-          }
-        }
-      }
-
-      lastTimeRef.current = time;
-      animId = requestAnimationFrame(animate);
-    };
-
-    animId = requestAnimationFrame(animate);
     return () => {
-      if (animId) cancelAnimationFrame(animId);
+      tl.kill();
     };
-  }, [cx, cy, orbitRadius, arcStartDeg, arcSpanDeg]);
+  }, []);
 
   return (
-    // Outer container is pointer-events-none so transparent box never blocks Main Wheel
-    <div className="relative w-[340px] h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
-      {/* 
-        1. Morphing Central Core Hub:
-        126px diameter with physical elevation
-      */}
-      <AddonsWheelCenterHub
-        currentPhase={currentPhase}
-        cx={cx}
-        cy={cy}
-        radius={hubRadius}
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#F4F7FC] pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-24">
+      {/* Clean Luminous Light Pool */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[-5%] top-[10%] h-[600px] w-[600px] rounded-full bg-blue-100/30 blur-[120px]"
       />
 
-      {/* 
-        2. Master SVG Canvas:
-        Maps all 10 nodes simultaneously in sub-pixel SVG coordinates
-      */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
-        viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
-        fill="none"
-      >
-        {/* Exact 144° Arc Track with Faded Gradient Ends */}
-        <AddonsWheelOrbitPath />
-
-        {/* ALL 10 Nodes in DOM simultaneously */}
-        {ADDONS_NODE_STREAM.map((node, i) => (
-          <g
-            key={node.id}
-            ref={(el) => {
-              nodesGroupRef.current[i] = el;
-            }}
-            className="pointer-events-auto cursor-pointer"
-            onMouseEnter={() => {
-              isHoveredRef.current = true;
-              setHoveredNode(node);
-            }}
-            onMouseLeave={() => {
-              isHoveredRef.current = false;
-              setHoveredNode(null);
-            }}
-            style={{ willChange: "transform, opacity" }}
-          >
-            {/* Explicit 44px x 44px ForeignObject with guaranteed dimensions */}
-            <foreignObject x="-22" y="-22" width="44" height="44" className="overflow-visible">
-              <div
-                style={{ width: "44px", height: "44px" }}
-                className="flex items-center justify-center rounded-full bg-white border border-slate-200/90 shadow-[0_3px_12px_rgba(6,22,44,0.08)] transition-transform duration-150 hover:scale-115"
-              >
-                <AddonsWheelIcon type={node.iconKey} className="h-5 w-5" />
-              </div>
-            </foreignObject>
-          </g>
-        ))}
-      </svg>
-
-      {/* 
-        3. Professional Rich Hover Tooltip Pod:
-        Fixed rigid width (w-[260px] sm:w-[280px]) with clean line wrapping
-      */}
-      {hoveredNode && (
-        <div
-          style={{ left: cx, top: cy - hubRadius - 14 }}
-          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-xl bg-[#06162C] p-3 shadow-2xl z-50 w-[260px] sm:w-[280px] text-left border border-white/10 animate-in fade-in zoom-in-95 duration-150"
-        >
-          <div className="flex items-center justify-between pb-1 border-b border-white/10">
-            <span className="font-sans text-[12px] font-bold text-white tracking-tight">
-              {hoveredNode.name}
-            </span>
-            <span className="font-mono text-[8.5px] uppercase tracking-wider text-[#C7A76B] font-semibold">
-              {hoveredNode.role}
-            </span>
+      <div className="relative mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8 min-h-[580px]">
+          {/* Left Column: Editorial Headline & Actions (6 Columns) */}
+          <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center z-10">
+            <HeroContent
+              kickerRef={kickerRef}
+              headlineRef={headlineRef}
+              descriptionRef={descriptionRef}
+            />
+            <HeroActions
+              actionsRef={actionsRef}
+              onOpenShowreel={() => setIsShowreelActive(true)}
+            />
           </div>
-          <p className="mt-1.5 font-sans text-[10.5px] leading-relaxed text-slate-300 font-normal">
-            {hoveredNode.description}
-          </p>
+
+          {/* 
+            Right Column: 3-Wheel Constellation Stage (6 Columns)
+            - Main Wheel on Center-Left
+            - Top-Right Satellite Wheel (Moved further right with lg:-right-12 xl:-right-16)
+            - Bottom-Right Satellite Wheel (Symmetrically aligned along the same right boundary)
+          */}
+          <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center lg:justify-end min-h-[540px] sm:min-h-[600px]">
+            <div
+              ref={constellationWrapperRef}
+              style={{ opacity: 0 }}
+              className="relative w-full max-w-[540px] lg:max-w-none h-auto lg:h-[600px] flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-0 overflow-visible"
+            >
+              {/* 
+                1. Main Wheel:
+                Anchored on center-left (Dev -> Cloud -> AI)
+              */}
+              <div className="relative lg:absolute lg:left-[-15px] xl:left-0 lg:top-[50px] z-10 pointer-events-none">
+                <MainWheelMaster />
+              </div>
+
+              {/* 
+                2. Top-Right Satellite Wheel: Google Ads <-> Meta Ads
+                Moved further right (lg:-right-12 xl:-right-16) for clear separation from the main wheel
+              */}
+              <div className="relative lg:absolute lg:top-[-20px] lg:-right-12 xl:-right-16 z-20 pointer-events-none">
+                <AdsWheelMaster />
+              </div>
+
+              {/* 
+                3. Bottom-Right Satellite Wheel: Google Add-ons <-> Office Add-ins
+                Aligned to the EXACT same right edge (lg:-right-12 xl:-right-16) at the bottom
+              */}
+              <div className="relative lg:absolute lg:bottom-[-20px] lg:-right-12 xl:-right-16 z-20 pointer-events-none">
+                <AddonsWheelMaster />
+              </div>
+            </div>
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+    </section>
   );
 };
