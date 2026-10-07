@@ -95,8 +95,8 @@ export const HeroSection: React.FC = () => {
     if (mobileConstellationRef.current) {
       tl.fromTo(
         mobileConstellationRef.current,
-        { autoAlpha: 0, y: 20 },
-        { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" },
+        { autoAlpha: 0, y: 16 },
+        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
         0.25,
       );
     }
@@ -107,7 +107,7 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#F4F7FC] pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-24">
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFFFFF] via-[#F8FAFC] to-[#F4F7FC] pt-6 sm:pt-10 md:pt-16 pb-12 sm:pb-20">
       {/* Clean Luminous Light Pool */}
       <div
         aria-hidden="true"
@@ -115,8 +115,13 @@ export const HeroSection: React.FC = () => {
       />
 
       <div className="relative mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8 min-h-[580px]">
-          {/* Left Column: Editorial Headline & Actions (6 Columns on Desktop) */}
+        {/* 
+          Main Grid: 
+          min-h-0 on mobile eliminates the massive blank gap before the wheels!
+          lg:min-h-[580px] maintains perfect desktop centering.
+        */}
+        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12 lg:gap-8 min-h-0 lg:min-h-[580px]">
+          {/* Left Column: Editorial Headline & Actions */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center z-10">
             <HeroContent
               kickerRef={kickerRef}
@@ -130,26 +135,29 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* ================================================================= */}
-          {/* DESKTOP CONSTELLATION STAGE (>= 1024px — 100% UNTOUCHED & INTACT) */}
+          {/* DESKTOP CONSTELLATION STAGE (>= 1024px — 100% UNTOUCHED & SYMMETRICAL) */}
           {/* ================================================================= */}
           <div className="hidden lg:flex lg:col-span-6 xl:col-span-6 relative items-center justify-end min-h-[540px] sm:min-h-[600px]">
             <div
               ref={desktopConstellationRef}
               style={{ opacity: 0 }}
-              className="relative w-full max-w-none h-[600px] flex items-center justify-center overflow-visible"
+              className="relative w-full max-w-none h-[620px] flex items-center justify-center overflow-visible"
             >
               {/* 1. Main Wheel on Center-Left */}
               <div className="absolute left-[-15px] xl:left-0 top-[50px] z-10 pointer-events-none">
                 <MainWheelMaster />
               </div>
 
-              {/* 2. Top-Right Satellite Wheel (Google Ads <-> Meta Ads) */}
+              {/* 2. Top-Right Satellite Wheel: Google Ads <-> Meta Ads */}
               <div className="absolute top-[-20px] -right-12 xl:-right-16 z-20 pointer-events-none">
                 <AdsWheelMaster />
               </div>
 
-              {/* 3. Bottom-Right Satellite Wheel (Google Add-ons <-> Office Add-ins) */}
-              <div className="absolute bottom-[-20px] -right-12 xl:-right-16 z-20 pointer-events-none">
+              {/* 
+                3. Bottom-Right Satellite Wheel: Google Add-ons <-> Office Add-ins
+                Moved DOWN to bottom-[-60px] to match the exact 170px distance of the top wheel!
+              */}
+              <div className="absolute bottom-[-60px] -right-12 xl:-right-16 z-20 pointer-events-none">
                 <AddonsWheelMaster />
               </div>
             </div>
@@ -157,13 +165,13 @@ export const HeroSection: React.FC = () => {
         </div>
 
         {/* ================================================================= */}
-        {/* DEDICATED MOBILE CONSTELLATION (< 1024px — ZERO OVERFLOW / ZERO CLIPPING) */}
-        {/* Structured flow: Top (Ads) -> Middle (Main Dev) -> Bottom (Add-ons)*/}
+        {/* DEDICATED MOBILE CONSTELLATION (< 1024px)                        */}
+        {/* Begins shortly after the hero buttons with zero dead-space gaps   */}
         {/* ================================================================= */}
         <div
           ref={mobileConstellationRef}
           style={{ opacity: 0 }}
-          className="w-full lg:hidden overflow-visible"
+          className="w-full lg:hidden mt-4 sm:mt-6 overflow-visible"
         >
           <HeroMobileConstellation />
         </div>

@@ -24,7 +24,7 @@ export const HeroActions: React.FC<HeroActionsProps> = ({
     <div
       ref={actionsRef}
       style={{ opacity: 0 }}
-      className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap items-center gap-3 sm:gap-5"
+      className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-5 w-full"
     >
       {/* Primary CTA: Website Theme Gradient Pill */}
       <Link
