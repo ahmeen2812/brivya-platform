@@ -96,7 +96,7 @@ export const HeroSection: React.FC = () => {
       tl.fromTo(
         mobileConstellationRef.current,
         { autoAlpha: 0, y: 16 },
-        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
+        { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" },
         0.25,
       );
     }
@@ -118,7 +118,7 @@ export const HeroSection: React.FC = () => {
         {/* 
           Main Grid: 
           min-h-0 on mobile eliminates the massive blank gap before the wheels!
-          lg:min-h-[580px] maintains perfect desktop centering.
+          lg:min-h-[580px] maintains desktop layout.
         */}
         <div className="grid grid-cols-1 items-center gap-4 sm:gap-6 lg:grid-cols-12 lg:gap-8 min-h-0 lg:min-h-[580px]">
           {/* Left Column: Editorial Headline & Actions */}
@@ -135,7 +135,7 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* ================================================================= */}
-          {/* DESKTOP CONSTELLATION STAGE (>= 1024px — 100% UNTOUCHED & SYMMETRICAL) */}
+          {/* DESKTOP CONSTELLATION STAGE (>= 1024px — 100% UNTOUCHED)          */}
           {/* ================================================================= */}
           <div className="hidden lg:flex lg:col-span-6 xl:col-span-6 relative items-center justify-end min-h-[540px] sm:min-h-[600px]">
             <div
@@ -149,15 +149,15 @@ export const HeroSection: React.FC = () => {
               </div>
 
               {/* 2. Top-Right Satellite Wheel: Google Ads <-> Meta Ads */}
-              <div className="absolute top-[-20px] -right-10 xl:-right-14 z-20 pointer-events-none">
+              <div className="absolute top-[-20px] -right-12 xl:-right-16 z-20 pointer-events-none">
                 <AdsWheelMaster />
               </div>
 
               {/* 
                 3. Bottom-Right Satellite Wheel: Google Add-ons <-> Office Add-ins
-                Symmetrically positioned at top-[320px] for identical 170px spacing
+                Positioned symmetrically at top-[320px] for identical 170px spacing
               */}
-              <div className="absolute top-[320px] xl:top-[330px] -right-10 xl:-right-14 z-20 pointer-events-none">
+              <div className="absolute top-[320px] xl:top-[330px] -right-12 xl:-right-16 z-20 pointer-events-none">
                 <AddonsWheelMaster />
               </div>
             </div>
@@ -166,12 +166,12 @@ export const HeroSection: React.FC = () => {
 
         {/* ================================================================= */}
         {/* DEDICATED MOBILE CONSTELLATION (< 1024px)                        */}
-        {/* Starts ~16px below the hero buttons with zero dead-space gaps     */}
+        {/* Compact 520px S-Curve stage starting closely after the buttons   */}
         {/* ================================================================= */}
         <div
           ref={mobileConstellationRef}
           style={{ opacity: 0 }}
-          className="w-full lg:hidden mt-3 sm:mt-4 overflow-visible"
+          className="w-full lg:hidden mt-3 sm:mt-5 overflow-visible"
         >
           <HeroMobileConstellation />
         </div>
