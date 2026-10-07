@@ -19,8 +19,9 @@ export const AddonsWheelMaster: React.FC = () => {
   const [activePhaseIndex, setActivePhaseIndex] = React.useState<number>(0);
   const currentPhase: AddonsWheelPhaseConfig = ADDONS_WHEEL_PHASES[activePhaseIndex];
 
-  // Tooltip Hover State
+  // Tooltip Hover State & Position Anchor
   const [hoveredNode, setHoveredNode] = React.useState<AddonsWheelNode | null>(null);
+  const [hoveredCoords, setHoveredCoords] = React.useState<{ x: number; y: number } | null>(null);
   const isHoveredRef = React.useRef<boolean>(false);
 
   // DIRECT DOM NODE REFS (Zero React state in loop for 60fps motion)
@@ -99,6 +100,28 @@ export const AddonsWheelMaster: React.FC = () => {
     };
   }, [cx, cy, orbitRadius, arcStartDeg, arcSpanDeg]);
 
+  // Handler to capture the exact node coordinates upon mouse enter
+  const handleNodeMouseEnter = (node: AddonsWheelNode, index: number) => {
+    isHoveredRef.current = true;
+    setHoveredNode(node);
+
+    let relDist = (streamPositionRef.current - index * 45) % 360;
+    if (relDist < 0) relDist += 360;
+    if (relDist > 180) relDist -= 360;
+    const angle = arcStartDeg + relDist;
+    const rad = (angle * Math.PI) / 180;
+    const nodeX = cx + orbitRadius * Math.cos(rad);
+    const nodeY = cy + orbitRadius * Math.sin(rad);
+
+    setHoveredCoords({ x: nodeX, y: nodeY });
+  };
+
+  const handleNodeMouseLeave = () => {
+    isHoveredRef.current = false;
+    setHoveredNode(null);
+    setHoveredCoords(null);
+  };
+
   return (
     <div className="relative w-[340px] h-[340px] flex items-center justify-center select-none overflow-visible pointer-events-none">
       {/* 1. Morphing Central Core Hub */}
@@ -125,14 +148,8 @@ export const AddonsWheelMaster: React.FC = () => {
               nodesGroupRef.current[i] = el;
             }}
             className="pointer-events-auto cursor-pointer"
-            onMouseEnter={() => {
-              isHoveredRef.current = true;
-              setHoveredNode(node);
-            }}
-            onMouseLeave={() => {
-              isHoveredRef.current = false;
-              setHoveredNode(null);
-            }}
+            onMouseEnter={() => handleNodeMouseEnter(node, i)}
+            onMouseLeave={handleNodeMouseLeave}
             style={{ willChange: "transform, opacity" }}
           >
             <foreignObject x="-22" y="-22" width="44" height="44" className="overflow-visible">
@@ -147,13 +164,20 @@ export const AddonsWheelMaster: React.FC = () => {
         ))}
       </svg>
 
-      {/* 3. Hover Tooltip Pod */}
+      {/* 
+        3. Professional Rich Hover Tooltip Pod:
+        Top coordinate is clamped to max 218px so hovering the lowest/exiting
+        icons NEVER pushes the tooltip past the bottom section cutoff boundary.
+      */}
       {hoveredNode && (
         <div
-          style={{ left: cx, top: cy - hubRadius - 14 }}
-          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-xl bg-[#06162C] p-3 shadow-2xl z-50 w-[260px] sm:w-[280px] text-left border border-white/10 animate-in fade-in zoom-in-95 duration-150"
+          style={{
+            left: hoveredCoords ? Math.min(Math.max(hoveredCoords.x - 20, 110), 195) : cx,
+            top: hoveredCoords ? Math.min(hoveredCoords.y + 16, 218) : cy + hubRadius + 14,
+          }}
+          className="pointer-events-none absolute -translate-x-1/2 rounded-xl bg-[#06162C] p-3 shadow-2xl z-50 w-[260px] sm:w-[280px] text-left border border-white/10 animate-in fade-in zoom-in-95 duration-150"
         >
-          <div className="flex items-center justify-between pb-1.5 border-b border-white/10">
+          <div className="flex items-center justify-between pb-1 border-b border-white/10">
             <span className="font-sans text-[12px] font-bold text-white tracking-tight">
               {hoveredNode.name}
             </span>

@@ -44,8 +44,8 @@ export const NavContainer: React.FC<NavContainerProps> = ({
 
       {/* 
         The Main Floating Pill Chassis:
-        - Clean engineered 1px border + specular rim (no AI drop shadow)
-        - Supports dynamic width morphing for both initial entrance and idle capsule state
+        Pre-rendered directly in its hidden initial animation state
+        (opacity: 0, width: 60px, scale: 0.96) to eliminate the initial paint flash!
       */}
       <div
         ref={containerRef}
@@ -53,6 +53,9 @@ export const NavContainer: React.FC<NavContainerProps> = ({
         onMouseLeave={onMouseLeave}
         className="pointer-events-auto relative flex w-full max-w-[1360px] items-center justify-between overflow-hidden rounded-full bg-white px-3.5 sm:px-6 lg:px-8 py-2.5 sm:py-3 border border-slate-200/80 shadow-[0_2px_12px_-3px_rgba(6,22,44,0.06),0_1px_3px_rgba(6,22,44,0.03)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)]"
         style={{
+          opacity: 0,
+          width: "60px",
+          transform: "scale(0.96)",
           transformOrigin: "center center",
           willChange: "width, transform, opacity, max-width",
         }}
