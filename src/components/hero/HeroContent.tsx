@@ -27,17 +27,24 @@ export const HeroContent: React.FC<HeroContentRefs> = ({
         </span>
       </div>
 
-      {/* 2. Authority 3-Line Display Headline (Balanced line wrap on mobile) */}
+      {/* 2. Authority 2-Line Display Headline */}
       <h1
         ref={headlineRef}
         style={{ opacity: 0 }}
         className="mt-1 font-sans text-[clamp(28px,7.4vw,34px)] sm:text-[44px] md:text-[50px] lg:text-[56px] xl:text-[60px] font-extrabold tracking-[-0.035em] leading-[1.1] sm:leading-[1.08] text-[#06162C]"
       >
-        <span className="block">{HERO_EDITORIAL_COPY.headlineLine1}</span>
-        <span className="block text-[#0A5FD7]">
+        <span className="block whitespace-normal sm:whitespace-nowrap">
+          {HERO_EDITORIAL_COPY.headlineLine1}
+        </span>
+        <span className="block whitespace-normal sm:whitespace-nowrap text-[#0A5FD7]">
           {HERO_EDITORIAL_COPY.headlineLine2}
         </span>
-        <span className="block">{HERO_EDITORIAL_COPY.headlineLine3}</span>
+        {/* Render 3rd line only if provided */}
+        {HERO_EDITORIAL_COPY.headlineLine3 && (
+          <span className="block whitespace-normal sm:whitespace-nowrap">
+            {HERO_EDITORIAL_COPY.headlineLine3}
+          </span>
+        )}
       </h1>
 
       {/* 3. Executive Supporting Thesis */}
