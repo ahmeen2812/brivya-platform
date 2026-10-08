@@ -77,6 +77,7 @@ export const HeroActions: React.FC<HeroActionsProps> = ({
           </svg>
         </div>
 
+
         <span className="tracking-[-0.01em] whitespace-nowrap">
           {HERO_EDITORIAL_COPY.showreelCtaText}
         </span>
@@ -84,3 +85,4 @@ export const HeroActions: React.FC<HeroActionsProps> = ({
     </div>
   );
 };
+
