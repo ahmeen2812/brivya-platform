@@ -6,12 +6,12 @@
 import { HeroEditorialCopy, ConstellationOrbitSystem } from "@/types/hero";
 
 export const HERO_EDITORIAL_COPY: HeroEditorialCopy = {
-  kicker: "AI & DIGITAL PRODUCT AGENCY",
-  headlineLine1: "Build digital products.",
-  headlineLine2: "Acquire customers.",
-  headlineLine3: "Scale with systems.",
+  kicker: "DIGITAL PRODUCT & GROWTH STUDIO",
+  headlineLine1: "What customers see.",
+  headlineLine2: "that help businesses",
+  headlineLine3: "grow faster.",
   description:
-    "We combine design, technology, and performance marketing to build scalable business systems that create real growth.",
+    "From strategy and design to development and growth, we create digital experiences that solve real problems and deliver measurable results.",
   primaryCtaText: "Start a Project",
   primaryCtaHref: "/start-project",
   showreelCtaText: "View Showreel",
