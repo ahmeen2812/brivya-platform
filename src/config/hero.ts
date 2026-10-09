@@ -9,12 +9,12 @@ export const HERO_EDITORIAL_COPY: HeroEditorialCopy = {
   kicker: "DIGITAL PRODUCT & GROWTH STUDIO",
   headlineLine1: "Technology for what you're building.",
   headlineLine2: "Marketing for where you're going.",
-  headlineLine3: "How your business runs.",
+  headlineLine3: "",
   description:
     "We develop websites and web applications, manage Google and Meta advertising, and engineer custom solutions across AI automation, cloud infrastructure, databases, and Microsoft and Google Workspace extensions.",
   primaryCtaText: "Start a Project",
   primaryCtaHref: "/start-project",
-  showreelCtaText: "View Showreel",
+  showreelCtaText: "Explore Our Work",
 } as const;
 
 export const CONSTELLATION_SYSTEMS: readonly ConstellationOrbitSystem[] = [
@@ -49,5 +49,5 @@ export const CONSTELLATION_SYSTEMS: readonly ConstellationOrbitSystem[] = [
 
 
 // git add .
-// git commit -m " titles Updates to hero.ts"
+// git commit -m " button Updates to hero.ts"
 // git push origin main
