@@ -8,7 +8,7 @@ import { HeroEditorialCopy, ConstellationOrbitSystem } from "@/types/hero";
 export const HERO_EDITORIAL_COPY: HeroEditorialCopy = {
   kicker: "DIGITAL PRODUCT & GROWTH STUDIO",
   headlineLine1: "What customers see.",
-  headlineLine2: "that help businesses",
+  headlineLine2: "How they find you.",
   headlineLine3: "grow faster.",
   description:
     "From strategy and design to development and growth, we create digital experiences that solve real problems and deliver measurable results.",
@@ -45,3 +45,9 @@ export const CONSTELLATION_SYSTEMS: readonly ConstellationOrbitSystem[] = [
     ],
   },
 ] as const;
+
+
+
+// git add .
+// git commit -m "Few updates to hero.ts"
+// git push origin main
