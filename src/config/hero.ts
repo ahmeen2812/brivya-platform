@@ -11,7 +11,7 @@ export const HERO_EDITORIAL_COPY: HeroEditorialCopy = {
   headlineLine2: "How they find you.",
   headlineLine3: "How your business runs.",
   description:
-    "From strategy and design to development and growth, we create digital experiences that solve real problems and deliver measurable results.",
+    "We develop websites and web applications, manage Google and Meta advertising, and engineer custom solutions across AI automation, cloud infrastructure, databases, and Microsoft and Google Workspace extensions.",
   primaryCtaText: "Start a Project",
   primaryCtaHref: "/start-project",
   showreelCtaText: "View Showreel",
@@ -49,5 +49,5 @@ export const CONSTELLATION_SYSTEMS: readonly ConstellationOrbitSystem[] = [
 
 
 // git add .
-// git commit -m "pdates to hero.ts"
+// git commit -m "Updates to hero.ts"
 // git push origin main
