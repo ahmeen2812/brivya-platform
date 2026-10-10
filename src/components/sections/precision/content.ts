@@ -1,81 +1,57 @@
-import { PrecisionSectionContent } from "./types";
+import { MetricsSectionCopy, MetricItemData } from "./types";
 
-export const PRECISION_CONTENT: PrecisionSectionContent = {
-  eyebrow: "AUDITED ENGINEERING PRACTICE",
-  indexCode: "SPEC: BRV-VERIFIED-V3",
-  headline: {
-    line1: "Code that performs.",
-    line2Accent: "Data that accounts.",
-    line3: "Systems that scale.",
-  },
-  thesis:
-    "We do not build speculative templates or deploy unmonitored advertising campaigns. Every digital product is engineered with strict type contracts, edge delivery standards, and first-party attribution pipelines.",
-
-  metrics: [
-    {
-      id: "metric-latency",
-      index: "01",
-      value: "< 80ms",
-      unit: "TTFB",
-      label: "Edge Response Standard",
-      benchmarkStandard: "Global CDN delivery on Cloudflare & AWS edge networks",
-      verificationBadge: "Audited SLA",
-    },
-    {
-      id: "metric-types",
-      index: "02",
-      value: "100%",
-      unit: "STRICT",
-      label: "Type Contract Integrity",
-      benchmarkStandard: "Zero implicit-any TypeScript across production codebases",
-      verificationBadge: "Type-Safe Core",
-    },
-    {
-      id: "metric-attribution",
-      index: "03",
-      value: "First-Party",
-      unit: "CAPI",
-      label: "Conversion Attribution",
-      benchmarkStandard: "Server-side event matching bypassing browser tracking loss",
-      verificationBadge: "CAPI Protocol",
-    },
-    {
-      id: "metric-uptime",
-      index: "04",
-      value: "99.95%",
-      unit: "SLA",
-      label: "Platform Availability",
-      benchmarkStandard: "Multi-region failover with automated self-healing",
-      verificationBadge: "SLA Standard",
-    },
-  ],
-
-  ledgerEntries: [
-    {
-      id: "ledger-01",
-      code: "DEP-094",
-      clientSector: "Enterprise Commerce Ecosystem",
-      deliverable: "Headless Storefront & Checkout Architecture",
-      technicalArchitecture: "Next.js 15 · Shopify Plus · Edge Caching",
-      verifiedOutcome: "Sub-second product hydration & 99+ Core Vitals",
-      timestamp: "Q1 // 2026",
-    },
-  ],
-
-  plateNodes: [
-    {
-      id: "pin-01",
-      label: "EDGE_RUNTIME",
-      specification: "Sub-80ms Global Handshake",
-      coordinatePercent: { x: 18, y: 26 },
-      status: "verified",
-    },
-    {
-      id: "pin-02",
-      label: "TYPE_SAFETY",
-      specification: "Strict Schema Contract",
-      coordinatePercent: { x: 76, y: 30 },
-      status: "compiled",
-    },
-  ],
+export const METRICS_SECTION_COPY: MetricsSectionCopy = {
+  eyebrow: "THE WORK BEHIND THE THINKING",
+  headingLine1: "Good work is built",
+  headingLine2Accent: "on more than ideas.",
+  description:
+    "A successful project takes careful decisions, technical expertise, and attention to the details that matter. That's the standard we aim to bring to every engagement.",
+  footerStatement: "Thoughtful execution. Clear accountability.",
+  expandLabel: "Show all performance parameters",
+  collapseLabel: "Show core metrics only",
 } as const;
+
+export const METRICS_DATA: readonly MetricItemData[] = [
+  // 3 Primary metrics visible initially
+  {
+    id: "metric-projects",
+    iconKey: "projects",
+    value: "50+",
+    label: "Completed Projects",
+    sublabel: "Documented digital deliverables",
+    isPrimary: true,
+  },
+  {
+    id: "metric-experience",
+    iconKey: "experience",
+    value: "6+",
+    label: "Years of Experience",
+    sublabel: "Combined engineering leadership",
+    isPrimary: true,
+  },
+  {
+    id: "metric-clients",
+    iconKey: "clients",
+    value: "30+",
+    label: "Clients Served",
+    sublabel: "Enterprise & growth partners",
+    isPrimary: true,
+  },
+  // 2 Expanded metrics
+  {
+    id: "metric-campaigns",
+    iconKey: "campaigns",
+    value: "120+",
+    label: "Campaigns Managed",
+    sublabel: "Multi-channel media pipelines",
+    isPrimary: false,
+  },
+  {
+    id: "metric-satisfaction",
+    iconKey: "satisfaction",
+    value: "98%",
+    label: "Client Satisfaction",
+    sublabel: "Audited delivery SLA rating",
+    isPrimary: false,
+  },
+] as const;

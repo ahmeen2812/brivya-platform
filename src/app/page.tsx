@@ -14,16 +14,15 @@
 // }
 
 import { HeroSection } from "@/components/hero/HeroSection";
-// import { PrecisionInPracticeSection } from "@/components/sections/precision";
+import { PrecisionInPracticeSection } from "@/components/sections/precision";
 
 export default function HomePage() {
   return (
     <div className="relative w-full">
-      {/* 1. The Hero Section (Restored & 100% Intact) */}
       <HeroSection />
-
-      {/* 2. Precision Section (Temporarily disabled while resolving TS errors) */}
-      {/* <PrecisionInPracticeSection /> */}
+      
+      {/* 2. Seamless Scroll into Precision & Data Standard */}
+      <PrecisionInPracticeSection />
     </div>
   );
 }
