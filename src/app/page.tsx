@@ -12,17 +12,19 @@
 //     </div>
 //   );
 // }
-
 import { HeroSection } from "@/components/hero/HeroSection";
 import { PrecisionInPracticeSection } from "@/components/sections/precision";
+import { WhyChooseUsSection } from "@/components/sections/why-choose-us";
 
 export default function HomePage() {
   return (
     <div className="relative w-full">
       <HeroSection />
       
-      {/* 2. Seamless Scroll into Precision & Data Standard */}
       <PrecisionInPracticeSection />
+      
+      <WhyChooseUsSection />
+      
     </div>
   );
 }
