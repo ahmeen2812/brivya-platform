@@ -6,6 +6,7 @@ import { WHY_US_CONTENT } from "./content";
 import { WhyChooseUsHeader } from "./WhyChooseUsHeader";
 import { FeatureCard } from "./components/FeatureCard";
 import { setupWhyUsScrubEngine } from "./animations/scrollSequence";
+import { TrustSection } from "@/components/sections/trust";
 
 export const WhyChooseUsSection: React.FC = () => {
   const containerRef = useRef<HTMLElement | null>(null);
@@ -29,7 +30,7 @@ export const WhyChooseUsSection: React.FC = () => {
     }, containerRef);
 
     return () => {
-      ctx.revert(); // Completely restores initial DOM state upon unmount/HMR
+      ctx.revert();
     };
   }, []);
 
@@ -39,13 +40,15 @@ export const WhyChooseUsSection: React.FC = () => {
       ref={containerRef}
       aria-label="Why Work With Brivya"
       /* 
-        Compact Vertical Spacing:
-        - py-12 (48px) on mobile
-        - md:py-16 (64px) on tablet
-        - lg:py-20 (80px) on desktop
-        Targets ~50-60% of usable desktop viewport height without clipping content.
+        1. SEAMLESS HERO TRANSITION:
+           Starts with `from-[#F4F7FC]`, matching the hero's bottom color exactly.
+           Border-t is removed so the canvas flows continuously with zero visual seam.
+        
+        2. COMPACT VERTICAL PROPORTIONS:
+           Reduced padding keeps the combined header, 3 cards, and trust strip
+           within ~50-60% of usable desktop viewport height.
       */
-      className="relative w-full bg-[#FFFFFF] py-12 sm:py-14 md:py-16 lg:py-20 overflow-hidden border-t border-slate-100 select-none"
+      className="relative w-full bg-gradient-to-b from-[#F4F7FC] via-[#F8FAFC] to-[#FFFFFF] pt-10 sm:pt-12 md:pt-14 pb-12 sm:pb-14 overflow-hidden select-none"
     >
       <div className="relative mx-auto w-full max-w-[1340px] px-4 sm:px-6 md:px-8 flex flex-col justify-start">
         {/* Compact Typography Header */}
@@ -66,6 +69,14 @@ export const WhyChooseUsSection: React.FC = () => {
               }}
             />
           ))}
+        </div>
+
+        {/* 
+          Compact Trust Section:
+          Positioned directly beneath the 3 cards with tight, intentional spacing 
+        */}
+        <div className="mt-8 sm:mt-10 md:mt-12 w-full">
+          <TrustSection />
         </div>
       </div>
     </section>
