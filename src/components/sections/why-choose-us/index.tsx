@@ -42,13 +42,13 @@ export const WhyChooseUsSection: React.FC = () => {
       /* 
         1. SEAMLESS HERO TRANSITION:
            Starts with `from-[#F4F7FC]`, matching the hero's bottom color exactly.
-           Border-t is removed so the canvas flows continuously with zero visual seam.
+           No top border so the canvas flows continuously.
         
         2. COMPACT VERTICAL PROPORTIONS:
-           Reduced padding keeps the combined header, 3 cards, and trust strip
+           Reduced padding keeps the combined header, 3 cards, and trust section
            within ~50-60% of usable desktop viewport height.
       */
-      className="relative w-full bg-gradient-to-b from-[#F4F7FC] via-[#F8FAFC] to-[#FFFFFF] pt-10 sm:pt-12 md:pt-14 pb-12 sm:pb-14 overflow-hidden select-none"
+      className="relative w-full bg-gradient-to-b from-[#F4F7FC] via-[#F8FAFC] to-[#FFFFFF] pt-10 sm:pt-12 md:pt-14 pb-10 sm:pb-12 md:pb-14 overflow-hidden select-none"
     >
       <div className="relative mx-auto w-full max-w-[1340px] px-4 sm:px-6 md:px-8 flex flex-col justify-start">
         {/* Compact Typography Header */}
@@ -72,10 +72,10 @@ export const WhyChooseUsSection: React.FC = () => {
         </div>
 
         {/* 
-          Compact Trust Section:
-          Positioned directly beneath the 3 cards with tight, intentional spacing 
+          Reference-Aligned Trust Section:
+          Google + Gold Stars | Trustpilot + Green Star Tiles | Client Statement
         */}
-        <div className="mt-8 sm:mt-10 md:mt-12 w-full">
+        <div className="mt-7 sm:mt-8 md:mt-10 w-full">
           <TrustSection />
         </div>
       </div>
