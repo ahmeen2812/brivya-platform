@@ -3,7 +3,12 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { TRUST_CONTENT } from "./content";
-import { GoogleOfficialLogo, TrustpilotOfficialLogo } from "./TrustBrandIcons";
+import {
+  GoogleBrandLogo,
+  GoogleFiveStars,
+  TrustpilotBrandLogo,
+  TrustpilotFiveStarTiles,
+} from "./TrustBrandIcons";
 import { initTrustReveal } from "./animations/trustAnimations";
 
 export interface TrustSectionProps {
@@ -12,9 +17,9 @@ export interface TrustSectionProps {
 
 export const TrustSection: React.FC<TrustSectionProps> = ({ className = "" }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const googleRef = useRef<HTMLDivElement | null>(null);
-  const trustpilotRef = useRef<HTMLDivElement | null>(null);
-  const statementRef = useRef<HTMLDivElement | null>(null);
+  const googleBlockRef = useRef<HTMLDivElement | null>(null);
+  const trustpilotBlockRef = useRef<HTMLDivElement | null>(null);
+  const statementRef = useRef<HTMLParagraphElement | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -22,8 +27,8 @@ export const TrustSection: React.FC<TrustSectionProps> = ({ className = "" }) =>
     const ctx = gsap.context(() => {
       initTrustReveal({
         container: containerRef.current,
-        googlePill: googleRef.current,
-        trustpilotPill: trustpilotRef.current,
+        googleBlock: googleBlockRef.current,
+        trustpilotBlock: trustpilotBlockRef.current,
         statement: statementRef.current,
       });
     }, containerRef);
@@ -31,59 +36,56 @@ export const TrustSection: React.FC<TrustSectionProps> = ({ className = "" }) =>
     return () => ctx.revert();
   }, []);
 
-  const statementText = TRUST_CONTENT.clientStatement.showVerifiedCount
+  const statementText = TRUST_CONTENT.clientStatement.showVerifiedClientCount
     ? TRUST_CONTENT.clientStatement.verifiedText
     : TRUST_CONTENT.clientStatement.defaultText;
+
+  const showStars = TRUST_CONTENT.ratings.showRatingStarsPreview;
 
   return (
     <div
       ref={containerRef}
       role="region"
-      aria-label="Platform Credibility & Global Reach"
-      className={`w-full flex items-center justify-center select-none ${className}`}
+      aria-label="Client Trust & Reviews"
+      className={`w-full flex flex-col items-center justify-center select-none pt-2 sm:pt-4 ${className}`}
     >
       {/* 
-        High-Precision Executive Trust Capsule:
-        - Desktop: Single slim inline row
-        - Mobile: Natural flex-wrap centering without horizontal overflow
+        Two-Column Brand Arrangement matching Reference:
+        Left: Google + 5 Gold Stars | Right: Trustpilot + 5 Green Star Tiles
       */}
-      <div className="inline-flex flex-wrap items-center justify-center gap-3 sm:gap-5 md:gap-6 rounded-2xl sm:rounded-full bg-white/90 border border-slate-200/80 px-4 sm:px-6 py-2.5 sm:py-3 shadow-[0_2px_10px_-2px_rgba(6,22,44,0.04)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)]">
-        {/* 1. Google Official Attribution */}
-        <div ref={googleRef} className="flex items-center gap-2 shrink-0">
-          <GoogleOfficialLogo className="h-4 sm:h-4.5 w-auto" />
-          <span className="font-mono text-[9px] sm:text-[9.5px] uppercase tracking-wider text-[#475569] font-medium bg-slate-50 border border-slate-200/60 rounded px-1.5 py-0.5">
-            {TRUST_CONTENT.platforms[0].attributionLabel}
-          </span>
+      <div className="flex flex-row items-center justify-center gap-7 sm:gap-12 md:gap-16">
+        {/* 1. Google Column */}
+        <div
+          ref={googleBlockRef}
+          className="flex flex-col items-center justify-center gap-1.5 shrink-0"
+        >
+          <GoogleBrandLogo />
+          {showStars && <GoogleFiveStars />}
         </div>
 
-        {/* Divider 1 */}
+        {/* Subtle Vertical Hairline Divider */}
         <div
           aria-hidden="true"
-          className="hidden sm:block h-3.5 w-[1px] bg-slate-200 shrink-0"
+          className="h-8 sm:h-9 w-[1px] bg-slate-200/80 shrink-0"
         />
 
-        {/* 2. Trustpilot Official Attribution */}
-        <div ref={trustpilotRef} className="flex items-center gap-2 shrink-0">
-          <TrustpilotOfficialLogo className="h-4 sm:h-4.5 w-auto" />
-          <span className="font-mono text-[9px] sm:text-[9.5px] uppercase tracking-wider text-[#475569] font-medium bg-slate-50 border border-slate-200/60 rounded px-1.5 py-0.5">
-            {TRUST_CONTENT.platforms[1].attributionLabel}
-          </span>
-        </div>
-
-        {/* Divider 2 */}
+        {/* 2. Trustpilot Column */}
         <div
-          aria-hidden="true"
-          className="hidden sm:block h-3.5 w-[1px] bg-slate-200 shrink-0"
-        />
-
-        {/* 3. Client Trust Statement */}
-        <div ref={statementRef} className="flex items-center gap-2 shrink-0">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] shrink-0" />
-          <span className="font-sans text-[12px] sm:text-[13px] font-medium text-[#06162C] tracking-tight">
-            {statementText}
-          </span>
+          ref={trustpilotBlockRef}
+          className="flex flex-col items-center justify-center gap-1.5 shrink-0"
+        >
+          <TrustpilotBrandLogo />
+          {showStars && <TrustpilotFiveStarTiles />}
         </div>
       </div>
+
+      {/* 3. Centered Trust Statement Underneath */}
+      <p
+        ref={statementRef}
+        className="mt-3 sm:mt-3.5 text-center font-sans text-[12.5px] sm:text-[13.5px] font-medium text-[#475569] tracking-tight"
+      >
+        {statementText}
+      </p>
     </div>
   );
 };
