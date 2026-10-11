@@ -1,31 +1,21 @@
-// import { HeroSection } from "@/components/hero/HeroSection";
-// import { PrecisionInPracticeSection } from "@/components/sections/precision";
-
-// export default function HomePage() {
-//   return (
-//     <div className="relative w-full">
-//       {/* 1. The Hero Section (Unchanged & 100% Intact) */}
-//       <HeroSection />
-
-//       {/* 2. Precision in Practice Section (Direction 1 - Audited Credibility & Proof) */}
-//       <PrecisionInPracticeSection />
-//     </div>
-//   );
-// }
 import { HeroSection } from "@/components/hero/HeroSection";
 import { WhyChooseUsSection } from "@/components/sections/why-choose-us/index";
+import { ProjectResultsSection } from "@/components/sections/results";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 
 export default function HomePage() {
   return (
     <div className="relative w-full overflow-hidden bg-[#FFFFFF]">
-      {/* 1. The Approved Hero Section (100% Intact) */}
+      {/* 1. Existing Hero Section (Approved & Protected) */}
       <HeroSection />
 
-      {/* 2. Why Work With Brivya Section with In-Flow Trust Presentation */}
+      {/* 2. Why Work With Brivya — Three Cards (Approved & Protected) */}
       <WhyChooseUsSection />
 
-      {/* 3. New Client Testimonial Carousel */}
+      {/* 3. NEW PROJECT RESULTS SECTION (Delivery Record) */}
+      <ProjectResultsSection />
+
+      {/* 4. Google + Trustpilot & 5. Existing Testimonials Carousel */}
       <TestimonialsSection />
     </div>
   );
