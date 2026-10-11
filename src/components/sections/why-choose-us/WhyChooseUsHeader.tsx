@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef } from "react";
+import React from "react";
 import { WHY_US_CONTENT } from "./content";
 
 export interface WhyChooseUsHeaderProps {

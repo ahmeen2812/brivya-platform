@@ -12,6 +12,47 @@ interface FeatureCardProps {
   readonly data: WhyUsCardData;
 }
 
+interface ThemeStyleConfig {
+  readonly texture: React.ReactNode;
+  readonly bgSubstrate: string;
+  readonly borderClass: string;
+  readonly iconContainer: string;
+  readonly accentBar: string;
+}
+
+/**
+ * Exhaustive, strongly-typed theme resolver.
+ * Guaranteed to return a valid ThemeStyleConfig on every code path.
+ */
+function getThemeConfig(theme: WhyUsCardData["theme"]): ThemeStyleConfig {
+  switch (theme) {
+    case "blue":
+      return {
+        texture: <ConnectedNetworkTexture />,
+        bgSubstrate: "bg-gradient-to-br from-[#FAFCFF] via-[#F4F8FD] to-[#EBF3FB]",
+        borderClass: "border-slate-200/90 hover:border-[#0A5FD7]/50",
+        iconContainer: "bg-[#EBF3FF] text-[#0A5FD7] border-[#0A5FD7]/20 shadow-[0_2px_8px_rgba(10,95,215,0.08)]",
+        accentBar: "#0A5FD7",
+      };
+    case "green":
+      return {
+        texture: <EngineeringBlueprintTexture />,
+        bgSubstrate: "bg-gradient-to-br from-[#FAFCFF] via-[#F3FAF6] to-[#E8F6EF]",
+        borderClass: "border-slate-200/90 hover:border-[#059669]/50",
+        iconContainer: "bg-[#E3FAED] text-[#059669] border-[#059669]/20 shadow-[0_2px_8px_rgba(5,150,105,0.08)]",
+        accentBar: "#059669",
+      };
+    case "purple":
+      return {
+        texture: <CommunicationWaveTexture />,
+        bgSubstrate: "bg-gradient-to-br from-[#FAFCFF] via-[#F6F3FA] to-[#EEE8F7]",
+        borderClass: "border-slate-200/90 hover:border-[#7C3AED]/50",
+        iconContainer: "bg-[#F2EDFB] text-[#7C3AED] border-[#7C3AED]/20 shadow-[0_2px_8px_rgba(124,58,237,0.08)]",
+        accentBar: "#7C3AED",
+      };
+  }
+}
+
 /**
  * Contextual SVG Icon Components representing:
  * 1. Connected Thinking: Interconnected Network Topology
@@ -85,44 +126,8 @@ const CardIcon: React.FC<{ vectorId: WhyUsCardData["vectorId"] }> = ({ vectorId 
 
 export const FeatureCard = forwardRef<HTMLDivElement, FeatureCardProps>(
   ({ data }, ref) => {
-    // Theme configurations mapping substrate tones, textures, and accents
-    const themeConfig = (() => {
-      switch (data.theme) {
-        case "blue":
-          return {
-            texture: <ConnectedNetworkTexture />,
-            bgSubstrate:
-              "bg-gradient-to-br from-[#FAFCFF] via-[#F4F8FD] to-[#EBF3FB]",
-            borderClass:
-              "border-slate-200/90 hover:border-[#0A5FD7]/50",
-            iconContainer:
-              "bg-[#EBF3FF] text-[#0A5FD7] border-[#0A5FD7]/20 shadow-[0_2px_8px_rgba(10,95,215,0.08)]",
-            accentBar: "#0A5FD7",
-          };
-        case "green":
-          return {
-            texture: <EngineeringBlueprintTexture />,
-            bgSubstrate:
-              "bg-gradient-to-br from-[#FAFCFF] via-[#F3FAF6] to-[#E8F6EF]",
-            borderClass:
-              "border-slate-200/90 hover:border-[#059669]/50",
-            iconContainer:
-              "bg-[#E3FAED] text-[#059669] border-[#059669]/20 shadow-[0_2px_8px_rgba(5,150,105,0.08)]",
-            accentBar: "#059669",
-          };
-        case "purple":
-          return {
-            texture: <CommunicationWaveTexture />,
-            bgSubstrate:
-              "bg-gradient-to-br from-[#FAFCFF] via-[#F6F3FA] to-[#EEE8F7]",
-            borderClass:
-              "border-slate-200/90 hover:border-[#7C3AED]/50",
-            iconContainer:
-              "bg-[#F2EDFB] text-[#7C3AED] border-[#7C3AED]/20 shadow-[0_2px_8px_rgba(124,58,237,0.08)]",
-            accentBar: "#7C3AED",
-          };
-      }
-    })();
+    // Statically verified to be defined on every render
+    const themeConfig = getThemeConfig(data.theme);
 
     return (
       <div

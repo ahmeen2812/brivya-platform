@@ -1,48 +1,59 @@
 /**
- * BRIVYA SOLUTIONS — "WHY CHOOSE US" CONTENT MANIFEST & EXPLICIT TYPING
- * Deep strictly verified models executing beautifully native frameworks.
+ * BRIVYA SOLUTIONS — "WHY WORK WITH BRIVYA" CONTENT MANIFEST
+ * Authoritative editorial copy and canonical TypeScript data contracts.
  */
 
-// 1. Defining standard strictly typed components eliminating index boundary mapping faults.
 export interface WhyUsCardData {
-  id: string;
-  title: string;
-  desc: string;
-  theme: "quality" | "speed" | "value";
-  vectorId: string;
+  readonly id: string;
+  readonly title: string;
+  readonly desc: string;
+  readonly theme: "blue" | "green" | "purple";
+  readonly vectorId: "network" | "engineering" | "communication";
 }
 
-export const WHY_US_CONTENT = {
+export interface WhyUsHeaderData {
+  readonly eyebrow: string;
+  readonly kicker: string;
+  readonly headingPrimary: string;
+  readonly headingSecondary: string;
+  readonly thesis: string;
+}
+
+export interface WhyUsContent {
+  readonly header: WhyUsHeaderData;
+  readonly cards: readonly WhyUsCardData[];
+}
+
+export const WHY_US_CONTENT: WhyUsContent = {
   header: {
-    kicker: "Why Work With Brivya",
+    eyebrow: "WHY WORK WITH BRIVYA",
+    kicker: "WHY WORK WITH BRIVYA",
     headingPrimary: "Different disciplines.",
     headingSecondary: "One standard of work.",
     thesis:
       "A website, an advertising campaign, and an internal business tool may serve different purposes. We bring the same care to each: understand the problem, choose the right approach, and make the details count.",
   },
-  
-  // Assign explicitly ensuring the objects conform precisely allowing React components dynamically scaling flawlessly mapping properly seamlessly cleanly cleanly seamlessly safely establishing effectively providing components
   cards: [
     {
-      id: "opt-connect",
+      id: "card-connected-thinking",
       title: "01 — Connected Thinking",
       desc: "We consider how websites, digital advertising, and internal systems work together, rather than treating each as an isolated project.",
-      theme: "quality",
+      theme: "blue",
       vectorId: "network",
     },
     {
-      id: "opt-practical",
+      id: "card-practical-engineering",
       title: "02 — Practical Engineering",
-      desc: "From cloud infrastructure to AI automation and custom add-ons, we focus on technology that's useful, dependable, and straightforward to maintain.",
-      theme: "speed",
-      vectorId: "infrastructure",
+      desc: "From cloud infrastructure and databases to AI automation and custom add-ons, we focus on technology that's useful, dependable, and straightforward to maintain.",
+      theme: "green",
+      vectorId: "engineering",
     },
     {
-      id: "opt-clear",
+      id: "card-clear-communication",
       title: "03 — Clear Communication",
       desc: "We believe good partnerships depend on honest conversations, well-defined expectations, and decisions that make sense to the people paying for the work.",
-      theme: "value",
-      vectorId: "discussion",
+      theme: "purple",
+      vectorId: "communication",
     },
-  ] as WhyUsCardData[]
-};
+  ],
+} as const;
