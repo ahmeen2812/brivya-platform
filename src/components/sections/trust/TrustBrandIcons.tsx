@@ -8,9 +8,9 @@ interface BrandIconProps {
 
 /**
  * Official Google Multi-Color Logotype SVG
- * Exact proportional geometry: Blue (#4285F4), Red (#EA4335), Yellow (#FBBC05), Green (#34A853)
+ * Proportions: Blue (#4285F4), Red (#EA4335), Yellow (#FBBC05), Green (#34A853)
  */
-export const GoogleOfficialLogo: React.FC<BrandIconProps> = ({ className = "h-5 w-auto" }) => {
+export const GoogleBrandLogo: React.FC<BrandIconProps> = ({ className = "h-5 sm:h-5.5 w-auto" }) => {
   return (
     <svg
       className={className}
@@ -46,34 +46,71 @@ export const GoogleOfficialLogo: React.FC<BrandIconProps> = ({ className = "h-5 
 };
 
 /**
- * Official Trustpilot Vector Mark (4-point Green Star + Dark Wordmark)
- * Authentic colors: Star (#00B67A), Wordmark (#1A1A1A)
+ * Google 5 Gold Stars Rating Row
+ * Color: Official Google Review Gold (#FBBC04)
  */
-export const TrustpilotOfficialLogo: React.FC<BrandIconProps> = ({ className = "h-5 w-auto" }) => {
+export const GoogleFiveStars: React.FC = () => {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 100 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Trustpilot"
-      role="img"
-    >
-      {/* Official Trustpilot Star Glyph */}
-      <path
-        d="M12.67 1.5l3.24 6.55 7.23 1.05-5.23 5.1 1.23 7.2-6.47-3.4-6.47 3.4 1.23-7.2-5.23-5.1 7.23-1.05 3.24-6.55z"
-        fill="#00B67A"
-      />
-      <path
-        d="M16.92 14.37l-4.25-2.23v-7.8l2.25 4.55 5.01.73-3.01 4.75z"
-        fill="#005128"
-        fillOpacity="0.3"
-      />
+    <div className="flex items-center gap-0.5" aria-label="5 out of 5 stars on Google">
+      {[...Array(5)].map((_, i) => (
+        <svg
+          key={i}
+          className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#FBBC04]"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.05 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
+        </svg>
+      ))}
+    </div>
+  );
+};
 
-      {/* Trustpilot Wordmark */}
-      <g fill="#1A1A1A">
-        <path d="M28.4 6.8h2.3v10.4h-2.3V6.8zM27.2 4.2c0-.7.6-1.3 1.3-1.3s1.3.6 1.3 1.3-.6 1.3-1.3 1.3-1.3-.6-1.3-1.3zM34.8 17.4c-2.4 0-4-1.6-4-4.1s1.6-4.1 4-4.1 4 1.6 4 4.1-1.6 4.1-4 4.1zm0-2c1.2 0 1.9-.9 1.9-2.1s-.7-2.1-1.9-2.1-1.9.9-1.9 2.1.7 2.1 1.9 2.1zM42.2 9.5h2.1v1.1c.5-.8 1.4-1.3 2.4-1.3 1.8 0 2.8 1.1 2.8 2.9v5h-2.2v-4.6c0-1-.5-1.5-1.4-1.5s-1.5.6-1.5 1.6v4.5h-2.2V9.5zM53.1 15.2c.4.3 1.1.5 1.7.5.8 0 1.2-.3 1.2-.7 0-.5-.5-.6-1.5-.9-1.6-.4-2.7-.9-2.7-2.3 0-1.4 1.2-2.5 3-2.5 1 0 1.8.3 2.4.7l-.6 1.7c-.5-.3-1.1-.5-1.7-.5-.7 0-1.1.3-1.1.7 0 .4.5.6 1.5.8 1.7.4 2.7.9 2.7 2.3 0 1.5-1.2 2.6-3.2 2.6-1.1 0-2.1-.3-2.8-.8l.6-1.6zM61.8 7.3v2.2h2.2v1.8h-2.2v3.7c0 .5.2.8.8.8h1.4v1.8c-.5.1-1.2.2-1.9.2-1.6 0-2.5-.8-2.5-2.3v-4.2h-1.5V9.5h1.5V7.3h2.2zM67.8 9.5h2.1v1.1c.5-.8 1.4-1.3 2.4-1.3 2 0 3.5 1.6 3.5 4.1s-1.5 4.1-3.5 4.1c-1 0-1.9-.5-2.4-1.2v3.6h-2.1V9.5zm3.9 5.9c1.2 0 1.9-.9 1.9-2.1s-.7-2.1-1.9-2.1-1.9.9-1.9 2.1.7 2.1 1.9 2.1zM79.2 6.8h2.3v10.4h-2.3V6.8zM78 4.2c0-.7.6-1.3 1.3-1.3s1.3.6 1.3 1.3-.6 1.3-1.3 1.3-1.3-.6-1.3-1.3zM85.6 17.4c-2.4 0-4-1.6-4-4.1s1.6-4.1 4-4.1 4 1.6 4 4.1-1.6 4.1-4 4.1zm0-2c1.2 0 1.9-.9 1.9-2.1s-.7-2.1-1.9-2.1-1.9.9-1.9 2.1.7 2.1 1.9 2.1zM93.6 7.3v2.2h2.2v1.8h-2.2v3.7c0 .5.2.8.8.8h1.4v1.8c-.5.1-1.2.2-1.9.2-1.6 0-2.5-.8-2.5-2.3v-4.2h-1.5V9.5h1.5V7.3h2.2z" />
-      </g>
-    </svg>
+/**
+ * Official Trustpilot Logotype SVG
+ * Green star (#00B67A) + Charcoal wordmark (#1A1A1A)
+ */
+export const TrustpilotBrandLogo: React.FC<BrandIconProps> = ({ className = "h-5 sm:h-5.5 w-auto" }) => {
+  return (
+    <div className="flex items-center gap-1.5" aria-label="Trustpilot" role="img">
+      {/* Trustpilot 4-point Star Glyph */}
+      <svg className="h-5 w-5 sm:h-5.5 sm:w-5.5 shrink-0" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 1.5l3.2 6.5 7.2 1.1-5.2 5.1 1.2 7.2-6.4-3.4-6.4 3.4 1.2-7.2-5.2-5.1 7.2-1.1L12 1.5z"
+          fill="#00B67A"
+        />
+        <path
+          d="M16.3 14.3l-4.3-2.3v-7.8l2.3 4.6 5 .7-3 4.8z"
+          fill="#005128"
+          fillOpacity="0.35"
+        />
+      </svg>
+
+      {/* Trustpilot Wordmark in high-legibility Brivya typography */}
+      <span className="font-sans text-[15px] sm:text-[16px] font-extrabold tracking-[-0.03em] text-[#1A1A1A] leading-none">
+        Trustpilot
+      </span>
+    </div>
+  );
+};
+
+/**
+ * Official Trustpilot 5 Green Star Tiles
+ * Signature Trustpilot rating presentation: 5 green square tiles with white star silhouettes
+ */
+export const TrustpilotFiveStarTiles: React.FC = () => {
+  return (
+    <div className="flex items-center gap-1" aria-label="5 out of 5 stars on Trustpilot">
+      {[...Array(5)].map((_, i) => (
+        <div
+          key={i}
+          className="flex h-3.5 w-3.5 sm:h-4 sm:w-4 items-center justify-center rounded-[2px] bg-[#00B67A] p-0.5"
+        >
+          <svg className="h-full w-full text-white" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.05 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
+          </svg>
+        </div>
+      ))}
+    </div>
   );
 };
