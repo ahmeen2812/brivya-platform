@@ -15,8 +15,8 @@ export const EditorialIntro = forwardRef<HTMLDivElement, EditorialIntroProps>(
       <div ref={ref} className="flex flex-col justify-center w-full select-none pr-0 lg:pr-8">
         {/* Technical Eyebrow Badge */}
         <div ref={eyebrowRef} className="flex items-center gap-2 mb-3.5 sm:mb-4">
-          <span aria-hidden="true" className="w-5 h-[2px] bg-[#38BDF8]" />
-          <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#38BDF8]">
+          <span aria-hidden="true" className="w-5 h-[2px] bg-[#0A5FD7]" />
+          <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#0A5FD7]">
             {RESULTS_CONTENT.eyebrow}
           </span>
         </div>
@@ -26,14 +26,14 @@ export const EditorialIntro = forwardRef<HTMLDivElement, EditorialIntroProps>(
           ref={headingRef}
           className="font-sans text-[28px] sm:text-[34px] md:text-[38px] lg:text-[40px] font-extrabold leading-[1.1] tracking-[-0.035em]"
         >
-          <span className="block text-white">{RESULTS_CONTENT.headingPrimary}</span>
-          <span className="block text-[#38BDF8]">{RESULTS_CONTENT.headingAccent}</span>
+          <span className="block text-[#06162C]">{RESULTS_CONTENT.headingPrimary}</span>
+          <span className="block text-[#0A5FD7]">{RESULTS_CONTENT.headingAccent}</span>
         </h2>
 
         {/* Supporting Technical Description */}
         <p
           ref={descRef}
-          className="mt-3.5 sm:mt-4 font-sans text-[13.5px] sm:text-[14px] lg:text-[14.5px] leading-relaxed text-[#94A3B8] font-normal tracking-[-0.01em] max-w-md"
+          className="mt-3.5 sm:mt-4 font-sans text-[13.5px] sm:text-[14px] lg:text-[14.5px] leading-relaxed text-[#475569] font-normal tracking-[-0.01em] max-w-md"
         >
           {RESULTS_CONTENT.description}
         </p>

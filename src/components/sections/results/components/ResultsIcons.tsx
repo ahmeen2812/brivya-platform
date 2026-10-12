@@ -14,7 +14,7 @@ export const ResultsIcon: React.FC<ResultsIconProps> = ({
 }) => {
   switch (iconKey) {
     case "completed":
-      // Layered Delivery Stack / Output Cube
+      // Layered Delivery Stack
       return (
         <svg
           className={className}
@@ -26,14 +26,14 @@ export const ResultsIcon: React.FC<ResultsIconProps> = ({
           strokeLinejoin="round"
           aria-hidden="true"
         >
-          <polygon points="12 2 2 7 12 12 22 7 12 2" />
+          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
           <polyline points="2 17 12 22 22 17" />
           <polyline points="2 12 12 17 22 12" />
         </svg>
       );
 
     case "ongoing":
-      // Precision Clock / Active Progress Cycle
+      // Precision Clock / Active Cycle
       return (
         <svg
           className={className}
@@ -51,7 +51,7 @@ export const ResultsIcon: React.FC<ResultsIconProps> = ({
       );
 
     case "clients":
-      // Partnership / Client Relationship Network
+      // Client Partnership Network
       return (
         <svg
           className={className}
