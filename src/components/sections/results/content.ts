@@ -24,7 +24,7 @@ export const RESULTS_CONTENT: ResultsSectionContent = {
     {
       id: "metric-ongoing",
       iconKey: "ongoing",
-      numericValue: 8, // Active engagements count (formats as 08)
+      numericValue: 7, // Configured to display as "07"
       suffix: "",
       label: "ONGOING PROJECTS",
       description: "Active engagements currently in progress.",
