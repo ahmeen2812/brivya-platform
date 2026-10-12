@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — RESULTS SECTION TYPE DEFINITIONS
- * Authoritative contracts for metrics, editorial copy, and counter state.
+ * Strict type contracts for metric records, editorial copy, and animation targets.
  */
 
 export type MetricIconKey = "completed" | "ongoing" | "clients";
