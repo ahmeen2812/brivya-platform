@@ -42,7 +42,7 @@ export const ProjectResultsSection: React.FC = () => {
         metric02: metric02Ref.current,
         metric03: metric03Ref.current,
         onFirstEntrance: () => {
-          // Permanently locks numbers at target values (800+, 07, 650+); never reverses
+          // Permanently locks numbers at target values (800+, 08, 650+); never reverses
           runPermanentCountUp([
             { element: num01Ref.current, targetNumber: RESULTS_CONTENT.metrics[0].numericValue },
             { element: num02Ref.current, targetNumber: RESULTS_CONTENT.metrics[1].numericValue },
@@ -62,20 +62,20 @@ export const ProjectResultsSection: React.FC = () => {
       id="results"
       ref={sectionRef}
       aria-label="Delivery Record & Performance Metrics"
-      /* Light page canvas surrounding the dark monolithic panel */
-      className="relative w-full bg-[#F4F7FC] py-12 sm:py-14 md:py-16 lg:py-20 overflow-hidden select-none"
+      /* Transitional Canvas: White -> Soft Ice-Blue -> F4F7FC */
+      className="relative w-full bg-gradient-to-b from-[#FFFFFF] via-[#EEF4FC] to-[#F4F7FC] py-12 sm:py-14 md:py-16 lg:py-20 overflow-hidden select-none"
     >
       <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8">
         {/* 
           Architectural Results Panel:
-          Dark Navy-to-Cobalt Monolith matching the navbar CTA button colors:
-          bg-gradient-to-br from-[#061B3A] via-[#072B5E] to-[#0A3F7A]
+          Soft midnight-blue/slate surface inspired by the navbar button.
+          Hairline white border, inset specular highlight, and ambient depth.
         */}
         <div
           ref={panelRef}
-          className="relative w-full rounded-2xl sm:rounded-3xl border border-[#1675F8]/30 bg-gradient-to-br from-[#061B3A] via-[#072B5E] to-[#0A3F7A] p-6 sm:p-8 lg:p-10 shadow-[0_24px_60px_-12px_rgba(6,27,58,0.4),0_4px_18px_rgba(10,95,215,0.15)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.14)] overflow-hidden"
+          className="group relative w-full rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-br from-[#071B36] via-[#0B254B] to-[#081E3D] p-6 sm:p-8 lg:p-10 shadow-[0_20px_50px_-15px_rgba(3,14,33,0.35)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.12)] overflow-hidden"
         >
-          {/* Animated Technical Vector Texture */}
+          {/* Subtle Technical Vector Texture */}
           <ResultsTexture />
 
           {/* Main Layout: Left Editorial (~38%) | Right 3 Metrics (~62%) */}
@@ -90,7 +90,7 @@ export const ProjectResultsSection: React.FC = () => {
             </div>
 
             {/* RIGHT — Three Performance Metrics */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-1.5 sm:divide-x sm:divide-[#1675F8]/20 items-stretch">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-1.5 sm:divide-x sm:divide-white/[0.08] items-stretch">
               {/* Metric 01 — Projects Delivered 800+ (Enters from Left) */}
               <div className="flex items-stretch">
                 <MetricColumn
@@ -104,7 +104,7 @@ export const ProjectResultsSection: React.FC = () => {
                 />
               </div>
 
-              {/* Metric 02 — Ongoing Projects 07 (Enters from Below) */}
+              {/* Metric 02 — Ongoing Projects 08 (Enters from Below) */}
               <div className="flex items-stretch">
                 <MetricColumn
                   ref={metric02Ref}
