@@ -13,7 +13,7 @@ export interface CounterAnimationTarget {
 
 export function runPermanentCountUp(
   targets: readonly CounterAnimationTarget[],
-  durationSec: number = 1.4
+  durationSec: number = 1.3
 ): void {
   targets.forEach(({ element, targetNumber }) => {
     if (!element) return;
@@ -26,7 +26,7 @@ export function runPermanentCountUp(
       ease: "power2.out",
       onUpdate: () => {
         const current = Math.floor(proxy.val);
-        // Formats numbers < 10 with leading zero (e.g., "07")
+        // Formats numbers < 10 with leading zero (e.g., "07" or "08")
         element.textContent = current < 10 && targetNumber < 10 ? `0${current}` : `${current}`;
       },
       onComplete: () => {
