@@ -15,7 +15,7 @@ export const EditorialIntro = forwardRef<HTMLDivElement, EditorialIntroProps>(
       <div ref={ref} className="flex flex-col justify-center w-full select-none pr-0 lg:pr-8">
         {/* Technical Eyebrow Badge */}
         <div ref={eyebrowRef} className="flex items-center gap-2 mb-3.5 sm:mb-4">
-          <span aria-hidden="true" className="w-5 h-[2px] bg-[#1675F8]" />
+          <span aria-hidden="true" className="w-5 h-[2px] bg-[#38BDF8]" />
           <span className="font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#38BDF8]">
             {RESULTS_CONTENT.eyebrow}
           </span>
