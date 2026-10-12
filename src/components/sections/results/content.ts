@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — RESULTS DATA MANIFEST
- * Editorial copy and configurable project delivery metrics.
+ * Authoritative editorial copy and delivery statistics.
  */
 
 import { ResultsSectionContent } from "./types";
@@ -24,7 +24,7 @@ export const RESULTS_CONTENT: ResultsSectionContent = {
     {
       id: "metric-ongoing",
       iconKey: "ongoing",
-      numericValue: 7, // Configured to display as "07"
+      numericValue: 8, // Configured to display as "08"
       suffix: "",
       label: "ONGOING PROJECTS",
       description: "Active engagements currently in progress.",
