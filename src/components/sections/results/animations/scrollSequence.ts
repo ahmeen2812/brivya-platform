@@ -1,7 +1,7 @@
 /**
  * BRIVYA SOLUTIONS — RESULTS SECTION SCROLL KINEMATICS
  * Coordinates directional entrances (Left, Below, Right) with smooth reverse scrub.
- * Numeric counting is excluded from the scrub timeline to guarantee numbers never count backward.
+ * Numeric counting is triggered once and excluded from the scrub timeline.
  */
 
 import gsap from "gsap";
@@ -64,9 +64,9 @@ export function initResultsScrollSequence(
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: "top 82%", // Engages smoothly as section enters viewport
-      end: "top 38%",   // Settles into position
-      scrub: 1.2,       // 1.2s smooth physical inertia tied to scroll progress
+      start: "top 84%",
+      end: "top 38%",
+      scrub: 1.2,
       onEnter: () => {
         if (!hasTriggeredCount && onFirstEntrance) {
           hasTriggeredCount = true;
@@ -76,23 +76,23 @@ export function initResultsScrollSequence(
     },
   });
 
-  // Stage 1: Panel Subtle Elevation
+  // Stage 1: Panel Subtle Elevation (40px rise with smooth deceleration)
   tl.fromTo(
     panel,
-    { autoAlpha: 0, y: 22, scale: 0.985 },
-    { autoAlpha: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out" },
+    { autoAlpha: 0, y: 35, scale: 0.98 },
+    { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out" },
     0
   );
 
-  // Stage 2: Left Editorial Intro
+  // Stage 2: Left Editorial Intro Stagger
   if (eyebrow) {
-    tl.fromTo(eyebrow, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.1);
+    tl.fromTo(eyebrow, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.1);
   }
   if (heading) {
-    tl.fromTo(heading, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.16);
+    tl.fromTo(heading, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.16);
   }
   if (description) {
-    tl.fromTo(description, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.22);
+    tl.fromTo(description, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.22);
   }
 
   // Stage 3: Coordinated Directional Metric Entrances
