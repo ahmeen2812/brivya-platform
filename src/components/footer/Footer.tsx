@@ -65,25 +65,24 @@ export function Footer() {
       role="contentinfo"
       aria-label="Site Footer"
       /* 
-        Spatially Continuous White-to-Blue Transition:
-        - 0%: #F4F7FC (exact match with previous section, zero hard edge)
-        - 10%: #C8DCF5 (soft blue transition)
-        - 24%: #3665A3 (cobalt deepening)
-        - 38%: #1C4376 (rich blue reached BEFORE navigation content begins)
-        - 100%: #14335E (deep base)
+        Calibrated Three-Boundary Gradient:
+        - 0px (Line 1): #F4F7FC (exact website canvas)
+        - 75px (Line 2): #8CB6E3 (intermediate muted blue-gray)
+        - 160px (Line 3): #1D477D (softened Brivya blue reached BEFORE content begins)
+        - Below 160px: Stable #1D477D throughout
       */
-      className="relative w-full overflow-hidden select-none bg-[linear-gradient(180deg,#F4F7FC_0%,#C8DCF5_10%,#3665A3_24%,#1C4376_38%,#14335E_100%)]"
+      className="relative w-full overflow-hidden select-none bg-[linear-gradient(180deg,#F4F7FC_0px,#D9E8F9_35px,#8CB6E3_75px,#4174AC_115px,#20497F_145px,#1D477D_160px,#1D477D_100%)]"
     >
-      {/* 6% Subtle Architectural Texture */}
+      {/* 6% Subtle Architectural Vector Texture */}
       <FooterTexture />
 
       {/* Main Viewport Container */}
       <div className="relative z-10 mx-auto w-full max-w-[1340px] px-4 sm:px-6 md:px-8">
-        {/* Navigation Content Area (Padded to let transition complete before text) */}
-        <div className="pt-16 sm:pt-20 md:pt-22 pb-7 sm:pb-8">
+        {/* Navigation Content Area (Top padding aligns content with Boundary 3) */}
+        <div className="pt-28 sm:pt-32 md:pt-36 pb-6 sm:pb-7">
           {/* Desktop 4-Column Cross-Directional Layout (>= 768px) */}
-          <div className="hidden md:grid md:grid-cols-12 gap-8 lg:gap-10 items-start">
-            {/* Group 1: Brand (Enters from RIGHT) */}
+          <div className="hidden md:grid md:grid-cols-12 gap-8 lg:gap-10 items-start overflow-hidden">
+            {/* Group 1: Brand (Enters from RIGHT, 140px travel) */}
             <div ref={brandColRef} className="md:col-span-5 lg:col-span-4 will-change-transform">
               <FooterBrand
                 logoRef={brandLogoRef}
@@ -94,7 +93,7 @@ export function Footer() {
               />
             </div>
 
-            {/* Group 2: Services (Enters from RIGHT) */}
+            {/* Group 2: Services (Enters from RIGHT, 140px travel) */}
             <div ref={servicesColRef} className="md:col-span-3 lg:col-span-3 will-change-transform">
               <FooterLinks
                 category={FOOTER_CATEGORIES[0]}
@@ -105,7 +104,7 @@ export function Footer() {
               />
             </div>
 
-            {/* Group 3: Company (Enters from LEFT) */}
+            {/* Group 3: Company (Enters from LEFT, 140px travel) */}
             <div ref={companyColRef} className="md:col-span-2 lg:col-span-2 will-change-transform">
               <FooterLinks
                 category={FOOTER_CATEGORIES[1]}
@@ -116,7 +115,7 @@ export function Footer() {
               />
             </div>
 
-            {/* Group 4: Resources (Enters from LEFT) */}
+            {/* Group 4: Resources (Enters from LEFT, 140px travel) */}
             <div ref={resourcesColRef} className="md:col-span-2 lg:col-span-3 will-change-transform">
               <FooterLinks
                 category={FOOTER_CATEGORIES[2]}
