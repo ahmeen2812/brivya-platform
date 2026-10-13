@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — FOOTER KINEMATIC SCROLL REVEAL ENGINE
- * Coordinated cross-directional entrances (Brand/Services from Right, Company/Resources from Left),
+ * Coordinated 140px cross-directional entrances (Brand/Services from Right, Company/Resources from Left),
  * internal element staggers, and bidirectional ScrollTrigger scrub.
  */
 
@@ -61,7 +61,6 @@ export function initFooterScrollSequence(
     Boolean
   ) as HTMLElement[];
 
-  // Fallback for reduced motion
   if (prefersReduced) {
     gsap.set(majorColumns, { autoAlpha: 1, x: 0, y: 0 });
     return null;
@@ -71,16 +70,16 @@ export function initFooterScrollSequence(
     const mm = gsap.matchMedia();
 
     // -------------------------------------------------------------------------
-    // DESKTOP & TABLET (>= 768px): Cross-Directional Opposing Entrances
+    // DESKTOP & TABLET (>= 768px): Substantial 140px Opposing Travel
     // -------------------------------------------------------------------------
     mm.add("(min-width: 768px)", () => {
-      const travelDistance = 85; // 85px controlled travel
+      const travelDistance = 140; // Substantial 140px visual travel distance
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: footer,
-          start: "top 92%", // Engages as the footer enters viewport
-          end: "top 45%",   // Fully settled into position
+          start: "top 88%", // Engages smoothly as footer enters viewport
+          end: "top 35%",   // Reaches full settlement
           scrub: 1.2,       // Bidirectional scrub tied to scroll velocity
         },
       });
@@ -90,7 +89,7 @@ export function initFooterScrollSequence(
         tl.fromTo(
           brandCol,
           { autoAlpha: 0, x: travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.85, ease: "power3.out" },
+          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
           0
         );
       }
@@ -100,8 +99,8 @@ export function initFooterScrollSequence(
         tl.fromTo(
           servicesCol,
           { autoAlpha: 0, x: travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.85, ease: "power3.out" },
-          0.06
+          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
+          0.05
         );
       }
 
@@ -110,8 +109,8 @@ export function initFooterScrollSequence(
         tl.fromTo(
           companyCol,
           { autoAlpha: 0, x: -travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.85, ease: "power3.out" },
-          0.06
+          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
+          0.05
         );
       }
 
@@ -120,89 +119,89 @@ export function initFooterScrollSequence(
         tl.fromTo(
           resourcesCol,
           { autoAlpha: 0, x: -travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.85, ease: "power3.out" },
+          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
           0
         );
       }
 
       // Internal Staggers within Columns
       if (brandLogo) {
-        tl.fromTo(brandLogo, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.15);
+        tl.fromTo(brandLogo, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.12);
       }
       if (brandDesc) {
-        tl.fromTo(brandDesc, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.22);
+        tl.fromTo(brandDesc, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.18);
       }
       const validSocials = socialIcons.filter(Boolean) as HTMLElement[];
       if (validSocials.length > 0) {
         tl.fromTo(
           validSocials,
           { autoAlpha: 0, scale: 0.8 },
-          { autoAlpha: 1, scale: 1, duration: 0.4, stagger: 0.04, ease: "back.out(1.4)" },
-          0.28
+          { autoAlpha: 1, scale: 1, duration: 0.4, stagger: 0.035, ease: "back.out(1.4)" },
+          0.24
         );
       }
 
       // Headers and Links Stagger
       if (servicesHeader) {
-        tl.fromTo(servicesHeader, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.18);
+        tl.fromTo(servicesHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.14);
       }
       const validServicesLinks = servicesLinks.filter(Boolean) as HTMLElement[];
       if (validServicesLinks.length > 0) {
         tl.fromTo(
           validServicesLinks,
-          { autoAlpha: 0, y: 8 },
-          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.025 },
-          0.24
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.022 },
+          0.2
         );
       }
 
       if (companyHeader) {
-        tl.fromTo(companyHeader, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.18);
+        tl.fromTo(companyHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.14);
       }
       const validCompanyLinks = companyLinks.filter(Boolean) as HTMLElement[];
       if (validCompanyLinks.length > 0) {
         tl.fromTo(
           validCompanyLinks,
-          { autoAlpha: 0, y: 8 },
-          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.025 },
-          0.24
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.022 },
+          0.2
         );
       }
 
       if (resourcesHeader) {
-        tl.fromTo(resourcesHeader, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.18);
+        tl.fromTo(resourcesHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.14);
       }
       const validResourcesLinks = resourcesLinks.filter(Boolean) as HTMLElement[];
       if (validResourcesLinks.length > 0) {
         tl.fromTo(
           validResourcesLinks,
-          { autoAlpha: 0, y: 8 },
-          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.025 },
-          0.24
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.022 },
+          0.2
         );
       }
 
-      // Bottom Legal Row
+      // Bottom Bar Reveal
       if (bottomBar) {
-        tl.fromTo(bottomBar, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.35);
+        tl.fromTo(bottomBar, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.3);
       }
     });
 
     // -------------------------------------------------------------------------
-    // MOBILE (< 768px): Vertical Dampened Motion (No Horizontal Scrollbars)
+    // MOBILE (< 768px): Vertical Motion without Horizontal Shift
     // -------------------------------------------------------------------------
     mm.add("(max-width: 767px)", () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: footer,
-          start: "top 90%",
-          end: "top 55%",
+          start: "top 88%",
+          end: "top 45%",
           scrub: 1.0,
         },
       });
 
       if (brandCol) {
-        tl.fromTo(brandCol, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0);
+        tl.fromTo(brandCol, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0);
       }
       if (bottomBar) {
         tl.fromTo(bottomBar, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.25);
