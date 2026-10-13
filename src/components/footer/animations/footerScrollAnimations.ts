@@ -1,7 +1,10 @@
 /**
  * BRIVYA SOLUTIONS — FOOTER KINEMATIC SCROLL REVEAL ENGINE
- * Coordinated 140px cross-directional entrances (Brand/Services from Right, Company/Resources from Left),
- * internal element staggers, and bidirectional ScrollTrigger scrub.
+ * Coordinated 4-way choreography:
+ * - Brand & Services: Synchronized cross-directional horizontal entrance (~340px)
+ * - Company: Masked downward emergence from beneath heading
+ * - Resources: Smooth upward entrance from below
+ * - Bidirectional ScrollTrigger scrub with mobile safety
  */
 
 import gsap from "gsap";
@@ -21,6 +24,7 @@ export interface FooterAnimationTargets {
   readonly servicesHeader: HTMLElement | null;
   readonly servicesLinks: readonly (HTMLElement | null)[];
   readonly companyHeader: HTMLElement | null;
+  readonly companyLinksContainer: HTMLElement | null;
   readonly companyLinks: readonly (HTMLElement | null)[];
   readonly resourcesHeader: HTMLElement | null;
   readonly resourcesLinks: readonly (HTMLElement | null)[];
@@ -70,66 +74,37 @@ export function initFooterScrollSequence(
     const mm = gsap.matchMedia();
 
     // -------------------------------------------------------------------------
-    // DESKTOP & TABLET (>= 768px): Substantial 140px Opposing Travel
+    // DESKTOP & TABLET (>= 768px): Exact 4-Group Directional Choreography
     // -------------------------------------------------------------------------
     mm.add("(min-width: 768px)", () => {
-      const travelDistance = 140; // Substantial 140px visual travel distance
+      // Calculate cross-horizontal distance between Brand and Services column centers
+      const crossDistance = 340;
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: footer,
           start: "top 88%", // Engages smoothly as footer enters viewport
-          end: "top 35%",   // Reaches full settlement
+          end: "top 32%",   // Completely settled
           scrub: 1.2,       // Bidirectional scrub tied to scroll velocity
         },
       });
 
-      // 1. Brand enters from RIGHT toward left position
+      // =======================================================================
+      // 1. BRAND SECTION: Starts from the Services position (RIGHT) -> Moves LEFT
+      // =======================================================================
       if (brandCol) {
         tl.fromTo(
           brandCol,
-          { autoAlpha: 0, x: travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
+          { autoAlpha: 0, x: crossDistance },
+          { autoAlpha: 1, x: 0, duration: 1.0, ease: "power3.out" },
           0
         );
       }
-
-      // 2. Services enters from RIGHT toward position
-      if (servicesCol) {
-        tl.fromTo(
-          servicesCol,
-          { autoAlpha: 0, x: travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
-          0.05
-        );
-      }
-
-      // 3. Company enters from LEFT toward position
-      if (companyCol) {
-        tl.fromTo(
-          companyCol,
-          { autoAlpha: 0, x: -travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
-          0.05
-        );
-      }
-
-      // 4. Resources enters from LEFT toward position
-      if (resourcesCol) {
-        tl.fromTo(
-          resourcesCol,
-          { autoAlpha: 0, x: -travelDistance },
-          { autoAlpha: 1, x: 0, duration: 0.9, ease: "power3.out" },
-          0
-        );
-      }
-
-      // Internal Staggers within Columns
       if (brandLogo) {
-        tl.fromTo(brandLogo, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.12);
+        tl.fromTo(brandLogo, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.15);
       }
       if (brandDesc) {
-        tl.fromTo(brandDesc, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.18);
+        tl.fromTo(brandDesc, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.22);
       }
       const validSocials = socialIcons.filter(Boolean) as HTMLElement[];
       if (validSocials.length > 0) {
@@ -137,58 +112,93 @@ export function initFooterScrollSequence(
           validSocials,
           { autoAlpha: 0, scale: 0.8 },
           { autoAlpha: 1, scale: 1, duration: 0.4, stagger: 0.035, ease: "back.out(1.4)" },
-          0.24
+          0.28
         );
       }
 
-      // Headers and Links Stagger
+      // =======================================================================
+      // 2. SERVICES SECTION: Starts from the Brand position (LEFT) -> Moves RIGHT
+      // =======================================================================
+      if (servicesCol) {
+        tl.fromTo(
+          servicesCol,
+          { autoAlpha: 0, x: -crossDistance },
+          { autoAlpha: 1, x: 0, duration: 1.0, ease: "power3.out" },
+          0
+        );
+      }
       if (servicesHeader) {
-        tl.fromTo(servicesHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.14);
+        tl.fromTo(servicesHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.15);
       }
       const validServicesLinks = servicesLinks.filter(Boolean) as HTMLElement[];
       if (validServicesLinks.length > 0) {
         tl.fromTo(
           validServicesLinks,
           { autoAlpha: 0, y: 10 },
-          { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.022 },
-          0.2
+          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.025 },
+          0.22
         );
       }
 
+      // =======================================================================
+      // 3. COMPANY SECTION: Links Emerge DOWNWARD from beneath heading
+      // =======================================================================
       if (companyHeader) {
-        tl.fromTo(companyHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.14);
+        tl.fromTo(
+          companyHeader,
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.4 },
+          0.1
+        );
       }
       const validCompanyLinks = companyLinks.filter(Boolean) as HTMLElement[];
       if (validCompanyLinks.length > 0) {
         tl.fromTo(
           validCompanyLinks,
-          { autoAlpha: 0, y: 10 },
-          { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.022 },
+          { autoAlpha: 0, y: -50 }, // Starts hidden behind the heading area
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.65,
+            stagger: 0.035,
+            ease: "power2.out",
+          },
           0.2
         );
       }
 
+      // =======================================================================
+      // 4. RESOURCES SECTION: Enters smoothly from BELOW (BOTTOM)
+      // =======================================================================
+      if (resourcesCol) {
+        tl.fromTo(
+          resourcesCol,
+          { autoAlpha: 0, y: 75 }, // Starts below position
+          { autoAlpha: 1, y: 0, duration: 0.9, ease: "power3.out" },
+          0.08
+        );
+      }
       if (resourcesHeader) {
-        tl.fromTo(resourcesHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.14);
+        tl.fromTo(resourcesHeader, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.35 }, 0.2);
       }
       const validResourcesLinks = resourcesLinks.filter(Boolean) as HTMLElement[];
       if (validResourcesLinks.length > 0) {
         tl.fromTo(
           validResourcesLinks,
-          { autoAlpha: 0, y: 10 },
-          { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.022 },
-          0.2
+          { autoAlpha: 0, y: 14 },
+          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.03 },
+          0.26
         );
       }
 
-      // Bottom Bar Reveal
+      // Bottom Legal Row
       if (bottomBar) {
-        tl.fromTo(bottomBar, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.3);
+        tl.fromTo(bottomBar, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.32);
       }
     });
 
     // -------------------------------------------------------------------------
-    // MOBILE (< 768px): Vertical Motion without Horizontal Shift
+    // MOBILE (< 768px): Safe Vertical-Only Motion (Zero Horizontal Overflow)
     // -------------------------------------------------------------------------
     mm.add("(max-width: 767px)", () => {
       const tl = gsap.timeline({
@@ -201,7 +211,7 @@ export function initFooterScrollSequence(
       });
 
       if (brandCol) {
-        tl.fromTo(brandCol, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0);
+        tl.fromTo(brandCol, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0);
       }
       if (bottomBar) {
         tl.fromTo(bottomBar, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 0.25);
