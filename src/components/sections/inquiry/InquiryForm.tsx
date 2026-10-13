@@ -247,3 +247,5 @@ export const InquiryForm: React.FC = () => {
     </div>
   );
 };
+
+

@@ -91,8 +91,6 @@ body {
     scroll-behavior: auto !important;
   }
 } */
-
-
 @import "tailwindcss";
 
 :root {
@@ -123,6 +121,38 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* 
+  Native Scrollbar System (Standard CSS + WebKit Fallbacks):
+  - Track: #E9EFF7 (Soft Blue-Gray)
+  - Thumb: #5278A3 (Muted Brivya Blue) -> Hover: #3D6087
+  - Width: 9px (Slim, balanced, non-intrusive)
+*/
+html,
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #5278A3 #E9EFF7;
+}
+
+/* Chromium (Chrome, Edge, Opera, Brave) & WebKit (Safari) */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #E9EFF7;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5278A3;
+  border-radius: 9999px;
+  border: 2px solid #E9EFF7; /* 2px padding margin around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #3D6087;
 }
 
 html {
