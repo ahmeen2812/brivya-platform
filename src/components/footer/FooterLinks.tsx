@@ -22,7 +22,7 @@ export const FooterLinks = forwardRef<HTMLDivElement, FooterLinksProps>(
           {category.heading}
         </h3>
 
-        {/* Links Stack with Directional Micro-Interactions */}
+        {/* Links Stack with Directional Masked Text-Shift Hover */}
         <ul className="mt-3.5 flex flex-col space-y-2">
           {category.links.map((link, idx) => (
             <li
@@ -36,18 +36,34 @@ export const FooterLinks = forwardRef<HTMLDivElement, FooterLinksProps>(
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/link inline-flex items-center gap-1.5 font-sans text-[13px] sm:text-[13.5px] text-[#CBDDF6] transition-colors duration-150 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#38BDF8]"
+                  className="group/link relative inline-flex h-[20px] items-center overflow-hidden font-sans text-[13px] sm:text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#38BDF8]"
                 >
-                  <span className="transition-transform duration-200 ease-out group-hover/link:translate-x-1.5">
+                  {/* Layer 1: Default text (rolls up and out on hover) */}
+                  <span className="inline-block text-[#CBDDF6] transition-transform duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:-translate-y-full group-focus-visible/link:-translate-y-full">
+                    {link.label}
+                  </span>
+                  {/* Layer 2: Incoming accent text (rolls in from below on hover) */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 inline-block translate-y-full text-white transition-transform duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:translate-y-0 group-focus-visible/link:translate-y-0"
+                  >
                     {link.label}
                   </span>
                 </a>
               ) : (
                 <Link
                   href={link.href}
-                  className="group/link inline-flex items-center gap-1.5 font-sans text-[13px] sm:text-[13.5px] text-[#CBDDF6] transition-colors duration-150 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#38BDF8]"
+                  className="group/link relative inline-flex h-[20px] items-center overflow-hidden font-sans text-[13px] sm:text-[13.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#38BDF8]"
                 >
-                  <span className="transition-transform duration-200 ease-out group-hover/link:translate-x-1.5">
+                  {/* Layer 1: Default text (rolls up and out on hover) */}
+                  <span className="inline-block text-[#CBDDF6] transition-transform duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:-translate-y-full group-focus-visible/link:-translate-y-full">
+                    {link.label}
+                  </span>
+                  {/* Layer 2: Incoming accent text (rolls in from below on hover) */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 inline-block translate-y-full text-white transition-transform duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:translate-y-0 group-focus-visible/link:translate-y-0"
+                  >
                     {link.label}
                   </span>
                 </Link>
