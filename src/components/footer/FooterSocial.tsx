@@ -8,7 +8,10 @@ interface SocialIconGlyphProps {
   readonly className?: string;
 }
 
-const SocialIconGlyph: React.FC<SocialIconGlyphProps> = ({ iconKey, className = "h-4 w-4" }) => {
+const SocialIconGlyph: React.FC<SocialIconGlyphProps> = ({
+  iconKey,
+  className = "h-[18px] w-[18px] sm:h-[19px] sm:w-[19px]",
+}) => {
   const commonProps = {
     className,
     fill: "currentColor",
@@ -37,7 +40,7 @@ const SocialIconGlyph: React.FC<SocialIconGlyphProps> = ({ iconKey, className = 
       );
     case "instagram":
       return (
-        <svg {...commonProps} fill="none" stroke="currentColor" strokeWidth="2">
+        <svg {...commonProps} fill="none" stroke="currentColor" strokeWidth="2.2">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" strokeLinecap="round" strokeWidth="2.5" />
@@ -66,16 +69,14 @@ export const FooterSocial = forwardRef<HTMLDivElement, FooterSocialProps>(
             aria-label={`Visit Brivya on ${social.name}`}
             /* 
               36px Circular Social Control:
-              - Default state: Light-colored icon on translucent circular background
-              - Hover state: Circle changes to pale ice-blue surface (#EBF3FF)
-              - Light icon exits RIGHT (+36px)
-              - Incoming dark icon enters from LEFT in deep navy (#102D50)
-              - Synchronized 380ms duration
+              - Proportional 18.5px icon sizing centered within 36px container
+              - Synchronized 380ms kinetic swap animation
+              - Hover state: pale ice-blue surface (#EBF3FF) with deep navy icon (#102D50)
             */
             className="group/social relative flex h-9 w-9 items-center justify-center rounded-full bg-[#102D50]/15 border border-[#102D50]/20 overflow-hidden transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] hover:scale-[1.08] hover:bg-[#EBF3FF] hover:border-white focus-visible:bg-[#EBF3FF] focus-visible:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5FD7]"
           >
             {/* 1. Default Light Icon (Exits smoothly to the RIGHT on hover) */}
-            <span className="absolute inset-0 flex items-center justify-center text-white transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-9 group-hover/social:opacity-0 group-focus-visible/social:translate-x-9 group-focus-visible/social:opacity-0">
+            <span className="absolute inset-0 flex items-center justify-center text-[#102D50] sm:text-white transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-9 group-hover/social:opacity-0 group-focus-visible/social:translate-x-9 group-focus-visible/social:opacity-0">
               <SocialIconGlyph iconKey={social.iconKey} />
             </span>
 
