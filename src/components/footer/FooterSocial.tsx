@@ -10,7 +10,7 @@ interface SocialIconGlyphProps {
 
 const SocialIconGlyph: React.FC<SocialIconGlyphProps> = ({
   iconKey,
-  className = "h-6 w-6 sm:h-[28px] sm:w-[28px]",
+  className = "h-[22px] w-[22px] sm:h-6 sm:w-6",
 }) => {
   const commonProps = {
     className,
@@ -40,7 +40,7 @@ const SocialIconGlyph: React.FC<SocialIconGlyphProps> = ({
       );
     case "instagram":
       return (
-        <svg {...commonProps} fill="none" stroke="currentColor" strokeWidth="2">
+        <svg {...commonProps} fill="none" stroke="currentColor" strokeWidth="2.2">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" strokeLinecap="round" strokeWidth="2.5" />
@@ -56,8 +56,8 @@ export interface FooterSocialProps {
 export const FooterSocial = forwardRef<HTMLDivElement, FooterSocialProps>(
   ({ registerSocialRef }, ref) => {
     return (
-      /* Gap: 12px Mobile | 14px Desktop */
-      <div ref={ref} className="flex items-center gap-3 sm:gap-[14px]">
+      /* Gap: 10px Mobile | 12px Desktop */
+      <div ref={ref} className="flex items-center gap-2.5 sm:gap-3">
         {FOOTER_SOCIAL_LINKS.map((social, index) => (
           <a
             key={social.id}
@@ -70,19 +70,18 @@ export const FooterSocial = forwardRef<HTMLDivElement, FooterSocialProps>(
             aria-label={`Visit Brivya on ${social.name}`}
             /* 
               Dimensions:
-              - Mobile: 48px × 48px
-              - Desktop: 60px × 60px
-              - Icon Glyphs: 24px Mobile | 28px Desktop
+              - Button: 48px × 48px (Mobile & Desktop)
+              - Icon Glyphs: 22px Mobile | 24px Desktop
             */
-            className="group/social relative flex h-12 w-12 sm:h-[60px] sm:w-[60px] shrink-0 items-center justify-center rounded-full bg-[#102D50]/15 border border-[#102D50]/20 overflow-hidden transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] hover:scale-[1.08] hover:bg-[#EBF3FF] hover:border-white focus-visible:bg-[#EBF3FF] focus-visible:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5FD7]"
+            className="group/social relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#102D50]/15 border border-[#102D50]/20 overflow-hidden transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] hover:scale-[1.08] hover:bg-[#EBF3FF] hover:border-white focus-visible:bg-[#EBF3FF] focus-visible:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5FD7]"
           >
-            {/* 1. Default Light Icon (Exits smoothly RIGHT on hover) */}
-            <span className="absolute inset-0 flex items-center justify-center text-[#102D50] sm:text-white transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-14 sm:group-hover/social:translate-x-16 group-hover/social:opacity-0 group-focus-visible/social:translate-x-14 sm:group-focus-visible/social:translate-x-16 group-focus-visible/social:opacity-0">
+            {/* 1. Default Light Icon (Exits smoothly to the RIGHT on hover) */}
+            <span className="absolute inset-0 flex items-center justify-center text-[#102D50] sm:text-white transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-12 group-hover/social:opacity-0 group-focus-visible/social:translate-x-12 group-focus-visible/social:opacity-0">
               <SocialIconGlyph iconKey={social.iconKey} />
             </span>
 
-            {/* 2. Dark Navy Icon (#102D50) (Enters smoothly from LEFT to Center on hover) */}
-            <span className="absolute inset-0 flex items-center justify-center text-[#102D50] -translate-x-14 sm:-translate-x-16 opacity-0 transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-0 group-hover/social:opacity-100 group-focus-visible/social:translate-x-0 group-focus-visible/social:opacity-100">
+            {/* 2. Dark Navy Icon (#102D50) (Enters smoothly from the LEFT into Center on hover) */}
+            <span className="absolute inset-0 flex items-center justify-center text-[#102D50] -translate-x-12 opacity-0 transition-all duration-[380ms] ease-[cubic-bezier(0.25,1,0.3,1)] group-hover/social:translate-x-0 group-hover/social:opacity-100 group-focus-visible/social:translate-x-0 group-focus-visible/social:opacity-100">
               <SocialIconGlyph iconKey={social.iconKey} />
             </span>
           </a>
