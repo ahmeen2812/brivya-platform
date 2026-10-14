@@ -4,6 +4,7 @@
  * 1. Architectural surface emerges from behind canvas (depth scale, blur dissipation, lateral glide).
  * 2. Internal content (heading, contact channels, telemetry note) follows sequentially.
  * 3. Directional ScrollTrigger replay: plays on scroll down, reverses on scroll up, replays on re-entry.
+ * 4. Post-animation cleanup: explicitly strips CSS filter to prevent rasterized GPU blur caching.
  */
 
 import gsap from "gsap";
@@ -68,7 +69,7 @@ export function initAsymmetricalPanelsAnimation(
       x: 0,
       y: 0,
       scale: 1,
-      filter: "blur(0px)",
+      filter: "none",
     });
     return null;
   }
@@ -81,9 +82,16 @@ export function initAsymmetricalPanelsAnimation(
     const masterTl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
-        start: "top 82%",
-        // Bidirectional replay protocol: plays forward on scroll down, reverses on scroll up, replays on return
+        start: "top 85%",
         toggleActions: INQUIRY_MOTION.scrollTrigger.toggleActions,
+      },
+      onComplete: () => {
+        // Complete filter removal to guarantee 0% blur rasterization in Chromium/WebKit
+        gsap.set([rightPanel, leftPanel], {
+          filter: "none",
+          clearProps: "filter",
+          autoAlpha: 1,
+        });
       },
     });
 
@@ -107,7 +115,6 @@ export function initAsymmetricalPanelsAnimation(
         filter: INQUIRY_MOTION.depth.clearedBlur,
         duration: INQUIRY_MOTION.durations.panelSlide,
         ease: INQUIRY_MOTION.easings.executiveDecel,
-        clearProps: "filter",
       },
       0
     );
@@ -167,7 +174,6 @@ export function initAsymmetricalPanelsAnimation(
         filter: INQUIRY_MOTION.depth.clearedBlur,
         duration: INQUIRY_MOTION.durations.panelSlide,
         ease: INQUIRY_MOTION.easings.executiveDecel,
-        clearProps: "filter",
       },
       0.16
     );
