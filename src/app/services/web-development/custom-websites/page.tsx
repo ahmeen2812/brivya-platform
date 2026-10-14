@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { CUSTOM_WEBSITES_CONTENT } from "@/config/services/customWebsites";
+
+// 5 Authoritative Section Components
 import { CustomWebsitesHero } from "@/components/services/web-development/custom-websites/CustomWebsitesHero";
 import { IntroductionCard } from "@/components/services/web-development/custom-websites/IntroductionCard";
 import { AlternatingServiceCards } from "@/components/services/web-development/custom-websites/AlternatingServiceCards";
 import { CustomWebsitesFaq } from "@/components/services/web-development/custom-websites/CustomWebsitesFaq";
 import { CustomWebsitesCta } from "@/components/services/web-development/custom-websites/CustomWebsitesCta";
+
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
@@ -14,22 +17,22 @@ export const metadata: Metadata = {
 
 export default function CustomWebsitesPage() {
   return (
-    <div className="relative w-full overflow-hidden bg-[#F4F7FC]">
+    <div className="relative w-full overflow-x-clip bg-[#F4F7FC]">
       {/* Main Content Chassis */}
-      <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8 pt-6 sm:pt-8 md:pt-10 pb-16 sm:pb-20">
-        {/* 1. Hero Section (Heading & description left, illustration right) */}
+      <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20">
+        {/* 1. Hero Section */}
         <CustomWebsitesHero />
 
-        {/* 2. Centered Introduction Card (What Is Custom Website Development?) */}
+        {/* 2. Centered Introduction Card */}
         <IntroductionCard />
 
-        {/* 3, 4, 5. Three Service Cards (Right -> Left -> Right Alternating ~70% Width) */}
+        {/* 3. Three Alternating Service Cards */}
         <AlternatingServiceCards />
 
-        {/* 6. FAQ Section (Bordered container with expandable rows) */}
+        {/* 4. FAQ Section */}
         <CustomWebsitesFaq />
 
-        {/* 7. Final Call to Action (Contact Us + Book a Consultation) */}
+        {/* 5. Final CTA */}
         <CustomWebsitesCta />
       </div>
 
@@ -38,3 +41,5 @@ export default function CustomWebsitesPage() {
     </div>
   );
 }
+
+

@@ -1,77 +1,94 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { CUSTOM_WEBSITES_CONTENT } from "@/config/services/customWebsites";
 import { SITE_CONTACT } from "@/config/siteContact";
 import { CalendlyModal } from "@/components/sections/inquiry/CalendlyModal";
+import { initCtaAnimation } from "./animations";
+import { CustomWebsitesCtaMobile } from "./mobile/CustomWebsitesCtaMobile";
 
 export const CustomWebsitesCta: React.FC = () => {
   const { cta } = CUSTOM_WEBSITES_CONTENT;
   const { meeting } = SITE_CONTACT;
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const descriptionRef = useRef<HTMLParagraphElement | null>(null);
+  const buttonsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = initCtaAnimation({
+      container: containerRef.current,
+      heading: headingRef.current,
+      description: descriptionRef.current,
+      buttons: buttonsRef.current,
+    });
+
+    return () => ctx?.revert();
+  }, []);
+
   return (
     <>
-      <section className="relative w-full mb-16 sm:mb-20 select-none">
+      {/* DESKTOP VIEWPORT */}
+      <section className="hidden lg:block relative w-full mb-20 select-none overflow-x-clip">
+        {/* 
+          FINAL UI CORRECTION:
+          - Completely removed the filled card-style background
+          - Uses the exact same background as the website body (bg-transparent over #F4F7FC)
+          - Only a clean, subtle border around the section
+        */}
         <div
-          /* 
-            Master Gradient Card Chassis:
-            from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] with border-[#BACFE6]
-          */
-          className="relative w-full rounded-2xl sm:rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 sm:p-11 lg:p-14 shadow-[0_16px_45px_-12px_rgba(7,54,109,0.08)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] overflow-hidden text-center flex flex-col items-center"
+          ref={containerRef}
+          className="w-full rounded-3xl border border-[#BACFE6] bg-transparent p-12 text-center flex flex-col items-center will-change-transform"
         >
-          <div className="relative z-10 max-w-[760px] mx-auto flex flex-col items-center">
-            {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 border border-[#BACFE6] shadow-2xs mb-4">
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-[#06162C]">
-                Ready to Build
-              </span>
-            </div>
+          <h2
+            ref={headingRef}
+            className="font-sans text-[36px] font-extrabold text-[#06162C] leading-[1.14] tracking-[-0.035em] will-change-transform"
+          >
+            {cta.heading}
+          </h2>
 
-            {/* Display Heading */}
-            <h2 className="font-sans text-[28px] sm:text-[36px] md:text-[40px] font-extrabold text-[#06162C] leading-[1.12] tracking-[-0.035em]">
-              {cta.heading}
-            </h2>
+          <p
+            ref={descriptionRef}
+            className="mt-4 font-sans text-[16px] leading-[1.7] text-[#475569] font-normal tracking-[-0.01em] max-w-[620px] will-change-transform"
+          >
+            {cta.description}
+          </p>
 
-            {/* Paragraphs */}
-            <div className="mt-4 sm:mt-5 flex flex-col space-y-2 max-w-[640px]">
-              {cta.paragraphs.map((p, idx) => (
-                <p
-                  key={idx}
-                  className="font-sans text-[14.5px] sm:text-[15.5px] leading-[1.68] text-[#475569] font-normal tracking-[-0.01em]"
-                >
-                  {p}
-                </p>
-              ))}
-            </div>
+          <div
+            ref={buttonsRef}
+            className="mt-8 flex items-center justify-center gap-4 will-change-transform"
+          >
+            <Link
+              href="/start-project"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-8 py-3.5 font-sans text-sm font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] transition-all"
+            >
+              <span>{cta.primaryButtonText}</span>
+              <span aria-hidden="true">→</span>
+            </Link>
 
-            {/* Exact Two Buttons Array */}
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-              {/* Button 1: Contact Us (Routes to Contact Page) */}
-              <Link
-                href="/start-project"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-8 py-3.5 font-sans text-sm font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] transition-all duration-300 hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5FD7]"
-              >
-                <span>{cta.primaryButtonText}</span>
-                <span aria-hidden="true">→</span>
-              </Link>
-
-              {/* Button 2: Book a Consultation (Triggers Calendly Modal Directly) */}
-              <button
-                type="button"
-                onClick={() => setIsCalendlyOpen(true)}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300/90 px-7 py-3.5 font-sans text-sm font-semibold text-[#06162C] shadow-2xs transition-all duration-300 hover:bg-slate-50 hover:border-[#0A5FD7]/50 hover:text-[#0A5FD7] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5FD7] cursor-pointer"
-              >
-                <span>{cta.secondaryButtonText}</span>
-                <span aria-hidden="true">↗</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setIsCalendlyOpen(true)}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300/90 px-7 py-3.5 font-sans text-sm font-semibold text-[#06162C] shadow-2xs hover:bg-slate-50 hover:border-[#0A5FD7]/50 hover:text-[#0A5FD7] active:scale-[0.98] transition-all cursor-pointer"
+            >
+              <span>{cta.secondaryButtonText}</span>
+              <span aria-hidden="true">↗</span>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Official Calendly Modal Integration */}
+      {/* DEDICATED MOBILE VIEWPORT */}
+      <div className="block lg:hidden">
+        <CustomWebsitesCtaMobile />
+      </div>
+
+      {/* Calendly Consultation Modal */}
       <CalendlyModal
         isOpen={isCalendlyOpen}
         onClose={() => setIsCalendlyOpen(false)}

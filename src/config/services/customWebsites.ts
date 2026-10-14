@@ -73,7 +73,7 @@ export const CUSTOM_WEBSITES_CONTENT: CustomWebsitesContentConfig = {
   introduction: {
     heading: "What Is Custom Website Development?",
     paragraph:
-      "Custom website development starts by understanding your operational requirements rather than forcing your business into a ready-made layout. Whether you need bespoke service funnels, automated client booking workflows, or direct integration with internal databases, we build your site around what you actually need. Every feature has a clear reason to exist—resulting in a seamless journey for your clients and a practical, maintainable system for your team.",
+      "Custom website development starts by understanding your operational requirements rather than forcing your business into a ready-made layout. Whether you need bespoke service funnels, automated client booking workflows, or direct integration with internal databases, we build your site around what you actually need. Every feature has a clear reason to exist resulting in a seamless journey for your clients and a practical, maintainable system for your team.",
   },
   cards: {
     card1: {
