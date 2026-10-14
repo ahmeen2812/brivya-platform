@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { INQUIRY_CONTENT } from "./content";
 import { SITE_CONTACT } from "@/config/siteContact";
 import { initAsymmetricalPanelsAnimation } from "./animations/ContactPanelsAnimation";
@@ -44,6 +46,9 @@ export const AsymmetricalContactPanels: React.FC = () => {
       leftNote: leftNoteRef.current,
     });
 
+    // Synchronize ScrollTrigger geometry post hydration
+    ScrollTrigger.refresh();
+
     return () => {
       if (ctx) ctx.revert();
     };
@@ -52,14 +57,19 @@ export const AsymmetricalContactPanels: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full flex flex-col space-y-7 sm:space-y-9 select-none overflow-x-hidden"
+      /*
+        Container Breathing Room:
+        - pt-3 pb-4 -my-3 provides 12px vertical clearance so -6px hover lift and box-shadow never get clipped.
+        - overflow-x-clip prevents horizontal scrollbars without clipping vertical transform coordinates.
+      */
+      className="w-full flex flex-col space-y-7 sm:space-y-9 select-none pt-3 pb-4 -my-3 overflow-x-clip"
     >
       {/* =================================================================== */}
       {/* PANEL 1 — DIRECT CONTACT: Emerges from RIGHT edge with edge blend   */}
       {/* =================================================================== */}
       <div
         ref={rightPanelRef}
-        className="w-full lg:w-[74%] xl:w-[70%] ml-auto will-change-transform"
+        className="w-full lg:w-[74%] xl:w-[70%] ml-auto pt-2 pb-2 will-change-transform"
       >
         <div
           onMouseEnter={() => {
@@ -73,14 +83,14 @@ export const AsymmetricalContactPanels: React.FC = () => {
             - Left corners: smoothly rounded (rounded-l-2xl sm:rounded-l-3xl)
             - Right corners: straight flush to page boundary (lg:rounded-r-none)
             - Border-r-0 prevents hard demarcation line on viewport edge
-            - Edge blend overlay softens physical perimeter into #F4F7FC canvas
+            - Removed card overflow-hidden so upper specular highlight and lift shadow expand cleanly
           */
-          className="group/panel relative rounded-2xl sm:rounded-3xl lg:rounded-r-none lg:rounded-l-3xl border border-[#BACFE6] lg:border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-6 sm:p-8 lg:p-9 lg:pr-14 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] transition-colors duration-300 hover:border-[#0A5FD7]/40 overflow-hidden"
+          className="group/panel relative rounded-2xl sm:rounded-3xl lg:rounded-r-none lg:rounded-l-3xl border border-[#BACFE6] lg:border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-6 sm:p-8 lg:p-9 lg:pr-14 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] transition-colors duration-300 hover:border-[#0A5FD7]/40"
         >
           {/* Architectural Edge Fade: Blends right edge seamlessly into page background */}
           <div
             aria-hidden="true"
-            className="hidden lg:block pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC]/70 via-[#F4F7FC]/20 to-transparent z-20"
+            className="hidden lg:block pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC]/70 via-[#F4F7FC]/20 to-transparent z-20 rounded-r-none"
           />
 
           <div className="relative z-10 flex flex-col">
@@ -171,7 +181,7 @@ export const AsymmetricalContactPanels: React.FC = () => {
       {/* =================================================================== */}
       <div
         ref={leftPanelRef}
-        className="w-full lg:w-[74%] xl:w-[70%] mr-auto will-change-transform"
+        className="w-full lg:w-[74%] xl:w-[70%] mr-auto pt-2 pb-2 will-change-transform"
       >
         <div
           onMouseEnter={() => {
@@ -185,14 +195,14 @@ export const AsymmetricalContactPanels: React.FC = () => {
             - Left corners: straight flush to page boundary (lg:rounded-l-none)
             - Right corners: smoothly rounded (rounded-r-2xl sm:rounded-r-3xl)
             - Border-l-0 prevents hard demarcation line on viewport edge
-            - Edge blend overlay softens physical perimeter into #F4F7FC canvas
+            - Removed card overflow-hidden so upper specular highlight and lift shadow expand cleanly
           */
-          className="group/panel relative rounded-2xl sm:rounded-3xl lg:rounded-l-none lg:rounded-r-3xl border border-[#BACFE6] lg:border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-6 sm:p-8 lg:p-9 lg:pl-14 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] transition-colors duration-300 hover:border-[#0A5FD7]/40 overflow-hidden"
+          className="group/panel relative rounded-2xl sm:rounded-3xl lg:rounded-l-none lg:rounded-r-3xl border border-[#BACFE6] lg:border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-6 sm:p-8 lg:p-9 lg:pl-14 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] transition-colors duration-300 hover:border-[#0A5FD7]/40"
         >
           {/* Architectural Edge Fade: Blends left edge seamlessly into page background */}
           <div
             aria-hidden="true"
-            className="hidden lg:block pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F4F7FC]/70 via-[#F4F7FC]/20 to-transparent z-20"
+            className="hidden lg:block pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F4F7FC]/70 via-[#F4F7FC]/20 to-transparent z-20 rounded-l-none"
           />
 
           <div className="relative z-10 flex flex-col">
