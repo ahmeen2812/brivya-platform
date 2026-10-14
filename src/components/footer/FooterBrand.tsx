@@ -17,26 +17,28 @@ export const FooterBrand = forwardRef<HTMLDivElement, FooterBrandProps>(
     return (
       /* 
         Symmetrical Column Flexbox:
-        - Removed asymmetrical md:pr-4 so the center axis is mathematically balanced.
+        - Mathematically centered axis matching brand guidelines.
         - items-center ensures Logo, Description, and Social Icons share the identical center line.
       */
       <div ref={ref} className="flex flex-col items-center text-center w-full">
-        {/* 1. Official Brivya Logo — Centered on the shared horizontal center axis */}
+        {/* 1. Official Brivya Logo — Governed by responsive parent container with fill layout */}
         <div className="w-full flex justify-center items-center">
           <Link
             href="/"
             aria-label="Brivya Solutions - Back to top"
             className="group relative inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#38BDF8]"
           >
-            <div ref={logoRef} className="relative h-9 w-[150px] sm:h-10 sm:w-[165px] flex items-center justify-center">
+            <div
+              ref={logoRef}
+              className="relative h-9 w-[150px] sm:h-10 sm:w-[165px] flex items-center justify-center"
+            >
               <Image
                 src={FOOTER_BRAND_DATA.logoSrc}
                 alt={FOOTER_BRAND_DATA.name}
-                width={165}
-                height={44}
+                fill
+                sizes="(max-width: 640px) 150px, 165px"
                 priority
-                className="h-full w-auto object-contain object-center"
-                style={{ width: "auto", height: "auto" }}
+                className="object-contain object-center"
               />
             </div>
           </Link>
@@ -66,6 +68,3 @@ export const FooterBrand = forwardRef<HTMLDivElement, FooterBrandProps>(
 
 FooterBrand.displayName = "FooterBrand";
 export default FooterBrand;
-
-
-
