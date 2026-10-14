@@ -61,9 +61,13 @@ export const UnifiedInquiryCard: React.FC = () => {
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: cardContainerRef.current,
-          // Triggers reliably on route mount while allowing bidirectional reverse on upward scroll
           start: "top 92%",
           toggleActions: INQUIRY_MOTION.scrollTrigger.toggleActions,
+        },
+        onComplete: () => {
+          if (cardContainerRef.current) {
+            gsap.set(cardContainerRef.current, { filter: "none", clearProps: "filter" });
+          }
         },
       });
 
@@ -96,6 +100,9 @@ export const UnifiedInquiryCard: React.FC = () => {
         0.22
       );
     }, cardContainerRef);
+
+    // Synchronize ScrollTrigger geometry post hydration
+    ScrollTrigger.refresh();
 
     return () => ctx.revert();
   }, []);
@@ -228,7 +235,7 @@ export const UnifiedInquiryCard: React.FC = () => {
             <div ref={fullNameFieldRef} className="group/field will-change-transform">
               <label
                 htmlFor="inquiry-fullname"
-                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1"
+                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1.5"
               >
                 Full Name <span className="text-[#0A5FD7]">*</span>
               </label>
@@ -240,10 +247,10 @@ export const UnifiedInquiryCard: React.FC = () => {
                 value={formState.fullName}
                 onChange={(e) => setFormState({ ...formState, fullName: e.target.value })}
                 placeholder="Jane Doe"
-                className={`w-full h-11 px-3.5 text-sm text-[#06162C] placeholder:text-[#8998AD] bg-white/80 rounded-xl border transition-all duration-200 outline-none focus:outline-none focus:bg-white ${
+                className={`w-full h-11 px-3.5 text-sm text-[#06162C] placeholder:text-[#8998AD] bg-white/85 rounded-xl border transition-all duration-200 ease-out outline-none focus:outline-none focus:ring-0 focus:bg-white ${
                   errors.fullName
-                    ? "border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15"
-                    : "border-slate-200/90 hover:border-[#BACFE6] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:ring-4 focus:ring-[#0A5FD7]/15 focus:shadow-[0_2px_12px_rgba(10,95,215,0.08)]"
+                    ? "border-red-400 focus:border-red-500 focus:shadow-[0_0_0_1px_#EF4444,0_2px_8px_rgba(239,68,68,0.12)]"
+                    : "border-[#BACFE6]/80 hover:border-[#8998AD] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:shadow-[0_0_0_1px_#0A5FD7,0_1px_3px_0_rgba(10,95,215,0.1),0_4px_16px_-2px_rgba(10,95,215,0.14)]"
                 }`}
               />
               {errors.fullName && <p className="mt-1 text-[11px] text-red-500">{errors.fullName}</p>}
@@ -253,7 +260,7 @@ export const UnifiedInquiryCard: React.FC = () => {
             <div ref={emailFieldRef} className="group/field will-change-transform">
               <label
                 htmlFor="inquiry-email-address"
-                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1"
+                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1.5"
               >
                 Email Address <span className="text-[#0A5FD7]">*</span>
               </label>
@@ -265,10 +272,10 @@ export const UnifiedInquiryCard: React.FC = () => {
                 value={formState.email}
                 onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                 placeholder="jane@company.com"
-                className={`w-full h-11 px-3.5 text-sm text-[#06162C] placeholder:text-[#8998AD] bg-white/80 rounded-xl border transition-all duration-200 outline-none focus:outline-none focus:bg-white ${
+                className={`w-full h-11 px-3.5 text-sm text-[#06162C] placeholder:text-[#8998AD] bg-white/85 rounded-xl border transition-all duration-200 ease-out outline-none focus:outline-none focus:ring-0 focus:bg-white ${
                   errors.email
-                    ? "border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15"
-                    : "border-slate-200/90 hover:border-[#BACFE6] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:ring-4 focus:ring-[#0A5FD7]/15 focus:shadow-[0_2px_12px_rgba(10,95,215,0.08)]"
+                    ? "border-red-400 focus:border-red-500 focus:shadow-[0_0_0_1px_#EF4444,0_2px_8px_rgba(239,68,68,0.12)]"
+                    : "border-[#BACFE6]/80 hover:border-[#8998AD] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:shadow-[0_0_0_1px_#0A5FD7,0_1px_3px_0_rgba(10,95,215,0.1),0_4px_16px_-2px_rgba(10,95,215,0.14)]"
                 }`}
               />
               {errors.email && <p className="mt-1 text-[11px] text-red-500">{errors.email}</p>}
@@ -278,7 +285,7 @@ export const UnifiedInquiryCard: React.FC = () => {
             <div ref={projectTypeFieldRef} className="group/field will-change-transform">
               <label
                 htmlFor="inquiry-project-type"
-                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1"
+                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1.5"
               >
                 Project Type <span className="text-[#0A5FD7]">*</span>
               </label>
@@ -287,10 +294,10 @@ export const UnifiedInquiryCard: React.FC = () => {
                 required
                 value={formState.projectType}
                 onChange={(e) => setFormState({ ...formState, projectType: e.target.value })}
-                className={`w-full h-11 px-3.5 text-sm text-[#06162C] bg-white/80 rounded-xl border transition-all duration-200 outline-none focus:outline-none focus:bg-white cursor-pointer ${
+                className={`w-full h-11 px-3.5 text-sm text-[#06162C] bg-white/85 rounded-xl border transition-all duration-200 ease-out outline-none focus:outline-none focus:ring-0 focus:bg-white cursor-pointer ${
                   errors.projectType
-                    ? "border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15"
-                    : "border-slate-200/90 hover:border-[#BACFE6] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:ring-4 focus:ring-[#0A5FD7]/15 focus:shadow-[0_2px_12px_rgba(10,95,215,0.08)]"
+                    ? "border-red-400 focus:border-red-500 focus:shadow-[0_0_0_1px_#EF4444,0_2px_8px_rgba(239,68,68,0.12)]"
+                    : "border-[#BACFE6]/80 hover:border-[#8998AD] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:shadow-[0_0_0_1px_#0A5FD7,0_1px_3px_0_rgba(10,95,215,0.1),0_4px_16px_-2px_rgba(10,95,215,0.14)]"
                 }`}
               >
                 <option value="">Select project category...</option>
@@ -307,7 +314,7 @@ export const UnifiedInquiryCard: React.FC = () => {
             <div ref={messageFieldRef} className="group/field will-change-transform">
               <label
                 htmlFor="inquiry-message"
-                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1"
+                className="block font-sans text-xs font-semibold text-[#06162C] group-focus-within/field:text-[#0A5FD7] transition-colors duration-200 mb-1.5"
               >
                 Message <span className="text-[#0A5FD7]">*</span>
               </label>
@@ -318,10 +325,10 @@ export const UnifiedInquiryCard: React.FC = () => {
                 value={formState.message}
                 onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                 placeholder="Tell us a little about your project, goals, or the problem you're trying to solve."
-                className={`w-full p-3.5 text-sm text-[#06162C] placeholder:text-[#8998AD] bg-white/80 rounded-xl border transition-all duration-200 outline-none focus:outline-none focus:bg-white leading-relaxed resize-none ${
+                className={`w-full p-3.5 text-sm text-[#06162C] placeholder:text-[#8998AD] bg-white/85 rounded-xl border transition-all duration-200 ease-out outline-none focus:outline-none focus:ring-0 focus:bg-white leading-relaxed resize-none ${
                   errors.message
-                    ? "border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-500/15"
-                    : "border-slate-200/90 hover:border-[#BACFE6] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:ring-4 focus:ring-[#0A5FD7]/15 focus:shadow-[0_2px_12px_rgba(10,95,215,0.08)]"
+                    ? "border-red-400 focus:border-red-500 focus:shadow-[0_0_0_1px_#EF4444,0_2px_8px_rgba(239,68,68,0.12)]"
+                    : "border-[#BACFE6]/80 hover:border-[#8998AD] hover:bg-white hover:shadow-[0_2px_8px_rgba(7,54,109,0.04)] focus:border-[#0A5FD7] focus:shadow-[0_0_0_1px_#0A5FD7,0_1px_3px_0_rgba(10,95,215,0.1),0_4px_16px_-2px_rgba(10,95,215,0.14)]"
                 }`}
               />
               {errors.message && <p className="mt-1 text-[11px] text-red-500">{errors.message}</p>}
