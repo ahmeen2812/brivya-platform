@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — PROJECT INQUIRY TYPE DEFINITIONS
- * Streamlined 4-field form contract and contact panel schemas.
+ * Authoritative contracts for the 4-field inquiry model and panel schemas.
  */
 
 export interface InquiryFormState {
@@ -33,6 +33,7 @@ export interface InquiryPageContent {
   readonly form: {
     readonly heading: string;
     readonly submitButtonText: string;
+    readonly bookCallButtonText: string;
     readonly projectTypes: readonly ServiceOption[];
   };
   readonly directContactHeading: string;

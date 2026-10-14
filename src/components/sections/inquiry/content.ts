@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — PROJECT INQUIRY CONTENT MANIFEST
- * Authoritative editorial copy and streamlined form options.
+ * Authoritative editorial copy and form options.
  */
 
 import { InquiryPageContent } from "./types";
@@ -17,6 +17,7 @@ export const INQUIRY_CONTENT: InquiryPageContent = {
   form: {
     heading: "Tell us about your project",
     submitButtonText: "Send Project Inquiry",
+    bookCallButtonText: "Book a Call",
     projectTypes: [
       { id: "web-dev", label: "Web Development & Custom Software" },
       { id: "google-ads", label: "Google Ads & Performance Marketing" },
