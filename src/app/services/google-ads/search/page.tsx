@@ -19,19 +19,19 @@ export default function GoogleSearchAdsPage() {
   return (
     <div className="relative w-full overflow-x-clip bg-[#F4F7FC]">
       <div className="relative mx-auto w-full max-w-[1360px] px-4 sm:px-6 md:px-8 pt-4 sm:pt-6 md:pt-8 pb-16 sm:pb-20">
-        {/* SECTION 01 — HERO (Image 01) */}
+        {/* SECTION 01 — HERO (Image 01 with 180px Edge Entrance) */}
         <SearchHero />
 
-        {/* SECTION 02 — GOOGLE SEARCH ADS SERVICES: Intro & Featured Card (Image 02) */}
+        {/* SECTION 02 — BENTO INTRO HEADER */}
         <SearchServicesIntro />
 
-        {/* SECTION 02 — GOOGLE SEARCH ADS SERVICES: Cards 02, 03, 04 (Image 03 beside Card 03) */}
+        {/* SECTION 02 — BENTO GRID: Featured Cell + Asymmetric Split + Anchor */}
         <SearchCardsSection />
 
-        {/* SECTION 03 — FREQUENTLY ASKED QUESTIONS (7 Questions with Animated Accordion) */}
+        {/* SECTION 03 — FAQ: 7 Questions with Animated Expansion */}
         <SearchFaq />
 
-        {/* SECTION 04 — FINAL CTA (Unfilled Bordered Layout) */}
+        {/* SECTION 04 — FINAL CTA: Unfilled Bordered Layout */}
         <SearchCta />
       </div>
 
