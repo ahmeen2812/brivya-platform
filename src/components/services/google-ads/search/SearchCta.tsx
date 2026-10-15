@@ -16,7 +16,7 @@ export const SearchCta: React.FC = () => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
-  const paraRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const descRef = useRef<HTMLParagraphElement | null>(null);
   const buttonsRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -25,7 +25,7 @@ export const SearchCta: React.FC = () => {
     const ctx = initCtaAnimation({
       container: containerRef.current,
       heading: headingRef.current,
-      descriptionParagraphs: paraRefs.current,
+      description: descRef.current,
       buttons: buttonsRef.current,
     });
 
@@ -47,19 +47,12 @@ export const SearchCta: React.FC = () => {
             {cta.heading}
           </h2>
 
-          <div className="mt-4 flex flex-col space-y-2 max-w-[680px]">
-            {cta.paragraphs.map((p, idx) => (
-              <p
-                key={idx}
-                ref={(el) => {
-                  paraRefs.current[idx] = el;
-                }}
-                className="font-sans text-[15.5px] leading-[1.7] text-[#475569] font-normal tracking-[-0.01em] will-change-transform"
-              >
-                {p}
-              </p>
-            ))}
-          </div>
+          <p
+            ref={descRef}
+            className="mt-4 font-sans text-[15.5px] leading-[1.7] text-[#475569] font-normal tracking-[-0.01em] max-w-[660px] will-change-transform"
+          >
+            {cta.description}
+          </p>
 
           <div
             ref={buttonsRef}
