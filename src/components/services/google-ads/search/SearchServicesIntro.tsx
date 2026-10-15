@@ -1,27 +1,25 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import Image from "next/image";
+import React, { useRef } from "react";
 import { GOOGLE_SEARCH_ADS_CONTENT } from "@/config/services/googleSearchAds";
-import { initFeaturedCardAnimation } from "./animations";
+import { initBentoIntroAnimation } from "./animations";
 import { SearchServicesIntroMobile } from "./mobile/SearchServicesIntroMobile";
 import { useIsomorphicLayoutEffect } from "@/components/shared/useIsomorphicLayoutEffect";
 
 export const SearchServicesIntro: React.FC = () => {
-  const { servicesIntro } = GOOGLE_SEARCH_ADS_CONTENT;
-  const [imageError, setImageError] = useState(false);
+  const { intro } = GOOGLE_SEARCH_ADS_CONTENT;
 
-  const cardRef = useRef<HTMLDivElement | null>(null);
-  const headerRef = useRef<HTMLDivElement | null>(null);
-  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const subheadingRef = useRef<HTMLParagraphElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
-    if (!cardRef.current) return;
+    if (!containerRef.current) return;
 
-    const ctx = initFeaturedCardAnimation(
-      cardRef.current,
-      headerRef.current,
-      bodyRef.current
+    const ctx = initBentoIntroAnimation(
+      containerRef.current,
+      headingRef.current,
+      subheadingRef.current
     );
 
     return () => ctx?.revert();
@@ -30,90 +28,26 @@ export const SearchServicesIntro: React.FC = () => {
   return (
     <>
       {/* DESKTOP VIEWPORT */}
-      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
-        {/* Section Intro */}
-        <div ref={headerRef} className="max-w-[820px] mb-8 will-change-transform">
+      <section
+        ref={containerRef}
+        className="hidden lg:block relative w-full mb-10 select-none overflow-x-clip"
+      >
+        <div className="max-w-[820px] will-change-transform">
           <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-            Pillar 02 // Precision Search
+            Pillar 02 // Performance Architecture
           </span>
-          <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
-            {servicesIntro.heading}
+          <h2
+            ref={headingRef}
+            className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14] will-change-transform"
+          >
+            {intro.heading}
           </h2>
-          <p className="mt-3 font-sans text-[16px] text-[#475569] leading-[1.7] font-normal">
-            {servicesIntro.paragraph}
+          <p
+            ref={subheadingRef}
+            className="mt-3 font-sans text-[16px] text-[#475569] leading-[1.7] font-normal will-change-transform"
+          >
+            {intro.subheading}
           </p>
-        </div>
-
-        {/* Featured Card (Campaign Management with Image 02) */}
-        <div
-          ref={cardRef}
-          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
-        >
-          <div ref={bodyRef} className="grid grid-cols-12 gap-8 items-center will-change-transform">
-            <div className="col-span-7 flex flex-col justify-center">
-              <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-                {servicesIntro.featuredCard.tag}
-              </span>
-              <h3 className="font-sans text-[26px] font-extrabold text-[#06162C] leading-[1.2] tracking-tight mb-2">
-                {servicesIntro.featuredCard.heading}
-              </h3>
-              <p className="font-sans text-[16px] font-semibold text-[#07366D] mb-3">
-                {servicesIntro.featuredCard.subheading}
-              </p>
-              
-              <div className="flex flex-col space-y-2.5 mb-5">
-                {servicesIntro.featuredCard.paragraphs.map((p, idx) => (
-                  <p key={idx} className="font-sans text-[15px] leading-[1.68] text-[#475569] font-normal">
-                    {p}
-                  </p>
-                ))}
-              </div>
-
-              {/* 3-Point Deliverables Breakdown (Structured, Not Wall-of-Text) */}
-              <div className="grid grid-cols-1 gap-2.5 pt-4 border-t border-[#BACFE6]/60">
-                {servicesIntro.featuredCard.deliverables.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0A5FD7]/10 text-[#0A5FD7] mt-0.5">
-                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </span>
-                    <div>
-                      <span className="font-sans text-xs font-bold text-[#06162C] block">
-                        {item.title}
-                      </span>
-                      <span className="font-sans text-[13px] text-[#475569] leading-relaxed block">
-                        {item.description}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Image 02 — Campaign Structure and Account Topology */}
-            <div className="col-span-5 flex items-center justify-center">
-              <div className="relative w-full aspect-[4/3] max-w-[360px] flex items-center justify-center">
-                {!imageError ? (
-                  <Image
-                    src={servicesIntro.featuredCard.illustrationPath}
-                    alt={servicesIntro.featuredCard.illustrationAlt}
-                    fill
-                    sizes="360px"
-                    className="object-contain"
-                    onError={() => setImageError(true)}
-                  />
-                ) : (
-                  <div className="flex flex-col items-center justify-center text-center p-4 border border-dashed border-[#BACFE6] rounded-2xl w-full h-full bg-white/40">
-                    <span className="font-mono text-[10.5px] font-bold text-[#06162C]">
-                      Image 02: {servicesIntro.featuredCard.illustrationPath}
-                    </span>
-                    <span className="mt-1 text-[11px] text-[#64748B]">Campaign structure illustration slot</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
