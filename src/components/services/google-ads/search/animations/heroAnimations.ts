@@ -42,20 +42,19 @@ export function initHeroAnimation(
       tl.fromTo(heading, { autoAlpha: 0, x: headingX, y: headingY }, { autoAlpha: 1, x: 0, y: 0, duration: SEARCH_ADS_MOTION.durations.heroHeading }, 0);
     }
     if (tagline) {
-      tl.fromTo(tagline, { autoAlpha: 0, x: taglineX, y: taglineY }, { autoAlpha: 1, x: 0, y: 0, duration: SEARCH_ADS_MOTION.durations.heroTagline }, 0.08);
+      tl.fromTo(tagline, { autoAlpha: 0, x: taglineX, y: taglineY }, { autoAlpha: 1, x: 0, y: 0, duration: SEARCH_ADS_MOTION.durations.heroTagline }, 0.1);
     }
     if (descriptionText) {
-      tl.fromTo(descriptionText, { autoAlpha: 0, x: descX, y: descY }, { autoAlpha: 1, x: 0, y: 0, duration: SEARCH_ADS_MOTION.durations.heroDescription }, 0.16);
+      tl.fromTo(descriptionText, { autoAlpha: 0, x: descX, y: descY }, { autoAlpha: 1, x: 0, y: 0, duration: SEARCH_ADS_MOTION.durations.heroDescription }, 0.2);
     }
-    // Snappy image reveal (no lag, 0 delay)
+    // Glides authoritatively from 180px near the container border with smooth zoom settle
     if (illustration) {
       tl.fromTo(
         illustration,
         { autoAlpha: 0, x: imgX, y: imgY, scale: SEARCH_ADS_MOTION.scale.heroImageInitial },
         { autoAlpha: 1, x: 0, y: 0, scale: 1.0, duration: SEARCH_ADS_MOTION.durations.heroImage },
-        0.05
+        0.08
       );
     }
   }, container);
 }
-
