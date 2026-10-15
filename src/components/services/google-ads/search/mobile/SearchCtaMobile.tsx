@@ -15,7 +15,7 @@ export const SearchCtaMobile: React.FC<SearchCtaMobileProps> = ({ onOpenCalendly
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
-  const paraRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const descRef = useRef<HTMLParagraphElement | null>(null);
   const buttonsRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -24,7 +24,7 @@ export const SearchCtaMobile: React.FC<SearchCtaMobileProps> = ({ onOpenCalendly
     const ctx = initCtaAnimation({
       container: containerRef.current,
       heading: headingRef.current,
-      descriptionParagraphs: paraRefs.current,
+      description: descRef.current,
       buttons: buttonsRef.current,
     });
 
@@ -44,19 +44,12 @@ export const SearchCtaMobile: React.FC<SearchCtaMobileProps> = ({ onOpenCalendly
           {cta.heading}
         </h2>
 
-        <div className="mt-3 flex flex-col space-y-2">
-          {cta.paragraphs.map((p, idx) => (
-            <p
-              key={idx}
-              ref={(el) => {
-                paraRefs.current[idx] = el;
-              }}
-              className="font-sans text-[13.5px] leading-[1.65] text-[#475569] will-change-transform"
-            >
-              {p}
-            </p>
-          ))}
-        </div>
+        <p
+          ref={descRef}
+          className="mt-3 font-sans text-[14px] leading-[1.65] text-[#475569] will-change-transform"
+        >
+          {cta.description}
+        </p>
 
         <div
           ref={buttonsRef}
