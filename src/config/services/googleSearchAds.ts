@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — GOOGLE SEARCH ADS CONTENT MANIFEST
- * Authoritative content manifest for both Desktop and Mobile layouts.
+ * Minimal, high-impact agency copy structured for maximum scannability.
  */
 
 export interface FaqItem {
@@ -9,12 +9,12 @@ export interface FaqItem {
   readonly answer: string;
 }
 
-export interface SearchDeliverablePoint {
-  readonly title: string;
-  readonly description: string;
+export interface SearchDeliverable {
+  readonly label: string;
+  readonly detail: string;
 }
 
-export interface SearchContentConfig {
+export interface GoogleSearchAdsConfig {
   readonly seo: {
     readonly title: string;
     readonly description: string;
@@ -22,49 +22,45 @@ export interface SearchContentConfig {
   readonly hero: {
     readonly heading: string;
     readonly tagline: string;
-    readonly paragraphs: readonly string[];
+    readonly description: string;
     readonly badges: readonly string[];
     readonly primaryButtonText: string;
     readonly secondaryButtonText: string;
     readonly imagePath: string;
     readonly imageAlt: string;
   };
-  readonly servicesIntro: {
+  readonly intro: {
     readonly heading: string;
-    readonly paragraph: string;
-    readonly featuredCard: {
-      readonly tag: string;
-      readonly heading: string;
-      readonly subheading: string;
-      readonly paragraphs: readonly string[];
-      readonly deliverables: readonly SearchDeliverablePoint[];
-      readonly illustrationPath: string;
-      readonly illustrationAlt: string;
-    };
+    readonly subheading: string;
   };
-  readonly cards: {
-    readonly card2: {
-      readonly tag: string;
-      readonly title: string;
+  readonly bento: {
+    readonly featured: {
+      readonly badge: string;
       readonly heading: string;
-      readonly paragraphs: readonly string[];
-      readonly deliverables: readonly SearchDeliverablePoint[];
-    };
-    readonly card3: {
-      readonly tag: string;
-      readonly title: string;
-      readonly heading: string;
-      readonly paragraphs: readonly string[];
-      readonly deliverables: readonly SearchDeliverablePoint[];
+      readonly summary: string;
+      readonly capabilities: readonly string[];
       readonly illustrationPath: string;
       readonly illustrationAlt: string;
     };
-    readonly card4: {
-      readonly tag: string;
-      readonly title: string;
+    readonly targeting: {
+      readonly badge: string;
       readonly heading: string;
-      readonly paragraphs: readonly string[];
-      readonly deliverables: readonly SearchDeliverablePoint[];
+      readonly summary: string;
+      readonly capabilities: readonly string[];
+    };
+    readonly relevance: {
+      readonly badge: string;
+      readonly heading: string;
+      readonly summary: string;
+      readonly capabilities: readonly string[];
+      readonly illustrationPath: string;
+      readonly illustrationAlt: string;
+    };
+    readonly attribution: {
+      readonly badge: string;
+      readonly heading: string;
+      readonly summary: string;
+      readonly capabilities: readonly string[];
     };
   };
   readonly faq: {
@@ -73,29 +69,26 @@ export interface SearchContentConfig {
   };
   readonly cta: {
     readonly heading: string;
-    readonly paragraphs: readonly string[];
+    readonly description: string;
     readonly primaryButtonText: string;
     readonly secondaryButtonText: string;
   };
 }
 
-export const GOOGLE_SEARCH_ADS_CONTENT: SearchContentConfig = {
+export const GOOGLE_SEARCH_ADS_CONTENT: GoogleSearchAdsConfig = {
   seo: {
     title: "Google Search Ads Management | Brivya Solutions",
     description:
-      "Turn the right searches into real business opportunities. High-intent keyword targeting, negative keyword filtration, and ROI-driven Google Search campaigns.",
+      "Turn commercial search intent into qualified revenue. Intent-focused campaign architecture, negative match shields, and verified conversion tracking.",
   },
   hero: {
     heading: "Google Search Ads Management",
     tagline: "Turn the Right Searches Into Real Business Opportunities.",
-    paragraphs: [
-      "When potential customers search for a product or service you offer, your business needs to be visible for the right reasons.",
-      "We plan, launch, and manage Google Search Ads campaigns around your business goals, your target customers, and the searches that matter most. From keyword selection and ad messaging to conversion tracking and ongoing optimization, we focus on helping you make better use of your advertising budget.",
-      "No generic campaigns. No guessing what your clicks are worth. A clear strategy built around what you want your business to achieve.",
-    ],
+    description:
+      "We design and manage search campaigns focused strictly on commercial intent. From keyword filtration and ad resonance to conversion tracking, we eliminate budget waste and capture customers actively looking for your services.",
     badges: [
-      "Intent-Driven Bidding",
-      "Negative Keyword Filtration",
+      "Commercial Intent Mapping",
+      "Negative Match Shields",
       "Verified Conversion Tracking",
     ],
     primaryButtonText: "Start a Project",
@@ -103,110 +96,58 @@ export const GOOGLE_SEARCH_ADS_CONTENT: SearchContentConfig = {
     imagePath: "/images/services/google-ads/search-hero-illustration.png",
     imageAlt: "Brivya Solutions Google Search Ads Management and Intent Telemetry Illustration",
   },
-  servicesIntro: {
-    heading: "Every Click Has a Cost. Make Your Campaign Count.",
-    paragraph:
-      "Successful search advertising takes more than choosing keywords and setting a daily budget. It requires the right targeting, relevant messaging, accurate measurement, and regular decisions based on campaign performance.",
-    featuredCard: {
-      tag: "Core Management",
-      heading: "Google Search Ads Campaign Management",
-      subheading: "A Campaign Built Around Your Business Goals.",
-      paragraphs: [
-        "Your advertising strategy should reflect what you're trying to sell, who you want to reach, and what makes your business worth choosing.",
-        "We manage Google Search Ads campaigns from planning and setup through launch and ongoing optimization. This includes campaign structure, keyword selection, bidding strategy, budget allocation, ad creation, and performance reviews.",
-        "Whether you want more qualified enquiries, product sales, or customer bookings, we build the campaign around the actions that matter to your business—not simply the number of clicks it receives.",
-      ],
-      deliverables: [
-        {
-          title: "Structured Account Architecture",
-          description: "Clean single-intent ad groups organized for maximum Quality Score and lower click costs.",
-        },
-        {
-          title: "Bidding & Budget Allocation",
-          description: "Smart bidding strategies calibrated to target CPA and return on ad spend (ROAS).",
-        },
-        {
-          title: "Active Performance Auditing",
-          description: "Continuous search term reviews, bid adjustments, and transparent performance reports.",
-        },
+  intro: {
+    heading: "Every Click Has a Cost. Make Your Budget Count.",
+    subheading:
+      "Search advertising engineered around active commercial demand, verified pipeline value, and disciplined budget governance.",
+  },
+  bento: {
+    featured: {
+      badge: "Campaign Governance",
+      heading: "Search Campaign Architecture & Bidding Strategy",
+      summary:
+        "We structure Google Ads accounts into single-intent ad groups. Bidding algorithms are calibrated to target CPA and commercial return, ensuring budget is directed only toward active buyers.",
+      capabilities: [
+        "Single-Intent Ad Group Architecture",
+        "Target CPA & ROAS Calibration",
+        "Search Query Mining & Budget Protection",
       ],
       illustrationPath: "/images/services/google-ads/campaign-structure-illustration.png",
-      illustrationAlt: "Google Ads Account Structure and Bidding Hierarchy Illustration",
+      illustrationAlt: "Google Ads Account Topology and Bidding Strategy Illustration",
     },
-  },
-  cards: {
-    card2: {
-      tag: "Intent Precision",
-      title: "Keyword Research & Search Intent Targeting",
-      heading: "Reach People Looking for What You Actually Offer.",
-      paragraphs: [
-        "Not every search represents a potential customer. Some people are researching, looking for free resources, or searching for services you don't provide.",
-        "We research relevant keywords, assess search intent, organize campaigns around closely related services, and review the actual searches triggering your ads. We also use negative keywords where appropriate to exclude irrelevant searches and reduce avoidable spend.",
-        "The objective is to attract more relevant traffic while giving your budget a clearer purpose.",
-      ],
-      deliverables: [
-        {
-          title: "Commercial Intent Mapping",
-          description: "Targeting high-value commercial searches while avoiding vague informational queries.",
-        },
-        {
-          title: "Negative Keyword Shields",
-          description: "Proactively eliminating irrelevant search terms to prevent budget waste.",
-        },
-        {
-          title: "Match Type Calibration",
-          description: "Disciplined phrase and exact match structures to ensure query relevance.",
-        },
+    targeting: {
+      badge: "Intent Precision",
+      heading: "Intent Research & Negative Match Shields",
+      summary:
+        "Not all searches represent customers. We isolate high-intent buyer keywords and deploy proactive negative keyword lists to shield your budget from unqualified clicks.",
+      capabilities: [
+        "Commercial Query Isolation",
+        "Proactive Negative Filtration",
+        "Disciplined Exact & Phrase Matching",
       ],
     },
-    card3: {
-      tag: "Message Resonance",
-      title: "Search Ad Copy & Landing Page Relevance",
-      heading: "Give Potential Customers a Reason to Choose You.",
-      paragraphs: [
-        "Getting your ad in front of someone is only the first step. Your message also needs to communicate why your offer is relevant and what the customer should do next.",
-        "We write and refine responsive search ads around your services, competitive advantages, and customer needs. We also align ad messaging with the destination page, so visitors can find the information, offer, or next step they expected when they clicked.",
-        "When an ad attracts attention but the landing page fails to support the promise, we identify that gap and recommend practical improvements.",
-      ],
-      deliverables: [
-        {
-          title: "Responsive Search Ad Copy",
-          description: "High-relevance headlines and descriptions tested against user search patterns.",
-        },
-        {
-          title: "Landing Page Message Matching",
-          description: "Aligning ad promises with page content to maximize conversion rates.",
-        },
-        {
-          title: "Friction Point Diagnostics",
-          description: "Pinpointing why clicks fail to convert and recommending high-impact landing page adjustments.",
-        },
+    relevance: {
+      badge: "Conversion Resonance",
+      heading: "Ad Copy Resonance & Landing Page Alignment",
+      summary:
+        "Responsive search ads written around your core advantages and aligned directly with landing page messaging to ensure zero conversion friction.",
+      capabilities: [
+        "High-Relevance Ad Copywriting",
+        "Ad-to-Page Message Matching",
+        "Quality Score & Friction Diagnostics",
       ],
       illustrationPath: "/images/services/google-ads/ad-relevance-illustration.png",
-      illustrationAlt: "Ad Relevance, Quality Score, and Landing Page Experience Illustration",
+      illustrationAlt: "Ad Relevance, Quality Score, and Landing Page Resonance Illustration",
     },
-    card4: {
-      tag: "Revenue Intelligence",
-      title: "Conversion Tracking & Campaign Optimization",
-      heading: "Know What's Working. Know What Needs to Change.",
-      paragraphs: [
-        "Clicks and impressions tell only part of the story. You also need to understand which campaigns generate enquiries, calls, purchases, and other valuable actions.",
-        "We help configure and validate conversion tracking, review campaign and keyword performance, and identify opportunities to improve results. Where suitable data is available, we can also help connect qualified leads or completed sales back to advertising activity.",
-        "You receive performance reporting that explains what the data means, what has changed, and which actions we recommend next.",
-      ],
-      deliverables: [
-        {
-          title: "Verified Conversion Pipelines",
-          description: "Accurate tracking for calls, forms, purchases, and qualified lead events.",
-        },
-        {
-          title: "Lead-to-Revenue Attribution",
-          description: "Connecting search ad clicks directly to real business pipeline value.",
-        },
-        {
-          title: "Action-Driven Reporting",
-          description: "Clear data insights detailing exactly what changed and where budget should shift next.",
-        },
+    attribution: {
+      badge: "Revenue Intelligence",
+      heading: "Verified Conversion Tracking & Lead Attribution",
+      summary:
+        "Clicks mean nothing without pipeline value. We connect search activity directly to phone calls, qualified form leads, and revenue data.",
+      capabilities: [
+        "First-Party Conversion Verification",
+        "Lead-to-Revenue Attribution",
+        "Action-Driven Spend Optimization",
       ],
     },
   },
@@ -217,53 +158,51 @@ export const GOOGLE_SEARCH_ADS_CONTENT: SearchContentConfig = {
         id: "faq-1",
         question: "How do you prevent our advertising budget from being wasted?",
         answer:
-          "We start by understanding your services, target customers, locations, and business priorities. We then structure targeting around relevant searches, apply suitable negative keywords, monitor actual search terms, and review performance regularly. No campaign can eliminate all wasted spend, but careful management helps identify and reduce avoidable costs.",
+          "We structure targeting around relevant commercial searches, apply strict negative keyword matrices, monitor actual search terms, and review performance regularly to eliminate non-converting spend.",
       },
       {
         id: "faq-2",
         question: "Why are our Google Ads getting clicks but not generating leads?",
         answer:
-          "The cause could be irrelevant search traffic, an offer that doesn't meet customer expectations, weak ad messaging, a poorly matched landing page, or a conversion tracking problem. We examine the available data to identify where potential customers are dropping off before recommending changes.",
+          "The cause is usually irrelevant search intent, a disconnect between the ad copy and the landing page, or unverified conversion tracking. We audit the drop-off points before recommending structural adjustments.",
       },
       {
         id: "faq-3",
         question: "Can you manage or improve our existing Google Ads account?",
         answer:
-          "Yes. We can review an existing account, assess its campaign structure, keywords, search terms, bidding, conversion tracking, and landing page relevance. Based on the findings, we recommend what to retain, improve, restructure, or stop rather than rebuilding everything automatically.",
+          "Yes. We review current campaign structures, search terms, bidding strategies, and tracking setups to identify what to keep, optimize, or pause rather than starting from scratch.",
       },
       {
         id: "faq-4",
         question: "How do you measure whether a campaign is successful?",
         answer:
-          "We agree on the business outcomes that matter before launch. Depending on your business, these might include qualified enquiries, phone calls, completed purchases, bookings, or cost per qualified lead. We then review the available conversion and revenue data alongside advertising costs to assess performance.",
+          "We measure real business outcomes: qualified inquiries, booked consultations, phone calls, and revenue generated against total advertising spend.",
       },
       {
         id: "faq-5",
         question: "How much should we spend on Google Search Ads?",
         answer:
-          "The right budget depends on your industry, target locations, competition, average click costs, and business goals. We help establish a realistic starting budget based on your priorities and available data. Your advertising spend and management fees should be clearly understood before the campaign begins.",
+          "Budget depends on industry competition, target geography, and average click costs. We calculate a realistic initial budget based on your goals and commercial conversion metrics.",
       },
       {
         id: "faq-6",
         question: "How soon can we expect results?",
         answer:
-          "Your ads may begin receiving impressions and clicks after approval and launch, but meaningful performance assessment takes longer. The timeline depends on search demand, competition, budget, conversion volume, and how effectively your website turns visitors into customers. We monitor early performance and make decisions based on evidence rather than promising a fixed number of leads by a specific date.",
+          "Impressions and clicks start shortly after launch. Meaningful conversion trends typically take 2–4 weeks as bidding algorithms calibrate and search term data is refined.",
       },
       {
         id: "faq-7",
         question: "Do you guarantee first-page placement or a specific number of leads?",
         answer:
-          "No responsible agency can guarantee a particular ad position, cost per lead, or sales outcome in every market. We can build and manage a strategy designed around your goals, measure performance, and make informed adjustments. We believe clear expectations and honest reporting are more valuable than promises that depend on factors outside our control.",
+          "No ethical agency guarantees positions or lead volume. We guarantee disciplined targeting, transparent data tracking, and continuous campaign optimization based on verifiable return on spend.",
       },
     ],
   },
   cta: {
     heading: "Your Next Campaign Deserves More Than Guesswork.",
-    paragraphs: [
-      "If you're investing in Google Ads—or preparing to start—we can help you approach it with a clearer strategy.",
-      "Tell us what you offer, who you want to reach, and what you want your advertising to achieve. We'll discuss your goals, identify the key considerations for your campaign, and help you understand the next steps before you commit your budget.",
-    ],
+    description:
+      "Tell us what you offer and what you need your advertising to achieve. We will audit your market demand, identify key considerations, and help you establish a clear strategy before you spend your budget.",
     primaryButtonText: "Start a Project",
-    secondaryButtonText: "Book a Consultation",
+    secondaryButtonText: "Book an Audit",
   },
 } as const;
