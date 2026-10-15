@@ -6,65 +6,58 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export function initFeaturedCardAnimation(
-  cardElement: HTMLElement | null,
-  headerElement: HTMLElement | null,
-  bodyElement: HTMLElement | null
+export function initBentoIntroAnimation(
+  container: HTMLElement | null,
+  heading: HTMLElement | null,
+  subheading: HTMLElement | null
 ): gsap.Context | null {
-  if (!cardElement) return null;
+  if (!container) return null;
 
   if (checkPrefersReducedMotion()) {
-    gsap.set([cardElement, headerElement, bodyElement].filter(Boolean), { autoAlpha: 1, y: 0, scale: 1 });
+    gsap.set([container, heading, subheading].filter(Boolean), { autoAlpha: 1, y: 0 });
     return null;
   }
 
   return gsap.context(() => {
     const isMobile = checkIsMobile();
-    const yTravel = isMobile ? SEARCH_ADS_MOTION.travel.mobileFeaturedY : SEARCH_ADS_MOTION.travel.desktopFeaturedY;
+    const yTravel = isMobile ? SEARCH_ADS_MOTION.travel.mobileBentoY : 35;
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: cardElement,
-        start: isMobile ? "top 92%" : "top 96%",
+        trigger: container,
+        start: isMobile ? "top 92%" : "top 94%",
         toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions,
       },
       onComplete: () => {
-        gsap.set([cardElement, headerElement, bodyElement].filter(Boolean), { clearProps: "transform,opacity" });
+        gsap.set([heading, subheading].filter(Boolean), { clearProps: "transform,opacity" });
       },
     });
 
-    tl.fromTo(
-      cardElement,
-      { autoAlpha: 0, y: yTravel, scale: SEARCH_ADS_MOTION.scale.featuredCardInitial },
-      { autoAlpha: 1, y: 0, scale: 1.0, duration: SEARCH_ADS_MOTION.durations.featuredCard, ease: SEARCH_ADS_MOTION.easings.executiveDecel },
-      0
-    );
-
-    if (headerElement) {
-      tl.fromTo(headerElement, { autoAlpha: 0, y: -10 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: SEARCH_ADS_MOTION.easings.powerOut }, 0.12);
+    if (heading) {
+      tl.fromTo(heading, { autoAlpha: 0, y: -yTravel }, { autoAlpha: 1, y: 0, duration: 0.6, ease: SEARCH_ADS_MOTION.easings.executiveDecel }, 0);
     }
-    if (bodyElement) {
-      tl.fromTo(bodyElement, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: SEARCH_ADS_MOTION.easings.powerOut }, 0.2);
+    if (subheading) {
+      tl.fromTo(subheading, { autoAlpha: 0, y: yTravel }, { autoAlpha: 1, y: 0, duration: 0.6, ease: SEARCH_ADS_MOTION.easings.executiveDecel }, 0.12);
     }
-  }, cardElement);
+  }, container);
 }
 
-export interface SearchCardsAnimationTargets {
-  readonly card2: HTMLElement | null;
-  readonly card3: HTMLElement | null;
-  readonly card3Container: HTMLElement | null;
-  readonly relevanceIllustration: HTMLElement | null;
-  readonly card4: HTMLElement | null;
+export interface BentoCardsTargets {
+  readonly featuredCard: HTMLElement | null;
+  readonly targetingCard: HTMLElement | null;
+  readonly relevanceCard: HTMLElement | null;
+  readonly relevanceImage: HTMLElement | null;
+  readonly attributionCard: HTMLElement | null;
 }
 
-export function initSearchCardsAnimation(
-  targets: SearchCardsAnimationTargets,
-  sectionContainer: HTMLElement | null
+export function initBentoGridAnimation(
+  targets: BentoCardsTargets,
+  container: HTMLElement | null
 ): gsap.Context | null {
-  const { card2, card3, card3Container, relevanceIllustration, card4 } = targets;
-  if (!sectionContainer) return null;
+  const { featuredCard, targetingCard, relevanceCard, relevanceImage, attributionCard } = targets;
+  if (!container) return null;
 
-  const elements = [card2, card3, relevanceIllustration, card4].filter(Boolean) as HTMLElement[];
+  const elements = [featuredCard, targetingCard, relevanceCard, relevanceImage, attributionCard].filter(Boolean) as HTMLElement[];
 
   if (checkPrefersReducedMotion()) {
     gsap.set(elements, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
@@ -73,76 +66,91 @@ export function initSearchCardsAnimation(
 
   return gsap.context(() => {
     const isMobile = checkIsMobile();
-    const lateralDistance = isMobile ? 0 : SEARCH_ADS_MOTION.travel.desktopCardLateralX;
-    const verticalDistance = isMobile ? SEARCH_ADS_MOTION.travel.mobileCardY : 0;
-    const startThreshold = isMobile ? "top 90%" : "top 88%";
+    const lateralDistance = isMobile ? 0 : SEARCH_ADS_MOTION.travel.desktopBentoLateralX;
+    const verticalDistance = isMobile ? SEARCH_ADS_MOTION.travel.mobileBentoY : 45;
+    const triggerStart = isMobile ? "top 90%" : "top 86%";
 
-    // Card 02: Enters RIGHT -> LEFT (Desktop) / Vertical (Mobile)
-    if (card2) {
+    // 1. Featured Cell: Subtle scale + upward emergence
+    if (featuredCard) {
       gsap.fromTo(
-        card2,
-        { autoAlpha: 0, x: lateralDistance, y: verticalDistance },
+        featuredCard,
+        { autoAlpha: 0, y: verticalDistance, scale: SEARCH_ADS_MOTION.scale.bentoFeaturedInitial },
         {
           autoAlpha: 1,
-          x: 0,
           y: 0,
-          duration: SEARCH_ADS_MOTION.durations.serviceCard,
+          scale: 1.0,
+          duration: SEARCH_ADS_MOTION.durations.bentoFeatured,
           ease: SEARCH_ADS_MOTION.easings.executiveDecel,
-          scrollTrigger: { trigger: card2, start: startThreshold, toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
-          onComplete: () => gsap.set(card2, { clearProps: "transform,opacity" }),
+          scrollTrigger: { trigger: featuredCard, start: isMobile ? "top 92%" : "top 88%", toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(featuredCard, { clearProps: "transform,opacity" }),
         }
       );
     }
 
-    // Card 03: Enters LEFT -> RIGHT (Desktop) + Ad Relevance Image 03
-    if (card3) {
-      const card3Trigger = card3Container || card3;
+    // 2. Targeting Card: Enters from Left
+    if (targetingCard) {
       gsap.fromTo(
-        card3,
-        { autoAlpha: 0, x: -lateralDistance, y: verticalDistance },
+        targetingCard,
+        { autoAlpha: 0, x: -lateralDistance, y: isMobile ? verticalDistance : 0 },
         {
           autoAlpha: 1,
           x: 0,
           y: 0,
-          duration: SEARCH_ADS_MOTION.durations.serviceCard,
+          duration: SEARCH_ADS_MOTION.durations.bentoCell,
           ease: SEARCH_ADS_MOTION.easings.executiveDecel,
-          scrollTrigger: { trigger: card3Trigger, start: startThreshold, toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
-          onComplete: () => gsap.set(card3, { clearProps: "transform,opacity" }),
+          scrollTrigger: { trigger: targetingCard, start: triggerStart, toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(targetingCard, { clearProps: "transform,opacity" }),
+        }
+      );
+    }
+
+    // 3. Relevance Card: Enters from Right + External Illustration
+    if (relevanceCard) {
+      gsap.fromTo(
+        relevanceCard,
+        { autoAlpha: 0, x: lateralDistance, y: isMobile ? verticalDistance : 0 },
+        {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          duration: SEARCH_ADS_MOTION.durations.bentoCell,
+          ease: SEARCH_ADS_MOTION.easings.executiveDecel,
+          scrollTrigger: { trigger: relevanceCard, start: triggerStart, toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(relevanceCard, { clearProps: "transform,opacity" }),
         }
       );
 
-      if (relevanceIllustration) {
+      if (relevanceImage) {
         gsap.fromTo(
-          relevanceIllustration,
-          { autoAlpha: 0, y: isMobile ? SEARCH_ADS_MOTION.travel.mobileRelevanceY : SEARCH_ADS_MOTION.travel.desktopRelevanceY, scale: SEARCH_ADS_MOTION.scale.relevanceImageInitial },
+          relevanceImage,
+          { autoAlpha: 0, y: 40, scale: SEARCH_ADS_MOTION.scale.relevanceImageInitial },
           {
             autoAlpha: 1,
             y: 0,
             scale: 1.0,
             duration: SEARCH_ADS_MOTION.durations.relevanceImage,
             ease: SEARCH_ADS_MOTION.easings.executiveDecel,
-            scrollTrigger: { trigger: card3Trigger, start: isMobile ? "top 92%" : "top 86%", toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
-            onComplete: () => gsap.set(relevanceIllustration, { clearProps: "transform,opacity" }),
+            scrollTrigger: { trigger: relevanceCard, start: isMobile ? "top 92%" : "top 84%", toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
+            onComplete: () => gsap.set(relevanceImage, { clearProps: "transform,opacity" }),
           }
         );
       }
     }
 
-    // Card 04: Enters RIGHT -> LEFT (Desktop) / Vertical (Mobile)
-    if (card4) {
+    // 4. Attribution Card: Enters Upward
+    if (attributionCard) {
       gsap.fromTo(
-        card4,
-        { autoAlpha: 0, x: lateralDistance, y: verticalDistance },
+        attributionCard,
+        { autoAlpha: 0, y: verticalDistance },
         {
           autoAlpha: 1,
-          x: 0,
           y: 0,
-          duration: SEARCH_ADS_MOTION.durations.serviceCard,
+          duration: SEARCH_ADS_MOTION.durations.bentoCell,
           ease: SEARCH_ADS_MOTION.easings.executiveDecel,
-          scrollTrigger: { trigger: card4, start: startThreshold, toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
-          onComplete: () => gsap.set(card4, { clearProps: "transform,opacity" }),
+          scrollTrigger: { trigger: attributionCard, start: triggerStart, toggleActions: SEARCH_ADS_MOTION.scrollTrigger.toggleActions },
+          onComplete: () => gsap.set(attributionCard, { clearProps: "transform,opacity" }),
         }
       );
     }
-  }, sectionContainer);
+  }, container);
 }
