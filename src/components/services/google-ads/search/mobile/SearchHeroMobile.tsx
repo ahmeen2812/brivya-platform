@@ -18,7 +18,7 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const taglineRef = useRef<HTMLParagraphElement | null>(null);
-  const descriptionTextRef = useRef<HTMLDivElement | null>(null);
+  const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -64,24 +64,23 @@ export const SearchHeroMobile: React.FC<SearchHeroMobileProps> = ({ onOpenCalend
         <div className="mt-4 flex items-stretch">
           <div aria-hidden="true" className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full" />
           <div className="overflow-hidden pl-3.5 py-0.5">
-            <div ref={descriptionTextRef} className="flex flex-col space-y-2 will-change-transform">
-              {hero.paragraphs.map((p, idx) => (
-                <p key={idx} className="font-sans text-[14px] leading-[1.68] text-[#475569] font-normal">
-                  {p}
-                </p>
-              ))}
-            </div>
+            <p
+              ref={descriptionTextRef}
+              className="font-sans text-[14px] leading-[1.68] text-[#475569] font-normal tracking-[-0.01em] will-change-transform"
+            >
+              {hero.description}
+            </p>
           </div>
         </div>
 
-        {/* Structured Badges on Mobile */}
-        <div className="mt-4 flex flex-wrap gap-2">
+        {/* Minimal Badges on Mobile */}
+        <div className="mt-4 flex flex-wrap gap-1.5">
           {hero.badges.map((badge, idx) => (
             <span
               key={idx}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#BACFE6] font-mono text-[10px] font-semibold text-[#06162C] uppercase"
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/90 border border-[#BACFE6] font-mono text-[9.5px] font-semibold text-[#06162C] uppercase"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#0A5FD7]" />
+              <span className="h-1 w-1 rounded-full bg-[#0A5FD7]" />
               {badge}
             </span>
           ))}
