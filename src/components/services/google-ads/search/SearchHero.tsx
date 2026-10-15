@@ -19,7 +19,7 @@ export const SearchHero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const taglineRef = useRef<HTMLParagraphElement | null>(null);
-  const descriptionTextRef = useRef<HTMLDivElement | null>(null);
+  const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -71,25 +71,24 @@ export const SearchHero: React.FC = () => {
             <div className="mt-6 flex items-stretch">
               <div aria-hidden="true" className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full" />
               <div className="overflow-hidden pl-5 py-0.5">
-                <div ref={descriptionTextRef} className="flex flex-col space-y-3 max-w-[580px] will-change-transform">
-                  {hero.paragraphs.map((p, idx) => (
-                    <p key={idx} className="font-sans text-[15px] leading-[1.7] text-[#475569] font-normal tracking-[-0.01em]">
-                      {p}
-                    </p>
-                  ))}
-                </div>
+                <p
+                  ref={descriptionTextRef}
+                  className="font-sans text-[15.5px] leading-[1.72] text-[#475569] font-normal tracking-[-0.01em] max-w-[560px] will-change-transform"
+                >
+                  {hero.description}
+                </p>
               </div>
             </div>
 
-            {/* Structured Telemetry Badges */}
-            <div className="mt-7 flex flex-wrap items-center gap-2.5">
+            {/* Minimal Telemetry Badges */}
+            <div className="mt-6 flex flex-wrap items-center gap-2">
               {hero.badges.map((badge, idx) => (
                 <div
                   key={idx}
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-[#BACFE6] shadow-[0_2px_8px_rgba(7,54,109,0.04)]"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#BACFE6] shadow-[0_1px_4px_rgba(7,54,109,0.03)]"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#0A5FD7]" aria-hidden="true" />
-                  <span className="font-mono text-[11px] font-semibold text-[#06162C] uppercase tracking-wider">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#0A5FD7]" />
+                  <span className="font-mono text-[10.5px] font-semibold text-[#06162C] uppercase tracking-wider">
                     {badge}
                   </span>
                 </div>
@@ -117,7 +116,7 @@ export const SearchHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Hero Illustration Container (Image 01) */}
+          {/* Right Column: Hero Illustration (Pronounced 180px Edge Entrance) */}
           <div className="col-span-5 flex items-center justify-center">
             <div
               ref={illustrationRef}
