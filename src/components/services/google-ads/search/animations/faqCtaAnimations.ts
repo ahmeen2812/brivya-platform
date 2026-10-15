@@ -64,16 +64,15 @@ export function initFaqAnimation(
 export interface CtaAnimationTargets {
   readonly container: HTMLElement | null;
   readonly heading: HTMLElement | null;
-  readonly descriptionParagraphs: readonly (HTMLElement | null)[];
+  readonly description: HTMLElement | null;
   readonly buttons: HTMLElement | null;
 }
 
 export function initCtaAnimation(targets: CtaAnimationTargets): gsap.Context | null {
-  const { container, heading, descriptionParagraphs, buttons } = targets;
+  const { container, heading, description, buttons } = targets;
   if (!container) return null;
 
-  const validParas = descriptionParagraphs.filter(Boolean) as HTMLElement[];
-  const elements = [container, heading, ...validParas, buttons].filter(Boolean) as HTMLElement[];
+  const elements = [container, heading, description, buttons].filter(Boolean) as HTMLElement[];
 
   if (checkPrefersReducedMotion()) {
     gsap.set(elements, { autoAlpha: 1, y: 0 });
@@ -98,11 +97,11 @@ export function initCtaAnimation(targets: CtaAnimationTargets): gsap.Context | n
     if (heading) {
       tl.fromTo(heading, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: SEARCH_ADS_MOTION.easings.powerOut }, 0.16);
     }
-    if (validParas.length > 0) {
-      tl.fromTo(validParas, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.08, ease: SEARCH_ADS_MOTION.easings.powerOut }, 0.24);
+    if (description) {
+      tl.fromTo(description, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: SEARCH_ADS_MOTION.easings.powerOut }, 0.24);
     }
     if (buttons) {
-      tl.fromTo(buttons, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: SEARCH_ADS_MOTION.easings.powerOut }, 0.36);
+      tl.fromTo(buttons, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: SEARCH_ADS_MOTION.easings.powerOut }, 0.34);
     }
   }, container);
 }
