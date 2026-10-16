@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { SAAS_PRODUCTS_CONTENT } from "@/config/services/saasProducts";
 import { initHeroAnimation } from "./animations";
 import { SaasProductsHeroMobile } from "./mobile/SaasProductsHeroMobile";
+import { useIsomorphicLayoutEffect } from "@/components/shared/useIsomorphicLayoutEffect";
 
 export const SaasProductsHero: React.FC = () => {
   const { hero } = SAAS_PRODUCTS_CONTENT;
@@ -16,7 +17,8 @@ export const SaasProductsHero: React.FC = () => {
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  // Synchronous pre-paint initialization eliminates the flash on both reload and route navigation
+  useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
 
     const ctx = initHeroAnimation(

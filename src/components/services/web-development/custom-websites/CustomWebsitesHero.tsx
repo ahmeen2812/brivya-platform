@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { CUSTOM_WEBSITES_CONTENT } from "@/config/services/customWebsites";
 import { initHeroAnimation } from "./animations";
 import { CustomWebsitesHeroMobile } from "./mobile/CustomWebsitesHeroMobile";
+import { useIsomorphicLayoutEffect } from "@/components/shared/useIsomorphicLayoutEffect";
 
 export const CustomWebsitesHero: React.FC = () => {
   const { hero } = CUSTOM_WEBSITES_CONTENT;
@@ -16,7 +17,8 @@ export const CustomWebsitesHero: React.FC = () => {
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  // Synchronous pre-paint initialization eliminates the flash on both reload and route navigation
+  useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
 
     const ctx = initHeroAnimation(
@@ -34,15 +36,13 @@ export const CustomWebsitesHero: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT (hidden on mobile) */}
+      {/* DESKTOP VIEWPORT */}
       <section
         ref={containerRef}
         className="hidden lg:block relative w-full pt-6 pb-16 lg:pb-20 select-none overflow-x-clip"
       >
         <div className="grid grid-cols-12 gap-10 items-center">
-          {/* Left Column: Heading, Subtitle & Line-Masked Description */}
           <div className="col-span-7 flex flex-col justify-center">
-            {/* 1. Navy Heading (Enters Left -> Right) */}
             <div className="overflow-hidden pb-1">
               <h1
                 ref={headingRef}
@@ -52,7 +52,6 @@ export const CustomWebsitesHero: React.FC = () => {
               </h1>
             </div>
 
-            {/* 2. Cobalt Subtitle (Enters Right -> Left) */}
             <div className="overflow-hidden pb-1">
               <p
                 ref={taglineRef}
@@ -62,14 +61,8 @@ export const CustomWebsitesHero: React.FC = () => {
               </p>
             </div>
 
-            {/* 3. Description: Stationary Accent Line with Text Emerging From Behind */}
             <div className="mt-6 flex items-stretch">
-              {/* Fixed vertical accent line */}
-              <div
-                aria-hidden="true"
-                className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full"
-              />
-              {/* Mask boundary pinned right next to the line */}
+              <div aria-hidden="true" className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full" />
               <div className="overflow-hidden pl-5 py-0.5">
                 <p
                   ref={descriptionTextRef}
@@ -81,7 +74,6 @@ export const CustomWebsitesHero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Hero Illustration Container (Right -> Left + Zoom Settle) */}
           <div className="col-span-5 flex items-center justify-center">
             <div
               ref={illustrationRef}

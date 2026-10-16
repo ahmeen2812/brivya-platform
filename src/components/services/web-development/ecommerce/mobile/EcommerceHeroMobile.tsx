@@ -2,15 +2,10 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { ECOMMERCE_CONTENT } from "@/config/services/ecommerce";
 import { initHeroAnimation } from "../animations";
 
-export interface EcommerceHeroMobileProps {
-  readonly onOpenCalendly: () => void;
-}
-
-export const EcommerceHeroMobile: React.FC<EcommerceHeroMobileProps> = ({ onOpenCalendly }) => {
+export const EcommerceHeroMobile: React.FC = () => {
   const { hero } = ECOMMERCE_CONTENT;
   const [imageError, setImageError] = useState(false);
 
@@ -18,7 +13,6 @@ export const EcommerceHeroMobile: React.FC<EcommerceHeroMobileProps> = ({ onOpen
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const taglineRef = useRef<HTMLParagraphElement | null>(null);
   const descriptionTextRef = useRef<HTMLDivElement | null>(null);
-  const buttonsRef = useRef<HTMLDivElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -29,7 +23,6 @@ export const EcommerceHeroMobile: React.FC<EcommerceHeroMobileProps> = ({ onOpen
         heading: headingRef.current,
         tagline: taglineRef.current,
         descriptionText: descriptionTextRef.current,
-        buttons: buttonsRef.current,
         illustration: illustrationRef.current,
       },
       containerRef.current
@@ -73,25 +66,6 @@ export const EcommerceHeroMobile: React.FC<EcommerceHeroMobileProps> = ({ onOpen
               ))}
             </div>
           </div>
-        </div>
-
-        <div ref={buttonsRef} className="mt-6 flex flex-col gap-3 w-full will-change-transform">
-          <Link
-            href="/start-project"
-            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] py-3.5 font-sans text-sm font-semibold text-white shadow-md active:scale-[0.98]"
-          >
-            <span>{hero.primaryButtonText}</span>
-            <span aria-hidden="true">→</span>
-          </Link>
-
-          <button
-            type="button"
-            onClick={onOpenCalendly}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300 py-3.5 font-sans text-sm font-semibold text-[#06162C] shadow-2xs active:scale-[0.98]"
-          >
-            <span>{hero.secondaryButtonText}</span>
-            <span aria-hidden="true">↗</span>
-          </button>
         </div>
 
         <div

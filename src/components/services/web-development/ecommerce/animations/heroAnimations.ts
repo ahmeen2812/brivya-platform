@@ -5,7 +5,7 @@ export interface HeroAnimationTargets {
   readonly heading: HTMLElement | null;
   readonly tagline: HTMLElement | null;
   readonly descriptionText: HTMLElement | null;
-  readonly buttons: HTMLElement | null;
+  readonly buttons?: HTMLElement | null;
   readonly illustration: HTMLElement | null;
 }
 

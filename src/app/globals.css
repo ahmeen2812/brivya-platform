@@ -230,3 +230,16 @@ body {
     scroll-behavior: auto !important;
   }
 }
+/* ==========================================================================
+   BRIVYA MOTION — FOUC (FLASH OF UNANIMATED CONTENT) PREVENTION PROTOCOL
+   - Conceals animated targets on initial paint ONLY when JavaScript is enabled.
+   - Preserves 100% accessibility if JS is disabled (no .js class on <html>).
+   - Preserves 100% visibility when prefers-reduced-motion is active.
+   - Releases automatically to GSAP once .fouc-ready is added upon hydration.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html.js:not(.fouc-ready) main .will-change-transform {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}

@@ -2,24 +2,18 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { ECOMMERCE_CONTENT } from "@/config/services/ecommerce";
-import { SITE_CONTACT } from "@/config/siteContact";
-import { CalendlyModal } from "@/components/sections/inquiry/CalendlyModal";
 import { initHeroAnimation } from "./animations";
 import { EcommerceHeroMobile } from "./mobile/EcommerceHeroMobile";
 
 export const EcommerceHero: React.FC = () => {
   const { hero } = ECOMMERCE_CONTENT;
-  const { meeting } = SITE_CONTACT;
   const [imageError, setImageError] = useState(false);
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const taglineRef = useRef<HTMLParagraphElement | null>(null);
   const descriptionTextRef = useRef<HTMLDivElement | null>(null);
-  const buttonsRef = useRef<HTMLDivElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -30,7 +24,6 @@ export const EcommerceHero: React.FC = () => {
         heading: headingRef.current,
         tagline: taglineRef.current,
         descriptionText: descriptionTextRef.current,
-        buttons: buttonsRef.current,
         illustration: illustrationRef.current,
       },
       containerRef.current
@@ -81,26 +74,6 @@ export const EcommerceHero: React.FC = () => {
                 </div>
               </div>
             </div>
-
-            {/* Hero Action Buttons */}
-            <div ref={buttonsRef} className="mt-8 flex items-center gap-4 will-change-transform">
-              <Link
-                href="/start-project"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#061B3A] via-[#072B5E] to-[#0A5FD7] px-8 py-3.5 font-sans text-sm font-semibold text-white shadow-[0_4px_16px_-2px_rgba(6,27,58,0.35)] hover:shadow-[0_8px_25px_-2px_rgba(10,95,215,0.45)] hover:scale-[1.01] active:scale-[0.98] transition-all"
-              >
-                <span>{hero.primaryButtonText}</span>
-                <span aria-hidden="true">→</span>
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => setIsCalendlyOpen(true)}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300/90 px-7 py-3.5 font-sans text-sm font-semibold text-[#06162C] shadow-2xs hover:bg-slate-50 hover:border-[#0A5FD7]/50 hover:text-[#0A5FD7] active:scale-[0.98] transition-all cursor-pointer"
-              >
-                <span>{hero.secondaryButtonText}</span>
-                <span aria-hidden="true">↗</span>
-              </button>
-            </div>
           </div>
 
           {/* Right Column: Hero Illustration Container (Image 01) */}
@@ -136,17 +109,8 @@ export const EcommerceHero: React.FC = () => {
 
       {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
-        <EcommerceHeroMobile onOpenCalendly={() => setIsCalendlyOpen(true)} />
+        <EcommerceHeroMobile />
       </div>
-
-      <CalendlyModal
-        isOpen={isCalendlyOpen}
-        onClose={() => setIsCalendlyOpen(false)}
-        calendlyUrl={meeting.calendlyUrl}
-        primaryColor={meeting.theme.primaryColor}
-        textColor={meeting.theme.textColor}
-        backgroundColor={meeting.theme.backgroundColor}
-      />
     </>
   );
 };
