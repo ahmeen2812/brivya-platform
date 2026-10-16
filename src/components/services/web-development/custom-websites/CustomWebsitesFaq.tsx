@@ -75,14 +75,14 @@ export const CustomWebsitesFaq: React.FC = () => {
                     </span>
 
                     <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                         isOpen
                           ? "bg-[#0A5FD7] text-white border-[#0A5FD7]"
                           : "bg-white text-slate-500 border-slate-200 group-hover:border-[#BACFE6]"
                       }`}
                     >
                       <svg
-                        className={`h-4 w-4 transition-transform duration-200 ${
+                        className={`h-4 w-4 transition-transform duration-300 ${
                           isOpen ? "rotate-45" : "rotate-0"
                         }`}
                         fill="none"
@@ -95,13 +95,18 @@ export const CustomWebsitesFaq: React.FC = () => {
                     </span>
                   </button>
 
-                  {isOpen && (
-                    <div className="pt-3.5 pr-8">
+                  {/* Smooth Animated Height & Opacity Expansion */}
+                  <div
+                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                      isOpen ? "grid-rows-[1fr] opacity-100 mt-3.5" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden pr-8">
                       <p className="font-sans text-[15px] leading-[1.72] text-[#475569] font-normal tracking-[-0.01em]">
                         {item.answer}
                       </p>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}

@@ -50,9 +50,7 @@ export const ApiCardsSection: React.FC = () => {
               className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10"
             />
             <div className="relative z-0">
-              <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-                Card {cards.card2.index} — {cards.card2.title}
-              </span>
+             
               <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
                 {cards.card2.heading}
               </h3>
@@ -75,9 +73,7 @@ export const ApiCardsSection: React.FC = () => {
                 className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10"
               />
               <div className="relative z-0">
-                <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-                  Card {cards.card3.index} — {cards.card3.title}
-                </span>
+                
                 <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
                   {cards.card3.heading}
                 </h3>
@@ -126,9 +122,7 @@ export const ApiCardsSection: React.FC = () => {
               className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10"
             />
             <div className="relative z-0">
-              <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-                Card {cards.card4.index} — {cards.card4.title}
-              </span>
+           
               <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
                 {cards.card4.heading}
               </h3>

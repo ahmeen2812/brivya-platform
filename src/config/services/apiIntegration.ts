@@ -101,7 +101,7 @@ export const API_INTEGRATION_CONTENT: ApiContentConfig = {
   },
   cards: {
     card2: {
-      index: "02",
+      index: "0",
       title: "Third-Party API Integration",
       heading: "Make Your Existing Platforms Work Together",
       paragraph:

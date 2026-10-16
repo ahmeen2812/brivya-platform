@@ -22,9 +22,7 @@ export const PerformanceServicesIntroMobile: React.FC = () => {
   return (
     <section className="relative w-full mb-10 select-none overflow-x-clip">
       <div className="mb-5">
-        <span className="font-mono text-[10.5px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
-          Section 02 // Core Optimization
-        </span>
+       
         <h2 className="font-sans text-[24px] font-extrabold text-[#06162C] leading-[1.2] tracking-tight">
           {servicesIntro.heading}
         </h2>

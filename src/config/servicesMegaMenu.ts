@@ -81,7 +81,6 @@ export const SERVICE_PILLARS: readonly ServicePillar[] = [
         title: "Website Performance Optimization",
         description: "Codebase refactoring to guarantee 99+ Core Web Vitals.",
         href: "/services/web-development/performance-optimization",
-        badge: "99+ Vitals",
         iconType: "lighthouse",
       },
     ],

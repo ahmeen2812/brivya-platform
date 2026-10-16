@@ -33,9 +33,7 @@ export const PerformanceServicesIntro: React.FC = () => {
       <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
         {/* Section Intro */}
         <div ref={headerRef} className="max-w-[820px] mb-8 will-change-transform">
-          <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-            Section 02 // Core Optimization
-          </span>
+         
           <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
             {servicesIntro.heading}
           </h2>

@@ -91,7 +91,7 @@ export const PERFORMANCE_OPTIMIZATION_CONTENT: PerformanceContentConfig = {
     paragraph:
       "Every website has its own performance challenges. We focus on the issues affecting your website, your visitors, and the actions you want them to take.",
     featuredCard: {
-      tag: "Featured Service — Core Speed",
+      tag: "",
       heading: "Website Speed Optimization",
       subheading: "A Faster Website, Without Unnecessary Changes",
       paragraphs: [

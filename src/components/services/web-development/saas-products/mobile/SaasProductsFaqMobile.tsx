@@ -38,7 +38,7 @@ export const SaasProductsFaqMobile: React.FC = () => {
                     {item.question}
                   </span>
                   <span
-                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold ${
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold transition-all duration-300 ${
                       isOpen
                         ? "bg-[#0A5FD7] text-white border-[#0A5FD7]"
                         : "bg-white text-slate-500 border-slate-200"
@@ -48,13 +48,18 @@ export const SaasProductsFaqMobile: React.FC = () => {
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div className="pt-2.5">
+                {/* Animated Height Expansion on Mobile */}
+                <div
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                    isOpen ? "grid-rows-[1fr] opacity-100 mt-2.5" : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
                     <p className="font-sans text-[13.5px] leading-[1.65] text-[#475569]">
                       {item.answer}
                     </p>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}
