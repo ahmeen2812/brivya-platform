@@ -74,123 +74,114 @@ export const PERFORMANCE_OPTIMIZATION_CONTENT: PerformanceContentConfig = {
   seo: {
     title: "Website Performance Optimization | Brivya Solutions",
     description:
-      "Your visitors shouldn't have to wait for your website to catch up. Targeted improvements to loading speed, Core Web Vitals, responsiveness, and stability.",
+      "Make your website faster. Give your customers a better experience. Targeted improvements to loading speed, Core Web Vitals, responsiveness, and stability.",
   },
   hero: {
     heading: "Website Performance Optimization",
-    tagline: "Your Visitors Shouldn't Have to Wait for Your Website to Catch Up.",
+    tagline: "Make Your Website Faster. Give Your Customers a Better Experience.",
     paragraphs: [
-      "A slow website can turn a simple visit into a frustrating experience. Pages take too long to appear, buttons feel unresponsive, and important content shifts while people are trying to read.",
-      "We identify what's slowing your website down and make targeted improvements to loading speed, responsiveness, and stability—without compromising the experience your website was built to deliver.",
+      "A slow website can cost you more than time. It can frustrate potential customers, interrupt their journey, and make it harder for them to reach out or complete a purchase.",
+      "We optimize existing websites by finding the issues behind slow loading, unresponsive interactions, and poor mobile performance. Our team works on the actual causes, implements targeted improvements, and tests the results—so your website works better without an unnecessary rebuild.",
     ],
     imagePath: "/images/services/web-development/performance-hero-illustration.png",
     imageAlt: "Brivya Solutions Website Performance Optimization & Telemetry Illustration",
   },
   servicesIntro: {
-    heading: "Better Performance Starts With Understanding What's Wrong.",
+    heading: "Performance Improvements Built Around Your Website",
     paragraph:
-      "Every slow website has a different cause. We measure how your pages perform, identify the issues that matter most, and prioritize practical improvements based on their impact on real users.",
+      "Every website has its own performance challenges. We focus on the issues affecting your website, your visitors, and the actions you want them to take.",
     featuredCard: {
-      tag: "Featured Service — Technical Diagnostics",
-      heading: "Website Performance Audit & Optimization",
-      subheading: "Find the Problems. Fix What Matters.",
+      tag: "Featured Service — Core Speed",
+      heading: "Website Speed Optimization",
+      subheading: "A Faster Website, Without Unnecessary Changes",
       paragraphs: [
-        "Before making changes, we need to understand what's happening.",
-        "We assess your website using performance testing tools and technical diagnostics to identify bottlenecks, from inefficient resource loading to unnecessary scripts and rendering delays. You get a clearer picture of what's holding your website back and a focused plan for improving it.",
+        "If your website takes too long to load, we investigate what's causing the delay before recommending a fix.",
+        "We analyze page loading, resource requests, rendering behavior, and server response times. Then we optimize the areas that need attention, helping your important pages load more efficiently while preserving the design and functionality your business depends on.",
       ],
       illustrationPath: "/images/services/web-development/performance-audit-illustration.png",
-      illustrationAlt: "Performance Diagnostics and Lighthouse Auditing Illustration",
+      illustrationAlt: "Performance Diagnostics and Website Speed Auditing Illustration",
     },
   },
   cards: {
     card2: {
       index: "02",
-      title: "Core Web Vitals Optimization",
-      heading: "Make Your Website Feel Faster, More Responsive, and Stable.",
+      title: "Core Web Vitals & Mobile Performance",
+      heading: "A Better Experience on Every Screen",
       paragraphs: [
-        "A page can finish loading and still feel slow when someone tries to use it. We focus on Google's Core Web Vitals to improve how quickly your main content appears, how promptly your website responds to interactions, and how stable the layout remains while loading.",
+        "Your website should feel responsive when customers browse products, explore services, or fill out a contact form.",
+        "We address Core Web Vitals issues, improve mobile loading behavior, reduce unnecessary delays during interactions, and fix layout shifts that disrupt the browsing experience. The focus is on making your website easier to use—not simply improving a score in a testing tool.",
       ],
-      highlight: "LCP under 2.5s, INP under 200ms, and zero Cumulative Layout Shift.",
+      highlight: "Interaction responsiveness, visual stability, and smooth mobile browsing.",
     },
     card3: {
       index: "03",
-      title: "Image, JavaScript & Front-End Optimization",
-      heading: "Deliver the Experience Without the Unnecessary Weight.",
+      title: "Front-End & Resource Optimization",
+      heading: "Keep the Features. Reduce the Unnecessary Load.",
       paragraphs: [
-        "Large images, excessive JavaScript, and resources that block rendering can add unnecessary delays. We optimize media, reduce unnecessary code where possible, and improve how critical and non-critical resources are loaded—helping your website do more with less.",
+        "Heavy images, excessive JavaScript, and resources that delay page rendering can make a website slower than it needs to be.",
+        "We optimize image delivery, review CSS and JavaScript loading, remove unnecessary resource overhead where appropriate, and improve how critical content reaches the browser. Your website retains the features it needs without carrying avoidable performance costs.",
       ],
-      highlight: "Modern format encoding, script tree-shaking, and critical CSS inlining.",
+      highlight: "Asset compression, script reduction, and critical render path optimization.",
       illustrationPath: "/images/services/web-development/caching-delivery-illustration.png",
       illustrationAlt: "Asset Compression and Edge Caching Architecture Illustration",
     },
     card4: {
       index: "04",
-      title: "Caching & Page Delivery Optimization",
-      heading: "Get Important Content to Visitors More Efficiently.",
+      title: "Server Response, Caching & Page Delivery",
+      heading: "Help Your Website Respond More Efficiently",
       paragraphs: [
-        "Your website shouldn't have to repeat unnecessary work on every visit. We review browser caching, resource compression, and content delivery options to reduce avoidable loading delays and improve performance across devices and network conditions.",
+        "Sometimes the problem starts before the page even begins to appear.",
+        "We investigate server response delays, caching configuration, and resource delivery to identify where requests are taking too long. Where the hosting environment and website architecture allow it, we implement appropriate improvements to reduce unnecessary work and deliver content more efficiently.",
       ],
-      highlight: "Edge caching rules, Brotli compression, and distributed CDN delivery.",
+      highlight: "Server response efficiency, caching configuration, and edge delivery.",
     },
   },
   faq: {
-    heading: "Practical Answers Before We Get Started.",
+    heading: "Frequently Asked Questions",
     items: [
       {
         id: "faq-1",
-        question: "Can you optimize my existing website without redesigning it?",
+        question: "Can you speed up my existing website without redesigning it?",
         answer:
-          "Yes. Performance optimization often starts with improving the existing code, assets, and loading behavior rather than changing the design. If a deeper structural change is needed, we'll explain why before recommending it.",
+          "Yes. Our first approach is to identify and fix performance issues within your existing website. A redesign is not automatically necessary. If the underlying architecture is responsible for significant limitations, we'll explain the options before recommending larger changes.",
       },
       {
         id: "faq-2",
-        question: "How do you measure website performance?",
+        question: "What exactly will you do to improve my website?",
         answer:
-          "We use tools such as Google PageSpeed Insights and Lighthouse to examine loading behavior and identify technical issues. Where sufficient real-user data is available, we also consider field metrics from the Chrome User Experience Report and Google Search Console.",
+          "We begin by assessing your website and identifying the main performance bottlenecks. Based on the findings, we prioritize relevant fixes, implement the agreed improvements, and test the affected pages again. You'll receive a clear explanation of the work completed and the results observed.",
       },
       {
         id: "faq-3",
-        question: "What are Core Web Vitals, and why do they matter?",
+        question: "Can you improve my Google PageSpeed Insights score?",
         answer:
-          "Core Web Vitals measure three important parts of the user experience: loading performance, responsiveness, and visual stability. Google's recommended targets are a Largest Contentful Paint of 2.5 seconds or less, Interaction to Next Paint of 200 milliseconds or less, and Cumulative Layout Shift of 0.1 or less, assessed at the 75th percentile of page visits.",
+          "We can work on the technical issues identified by PageSpeed Insights and Lighthouse, including opportunities related to loading, JavaScript execution, image delivery, and Core Web Vitals. The achievable improvement depends on your website's current condition, platform, and third-party dependencies. We don't promise a particular score before reviewing the site.",
       },
       {
         id: "faq-4",
-        question: "Will a faster website improve my Google rankings?",
+        question: "Will performance optimization affect my website's design or features?",
         answer:
-          "Good Core Web Vitals contribute to a better page experience and are used by Google's ranking systems. However, they are not the only ranking consideration, and improving performance does not guarantee a higher position in search results. Our focus is on measurable performance improvements that benefit your visitors as well.",
+          "Our aim is to improve speed while preserving your existing design, functionality, and user journey. We test relevant pages after making changes and avoid removing important features simply to improve a performance score.",
       },
       {
         id: "faq-5",
-        question: "Can you improve mobile performance specifically?",
+        question: "Can you optimize a website that is already live?",
         answer:
-          "Yes. We assess mobile performance separately because processing power, network conditions, and resource loading can affect the experience differently from desktop. We prioritize improvements according to the issues identified on your actual pages.",
+          "Yes. We can assess an existing website and plan improvements around its current setup. Implementation depends on the platform, available access, hosting environment, and any technical restrictions. We establish the scope before making changes.",
       },
       {
         id: "faq-6",
-        question: "Will optimization affect my website's design or functionality?",
+        question: "How long will the optimization process take?",
         answer:
-          "Our goal is to improve performance while preserving the design and features your visitors rely on. We test relevant pages and interactions after changes, and discuss any necessary trade-offs before proceeding.",
-      },
-      {
-        id: "faq-7",
-        question: "How long does website performance optimization take?",
-        answer:
-          "The timeline depends on your website's technology, the number of affected pages, and the complexity of the problems. After reviewing the current performance and scope, we can recommend priorities and provide a realistic project timeline.",
-      },
-      {
-        id: "faq-8",
-        question: "Can you guarantee a perfect PageSpeed score?",
-        answer:
-          "We don't promise a particular score before examining your website. Test results can vary with testing conditions, third-party services, and the site's functionality. We focus on addressing genuine bottlenecks and improving relevant performance metrics rather than chasing a number at the expense of the user experience.",
+          "The timeline depends on the number of issues, the complexity of your website, and the changes required. After assessing the work involved, we'll agree on the scope and expected timeline before implementation begins.",
       },
     ],
   },
   cta: {
-    heading: "A Better Website Starts With Knowing What's Slowing It Down.",
+    heading: "Your Website Has Potential. Let's Help It Perform Better.",
     paragraphs: [
-      "If your pages take too long to load, interactions feel sluggish, or performance reports keep highlighting the same problems, there's a reason worth investigating.",
-      "Share your website with us and tell us what you've been noticing. We'll help you understand where the delays may be coming from and which improvements make the most sense for your website.",
+      "If your website feels slower than it should, don't settle for repeated tests that tell you something is wrong without explaining how to fix it.",
+      "Share your website with us. We'll discuss your performance concerns, understand what you want to improve, and help define the right next steps for your project.",
     ],
     primaryButtonText: "Start a Project",
     secondaryButtonText: "Book a Consultation",
