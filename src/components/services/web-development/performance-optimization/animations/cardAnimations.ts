@@ -25,7 +25,8 @@ export function initFeaturedCardAnimation(
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: cardElement,
-        start: isMobile ? "top 88%" : "top 86%",
+        // Threshold calibrated to 96% so cards peeking at the bottom of the viewport reveal on initial reload
+        start: isMobile ? "top 92%" : "top 96%",
         toggleActions: PERFORMANCE_MOTION.scrollTrigger.toggleActions,
       },
       onComplete: () => {
@@ -75,7 +76,7 @@ export function initPerformanceCardsAnimation(
     const isMobile = checkIsMobile();
     const lateralDistance = isMobile ? 0 : PERFORMANCE_MOTION.travel.desktopCardLateralX;
     const verticalDistance = isMobile ? PERFORMANCE_MOTION.travel.mobileCardY : 0;
-    const startThreshold = isMobile ? "top 88%" : "top 84%";
+    const startThreshold = isMobile ? "top 90%" : "top 88%";
 
     // Card 02: Enters RIGHT -> LEFT (Desktop) / Vertical Emergence (Mobile)
     if (card2) {
@@ -121,7 +122,7 @@ export function initPerformanceCardsAnimation(
             scale: 1.0,
             duration: PERFORMANCE_MOTION.durations.deliveryImage,
             ease: PERFORMANCE_MOTION.easings.executiveDecel,
-            scrollTrigger: { trigger: card3Trigger, start: isMobile ? "top 90%" : "top 82%", toggleActions: PERFORMANCE_MOTION.scrollTrigger.toggleActions },
+            scrollTrigger: { trigger: card3Trigger, start: isMobile ? "top 92%" : "top 86%", toggleActions: PERFORMANCE_MOTION.scrollTrigger.toggleActions },
             onComplete: () => gsap.set(deliveryIllustration, { clearProps: "transform,opacity" }),
           }
         );
