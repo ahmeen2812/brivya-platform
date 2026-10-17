@@ -73,26 +73,27 @@ export const DATABASE_SYSTEMS_CONTENT: DatabaseContentConfig = {
   seo: {
     title: "Database & Backend Systems | Brivya Solutions",
     description:
-      "A strong foundation for everything your product needs to do. High-availability database schemas, custom backend architectures, and secure data access.",
+      "A reliable backend starts with the right decisions. Dependable application logic, structured database architectures, and performance optimization.",
   },
   hero: {
     heading: "Database & Backend Systems",
-    tagline: "A Strong Foundation for Everything Your Product Needs to Do.",
+    tagline: "A Reliable Backend Starts With the Right Decisions.",
     description:
-      "A product can look great on the surface, but what happens behind the scenes matters just as much. We design and develop database structures and backend systems that manage your data, handle your application's logic, and support the features your business depends on. Whether you're building something new or improving an existing product, we focus on getting the foundation right.",
+      "Behind every reliable application is a system that manages its data, processes requests, and keeps important features working as expected. We build and improve backend systems and databases that help your product run reliably, handle information correctly, and remain easier to maintain as your business evolves. Whether you're developing a new application or dealing with problems in an existing system, we help you build the right technical foundation for your next stage of growth.",
     imagePath: "/images/services/web-development/database-hero-illustration.png",
     imageAlt: "Brivya Solutions Database & Backend Systems Infrastructure Illustration",
   },
   servicesIntro: {
-    heading: "The Infrastructure Behind a Better Product",
+    heading: "Backend Development Built Around Your Product.",
     paragraph:
-      "Good backend development isn't about adding complexity. It's about building the right structure for your product, solving the problems you have today, and making future changes easier to manage.",
+      "Your backend should support the way your business operates—not make every new feature harder to build. We focus on practical architecture, well-structured data, dependable application logic, and performance improvements that address the actual needs of your product.",
     featuredCard: {
       tag: "Featured Service — Core Infrastructure",
       heading: "Backend Systems Development",
       paragraphs: [
-        "Every application has work to do behind the scenes: processing requests, applying business rules, managing user permissions, and handling data correctly.",
-        "We build custom backend systems around those requirements, with clear application logic and a structure that's easier to test, maintain, and extend as your product evolves.",
+        "Build a Backend That Works as Hard as Your Business.",
+        "Your application's most important operations happen behind the scenes. User accounts, business rules, transactions, permissions, and data processing all depend on backend systems working together correctly.",
+        "We develop custom backend solutions around your product's requirements, with clearly organized application logic, reliable request handling, and a structure designed to support future development. If you already have a backend, we can also help extend or improve it without automatically replacing everything.",
       ],
       illustrationPath: "/images/services/web-development/backend-systems-illustration.png",
       illustrationAlt: "Custom Backend Systems Logic & Architecture Illustration",
@@ -102,88 +103,89 @@ export const DATABASE_SYSTEMS_CONTENT: DatabaseContentConfig = {
     card2: {
       index: "02",
       title: "Database Design & Architecture",
-      heading: "Structured for Reliability and Growth",
+      heading: "Give Your Data a Structure You Can Build On.",
       paragraphs: [
-        "A poorly structured database can make even simple features difficult to maintain. We design database schemas, relationships, and data models around how your application actually stores, retrieves, and updates information.",
-        "From choosing the right database technology to planning for future changes, every decision starts with your data and your application's needs.",
+        "Poorly planned data structures can lead to duplicated records, inconsistent information, and complicated changes as an application grows.",
+        "We design database schemas, relationships, constraints, and data models around how your application actually uses information. We also help select appropriate database technologies based on your data, access patterns, consistency requirements, and expected workload.",
+        "The result is a database structure that makes your application easier to develop, maintain, and extend.",
       ],
-      highlight: "Normalized schemas, strict data integrity, and scalable models.",
+      highlight: "Logical data models, strict relationships, and schema consistency.",
     },
     card3: {
       index: "03",
       title: "Database Performance Optimization",
-      heading: "Eliminate Query Lag Before Adding Infrastructure",
+      heading: "Solve the Bottlenecks Behind Slow Applications.",
       paragraphs: [
-        "Slow queries, inefficient data retrieval, and unnecessary database operations can affect the entire application. We examine query patterns, indexes, and backend processing to identify where performance is being lost.",
-        "The goal is to improve what's already there before recommending more infrastructure than your application needs.",
+        "When dashboards take too long to load or data-heavy features become sluggish, adding more server resources isn't always the right answer.",
+        "We investigate database queries, indexing, execution plans, and other performance bottlenecks to understand where time is being lost. Then we implement targeted improvements based on the findings, helping your application retrieve and process information more efficiently.",
       ],
-      highlight: "Execution plan auditing, indexing strategy, and connection pooling.",
+      highlight: "Query tuning, indexing strategies, and execution plan auditing.",
       illustrationPath: "/images/services/web-development/database-architecture-illustration.png",
-      illustrationAlt: "Query Execution Optimization and Database Telemetry Illustration",
+      illustrationAlt: "Database Query Optimization and Architecture Illustration",
     },
     card4: {
       index: "04",
-      title: "Data Security, Backups & Recovery",
-      heading: "Safeguard the Information Your Business Depends On",
+      title: "Database Security, Backups & Recovery",
+      heading: "Protect Your Data. Prepare for the Unexpected.",
       paragraphs: [
-        "Your database holds more than records. It holds information your product needs to operate.",
-        "We help implement appropriate database permissions, secure data access, backup strategies, and recovery procedures. We also consider how changes are deployed and how important information can be restored if something goes wrong.",
+        "Your business needs more than a database that works today. It needs appropriate controls to protect information and a realistic plan for recovering it if something goes wrong.",
+        "We help implement database access restrictions, secure query handling, backup strategies, and recovery procedures appropriate to your system. Where included in the project scope, we also test recovery processes to verify that backed-up data can actually be restored.",
       ],
-      highlight: "Role-based access, automated snapshots, and verifiable disaster recovery.",
+      highlight: "Access permissions, reliable backup routines, and tested recovery plans.",
     },
   },
   faq: {
-    heading: "Before We Build, Let's Clear a Few Things Up.",
+    heading: "What You Should Know Before Starting Your Project.",
     items: [
       {
         id: "faq-1",
-        question: "01. Can you improve our existing backend without rebuilding everything?",
+        question: "Can you improve our existing backend without rebuilding it?",
         answer:
-          "Yes. We can review your current architecture, database structure, and application behavior to identify what needs improvement. Sometimes targeted changes are enough; a larger rebuild is only worth considering when the existing structure genuinely limits your requirements.",
+          "Yes. We can assess your current backend, identify structural or performance issues, and recommend targeted improvements. If the existing architecture can support your requirements with a few changes, there may be no reason to start from scratch.",
       },
       {
         id: "faq-2",
-        question: "02. Which database is right for our application?",
+        question: "How do you decide which database is right for our application?",
         answer:
-          "That depends on the kind of data you manage, how your application accesses it, and the consistency and performance requirements involved. Relational databases such as PostgreSQL and MySQL suit many structured workloads, while document databases such as MongoDB can fit different data models. We recommend a database based on the use case, not simply its popularity.",
+          "We consider the type of information you're storing, how the application reads and updates it, the consistency requirements, and the expected workload. We then recommend a suitable database technology based on those needs rather than choosing one simply because it's popular.",
       },
       {
         id: "faq-3",
-        question: "03. Why is our application becoming slower as our data grows?",
+        question: "Our application is becoming slower as our data grows. Can you help?",
         answer:
-          "There can be several reasons, including inefficient queries, missing or unsuitable indexes, growing workloads, and poorly planned data relationships. We investigate the actual bottleneck before deciding which changes are likely to help.",
+          "Yes. We investigate query performance, indexes, database access patterns, and the way the backend processes requests. The objective is to identify the actual cause of the slowdown and address it before recommending more complex infrastructure.",
       },
       {
         id: "faq-4",
-        question: "04. How do you keep our database secure?",
+        question: "Can you migrate our existing database to a new structure or platform?",
         answer:
-          "We consider access permissions, input validation, safe query handling, credential management, and the separation of development and production environments. The appropriate controls depend on your application, its data, and its deployment.",
+          "Yes. We can plan database migrations around your existing data, application dependencies, and downtime requirements. The process can include data mapping, migration scripts, validation, and rollback planning to reduce the risk of disruption or data loss.",
       },
       {
         id: "faq-5",
-        question: "05. Can you migrate our existing database to a new structure or technology?",
+        question: "How do you protect our database from unauthorized access?",
         answer:
-          "Yes, depending on the source and target systems. We assess the existing data, plan the migration, validate the results, and consider how to minimize disruption. The approach depends on data volume, application dependencies, and acceptable downtime.",
+          "We apply appropriate security measures based on the system, including restricted database permissions, safe query handling, input validation, and secure configuration. Access should be limited to what each application component and user actually needs.",
       },
       {
         id: "faq-6",
-        question: "06. What happens if our database fails or data is accidentally lost?",
+        question: "Do you provide backup and disaster recovery solutions?",
         answer:
-          "Recovery depends on the backup strategy, the type of failure, and how recently the data was captured. We can help plan backups and recovery procedures, including restore testing where included in the project scope. A backup is only useful if the data can actually be recovered.",
+          "We can help design and implement backup and recovery procedures appropriate to your application's requirements. The plan considers how frequently data should be backed up, how much data loss is acceptable, and how quickly the system needs to recover. Recovery testing can also be included in the agreed scope.",
       },
       {
         id: "faq-7",
-        question: "07. Can the backend support more users as our business grows?",
+        question: "Can you build a backend that supports future growth?",
         answer:
-          "It can be designed with growth in mind, but the right approach depends on how the application is used. We consider database performance, application workload, resource limits, and likely growth before deciding whether optimization, additional capacity, or architectural changes are needed.",
+          "Yes. We consider expected workloads, data access patterns, maintainability, and likely changes to your product when making architectural decisions. We aim to provide room for growth without introducing unnecessary complexity or infrastructure costs before they are justified.",
       },
     ],
   },
   cta: {
-    heading: "Build on a Foundation You Won't Have to Fight Later.",
+    heading: "Let's Build a Backend You Can Move Forward With.",
     paragraphs: [
-      "Whether you're starting a new product or dealing with a backend that's becoming harder to maintain, the first step is understanding what's happening behind the scenes.",
-      "Tell us what you're building, what's slowing you down, or what you need your system to handle next. We'll help you work out a practical approach that fits your product and your priorities.",
+      "Whether you're launching a new application, improving an existing database, or trying to solve problems that keep returning, the right next step starts with understanding your system.",
+      "Tell us what you're building, what's not working as it should, or what your backend needs to handle next. We'll help you define the requirements, identify the right approach, and establish a clear scope for your project.",
     ],
     primaryButtonText: "Start a Project",
     secondaryButtonText: "Book a Consultation",
