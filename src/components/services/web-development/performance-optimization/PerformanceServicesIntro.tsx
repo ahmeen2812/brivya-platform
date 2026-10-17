@@ -1,0 +1,104 @@
+"use client";
+
+import React, { useState, useRef } from "react";
+import Image from "next/image";
+import { PERFORMANCE_OPTIMIZATION_CONTENT } from "@/config/services/performanceOptimization";
+import { initFeaturedCardAnimation } from "./animations";
+import { PerformanceServicesIntroMobile } from "./mobile/PerformanceServicesIntroMobile";
+import { useIsomorphicLayoutEffect } from "@/components/shared/useIsomorphicLayoutEffect";
+
+export const PerformanceServicesIntro: React.FC = () => {
+  const { servicesIntro } = PERFORMANCE_OPTIMIZATION_CONTENT;
+  const [imageError, setImageError] = useState(false);
+
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const headerRef = useRef<HTMLDivElement | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!cardRef.current) return;
+
+    const ctx = initFeaturedCardAnimation(
+      cardRef.current,
+      headerRef.current,
+      bodyRef.current
+    );
+
+    return () => ctx?.revert();
+  }, []);
+
+  return (
+    <>
+      {/* DESKTOP VIEWPORT */}
+      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
+        {/* Section Intro */}
+        <div ref={headerRef} className="max-w-[820px] mb-8 will-change-transform">
+          <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
+            Section 02 // Core Optimization
+          </span>
+          <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
+            {servicesIntro.heading}
+          </h2>
+          <p className="mt-3 font-sans text-[16px] text-[#475569] leading-[1.7] font-normal">
+            {servicesIntro.paragraph}
+          </p>
+        </div>
+
+        {/* Featured Card (Website Performance Audit & Optimization with Image 02) */}
+        <div
+          ref={cardRef}
+          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
+        >
+          <div ref={bodyRef} className="grid grid-cols-12 gap-8 items-center will-change-transform">
+            <div className="col-span-7 flex flex-col justify-center">
+              <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
+                {servicesIntro.featuredCard.tag}
+              </span>
+              <h3 className="font-sans text-[26px] font-extrabold text-[#06162C] leading-[1.2] tracking-tight mb-2">
+                {servicesIntro.featuredCard.heading}
+              </h3>
+              <p className="font-sans text-[16px] font-semibold text-[#07366D] mb-3">
+                {servicesIntro.featuredCard.subheading}
+              </p>
+              <div className="flex flex-col space-y-3">
+                {servicesIntro.featuredCard.paragraphs.map((p, idx) => (
+                  <p key={idx} className="font-sans text-[15px] leading-[1.72] text-[#475569] font-normal">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            {/* Image 02 — Technical Diagnostics and Lighthouse Auditing */}
+            <div className="col-span-5 flex items-center justify-center">
+              <div className="relative w-full aspect-[4/3] max-w-[360px] flex items-center justify-center">
+                {!imageError ? (
+                  <Image
+                    src={servicesIntro.featuredCard.illustrationPath}
+                    alt={servicesIntro.featuredCard.illustrationAlt}
+                    fill
+                    sizes="360px"
+                    className="object-contain"
+                    onError={() => setImageError(true)}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-center p-4 border border-dashed border-[#BACFE6] rounded-2xl w-full h-full bg-white/40">
+                    <span className="font-mono text-[10.5px] font-bold text-[#06162C]">
+                      Image 02: {servicesIntro.featuredCard.illustrationPath}
+                    </span>
+                    <span className="mt-1 text-[11px] text-[#64748B]">Audit illustration slot</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DEDICATED MOBILE VIEWPORT */}
+      <div className="block lg:hidden">
+        <PerformanceServicesIntroMobile />
+      </div>
+    </>
+  );
+};
