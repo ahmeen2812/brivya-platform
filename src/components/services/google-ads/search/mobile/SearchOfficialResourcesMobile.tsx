@@ -47,12 +47,12 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
           }}
           className="relative rounded-2xl border border-[#BACFE6] bg-white/85 p-6 shadow-xs flex flex-col justify-between will-change-transform"
         >
-          {/* Transparent Floating Badge on Mobile */}
+          {/* Enlarged Transparent Floating Badge on Mobile */}
           <div
             ref={(el) => {
               badgeRefs.current[idx] = el;
             }}
-            className="absolute -top-5 right-4 z-20 w-14 h-14 flex items-center justify-center will-change-transform drop-shadow-[0_10px_20px_rgba(7,54,109,0.2)]"
+            className="absolute -top-6 right-4 z-20 w-16 h-16 flex items-center justify-center will-change-transform drop-shadow-[0_12px_22px_rgba(7,54,109,0.22)]"
           >
             {!badgeErrors[item.id] ? (
               <div className="relative w-full h-full">
@@ -60,7 +60,7 @@ export const SearchOfficialResourcesMobile: React.FC = () => {
                   src={item.badgeImagePath}
                   alt={item.badgeImageAlt}
                   fill
-                  sizes="56px"
+                  sizes="64px"
                   className="object-contain"
                   onError={() => handleBadgeError(item.id)}
                 />
