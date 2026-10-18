@@ -35,7 +35,7 @@ export const SearchOfficialResources: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Top-left icons removed; Transparent floating badges with drop-shadow */}
+      {/* DESKTOP VIEWPORT: Enlarged 98px Badges with Deep Drop Shadow */}
       <section
         ref={containerRef}
         className="hidden lg:block relative w-full mb-28 select-none overflow-visible"
@@ -52,7 +52,7 @@ export const SearchOfficialResources: React.FC = () => {
           </p>
         </div>
 
-        {/* 4 Cards Grid with Unclipped Overflows for Floating Transparent Badges */}
+        {/* 4 Cards Grid */}
         <div className="grid grid-cols-4 gap-6 pt-6 pb-6">
           {officialResources.items.map((item, idx) => {
             const isTop = item.badgePosition === "top";
@@ -65,17 +65,13 @@ export const SearchOfficialResources: React.FC = () => {
                 }}
                 className="relative rounded-2xl border border-[#BACFE6] bg-white/85 p-7 flex flex-col justify-between hover:border-[#0A5FD7] hover:-translate-y-1 hover:shadow-[0_12px_30px_-6px_rgba(10,95,215,0.12)] transition-all duration-300 will-change-transform"
               >
-                {/* 
-                  Transparent Floating Badge (NO white box, larger size, natural drop shadow)
-                  - Card 1 & 3: Bottom-Right (Down)
-                  - Card 2 & 4: Top-Right (Up)
-                */}
+                {/* Enlarged Floating Badge: w-24 h-24 lg:w-[98px] lg:h-[98px] */}
                 <div
                   ref={(el) => {
                     badgeRefs.current[idx] = el;
                   }}
-                  className={`absolute right-3 z-20 w-18 h-18 lg:w-[84px] lg:h-[84px] flex items-center justify-center will-change-transform drop-shadow-[0_14px_24px_rgba(7,54,109,0.22)] ${
-                    isTop ? "-top-10" : "-bottom-10"
+                  className={`absolute right-3 z-20 w-24 h-24 lg:w-[98px] lg:h-[98px] flex items-center justify-center will-change-transform drop-shadow-[0_16px_28px_rgba(7,54,109,0.25)] ${
+                    isTop ? "-top-12" : "-bottom-12"
                   }`}
                 >
                   {!badgeErrors[item.id] ? (
@@ -84,19 +80,18 @@ export const SearchOfficialResources: React.FC = () => {
                         src={item.badgeImagePath}
                         alt={item.badgeImageAlt}
                         fill
-                        sizes="84px"
+                        sizes="98px"
                         className="object-contain"
                         onError={() => handleBadgeError(item.id)}
                       />
                     </div>
                   ) : (
-                    <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-white/90 border border-[#BACFE6] shadow-sm">
+                    <div className="w-16 h-16 flex items-center justify-center rounded-xl bg-white/90 border border-[#BACFE6] shadow-sm">
                       <span className="font-mono text-[9px] font-bold text-[#0A5FD7]">Badge {idx + 1}</span>
                     </div>
                   )}
                 </div>
 
-                {/* Content: Clean title and description (top-left SVG icons completely removed) */}
                 <div>
                   <h3 className="font-sans text-[18px] font-bold text-[#06162C] tracking-tight mb-2.5 pr-8">
                     {item.title}
@@ -106,7 +101,6 @@ export const SearchOfficialResources: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Official Google Documentation Link */}
                 <a
                   href={item.url}
                   target="_blank"
