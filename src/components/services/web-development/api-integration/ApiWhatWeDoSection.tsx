@@ -29,12 +29,12 @@ export const ApiWhatWeDoSection: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT */}
-      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
-        {/* Section Intro */}
+      {/* DESKTOP VIEWPORT: Clean intro header, featured card positioned below the fold to reveal on scroll */}
+      <section className="hidden lg:block relative w-full mb-20 select-none overflow-x-clip">
+        {/* Section Intro Header */}
         <div ref={headerRef} className="max-w-[820px] mb-8 will-change-transform">
           <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-          
+            Section 02 // Engineering Architecture
           </span>
           <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
             {whatWeDoIntro.heading}
@@ -44,10 +44,10 @@ export const ApiWhatWeDoSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Featured Card (Custom API Development with Image 02) */}
+        {/* Featured Card (Positioned below fold with mt-16 to eliminate half-cut initial view) */}
         <div
           ref={cardRef}
-          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
+          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] mt-16 will-change-transform"
         >
           <div ref={bodyRef} className="grid grid-cols-12 gap-8 items-center will-change-transform">
             <div className="col-span-7 flex flex-col justify-center">
@@ -65,7 +65,6 @@ export const ApiWhatWeDoSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Image 02 — Custom API Endpoint Architecture */}
             <div className="col-span-5 flex items-center justify-center">
               <div className="relative w-full aspect-[4/3] max-w-[360px] flex items-center justify-center">
                 {!imageError ? (
