@@ -27,20 +27,20 @@ export const DisplayFeaturedCard: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Executive Terminal Console (#06162C) */}
+      {/* DESKTOP VIEWPORT: Sharp Unfilled Border Console */}
       <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
         <div
           ref={cardRef}
-          className="relative w-full rounded-2xl sm:rounded-3xl border border-white/10 bg-[#06162C] p-6 lg:py-6 lg:px-9 shadow-[0_16px_40px_-8px_rgba(6,22,44,0.35)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.15)] will-change-transform"
+          className="relative w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
         >
-          <div className="grid grid-cols-12 gap-6 items-center">
-            <div className="col-span-5 pr-4 border-r border-white/10">
-              <span className="font-mono text-[10px] font-bold text-[#1675F8] uppercase tracking-wider block mb-1.5">
+          <div className="grid grid-cols-12 gap-8 items-center">
+            <div className="col-span-5 pr-6 border-r border-[#07366D]/25">
+              <span className="font-mono text-[10.5px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
                 Strategic Directive
               </span>
               <h2
                 ref={headerRef}
-                className="font-sans text-[22px] font-extrabold text-white tracking-tight leading-tight will-change-transform"
+                className="font-sans text-[22px] font-extrabold text-[#07366D] tracking-tight leading-tight will-change-transform"
               >
                 {mainFeaturedCard.heading}
               </h2>
@@ -50,7 +50,7 @@ export const DisplayFeaturedCard: React.FC = () => {
               {mainFeaturedCard.paragraphs.map((p, idx) => (
                 <p
                   key={idx}
-                  className="font-sans text-[14px] lg:text-[14.5px] leading-[1.62] text-[#BACFE6] font-normal"
+                  className="font-sans text-[14.5px] leading-[1.68] text-[#475569] font-normal"
                 >
                   {p}
                 </p>
