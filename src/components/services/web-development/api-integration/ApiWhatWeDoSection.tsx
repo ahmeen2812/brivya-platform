@@ -29,8 +29,8 @@ export const ApiWhatWeDoSection: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Featured Card sits cleanly below the fold and enters on scroll */}
-      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
+      {/* DESKTOP VIEWPORT: Featured Card sits below the initial fold with mt-24 lg:mt-32 to reveal cleanly on scroll */}
+      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip mt-24 lg:mt-32">
         <div
           ref={cardRef}
           className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
