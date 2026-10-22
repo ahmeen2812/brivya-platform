@@ -14,6 +14,7 @@ export const DatabaseHero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const taglineRef = useRef<HTMLParagraphElement | null>(null);
+  const accentLineRef = useRef<HTMLDivElement | null>(null);
   const descriptionTextRef = useRef<HTMLParagraphElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
   const consoleRef = useRef<HTMLDivElement | null>(null);
@@ -36,7 +37,7 @@ export const DatabaseHero: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Hero + Executive Terminal Console */}
+      {/* DESKTOP VIEWPORT: Sharp, Unfilled Architectural Console */}
       <section
         ref={containerRef}
         className="hidden lg:block relative w-full pt-4 pb-12 select-none overflow-x-clip"
@@ -62,7 +63,11 @@ export const DatabaseHero: React.FC = () => {
             </div>
 
             <div className="mt-6 flex items-stretch">
-              <div aria-hidden="true" className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full" />
+              <div
+                ref={accentLineRef}
+                aria-hidden="true"
+                className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full will-change-transform"
+              />
               <div className="overflow-hidden pl-5 py-0.5">
                 <p
                   ref={descriptionTextRef}
@@ -100,22 +105,22 @@ export const DatabaseHero: React.FC = () => {
           </div>
         </div>
 
-        {/* Executive Terminal Console */}
+        {/* Sharp Architectural Border Console: No Background, Fully Sharp Corners, Dark Navy Border */}
         <div
           ref={consoleRef}
-          className="mt-12 w-full rounded-2xl sm:rounded-3xl border border-white/10 bg-[#06162C] p-6 lg:py-6 lg:px-9 shadow-[0_16px_40px_-8px_rgba(6,22,44,0.35)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.15)] will-change-transform"
+          className="mt-12 w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
         >
-          <div className="grid grid-cols-12 gap-6 items-center">
-            <div className="col-span-5 pr-4 border-r border-white/10">
-              <span className="font-mono text-[10px] font-bold text-[#1675F8] uppercase tracking-wider block mb-1.5">
+          <div className="grid grid-cols-12 gap-8 items-center">
+            <div className="col-span-5 pr-6 border-r border-[#07366D]/25">
+              <span className="font-mono text-[10.5px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
                 Architecture Directive
               </span>
-              <h2 className="font-sans text-[21px] font-extrabold text-white tracking-tight leading-tight">
+              <h2 className="font-sans text-[22px] font-extrabold text-[#07366D] tracking-tight leading-tight">
                 {servicesIntro.heading}
               </h2>
             </div>
             <div className="col-span-7">
-              <p className="font-sans text-[14.5px] leading-[1.65] text-[#BACFE6] font-normal">
+              <p className="font-sans text-[14.5px] leading-[1.68] text-[#475569] font-normal">
                 {servicesIntro.paragraph}
               </p>
             </div>
