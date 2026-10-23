@@ -29,25 +29,11 @@ export const ApiWhatWeDoSection: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Clean intro header, featured card positioned below the fold to reveal on scroll */}
-      <section className="hidden lg:block relative w-full mb-20 select-none overflow-x-clip">
-        {/* Section Intro Header */}
-        <div ref={headerRef} className="max-w-[820px] mb-8 will-change-transform">
-          <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
-            Section 02 // Engineering Architecture
-          </span>
-          <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
-            {whatWeDoIntro.heading}
-          </h2>
-          <p className="mt-3 font-sans text-[16px] text-[#475569] leading-[1.7] font-normal">
-            {whatWeDoIntro.paragraph}
-          </p>
-        </div>
-
-        {/* Featured Card (Positioned below fold with mt-16 to eliminate half-cut initial view) */}
+      {/* DESKTOP VIEWPORT: Featured Card sits cleanly below the fold and enters on scroll */}
+      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
         <div
           ref={cardRef}
-          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] mt-16 will-change-transform"
+          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
         >
           <div ref={bodyRef} className="grid grid-cols-12 gap-8 items-center will-change-transform">
             <div className="col-span-7 flex flex-col justify-center">
@@ -81,7 +67,6 @@ export const ApiWhatWeDoSection: React.FC = () => {
                     <span className="font-mono text-[10.5px] font-bold text-[#06162C]">
                       Image 02: {whatWeDoIntro.featuredCard.illustrationPath}
                     </span>
-                    <span className="mt-1 text-[11px] text-[#64748B]">Custom API illustration slot</span>
                   </div>
                 )}
               </div>
