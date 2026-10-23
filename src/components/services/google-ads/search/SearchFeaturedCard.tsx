@@ -27,25 +27,30 @@ export const SearchFeaturedCard: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Compact vertical padding ensures the entire card fits inside the viewport */}
-      <section className="hidden lg:block relative w-full  mb-16 select-none overflow-x-clip">
+      {/* DESKTOP VIEWPORT: Executive Terminal Console (#06162C) Anchored at Bottom of Hero Viewport */}
+      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
         <div
           ref={cardRef}
-          className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] py-6 px-8 lg:py-6.5 lg:px-10 shadow-[0_16px_45px_-12px_rgba(7,54,109,0.08)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
+          className="relative w-full rounded-2xl sm:rounded-3xl border border-white/10 bg-[#06162C] p-6 lg:py-6 lg:px-9 shadow-[0_16px_40px_-8px_rgba(6,22,44,0.35)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.15)] will-change-transform"
         >
-          <div className="max-w-[940px] mx-auto flex flex-col">
-            <h2
-              ref={headerRef}
-              className="font-sans text-[24px] lg:text-[26px] font-extrabold text-[#06162C] leading-[1.18] tracking-[-0.03em] mb-2.5 will-change-transform"
-            >
-              {mainFeaturedCard.heading}
-            </h2>
+          <div className="grid grid-cols-12 gap-6 items-center">
+            <div className="col-span-5 pr-4 border-r border-white/10">
+              <span className="font-mono text-[10px] font-bold text-[#1675F8] uppercase tracking-wider block mb-1.5">
+                Strategic Directive
+              </span>
+              <h2
+                ref={headerRef}
+                className="font-sans text-[22px] font-extrabold text-white tracking-tight leading-tight will-change-transform"
+              >
+                {mainFeaturedCard.heading}
+              </h2>
+            </div>
 
-            <div ref={bodyRef} className="flex flex-col space-y-2 will-change-transform">
+            <div ref={bodyRef} className="col-span-7 flex flex-col space-y-2 will-change-transform">
               {mainFeaturedCard.paragraphs.map((p, idx) => (
                 <p
                   key={idx}
-                  className="font-sans text-[14.5px] lg:text-[15px] leading-[1.62] text-[#475569] font-normal tracking-[-0.01em]"
+                  className="font-sans text-[14px] lg:text-[14.5px] leading-[1.62] text-[#BACFE6] font-normal"
                 >
                   {p}
                 </p>
