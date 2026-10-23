@@ -29,20 +29,8 @@ export const DatabaseServicesIntro: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT */}
+      {/* DESKTOP VIEWPORT: Clean Featured Card entrance on scroll */}
       <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
-        {/* Section Intro */}
-        <div ref={headerRef} className="max-w-[820px] mb-8 will-change-transform">
-          
-          <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
-            {servicesIntro.heading}
-          </h2>
-          <p className="mt-3 font-sans text-[16px] text-[#475569] leading-[1.7] font-normal">
-            {servicesIntro.paragraph}
-          </p>
-        </div>
-
-        {/* Featured Card (Backend Systems Development with Image 02) */}
         <div
           ref={cardRef}
           className="relative w-full rounded-3xl border border-[#BACFE6] bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(7,54,109,0.09)] [box-shadow:inset_0_1.5px_0_0_rgba(255,255,255,1)] will-change-transform"
@@ -64,7 +52,6 @@ export const DatabaseServicesIntro: React.FC = () => {
               </div>
             </div>
 
-            {/* Image 02 — Custom Backend Systems Architecture */}
             <div className="col-span-5 flex items-center justify-center">
               <div className="relative w-full aspect-[4/3] max-w-[360px] flex items-center justify-center">
                 {!imageError ? (
@@ -81,7 +68,6 @@ export const DatabaseServicesIntro: React.FC = () => {
                     <span className="font-mono text-[10.5px] font-bold text-[#06162C]">
                       Image 02: {servicesIntro.featuredCard.illustrationPath}
                     </span>
-                    <span className="mt-1 text-[11px] text-[#64748B]">Backend logic illustration slot</span>
                   </div>
                 )}
               </div>
