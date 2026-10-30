@@ -8,7 +8,7 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
   hero: {
     serviceTitle: "Facebook Ads",
     heading: "Reach the Right Customers With Facebook Advertising",
-    description: "Connect your business with potential customers through targeted Facebook advertising. We develop campaigns that combine audience research, engaging ad creative, strategic placements, and ongoing performance management to build brand awareness, encourage customer inquiries, and support measurable business growth.",
+    description: "Connect your business with potential customers through targeted Facebook advertising. We build campaigns combining audience intelligence, compelling creative, and ongoing optimization to drive measurable business growth.",
     primaryButtonText: "Start a Project",
     secondaryButtonText: "Book a Consultation",
     imagePath: "/images/services/meta-ads/facebook-hero-illustration.png",
@@ -18,9 +18,7 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
     tag: "Platform Strategy",
     heading: "Facebook Ad Campaigns Built Around Your Business Goals",
     paragraphs: [
-      "Effective Facebook advertising starts with understanding your customers and what motivates them to take action. Reaching people is only part of the process. Your ads also need relevant messaging, clear offers, and a suitable destination for potential customers.",
-      "We bring campaign planning, audience selection, creative strategy, budget management, and performance measurement together to develop advertising approaches aligned with your business objectives.",
-      "Whether your goal is to introduce your brand, generate customer inquiries, or increase online sales, we focus on creating relevant advertising experiences and making informed improvements based on campaign results."
+      "Whether your goal is to introduce your brand, generate customer inquiries, or increase online sales, we bring campaign planning, audience selection, creative testing, and conversion tracking together to deliver advertising approaches aligned with your revenue objectives."
     ]
   },
   supportingCards: {
@@ -34,22 +32,22 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
       {
         index: "01",
         title: "Audience Research & Targeting",
-        description: "Connect with audiences who may be interested in your products or services. We develop targeting strategies using available location, demographic, interest, and audience options. Where eligible, Custom Audiences and lookalike audiences can help support customer engagement and discovery while accounting for Meta's automated audience delivery features.",
+        description: "Connect with audiences who may be interested in your products or services. We develop targeting strategies using available demographic, interest, Custom Audience, and lookalike options.",
       },
       {
         index: "02",
         title: "Ad Formats & Placements",
-        description: "Present your business through advertising formats suited to your message and audience. We plan campaigns using eligible image, video, carousel, Stories, and Reels placements across Facebook and other selected Meta platforms. Format and placement decisions consider campaign objectives, creative requirements, and audience behavior.",
+        description: "Present your business through advertising formats suited to your audience. We plan campaigns across image, video, carousel, Stories, and Reels placements across Facebook and Meta networks.",
       },
       {
         index: "03",
         title: "Ad Creative & Messaging",
-        description: "Give potential customers a clear reason to learn more about your business. We develop advertising messages, headlines, visual concepts, and calls to action that communicate your products, services, and offers. Creative testing helps identify which messages and formats encourage meaningful customer engagement.",
+        description: "Give potential customers a clear reason to learn more. We develop persuasive copy, strong hooks, and clear calls to action, supported by ongoing creative testing.",
       },
       {
         index: "04",
         title: "Campaign Tracking & Optimization",
-        description: "Understand how your Facebook advertising performs and where improvements may be needed. We review campaign spending, reach, engagement, costs, and tracked customer actions to evaluate performance. Ongoing analysis helps guide adjustments to creative, audience settings, budgets, and campaign delivery.",
+        description: "Review campaign spending, reach, engagement, and conversion data to guide continuous adjustments to creative, audience settings, budgets, and bid strategies.",
       },
     ]
   },
@@ -61,7 +59,7 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
       {
         id: "fb-obj",
         title: "Facebook Ad Campaign Objectives",
-        description: "Learn how Meta Ads Manager connects advertising objectives with business goals, helping advertisers plan campaigns for relevant customer actions and measure campaign success.",
+        description: "Learn how Meta Ads Manager connects advertising objectives with business goals, helping advertisers plan campaigns for relevant customer actions.",
         url: "https://metaspark.facebookblueprint.com/student/path/211544-campaign-objectives-ads-manager",
         iconType: "guide",
         badgePosition: "bottom",
@@ -71,7 +69,7 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
       {
         id: "fb-audiences",
         title: "Meta Ads Audience Targeting",
-        description: "Explore the different audience options available in Meta Ads Manager and learn how advertisers create audiences for campaigns based on their marketing objectives.",
+        description: "Explore the different audience options available in Meta Ads Manager to build campaigns based on precise marketing goals.",
         url: "https://www.facebookblueprint.com/student/collection/255063/path/231052",
         iconType: "audience",
         badgePosition: "top",
@@ -81,7 +79,7 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
       {
         id: "fb-formats",
         title: "Facebook Ad Formats & Creative Guidelines",
-        description: "Review Meta's guidance on advertising formats, creative components, ad copy, visuals, and placement considerations when preparing advertising campaigns.",
+        description: "Review Meta's guidance on advertising formats, creative components, ad copy, visuals, and placement considerations when preparing campaigns.",
         url: "https://www.facebookblueprint.com/student/path/211553-ads-manager-visual-ads-course",
         iconType: "creative",
         badgePosition: "bottom",
@@ -91,7 +89,7 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
       {
         id: "fb-tracking",
         title: "Meta Pixel & Conversions API",
-        description: "Understand how the Meta Pixel and Conversions API can help businesses measure website customer actions and use conversion information to support advertising optimization.",
+        description: "Understand how the Meta Pixel and Conversions API help businesses measure customer actions and optimize ad delivery.",
         url: "https://www.facebookblueprint.com/student/path/211547-meta-pixel-conversions-api-course",
         iconType: "metrics",
         badgePosition: "top",
@@ -106,38 +104,38 @@ export const FACEBOOK_ADS_CONTENT: UnifiedServiceConfig = {
       {
         id: "faq-fb-1",
         question: "What are Facebook Ads, and how do they work?",
-        answer: "Facebook Ads are paid advertisements businesses can create and manage through Meta Ads Manager. Advertisers select a campaign objective, define eligible audience and placement settings, set a budget, and provide advertising creative. Meta's advertising system then delivers ads through its auction and delivery processes."
+        answer: "Facebook Ads are paid advertisements managed through Meta Ads Manager. Advertisers define objectives, target audiences, budget rules, and creative assets, which Meta delivers via auction-based delivery."
       },
       {
         id: "faq-fb-2",
         question: "Can Facebook Ads help my business generate leads and sales?",
-        answer: "Facebook Ads can support lead generation and online sales through suitable campaign objectives and conversion locations. Depending on campaign settings, businesses can encourage people to complete lead forms, visit websites, send messages, or make purchases. Actual results depend on factors such as audience relevance, advertising creative, offers, and customer experience."
+        answer: "Yes. By configuring conversion objectives and optimized destination pages or lead forms, businesses can drive qualified inquiries, website purchases, and direct customer interactions."
       },
       {
         id: "faq-fb-3",
         question: "Can I advertise to customers in specific locations?",
-        answer: "Yes. Meta Ads Manager provides location targeting options that help businesses advertise in selected geographic areas. Other eligible audience settings may include age, interests, and custom audience options. Available controls can vary by campaign configuration, region, and applicable advertising restrictions."
+        answer: "Yes. Meta Ads Manager provides geographic targeting options allowing you to focus on selected countries, regions, cities, or custom radius boundaries."
       },
       {
         id: "faq-fb-4",
         question: "Can my Facebook Ads also appear on Instagram?",
-        answer: "Yes. Eligible Meta advertising campaigns can deliver ads across Facebook and Instagram, along with other supported placements. Advertisers can review available placement controls, while Meta Advantage+ placements can automatically distribute ads across eligible placements based on campaign settings."
+        answer: "Yes. Campaigns can deliver across both platforms simultaneously, either through manual placement selections or automated Advantage+ distribution."
       },
       {
         id: "faq-fb-5",
         question: "How much does Facebook advertising cost?",
-        answer: "Facebook advertising costs vary depending on factors such as your budget, audience, campaign objective, competition, and ad delivery. Meta Ads Manager allows advertisers to configure daily or lifetime budgets. Advertising spend and any professional campaign management fees are separate considerations."
+        answer: "Costs depend on audience competition, bidding targets, and your selected budget. Meta Ads Manager supports both daily and lifetime budget settings."
       },
       {
         id: "faq-fb-6",
         question: "How do you measure Facebook Ads performance?",
-        answer: "Campaign performance can be evaluated through metrics such as reach, impressions, link clicks, click-through rate, cost per result, and tracked conversions. Where properly configured, the Meta Pixel and Conversions API can provide additional website event data. Businesses can also review lead quality, completed sales, and revenue information to better understand advertising outcomes."
+        answer: "We track reach, link clicks, cost per result, and verified conversions using Meta Pixel and Conversions API data to understand the true business return on ad spend."
       }
     ]
   },
   cta: {
     heading: "Connect With More Potential Customers Through Facebook Ads",
-    description: "Build a Facebook advertising strategy focused on reaching relevant audiences and encouraging meaningful customer actions. From campaign planning and creative development to performance tracking and ongoing optimization, let's create an approach that supports your business goals and advertising budget.",
+    description: "Build a Facebook advertising strategy focused on reaching relevant audiences and driving measurable commercial actions. Let's create an approach tailored to your business goals.",
     primaryButtonText: "Start a Project",
     secondaryButtonText: "Book a Consultation",
   }
