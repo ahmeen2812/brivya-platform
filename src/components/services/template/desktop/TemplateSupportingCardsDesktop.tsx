@@ -43,11 +43,11 @@ export const TemplateSupportingCardsDesktop: React.FC<Props> = ({ data }) => {
   }, [data]);
 
   return (
+    /* pt-8 lg:pt-12 ensures this entire section starts completely below the fold on initial load */
     <section
       ref={containerRef}
-      className="hidden lg:flex relative w-full flex-col space-y-12 mb-24 select-none overflow-x-clip"
+      className="hidden lg:flex relative w-full flex-col space-y-12 pt-8 lg:pt-12 mb-24 select-none overflow-x-clip"
     >
-      {/* Clean Header: Slash-eyebrow completely removed */}
       <div className="max-w-[820px] mb-8">
         <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
           {data.heading}
