@@ -21,7 +21,8 @@ export const TemplateFeaturedCardDesktop: React.FC<Props> = ({ data }) => {
   }, [data]);
 
   return (
-    <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
+    /* Pushed down into the bottom of the viewport with mt-8 lg:mt-10, and separated from the next section with mb-32 lg:mb-40 */
+    <section className="hidden lg:block relative w-full mt-16 lg:mt-16 mb-16 lg:mb-20 select-none overflow-x-clip">
       <div
         ref={cardRef}
         className="relative w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
