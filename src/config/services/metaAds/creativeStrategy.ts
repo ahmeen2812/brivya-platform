@@ -19,8 +19,6 @@ export const CREATIVE_STRATEGY_CONTENT: UnifiedServiceConfig = {
     heading: "Ad Creative That Connects Your Message With Customer Needs",
     paragraphs: [
       "An eye-catching advertisement can attract attention, but a clear message helps customers understand why your product or service matters to them. Effective creative strategy starts with knowing your audience, identifying what makes your offer relevant, and presenting that value through the right combination of words, visuals, and advertising formats.",
-      "We bring customer research, creative planning, ad copy, visual direction, and performance analysis together to develop advertising concepts aligned with your business objectives.",
-      "Whether you're introducing a new service, promoting a product, or improving existing advertisements, we focus on communicating meaningful benefits and guiding interested customers toward the next step."
     ]
   },
   supportingCards: {
