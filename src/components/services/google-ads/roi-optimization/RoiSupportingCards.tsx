@@ -49,7 +49,7 @@ export const RoiSupportingCards: React.FC = () => {
         ref={containerRef}
         className="hidden lg:flex relative w-full flex-col space-y-12 mb-24 select-none overflow-x-clip"
       >
-        <div className="max-w-[820px] mb-2">
+        <div className="max-w-[820px] mb-12">
           <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
             Section 03 // Supporting Capabilities
           </span>
@@ -61,7 +61,6 @@ export const RoiSupportingCards: React.FC = () => {
           </p>
         </div>
 
-        {/* Card 01: 80% Width, Right Aligned */}
         <div ref={card1Ref} className="w-[80%] ml-auto will-change-transform">
           <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
             <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10" />
@@ -76,7 +75,6 @@ export const RoiSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 02: 70% Width, Left Aligned + Image 02 */}
         <div ref={card2ContainerRef} className="w-full flex items-center justify-between gap-8">
           <div ref={card2Ref} className="w-[70%] will-change-transform">
             <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
@@ -105,7 +103,6 @@ export const RoiSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 03: Image 03 Left (30%) + Card 03 on Right (70%) */}
         <div ref={card3ContainerRef} className="w-full flex items-center justify-between gap-8">
           <div ref={card3IllustrationRef} className="w-[30%] flex items-center justify-center will-change-transform">
             <div className="relative w-full aspect-[4/3] max-w-[280px] flex items-center justify-center">
@@ -134,7 +131,6 @@ export const RoiSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 04: Alternating Left Alignment Setup 80% */}
         <div ref={card4Ref} className="w-[80%] mr-auto will-change-transform">
           <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
             <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10" />
@@ -150,7 +146,6 @@ export const RoiSupportingCards: React.FC = () => {
         </div>
       </section>
 
-      {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
         <RoiSupportingCardsMobile />
       </div>
