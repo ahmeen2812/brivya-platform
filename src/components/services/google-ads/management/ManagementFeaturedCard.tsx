@@ -15,22 +15,14 @@ export const ManagementFeaturedCard: React.FC = () => {
 
   useIsomorphicLayoutEffect(() => {
     if (!cardRef.current) return;
-
-    const ctx = initFeaturedCardAnimation(
-      cardRef.current,
-      headerRef.current,
-      bodyRef.current
-    );
-
+    const ctx = initFeaturedCardAnimation(cardRef.current, headerRef.current, bodyRef.current);
     return () => ctx?.revert();
   }, []);
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: SPACING FIX 
-          Added mt-24 lg:mt-32 mb-24 lg:mb-32 for extreme professional whitespace.
-      */}
-      <section className="hidden lg:block relative w-full mt-24 lg:mt-32 mb-24 lg:mb-32 select-none overflow-x-clip">
+      {/* SPACING FIX: Removed extreme mt-32/mb-32 margins; using mb-16 lg:mb-20 for natural elegant spacing */}
+      <section className="hidden lg:block relative w-full mb-16 lg:mb-20 select-none overflow-x-clip">
         <div
           ref={cardRef}
           className="relative w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-8 lg:px-12 shadow-xs will-change-transform"
@@ -47,13 +39,9 @@ export const ManagementFeaturedCard: React.FC = () => {
                 {mainFeaturedCard.heading}
               </h2>
             </div>
-
             <div ref={bodyRef} className="col-span-7 flex flex-col space-y-4 will-change-transform">
               {mainFeaturedCard.paragraphs.map((p, idx) => (
-                <p
-                  key={idx}
-                  className="font-sans text-[15.5px] leading-[1.7] text-[#475569] font-normal"
-                >
+                <p key={idx} className="font-sans text-[15.5px] leading-[1.7] text-[#475569] font-normal">
                   {p}
                 </p>
               ))}
@@ -62,7 +50,6 @@ export const ManagementFeaturedCard: React.FC = () => {
         </div>
       </section>
 
-      {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
         <ManagementFeaturedCardMobile />
       </div>
