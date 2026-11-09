@@ -15,43 +15,32 @@ export const RoiFeaturedCard: React.FC = () => {
 
   useIsomorphicLayoutEffect(() => {
     if (!cardRef.current) return;
-
-    const ctx = initFeaturedCardAnimation(
-      cardRef.current,
-      headerRef.current,
-      bodyRef.current
-    );
-
+    const ctx = initFeaturedCardAnimation(cardRef.current, headerRef.current, bodyRef.current);
     return () => ctx?.revert();
   }, []);
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Dark Navy #06162C Architecture Container, Transparent Format NO FILL */}
-      <section className="hidden lg:block relative w-full mb-16 select-none overflow-x-clip">
+      <section className="hidden lg:block relative w-full mb-16 lg:mb-20 select-none overflow-x-clip">
         <div
           ref={cardRef}
-          className="relative w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
+          className="relative w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-8 lg:px-12 shadow-xs will-change-transform"
         >
-          <div className="grid grid-cols-12 gap-8 items-center">
-            <div className="col-span-5 pr-6 border-r border-[#07366D]/25">
-              <span className="font-mono text-[10.5px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
+          <div className="grid grid-cols-12 gap-10 items-center">
+            <div className="col-span-5 pr-8 border-r border-[#07366D]/25">
+              <span className="font-mono text-[10.5px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
                 {mainFeaturedCard.tag}
               </span>
               <h2
                 ref={headerRef}
-                className="font-sans text-[22px] font-extrabold text-[#07366D] tracking-tight leading-tight will-change-transform"
+                className="font-sans text-[26px] font-extrabold text-[#07366D] tracking-tight leading-[1.15] will-change-transform"
               >
                 {mainFeaturedCard.heading}
               </h2>
             </div>
-
-            <div ref={bodyRef} className="col-span-7 flex flex-col space-y-2.5 will-change-transform">
+            <div ref={bodyRef} className="col-span-7 flex flex-col space-y-4 will-change-transform">
               {mainFeaturedCard.paragraphs.map((p, idx) => (
-                <p
-                  key={idx}
-                  className="font-sans text-[14.5px] leading-[1.68] text-[#475569] font-normal"
-                >
+                <p key={idx} className="font-sans text-[15.5px] leading-[1.7] text-[#475569] font-normal">
                   {p}
                 </p>
               ))}
@@ -59,8 +48,6 @@ export const RoiFeaturedCard: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
         <RoiFeaturedCardMobile />
       </div>
