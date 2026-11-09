@@ -24,65 +24,65 @@ export const ManagementSupportingCards: React.FC = () => {
 
   useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
-    const ctx = initSupportingCardsAnimation({
-      card1: card1Ref.current,
-      card2: card2Ref.current,
-      card2Container: card2ContainerRef.current,
-      card2Illustration: card2IllustrationRef.current,
-      card3Container: card3ContainerRef.current,
-      card3: card3Ref.current,
-      card3Illustration: card3IllustrationRef.current,
-      card4: card4Ref.current,
-    }, containerRef.current);
+
+    const ctx = initSupportingCardsAnimation(
+      {
+        card1: card1Ref.current,
+        card2: card2Ref.current,
+        card2Container: card2ContainerRef.current,
+        card2Illustration: card2IllustrationRef.current,
+        card3Container: card3ContainerRef.current,
+        card3: card3Ref.current,
+        card3Illustration: card3IllustrationRef.current,
+        card4: card4Ref.current,
+      },
+      containerRef.current
+    );
+
     return () => ctx?.revert();
   }, []);
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: SPACING FIX 
-          Added lg:space-y-28 to aggressively pull the alternating cards apart 
-          so images and panels do not clash visually. */}
       <section
         ref={containerRef}
-        className="hidden lg:flex relative w-full flex-col space-y-16 lg:space-y-28 mb-32 select-none overflow-x-clip"
+        className="hidden lg:flex relative w-full flex-col space-y-12 mb-24 select-none overflow-x-clip"
       >
-        <div className="max-w-[820px] mb-6">
-          <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-3">
+        <div className="max-w-[820px] mb-12">
+          <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
             Section 03 // Supporting Capabilities
           </span>
-          <h2 className="font-sans text-[36px] font-extrabold text-[#06162C] tracking-tight leading-[1.12]">
+          <h2 className="font-sans text-[32px] font-extrabold text-[#06162C] tracking-tight leading-[1.14]">
             {supportingCards.heading}
           </h2>
-          <p className="mt-3.5 font-sans text-[16px] text-[#475569] font-normal max-w-[700px]">
+          <p className="mt-2.5 font-sans text-[15.5px] text-[#475569] font-normal">
             {supportingCards.subtitle}
           </p>
         </div>
 
-        {/* Card 01 */}
         <div ref={card1Ref} className="w-[80%] ml-auto will-change-transform">
-          <div className="group/card relative min-h-[220px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-10 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/50 to-transparent z-10" />
+          <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10" />
             <div className="relative z-0">
-              <h3 className="font-sans text-[24px] font-bold text-[#06162C] tracking-tight mb-4">
+              <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
                 {supportingCards.items[0].title}
               </h3>
-              <p className="font-sans text-[15.5px] leading-[1.72] text-[#475569] font-normal">
+              <p className="font-sans text-[15px] leading-[1.68] text-[#475569] font-normal">
                 {supportingCards.items[0].description}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Card 02 (Left Aligned) */}
-        <div ref={card2ContainerRef} className="w-full flex items-center justify-between gap-12">
+        <div ref={card2ContainerRef} className="w-full flex items-center justify-between gap-8">
           <div ref={card2Ref} className="w-[70%] will-change-transform">
-            <div className="group/card relative min-h-[220px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-10 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
-              <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/50 to-transparent z-10" />
+            <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
+              <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10" />
               <div className="relative z-0">
-                <h3 className="font-sans text-[24px] font-bold text-[#06162C] tracking-tight mb-4">
+                <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
                   {supportingCards.items[1].title}
                 </h3>
-                <p className="font-sans text-[15.5px] leading-[1.72] text-[#475569] font-normal">
+                <p className="font-sans text-[15px] leading-[1.68] text-[#475569] font-normal">
                   {supportingCards.items[1].description}
                 </p>
               </div>
@@ -102,8 +102,7 @@ export const ManagementSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 03 (Right Aligned) */}
-        <div ref={card3ContainerRef} className="w-full flex items-center justify-between gap-12">
+        <div ref={card3ContainerRef} className="w-full flex items-center justify-between gap-8">
           <div ref={card3IllustrationRef} className="w-[30%] flex items-center justify-center will-change-transform">
             <div className="relative w-full aspect-[4/3] max-w-[280px] flex items-center justify-center">
               {!card3ImageError ? (
@@ -117,13 +116,13 @@ export const ManagementSupportingCards: React.FC = () => {
           </div>
 
           <div ref={card3Ref} className="w-[70%] will-change-transform">
-            <div className="group/card relative min-h-[220px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-10 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
-              <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/50 to-transparent z-10" />
+            <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-l-3xl rounded-r-none border border-[#BACFE6] border-r-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
+              <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10" />
               <div className="relative z-0">
-                <h3 className="font-sans text-[24px] font-bold text-[#06162C] tracking-tight mb-4">
+                <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
                   {supportingCards.items[2].title}
                 </h3>
-                <p className="font-sans text-[15.5px] leading-[1.72] text-[#475569] font-normal">
+                <p className="font-sans text-[15px] leading-[1.68] text-[#475569] font-normal">
                   {supportingCards.items[2].description}
                 </p>
               </div>
@@ -131,15 +130,14 @@ export const ManagementSupportingCards: React.FC = () => {
           </div>
         </div>
 
-        {/* Card 04: Alternating FIX -- Left Aligned */}
         <div ref={card4Ref} className="w-[80%] mr-auto will-change-transform">
-          <div className="group/card relative min-h-[220px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-10 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/50 to-transparent z-10" />
+          <div className="group/card relative min-h-[200px] flex flex-col justify-between rounded-r-3xl rounded-l-none border border-[#BACFE6] border-l-0 bg-gradient-to-br from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-8 shadow-[0_12px_36px_-8px_rgba(7,54,109,0.06)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:-translate-y-1 hover:shadow-[0_18px_45px_-8px_rgba(7,54,109,0.12)] transition-all duration-300 overflow-hidden">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/40 to-transparent z-10" />
             <div className="relative z-0">
-              <h3 className="font-sans text-[24px] font-bold text-[#06162C] tracking-tight mb-4">
+              <h3 className="font-sans text-[22px] font-bold text-[#06162C] tracking-tight mb-3">
                 {supportingCards.items[3].title}
               </h3>
-              <p className="font-sans text-[15.5px] leading-[1.72] text-[#475569] font-normal">
+              <p className="font-sans text-[15px] leading-[1.68] text-[#475569] font-normal">
                 {supportingCards.items[3].description}
               </p>
             </div>
@@ -147,7 +145,6 @@ export const ManagementSupportingCards: React.FC = () => {
         </div>
       </section>
 
-      {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
         <ManagementSupportingCardsMobile />
       </div>
