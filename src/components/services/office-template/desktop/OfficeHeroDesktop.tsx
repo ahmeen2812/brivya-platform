@@ -53,11 +53,10 @@ export const OfficeHeroDesktop: React.FC<Props> = ({ hero, directive }) => {
   return (
     <section
       ref={containerRef}
-      className="hidden lg:block relative w-full pt-4 pb-12 select-none overflow-x-clip"
+      className="hidden lg:block relative w-full pt-4 pb-10 select-none overflow-x-clip"
     >
       {/* 1. TOP SPLIT (ui4.png): Left Headline/Content + Right Hero Visual */}
       <div className="grid grid-cols-12 gap-10 items-center">
-        {/* Left Column: Heading & Content (Enters Left-to-Right) */}
         <div className="col-span-7 flex flex-col justify-center">
           <div ref={serviceTitleRef} className="w-fit mb-3 will-change-transform">
             <span className="font-mono text-[11.5px] font-bold text-[#0A5FD7] uppercase tracking-wider block">
@@ -91,7 +90,7 @@ export const OfficeHeroDesktop: React.FC<Props> = ({ hero, directive }) => {
           </div>
         </div>
 
-        {/* Right Column: Hero Visual (Enters from Top, Downward Arrow in ui4.png) */}
+        {/* Right Column: Hero Visual (Enters from Top) */}
         <div className="col-span-5 flex items-center justify-center">
           <div
             ref={illustrationRef}
@@ -119,10 +118,14 @@ export const OfficeHeroDesktop: React.FC<Props> = ({ hero, directive }) => {
         </div>
       </div>
 
-      {/* 2. BOTTOM DIRECTIVE BANNER (ui4.png Bottom): Inward-Converging Full-Width Strip */}
+      {/* 
+        2. BOTTOM DIRECTIVE BANNER (ui4.png Bottom)
+        Adjusted with `mt-16 lg:mt-20` to place it slightly down from the hero text.
+        (You can edit `mt-16 lg:mt-20` directly if you want it closer or further down).
+      */}
       <div
         ref={directiveContainerRef}
-        className="mt-12 w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
+        className="mt-16 lg:mt-20 w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
       >
         <div className="grid grid-cols-12 gap-8 items-center">
           <div ref={directiveLeftRef} className="col-span-5 pr-6 border-r border-[#07366D]/25 will-change-transform">
