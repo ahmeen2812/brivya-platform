@@ -30,11 +30,12 @@ export const OFFICE_MOTION = {
     rightSlideX: 85,         // Left-pointing arrow: Mosaic Block 2 enters from right
     convergeX: 60,           // Converging arrows: Directive banner columns slide inward toward center
     
-    // Mobile responsive dampening (prevents horizontal blowout on small screens)
+    // Mobile responsive dampening
     mobileTopDropY: -40,
     mobileBottomRiseY: 35,
     mobileLeftSlideX: -30,
     mobileRightSlideX: 30,
+    mobileResourcesY: 24,    // Restored property resolving TS(2339) error
   },
   scale: {
     heroImageInitial: 1.05,
