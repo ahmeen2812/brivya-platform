@@ -14,14 +14,14 @@ export const OfficeVerticalSplitDesktop: React.FC<Props> = ({ data }) => {
   const [imageError, setImageError] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const leftContentRef = useRef<HTMLDivElement | null>(null);
+  const rightContentRef = useRef<HTMLDivElement | null>(null);
   const verticalImageRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
     const ctx = initVerticalSplitAnimation(
       containerRef.current,
-      leftContentRef.current,
+      rightContentRef.current,
       verticalImageRef.current
     );
     return () => ctx?.revert();
@@ -33,8 +33,39 @@ export const OfficeVerticalSplitDesktop: React.FC<Props> = ({ data }) => {
       className="hidden lg:block relative w-full pt-12 pb-20 select-none overflow-x-clip"
     >
       <div className="grid grid-cols-12 gap-12 items-center">
-        {/* Left Column: Feature Headline & Capabilities List */}
-        <div ref={leftContentRef} className="col-span-7 flex flex-col justify-center will-change-transform">
+        {/* 
+          1. LEFT COLUMN: Vertical UI Mockup 
+          - Flipped to Left side to balance the Hero visual on the Right
+          - Removed container card background, borders, and gradients
+          - Transparent PNG rests cleanly on the page canvas
+        */}
+        <div className="col-span-5 flex items-center justify-center">
+          <div
+            ref={verticalImageRef}
+            className="relative w-full aspect-[3/4] max-w-[420px] bg-transparent p-0 flex items-center justify-center will-change-transform"
+          >
+            {!imageError ? (
+              <Image
+                src={data.imagePath}
+                alt={data.imageAlt}
+                fill
+                sizes="420px"
+                className="object-contain"
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center text-center p-6 border border-dashed border-[#BACFE6] rounded-2xl w-full h-full bg-white/40">
+                <span className="font-mono text-[11px] font-bold text-[#06162C]">
+                  {data.imagePath}
+                </span>
+                <span className="mt-1 text-[11px] text-[#64748B]">Vertical UI Mockup Slot</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* 2. RIGHT COLUMN: Heading & Capabilities List */}
+        <div ref={rightContentRef} className="col-span-7 flex flex-col justify-center will-change-transform">
           <span className="font-mono text-[11px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-2">
             {data.tag}
           </span>
@@ -45,7 +76,6 @@ export const OfficeVerticalSplitDesktop: React.FC<Props> = ({ data }) => {
             {data.description}
           </p>
 
-          {/* Key Features Breakdown */}
           <div className="flex flex-col space-y-6">
             {data.keyFeatures.map((feature, idx) => (
               <div key={idx} className="flex items-start gap-4 p-5 rounded-2xl border border-[#BACFE6] bg-white/80 shadow-2xs">
@@ -62,32 +92,6 @@ export const OfficeVerticalSplitDesktop: React.FC<Props> = ({ data }) => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Right Column: Tall Vertical Mockup (Drops from above, indicated by red downward arrow in ui3.png) */}
-        <div className="col-span-5 flex items-center justify-center">
-          <div
-            ref={verticalImageRef}
-            className="relative w-full aspect-[3/4] max-w-[420px] rounded-3xl border border-[#BACFE6] bg-gradient-to-b from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-4 shadow-[0_16px_40px_-10px_rgba(7,54,109,0.12)] flex items-center justify-center overflow-hidden will-change-transform"
-          >
-            {!imageError ? (
-              <Image
-                src={data.imagePath}
-                alt={data.imageAlt}
-                fill
-                sizes="420px"
-                className="object-contain p-3"
-                onError={() => setImageError(true)}
-              />
-            ) : (
-              <div className="flex flex-col items-center justify-center text-center p-6 border border-dashed border-[#BACFE6] rounded-2xl w-full h-full bg-white/50">
-                <span className="font-mono text-[11px] font-bold text-[#06162C]">
-                  {data.imagePath}
-                </span>
-                <span className="mt-1 text-[11px] text-[#64748B]">Vertical UI Mockup Slot</span>
-              </div>
-            )}
           </div>
         </div>
       </div>
