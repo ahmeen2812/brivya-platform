@@ -8,7 +8,6 @@ if (typeof window !== "undefined") {
 
 // ---------------------------------------------------------------------------
 // 1. HERO ANIMATIONS (ui4.png)
-// Top-down image entrance (v) + Left-to-right text entrance (-->)
 // ---------------------------------------------------------------------------
 export interface OfficeHeroTargets {
   readonly serviceTitle: HTMLElement | null;
@@ -44,7 +43,6 @@ export function initOfficeHeroAnimation(
       onComplete: () => gsap.set(elements, { clearProps: "transform,opacity" }),
     });
 
-    // Hero visual drops from above (indicated by wireframe downward red arrow)
     if (illustration) {
       tl.fromTo(
         illustration,
@@ -74,7 +72,6 @@ export function initOfficeHeroAnimation(
 
 // ---------------------------------------------------------------------------
 // 2. HERO DIRECTIVE CONVERGING BANNER (ui4.png Bottom)
-// Left column enters from left (-->), Right column enters from right (<--)
 // ---------------------------------------------------------------------------
 export function initDirectiveBannerAnimation(
   container: HTMLElement | null,
@@ -113,23 +110,24 @@ export function initDirectiveBannerAnimation(
 
 // ---------------------------------------------------------------------------
 // 3. VERTICAL SPLIT SECTION (ui3.png Part 1)
-// Left copy (-->) + Right vertical image drops from above (v)
 // ---------------------------------------------------------------------------
 export function initVerticalSplitAnimation(
   container: HTMLElement | null,
-  leftContent: HTMLElement | null,
+  contentElement: HTMLElement | null,
   verticalImage: HTMLElement | null
 ): gsap.Context | null {
   if (!container) return null;
 
+  const elements = [contentElement, verticalImage].filter(Boolean) as HTMLElement[];
+
   if (checkPrefersReducedMotion()) {
-    gsap.set([leftContent, verticalImage].filter(Boolean), { autoAlpha: 1, x: 0, y: 0, scale: 1 });
+    gsap.set(elements, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
     return null;
   }
 
   return gsap.context(() => {
     const isMobile = checkIsMobile();
-    const leftX = isMobile ? 0 : OFFICE_MOTION.travel.leftSlideX;
+    const contentX = isMobile ? 0 : OFFICE_MOTION.travel.rightSlideX * 0.7;
     const imgY = isMobile ? OFFICE_MOTION.travel.mobileTopDropY : OFFICE_MOTION.travel.topDropY;
 
     const tl = gsap.timeline({
@@ -138,27 +136,26 @@ export function initVerticalSplitAnimation(
         start: isMobile ? "top 90%" : "top 85%",
         toggleActions: OFFICE_MOTION.scrollTrigger.toggleActions,
       },
-      onComplete: () => gsap.set([leftContent, verticalImage].filter(Boolean), { clearProps: "transform,opacity" }),
+      onComplete: () => gsap.set(elements, { clearProps: "transform,opacity" }),
     });
-
-    if (leftContent) {
-      tl.fromTo(leftContent, { autoAlpha: 0, x: leftX }, { autoAlpha: 1, x: 0, duration: 0.85, ease: OFFICE_MOTION.easings.executiveDecel }, 0);
-    }
 
     if (verticalImage) {
       tl.fromTo(
         verticalImage,
         { autoAlpha: 0, y: imgY, scale: OFFICE_MOTION.scale.verticalImageInitial },
         { autoAlpha: 1, y: 0, scale: 1.0, duration: OFFICE_MOTION.durations.verticalImageDrop, ease: OFFICE_MOTION.easings.executiveDecel },
-        0.15
+        0
       );
+    }
+
+    if (contentElement) {
+      tl.fromTo(contentElement, { autoAlpha: 0, x: contentX }, { autoAlpha: 1, x: 0, duration: 0.85, ease: OFFICE_MOTION.easings.executiveDecel }, 0.15);
     }
   }, container);
 }
 
 // ---------------------------------------------------------------------------
 // 4. FULL-WIDTH BANNER (ui3.png Part 2)
-// Elevates smoothly from below (^)
 // ---------------------------------------------------------------------------
 export function initFullWidthBannerAnimation(
   container: HTMLElement | null,
@@ -196,7 +193,6 @@ export function initFullWidthBannerAnimation(
 
 // ---------------------------------------------------------------------------
 // 5. FOUR-PART MOSAIC (ui3.png Part 3)
-// Block 1 (-->) | Icon 1 (scale) | Center Axis unmask | Block 2 (<--) | Icon 2 (scale)
 // ---------------------------------------------------------------------------
 export interface FourPartMosaicTargets {
   readonly block1: HTMLElement | null;
@@ -239,21 +235,11 @@ export function initFourPartMosaicAnimation(
     }
 
     if (icon1) {
-      tl.fromTo(
-        icon1,
-        { autoAlpha: 0, scale: OFFICE_MOTION.scale.mosaicIconInitial },
-        { autoAlpha: 1, scale: 1.0, duration: OFFICE_MOTION.durations.mosaicIconPop, ease: OFFICE_MOTION.easings.powerOut },
-        0.12
-      );
+      tl.fromTo(icon1, { autoAlpha: 0, scale: OFFICE_MOTION.scale.mosaicIconInitial }, { autoAlpha: 1, scale: 1.0, duration: OFFICE_MOTION.durations.mosaicIconPop, ease: OFFICE_MOTION.easings.powerOut }, 0.12);
     }
 
     if (centerDivider) {
-      tl.fromTo(
-        centerDivider,
-        { autoAlpha: 0, scaleY: 0, transformOrigin: "center center" },
-        { autoAlpha: 1, scaleY: 1, duration: 0.7, ease: OFFICE_MOTION.easings.smoothMechanical },
-        0.18
-      );
+      tl.fromTo(centerDivider, { autoAlpha: 0, scaleY: 0, transformOrigin: "center center" }, { autoAlpha: 1, scaleY: 1, duration: 0.7, ease: OFFICE_MOTION.easings.smoothMechanical }, 0.18);
     }
 
     if (block2) {
@@ -261,19 +247,13 @@ export function initFourPartMosaicAnimation(
     }
 
     if (icon2) {
-      tl.fromTo(
-        icon2,
-        { autoAlpha: 0, scale: OFFICE_MOTION.scale.mosaicIconInitial },
-        { autoAlpha: 1, scale: 1.0, duration: OFFICE_MOTION.durations.mosaicIconPop, ease: OFFICE_MOTION.easings.powerOut },
-        0.3
-      );
+      tl.fromTo(icon2, { autoAlpha: 0, scale: OFFICE_MOTION.scale.mosaicIconInitial }, { autoAlpha: 1, scale: 1.0, duration: OFFICE_MOTION.durations.mosaicIconPop, ease: OFFICE_MOTION.easings.powerOut }, 0.3);
     }
   }, container);
 }
 
 // ---------------------------------------------------------------------------
-// 6. PANORAMIC VISUAL SHOWCASE (ui3.png Part 4)
-// Rises smoothly from below (^) with subtle zoom settle
+// 6. PANORAMIC SHOWCASE (ui3.png Part 4)
 // ---------------------------------------------------------------------------
 export function initPanoramicShowcaseAnimation(
   container: HTMLElement | null,
@@ -311,7 +291,46 @@ export function initPanoramicShowcaseAnimation(
 }
 
 // ---------------------------------------------------------------------------
-// 7. RESOURCES, FAQ, AND CTA INTERPOLATIONS
+// 7. ADDITIONAL CAPABILITIES (Cards 01 & 02 with Staggered Entrance)
+// ---------------------------------------------------------------------------
+export function initAdditionalCapabilitiesAnimation(
+  container: HTMLElement | null,
+  cards: readonly (HTMLElement | null)[]
+): gsap.Context | null {
+  if (!container) return null;
+  const validCards = cards.filter(Boolean) as HTMLElement[];
+
+  if (checkPrefersReducedMotion()) {
+    gsap.set(validCards, { autoAlpha: 1, y: 0 });
+    return null;
+  }
+
+  return gsap.context(() => {
+    const isMobile = checkIsMobile();
+    const yDist = isMobile ? 22 : 32;
+
+    gsap.fromTo(
+      validCards,
+      { autoAlpha: 0, y: yDist },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: OFFICE_MOTION.easings.executiveDecel,
+        scrollTrigger: {
+          trigger: container,
+          start: isMobile ? "top 90%" : "top 85%",
+          toggleActions: OFFICE_MOTION.scrollTrigger.toggleActions,
+        },
+        onComplete: () => gsap.set(validCards, { clearProps: "transform,opacity" }),
+      }
+    );
+  }, container);
+}
+
+// ---------------------------------------------------------------------------
+// 8. RESOURCES, FAQ, AND CTA INTERPOLATIONS
 // ---------------------------------------------------------------------------
 export function initOfficeResourcesAnimation(
   container: HTMLElement | null,
