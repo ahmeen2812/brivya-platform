@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — GOOGLE ADS CAMPAIGN MANAGEMENT CONTENT MANIFEST
- * Authoritative content mapping for desktop and mobile component rendering arrays.
+ * Refined structure enabling complete console framing in viewport logic parameters.
  */
 
 export interface FaqItem {
@@ -80,7 +80,7 @@ export const CAMPAIGN_MANAGEMENT_CONTENT: CampaignManagementConfig = {
     serviceTitle: "Campaign Management",
     heading: "Google Ads Campaign Management Focused on Your Business Goals",
     description:
-      "Make your advertising budget work toward the results that matter to your business. We plan, manage, and optimize Google Ads campaigns with a focus on relevant audiences, efficient spending, and measurable customer actions. From campaign setup to ongoing performance improvements, we help keep your advertising aligned with your business objectives.",
+      "Make your advertising budget work toward the results that matter to your business. We plan, manage, and optimize Google Ads campaigns with a focus on relevant audiences, efficient spending, and measurable customer actions.",
     imagePath: "/images/services/google-ads/management-hero-illustration.png",
     imageAlt: "Google Ads dashboard performance optimization strategies",
   },
@@ -88,8 +88,8 @@ export const CAMPAIGN_MANAGEMENT_CONTENT: CampaignManagementConfig = {
     tag: "Management Directive",
     heading: "Campaign Management Built Around Your Advertising Goals",
     paragraphs: [
-      "Effective advertising requires more than launching campaigns and generating clicks. It takes clear objectives, relevant targeting, thoughtful budget allocation, and ongoing performance analysis to understand what your advertising is achieving.",
-      "We bring campaign strategy, account management, bidding decisions, ad optimization, and conversion measurement together to support your marketing goals. Whether you want to generate leads, increase online sales, or improve existing campaigns, our approach focuses on making informed decisions using campaign performance data.",
+      "Effective advertising requires clear objectives, relevant targeting, thoughtful budget allocation, and continuous analysis to understand true return on spend.",
+      "We seamlessly align strategy, bidding algorithms, and accurate conversion measurement pipelines. Whether generating B2B leads or boosting sales revenue, we orchestrate campaigns using precision performance data rather than chasing volume without margin metrics attached.",
     ],
   },
   supportingCards: {

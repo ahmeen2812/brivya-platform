@@ -37,10 +37,10 @@ export const RoiHero: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Photo on LEFT, Text on RIGHT (No Buttons!) */}
+      {/* DESKTOP VIEWPORT */}
       <section
         ref={containerRef}
-        className="hidden lg:block relative w-full pt-6 pb-20 lg:pb-24 select-none overflow-x-clip"
+        className="hidden lg:block relative w-full pt-6 pb-8 lg:pb-12 select-none overflow-x-clip"
       >
         <div className="grid grid-cols-12 gap-10 items-center">
           <div className="col-span-5 flex items-center justify-center">
@@ -103,7 +103,6 @@ export const RoiHero: React.FC = () => {
         </div>
       </section>
 
-      {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
         <RoiHeroMobile />
       </div>

@@ -51,3 +51,4 @@ export const UniversalDirective: React.FC<UniversalDirectiveProps> = ({ config }
     </section>
   );
 };
+

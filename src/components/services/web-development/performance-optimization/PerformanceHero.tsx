@@ -14,7 +14,6 @@ export const PerformanceHero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const taglineRef = useRef<HTMLParagraphElement | null>(null);
-  const accentLineRef = useRef<HTMLDivElement | null>(null);
   const descriptionTextRef = useRef<HTMLDivElement | null>(null);
   const illustrationRef = useRef<HTMLDivElement | null>(null);
   const consoleRef = useRef<HTMLDivElement | null>(null);
@@ -37,7 +36,7 @@ export const PerformanceHero: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Sharp, Unfilled Architectural Console */}
+      {/* DESKTOP VIEWPORT: mt-16 lg:mt-20 clearance on console */}
       <section
         ref={containerRef}
         className="hidden lg:block relative w-full pt-4 pb-12 select-none overflow-x-clip"
@@ -63,11 +62,7 @@ export const PerformanceHero: React.FC = () => {
             </div>
 
             <div className="mt-6 flex items-stretch">
-              <div
-                ref={accentLineRef}
-                aria-hidden="true"
-                className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full will-change-transform"
-              />
+              <div aria-hidden="true" className="w-[2.5px] bg-[#0A5FD7] shrink-0 rounded-full" />
               <div className="overflow-hidden pl-5 py-0.5">
                 <div ref={descriptionTextRef} className="flex flex-col space-y-3 max-w-[560px] will-change-transform">
                   {hero.paragraphs.map((p, idx) => (
@@ -106,10 +101,10 @@ export const PerformanceHero: React.FC = () => {
           </div>
         </div>
 
-        {/* Sharp Architectural Border Console: No Background, Fully Sharp Corners, Dark Navy Border */}
+        {/* Sharp Console with mt-16 lg:mt-20 Clearance */}
         <div
           ref={consoleRef}
-          className="mt-12 w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
+          className="mt-16 lg:mt-20 w-full rounded-none border border-[#07366D]/35 bg-transparent p-6 lg:py-6 lg:px-8 shadow-xs will-change-transform"
         >
           <div className="grid grid-cols-12 gap-8 items-center">
             <div className="col-span-5 pr-6 border-r border-[#07366D]/25">

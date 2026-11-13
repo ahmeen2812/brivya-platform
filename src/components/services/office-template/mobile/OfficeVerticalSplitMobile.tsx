@@ -14,14 +14,14 @@ export const OfficeVerticalSplitMobile: React.FC<Props> = ({ data }) => {
   const [imageError, setImageError] = useState(false);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const leftContentRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const verticalImageRef = useRef<HTMLDivElement | null>(null);
 
   useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
     const ctx = initVerticalSplitAnimation(
       containerRef.current,
-      leftContentRef.current,
+      contentRef.current,
       verticalImageRef.current
     );
     return () => ctx?.revert();
@@ -32,7 +32,7 @@ export const OfficeVerticalSplitMobile: React.FC<Props> = ({ data }) => {
       ref={containerRef}
       className="relative w-full pt-8 pb-12 select-none overflow-x-clip"
     >
-      <div ref={leftContentRef} className="flex flex-col will-change-transform">
+      <div ref={contentRef} className="flex flex-col will-change-transform">
         <span className="font-mono text-[10px] font-bold text-[#0A5FD7] uppercase tracking-wider block mb-1">
           {data.tag}
         </span>
@@ -62,10 +62,10 @@ export const OfficeVerticalSplitMobile: React.FC<Props> = ({ data }) => {
         </div>
       </div>
 
-      {/* Vertical UI Mockup */}
+      {/* Vertical UI Mockup on Mobile — Clean transparent background */}
       <div
         ref={verticalImageRef}
-        className="w-full max-w-[300px] aspect-[3/4] mx-auto relative rounded-2xl border border-[#BACFE6] bg-gradient-to-b from-[#E1E7EF] via-[#D8E2F0] to-[#C2DBF7] p-3 shadow-md flex items-center justify-center overflow-hidden will-change-transform"
+        className="w-full max-w-[300px] aspect-[3/4] mx-auto relative bg-transparent p-0 flex items-center justify-center will-change-transform"
       >
         {!imageError ? (
           <Image
@@ -73,11 +73,11 @@ export const OfficeVerticalSplitMobile: React.FC<Props> = ({ data }) => {
             alt={data.imageAlt}
             fill
             sizes="300px"
-            className="object-contain p-2"
+            className="object-contain"
             onError={() => setImageError(true)}
           />
         ) : (
-          <div className="flex flex-col items-center justify-center text-center p-3 border border-dashed border-[#BACFE6] rounded-xl w-full h-full bg-white/50">
+          <div className="flex flex-col items-center justify-center text-center p-3 border border-dashed border-[#BACFE6] rounded-xl w-full h-full bg-white/40">
             <span className="font-mono text-[10px] font-bold text-[#06162C]">
               {data.imagePath}
             </span>

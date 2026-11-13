@@ -63,7 +63,7 @@ export const SITE_CONTACT: SiteContactConfig = {
   },
   socials: {
     linkedin: "https://linkedin.com/company/brivya",
-    github: "https://github.com/brivya",
+    github: "https://github.com/ahmeen2812",
     twitter: "https://x.com/brivya",
     instagram: "https://instagram.com/brivya",
   },

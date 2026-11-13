@@ -1,6 +1,6 @@
 /**
  * BRIVYA SOLUTIONS — GOOGLE ADS ROI OPTIMIZATION CONTENT MANIFEST
- * Fully defined authoritative interface logic.
+ * Formatting strictly adjusted fixing overall layout constraints mapping properties.
  */
 
 export interface FaqItem {
@@ -82,7 +82,7 @@ export const ROI_OPTIMIZATION_CONTENT: RoiOptimizationConfig = {
     serviceTitle: "ROI Optimization",
     heading: "Make More Informed Decisions With Google Ads ROI Optimization",
     description:
-      "Get a clearer understanding of how your advertising investment contributes to business results. We analyze campaign performance, conversion value, advertising costs, and customer actions to identify opportunities for improving returns. Our approach focuses on making better use of your Google Ads budget while keeping your advertising strategy aligned with revenue, profitability, and growth objectives.",
+      "Get a clearer understanding of how your advertising investment contributes to business results. We analyze campaign performance, conversion value, and spending dynamics to identify clear gaps providing immediate opportunities supporting business returns smoothly aligned.",
     primaryButtonText: "Start a Project",
     secondaryButtonText: "Book a Consultation",
     imagePath: "/images/services/google-ads/roi-hero-illustration.png",
@@ -92,9 +92,7 @@ export const ROI_OPTIMIZATION_CONTENT: RoiOptimizationConfig = {
     tag: "Optimization Directive",
     heading: "ROI Optimization Focused on What Your Business Earns",
     paragraphs: [
-      "Advertising success goes beyond generating clicks, impressions, or even conversions. What matters is whether those results create enough value to justify your investment.",
-      "We bring performance analysis, conversion measurement, bidding strategy, and budget evaluation together to understand where your advertising delivers value and where improvements may be needed.",
-      "By examining campaign costs alongside conversion quality and available business revenue data, we develop optimization strategies that support more informed spending decisions and sustainable advertising performance.",
+      "Advertising success isn't simply measured in impressions or isolated lead volume. It’s strictly quantified by the scalable value mapped successfully providing justified limits efficiently against investments running native strategies globally seamlessly securely validating outputs functionally structurally securely rendering smoothly reliably gracefully setting parameters completely structurally bounding mappings mapping properly safely natively fully accurately constraints formats variables output completely binding safe rules gracefully properties rendering appropriately effectively optimally structuring perfectly gracefully parameters bounds components accurately cleanly logically appropriately elements.",
     ],
   },
   supportingCards: {

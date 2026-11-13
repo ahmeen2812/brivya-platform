@@ -37,10 +37,10 @@ export const ManagementHero: React.FC = () => {
 
   return (
     <>
-      {/* DESKTOP VIEWPORT: Photo on LEFT, Text on RIGHT (No Buttons!) */}
+      {/* DESKTOP VIEWPORT: Minimized bottom padding logic preventing overlapping cards logic */}
       <section
         ref={containerRef}
-        className="hidden lg:block relative w-full pt-6 pb-20 lg:pb-24 select-none overflow-x-clip"
+        className="hidden lg:block relative w-full pt-6 pb-8 lg:pb-12 select-none overflow-x-clip"
       >
         <div className="grid grid-cols-12 gap-10 items-center">
           <div className="col-span-5 flex items-center justify-center">
@@ -62,9 +62,6 @@ export const ManagementHero: React.FC = () => {
                 <div className="flex flex-col items-center justify-center text-center p-6 border border-dashed border-[#BACFE6] rounded-3xl w-full h-full bg-white/50 shadow-xs">
                   <span className="font-mono text-[11px] font-bold text-[#06162C]">
                     Hero Illustration: {hero.imagePath}
-                  </span>
-                  <span className="mt-1 text-[11px] text-[#64748B]">
-                    Google Ads dashboard structure rendering placeholder logic space allocation default image box fallback standard fallback layout container logic structural framework box slot structure structural frame 
                   </span>
                 </div>
               )}
@@ -106,7 +103,6 @@ export const ManagementHero: React.FC = () => {
         </div>
       </section>
 
-      {/* DEDICATED MOBILE VIEWPORT */}
       <div className="block lg:hidden">
         <ManagementHeroMobile />
       </div>
