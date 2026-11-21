@@ -61,7 +61,7 @@ export const EXCEL_ADDIN_CONTENT: OfficeTemplateConfig = {
     tag: "Enterprise Deployment",
     heading: "Standardized Financial & Operational Workbooks Across Platforms",
     description: "Centralized deployment across organizations with secure manifest distribution through Microsoft 365 Admin Center.",
-    imagePath: "/images/services/office-addins/excel-panoramic-showcase.png",
+    imagePath: "/images/services/office-addins/excel-panoramic-showcase11.png",
     imageAlt: "Excel Add-in running across Windows desktop, Mac, and Excel Online",
   },
   additionalCapabilities: [

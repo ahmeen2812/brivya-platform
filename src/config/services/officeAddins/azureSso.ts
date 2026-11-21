@@ -61,7 +61,7 @@ export const AZURE_SSO_CONTENT: OfficeTemplateConfig = {
     tag: "Automated Provisioning",
     heading: "Automated SCIM User Provisioning & Lifecycle Governance",
     description: "Automatically provision, synchronize, and revoke user access across all integrated SaaS platforms when employee roles update in Entra ID.",
-    imagePath: "/images/services/office-addins/sso-panoramic-showcase.png",
+    imagePath: "/images/services/office-addins/sso-panoramic-showcase11.png",
     imageAlt: "Microsoft Entra ID Identity Lifecycle and SCIM Provisioning Showcase",
   },
   additionalCapabilities: [

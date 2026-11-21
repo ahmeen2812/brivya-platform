@@ -61,7 +61,7 @@ export const VSTO_MIGRATION_CONTENT: OfficeTemplateConfig = {
     tag: "Coexistence & Phased Rollout",
     heading: "Side-by-Side Coexistence for Zero-Downtime Migration",
     description: "Deploy modern web add-ins alongside existing COM plugins to allow smooth employee transitions without disrupting daily operations.",
-    imagePath: "/images/services/office-addins/vsto-panoramic-showcase.png",
+    imagePath: "/images/services/office-addins/vsto-panoramic-showcase11.png",
     imageAlt: "VSTO and Web Add-in Coexistence Architecture Showcase",
   },
   additionalCapabilities: [

@@ -67,7 +67,7 @@ export const WORD_ADDIN_CONTENT: OfficeTemplateConfig = {
     tag: "Enterprise Deployment",
     heading: "Unified Document Automation Across Enterprise Ecosystems",
     description: "Deploy custom ribbon commands and automated document pipelines across your entire organization via Microsoft 365 Centralized Deployment.",
-    imagePath: "/images/services/office-addins/word-panoramic-showcase.png",
+    imagePath: "/images/services/office-addins/word-panoramic-showcase11.png",
     imageAlt: "Word Add-in running across Windows desktop, Mac, and Web browser interfaces",
   },
   // Additional capabilities
