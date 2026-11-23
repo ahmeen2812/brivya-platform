@@ -227,3 +227,123 @@ export const CAMPAIGN_MANAGEMENT_CONTENT: CampaignManagementConfig = {
     secondaryButtonText: "Book a Consultation",
   },
 } as const;
+
+export interface CampaignManagementComponentConfig {
+  readonly hero: {
+    readonly tag: string;
+    readonly headline: string;
+    readonly description: string;
+    readonly image: string;
+    readonly imageAlt: string;
+  };
+  readonly featuredConsole: {
+    readonly tag: string;
+    readonly headline: string;
+    readonly description: string;
+  };
+  readonly supportingCards: {
+    readonly card01: {
+      readonly title: string;
+      readonly description: string;
+    };
+    readonly card02: {
+      readonly title: string;
+      readonly description: string;
+      readonly companionImage: string;
+      readonly companionAlt: string;
+    };
+    readonly card03: {
+      readonly title: string;
+      readonly description: string;
+      readonly companionImage: string;
+      readonly companionAlt: string;
+    };
+    readonly card04: {
+      readonly title: string;
+      readonly description: string;
+    };
+  };
+  readonly ecosystem: {
+    readonly tag: string;
+    readonly heading: string;
+    readonly subheading: string;
+    readonly items: readonly {
+      readonly title: string;
+      readonly description: string;
+      readonly url: string;
+      readonly badgePosition: "down" | "up";
+      readonly badgeImage: string;
+      readonly badgeAlt: string;
+    }[];
+  };
+  readonly faq: {
+    readonly heading: string;
+    readonly items: readonly FaqItem[];
+  };
+  readonly cta: {
+    readonly heading: string;
+    readonly description: string;
+    readonly primaryButtonText: string;
+    readonly primaryButtonUrl: string;
+    readonly secondaryButtonText: string;
+  };
+}
+
+export const CAMPAIGN_MANAGEMENT_CONFIG: CampaignManagementComponentConfig = {
+  hero: {
+    tag: CAMPAIGN_MANAGEMENT_CONTENT.hero.serviceTitle,
+    headline: CAMPAIGN_MANAGEMENT_CONTENT.hero.heading,
+    description: CAMPAIGN_MANAGEMENT_CONTENT.hero.description,
+    image: CAMPAIGN_MANAGEMENT_CONTENT.hero.imagePath,
+    imageAlt: CAMPAIGN_MANAGEMENT_CONTENT.hero.imageAlt,
+  },
+  featuredConsole: {
+    tag: CAMPAIGN_MANAGEMENT_CONTENT.mainFeaturedCard.tag,
+    headline: CAMPAIGN_MANAGEMENT_CONTENT.mainFeaturedCard.heading,
+    description: CAMPAIGN_MANAGEMENT_CONTENT.mainFeaturedCard.paragraphs.join(" "),
+  },
+  supportingCards: {
+    card01: {
+      title: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[0].title,
+      description: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[0].description,
+    },
+    card02: {
+      title: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[1].title,
+      description: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[1].description,
+      companionImage: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.card2IllustrationPath,
+      companionAlt: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.card2IllustrationAlt,
+    },
+    card03: {
+      title: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[2].title,
+      description: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[2].description,
+      companionImage: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.card3IllustrationPath,
+      companionAlt: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.card3IllustrationAlt,
+    },
+    card04: {
+      title: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[3].title,
+      description: CAMPAIGN_MANAGEMENT_CONTENT.supportingCards.items[3].description,
+    },
+  },
+  ecosystem: {
+    tag: CAMPAIGN_MANAGEMENT_CONTENT.officialResources.tag,
+    heading: CAMPAIGN_MANAGEMENT_CONTENT.officialResources.heading,
+    subheading: CAMPAIGN_MANAGEMENT_CONTENT.officialResources.description,
+    items: CAMPAIGN_MANAGEMENT_CONTENT.officialResources.items.map((item) => ({
+      title: item.title,
+      description: item.description,
+      url: item.url,
+      badgePosition: item.badgePosition === "bottom" ? "down" : "up",
+      badgeImage: item.badgeImagePath,
+      badgeAlt: item.badgeImageAlt,
+    })),
+  },
+  faq: CAMPAIGN_MANAGEMENT_CONTENT.faq,
+  cta: {
+    heading: CAMPAIGN_MANAGEMENT_CONTENT.cta.heading,
+    description: CAMPAIGN_MANAGEMENT_CONTENT.cta.description,
+    primaryButtonText: CAMPAIGN_MANAGEMENT_CONTENT.cta.primaryButtonText,
+    primaryButtonUrl: "/start-project",
+    secondaryButtonText: CAMPAIGN_MANAGEMENT_CONTENT.cta.secondaryButtonText,
+  },
+};
+
